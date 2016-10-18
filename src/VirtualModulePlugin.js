@@ -5,11 +5,15 @@ import proxyFileSystem from './proxyFileSystem';
 
 class VirtualModulePlugin {
 
-  constructor(data) {
-    this.fs = new MemoryFileSystem(data)
+  constructor(files) {
+    this.fs = new MemoryFileSystem()
+
+    if (files) {
+      Object.keys(files).forEach(key => this.addFile(key, files[key]))
+    }
   }
 
-  emitVirtualFile = (virtualPath, content) => {
+  addFile = (virtualPath, content) => {
     this.fs.mkdirpSync(path.dirname(virtualPath))
     this.fs.writeFileSync(virtualPath, content)
   }
@@ -31,7 +35,7 @@ class VirtualModulePlugin {
     // extract source strings to virtual files.
     compiler.plugin('compilation', compilation => compilation
       .plugin('normal-module-loader', loaderContext => {
-        loaderContext.emitVirtualFile = this.emitVirtualFile
+        loaderContext.emitVirtualFile = this.addFile
       })
     );
   }
