@@ -1,0 +1,47 @@
+{
+  "name": "inline-css-loader",
+  "version": "1.0.0",
+  "description": "webpack loader",
+  "main": "index.js",
+  "scripts": {
+    "test": "babel-node ./test/e2e.js",
+    "build": "rimraf lib/* && babel src --out-dir lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jquense/inline-module-loader.git"
+  },
+  "author": "jquense",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jquense/inline-module-loader/issues"
+  },
+  "homepage": "https://github.com/jquense/inline-module-loader#readme",
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-core": "^6.17.0",
+    "babel-eslint": "^7.0.0",
+    "babel-jest": "^16.0.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-jason": "^2.0.0",
+    "css-loader": "^0.25.0",
+    "eslint": "^3.7.1",
+    "eslint-config-jason": "^4.0.0",
+    "eslint-plugin-import": "^2.0.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "jest": "^16.0.1",
+    "react": "^15.3.2",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.2"
+  },
+  "dependencies": {
+    "babel-traverse": "^6.16.0",
+    "babel-types": "^6.16.0",
+    "babylon": "^6.11.6",
+    "loader-utils": "^0.2.16",
+    "memory-fs": "^0.3.0",
+    "mock-fs": "^3.11.0",
+    "virtual-module-webpack-plugin": "^0.1.1",
+    "webpack-sources": "^0.1.2"
+  }
+}
