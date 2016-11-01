@@ -1,6 +1,6 @@
 {
   "name": "css-literal-loader",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "extract and process inline css literals in JavaScript files",
   "main": "index.js",
   "scripts": {
