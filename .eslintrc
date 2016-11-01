@@ -1,2 +1,9 @@
-extends: jason
-parser: babel-eslint
+
+extends: "4catalyzer"
+globals:
+  css: false
+rules:
+  no-param-reassign: off
+  import/no-extraneous-dependencies:
+    - error
+    - devDependencies: true
