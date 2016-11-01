@@ -7,7 +7,7 @@ import proxyFileSystem from './proxyFileSystem';
 class VirtualModulePlugin {
   /**
    * Apply an instance of the plugin to compilation.
-   * helpful for adding hte plugin inside a loader.
+   * helpful for adding the plugin inside a loader.
    */
   static bootstrap(compilation, files) {
     const { compiler } = compilation;
@@ -23,7 +23,9 @@ class VirtualModulePlugin {
     this.fs = new MemoryFileSystem();
 
     if (files) {
-      Object.keys(files).forEach(key => this.addFile(key, files[key]));
+      Object.keys(files).forEach((key) => {
+        this.addFile(key, files[key]);
+      });
     }
   }
 
@@ -58,11 +60,11 @@ class VirtualModulePlugin {
 
     // Augment the loader context so that loaders can neatly
     // extract source strings to virtual files.
-    compiler.plugin('compilation', compilation => compilation
-      .plugin('normal-module-loader', (loaderContext) => {
+    compiler.plugin('compilation', (compilation) => {
+      compilation.plugin('normal-module-loader', (loaderContext) => {
         loaderContext.emitVirtualFile = this.addFile;
-      })
-    );
+      });
+    });
   }
 }
 

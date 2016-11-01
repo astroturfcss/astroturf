@@ -1,6 +1,5 @@
 import path from 'path';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import VirtualModulePlugin from '../src/VirtualModulePlugin';
 
 // eslint-disable-next-line max-len
 const cssLoader = 'css?modules&camelCase&importLoaders=1&localIdentName="[name]--[local]--[hash:base64:5]"';

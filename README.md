@@ -3,7 +3,7 @@ css-literal-loader
 
 A webpack loader for extracting and processing css defined in other files.
 
-"Inline css" that just works with css modules, extract-text-webpack-plugin, postCSS, LESS, SASS, or any other css preprocessor or loader.
+"Inline css" that just works with CSS, PostCSS, Less, Sass, or any other css preprocessor, and plays nicely with existing style tooling like `extract-text-webpack-plugin`.
 
 ```js
 import React from 'react';
@@ -16,8 +16,12 @@ const styles = css`
   }
 `;
 
-export default function Button(props) {
-  return <button className={styles.button} {...props} />
+export default function Button({ children }) {
+  return (
+    <button className={styles.button}>
+      {children}
+    </button>
+  );
 }
 ```
 
@@ -45,7 +49,7 @@ const styles = css`
 
 ## Setup
 
-Add the css-literal-loader to js/jsx file loaders, and whatever you want to handle `.css` files:
+Add the css-literal-loader to JavaScript loader configuration, and whatever you want to handle `.css` files:
 
  ```js
 {
@@ -64,6 +68,11 @@ Add the css-literal-loader to js/jsx file loaders, and whatever you want to hand
 }
  ```
 
-You can change the "tag" name used to locate style definitions (by default `"css"`), by adding the `query: { tagName: 'myCustomName'}` to the loader query.
+### Options
 
-**Note:** css-literal-loader expects uncompiled JavaScript code, If you are using babel to transform tagged template literals, you ensure the loader runs _before_ the babel loader.
+css-literal-loader accepts a few query options.
+
+- **tagName**: (default: `'css'`) The tag identifier used to locate inline css literals and extract them.
+- **extension**: (default: `'.css'`) the extension used for extracted "virtual" files. Change to whatever file type you want webpack to process extracted literals as.
+
+**Note:** css-literal-loader expects uncompiled JavaScript code, If you are using babel to transform tagged template literals, ensure the loader runs _before_ the babel loader.
