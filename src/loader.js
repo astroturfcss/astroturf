@@ -55,7 +55,7 @@ function replaceStyleTemplates(src, styles) {
   }
 
   styles.forEach(({ start, end, path }) => {
-    src = splice(src, start, end, `require('${path}')`);
+    src = splice(src, start, end, `require('./${basename(path)}')`);
   });
 
   return src;
@@ -67,8 +67,8 @@ const LOADER_PLUGIN = Symbol('loader added VM plugin');
 module.exports = function loader(content) {
   if (this.cacheable) this.cacheable();
 
-  const query = loaderUtils.parseQuery(this.query);
-  const styles = collectStyles(content, query.tagName);
+  const { tagName, extension = '.css' } = loaderUtils.parseQuery(this.query);
+  const styles = collectStyles(content, tagName);
 
   if (!styles.length) return content;
 
@@ -76,6 +76,7 @@ module.exports = function loader(content) {
     dirname(this.resource),
     basename(this.resource, extname(this.resource))
   );
+
   const compilation = this._compilation; // eslint-disable-line no-underscore-dangle
   let plugin = compilation[LOADER_PLUGIN];
 
@@ -85,7 +86,7 @@ module.exports = function loader(content) {
   }
 
   styles.forEach((style, idx) => {
-    style.path = `${basepath}__extracted_styles_${idx++}.css`;
+    style.path = `${basepath}__css_literal_loader_${idx++}${extension}`;
     plugin.addFile(style.path, style.value);
   });
 
