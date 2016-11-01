@@ -1,7 +1,7 @@
 
 const SIZE = 75;
 
-let styles = css`
+const styles = css`
   .foo {
     color: red;
     width: ${SIZE}px;
@@ -15,15 +15,8 @@ let styles = css`
   }
 `;
 
-let styles2 = css`
-  .foo {
-    color: red;
-    width: ${SIZE}px;
-  }
-`;
-
 export default function Component() {
-  let name = styles.foo;
+  const name = styles.foo;
 
-  return <div className={name} width={SIZE}/>
+  return <div className={name} width={SIZE}/>;
 }
