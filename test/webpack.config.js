@@ -27,7 +27,7 @@ export default function getConfig(entry, extract = true) {
         },
         {
           test: /\.js$/,
-          loader: require.resolve('../src/'),
+          loader: require.resolve('../src/loader'),
         },
       ],
     },

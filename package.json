@@ -2,15 +2,19 @@
   "name": "css-literal-loader",
   "version": "0.1.0",
   "description": "extract and process inline css literals in JavaScript files",
-  "main": "index.js",
+  "main": "lib/loader.js",
   "scripts": {
     "test": "babel-node ./test/e2e.js",
+    "prepublish": "npm run build",
     "build": "rimraf lib/* && babel src --out-dir lib"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jquense/inline-module-loader.git"
   },
+  "files": [
+    "lib"
+  ],
   "author": "jquense",
   "license": "MIT",
   "bugs": {
