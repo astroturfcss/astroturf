@@ -34,7 +34,7 @@ function parseSource(src) {
 }
 
 
-export default function traverse(source, visitors) {
+export default function traverse(source, visitors, opts) {
   const ast = parseSource(source);
   // https://github.com/babel/babel/issues/4640
   const hub = new Hub({ buildCodeFrameError });
@@ -46,5 +46,5 @@ export default function traverse(source, visitors) {
     key: 'program',
   });
 
-  return _traverse(ast, visitors, path.setContext().scope);
+  return _traverse(ast, visitors, path.setContext().scope, { opts });
 }
