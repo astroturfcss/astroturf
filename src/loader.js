@@ -2,6 +2,7 @@ import { join, dirname, extname, basename } from 'path';
 import loaderUtils from 'loader-utils';
 
 import traverse from './traverse';
+import visitor from './visitor';
 import VirtualModulePlugin from './VirtualModulePlugin';
 
 function collectStyles(src, tagName = 'css') {
@@ -12,32 +13,7 @@ function collectStyles(src, tagName = 'css') {
     return styles;
   }
 
-  traverse(src, {
-    TaggedTemplateExpression(path) {
-      const node = path.node;
-
-      if (node.tag.name !== tagName || !path.scope.hasGlobal(tagName)) {
-        return;
-      }
-
-      const parseError = path.buildCodeFrameError(
-        'Could not evaluate css. inline css must be statically analyzable'
-      );
-
-      const { start, end } = node;
-
-      // remove the tag and evaluate as a plain template;
-      path.replaceWith(node.quasi);
-
-      const { confident, value } = path.evaluate();
-
-      if (!confident) {
-        throw parseError;
-      }
-
-      styles.push({ value, start, end });
-    },
-  });
+  traverse(src, visitor(styles), { tagName });
 
   return styles;
 }
