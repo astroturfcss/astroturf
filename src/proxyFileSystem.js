@@ -1,3 +1,4 @@
+const uniq = require('lodash/uniq');
 
 const withSyncMethod = (methods, name) => ([...methods, name, `${name}Sync`]);
 
@@ -33,6 +34,27 @@ export default function proxyFileSystem(realFs, virtualFs) {
       return virtualFs[method](path, ...args);
     };
   });
+
+  proxiedMethods.readdirSync = function readdirSync(dirPath) {
+    const virtualFiles = virtualFs.existsSync(dirPath)
+      ? virtualFs.readdirSync(dirPath) : [];
+
+    return uniq([
+      ...realFs.readdirSync(dirPath),
+      ...virtualFiles,
+    ]);
+  };
+
+  proxiedMethods.readdir = function readdir(dirPath, cb) {
+    realFs.readdir(dirPath, (err, realFiles) => {
+      if (err) return cb(err);
+
+      const virtualFiles = virtualFs.existsSync(dirPath)
+        ? virtualFs.readdirSync(dirPath) : [];
+
+      return cb(null, uniq([...realFiles, ...virtualFiles]));
+    });
+  };
 
   return Object.assign(fs, realFs, proxiedMethods);
 }
