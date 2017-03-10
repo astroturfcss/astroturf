@@ -1,7 +1,7 @@
 
 const SIZE = 75;
 
-const styles = css`
+const styles = less`
   .foo {
     color: red;
     width: ${SIZE}px;
