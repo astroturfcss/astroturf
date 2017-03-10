@@ -2,7 +2,7 @@ import path from 'path';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 // eslint-disable-next-line max-len
-const cssLoader = 'css?modules&camelCase&importLoaders=1&localIdentName="[name]--[local]--[hash:base64:5]"';
+const cssLoader = 'css-loader?modules&camelCase&importLoaders=1&localIdentName="[name]--[local]--[hash:base64:5]"';
 
 export default function getConfig(entry, extract = true) {
   return {
@@ -13,20 +13,27 @@ export default function getConfig(entry, extract = true) {
     },
 
     module: {
-      loaders: [
+      rules: [
         {
           test: /\.css$/,
-          loader: ExtractTextPlugin.extract('style', cssLoader, {
+          use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: cssLoader,
             disable: !extract,
           }),
         },
         {
           test: /\.js$/,
-          loader: 'babel',
+          use: 'babel-loader',
         },
         {
           test: /\.js$/,
-          loader: require.resolve('../src/loader'),
+          use: [
+            {
+              loader: require.resolve('../src/loader'),
+              options: { tagName: 'less' },
+            },
+          ],
         },
       ],
     },
