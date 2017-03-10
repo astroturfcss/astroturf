@@ -43,7 +43,9 @@ const LOADER_PLUGIN = Symbol('loader added VM plugin');
 module.exports = function loader(content) {
   if (this.cacheable) this.cacheable();
 
-  const { tagName, extension = '.css' } = loaderUtils.parseQuery(this.query);
+
+  const { tagName, extension = '.css' } = loaderUtils.getOptions(this) || {};
+  
   const styles = collectStyles(content, tagName);
 
   if (!styles.length) return content;
