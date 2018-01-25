@@ -3,7 +3,6 @@ import MemoryFileSystem from 'memory-fs';
 
 import proxyFileSystem from './proxyFileSystem';
 
-
 class VirtualModulePlugin {
   /**
    * Apply an instance of the plugin to compilation.
@@ -23,7 +22,7 @@ class VirtualModulePlugin {
     this.fs = new MemoryFileSystem();
 
     if (files) {
-      Object.keys(files).forEach((key) => {
+      Object.keys(files).forEach(key => {
         this.addFile(key, files[key]);
       });
     }
@@ -32,7 +31,7 @@ class VirtualModulePlugin {
   addFile = (virtualPath, content) => {
     this.fs.mkdirpSync(path.dirname(virtualPath));
     this.fs.writeFileSync(virtualPath, content);
-  }
+  };
 
   augmentCompilerFileSystem(compiler) {
     if (this.augmented === true) {
@@ -60,8 +59,8 @@ class VirtualModulePlugin {
 
     // Augment the loader context so that loaders can neatly
     // extract source strings to virtual files.
-    compiler.plugin('compilation', (compilation) => {
-      compilation.plugin('normal-module-loader', (loaderContext) => {
+    compiler.plugin('compilation', compilation => {
+      compilation.plugin('normal-module-loader', loaderContext => {
         loaderContext.emitVirtualFile = this.addFile;
       });
     });

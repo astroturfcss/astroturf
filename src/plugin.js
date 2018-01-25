@@ -7,7 +7,8 @@ import visitor from './visitor';
 let idx = 0;
 function createFilename({ extension = '.css' }, hostFile) {
   const basepath = join(
-    dirname(hostFile), basename(hostFile, extname(hostFile))
+    dirname(hostFile),
+    basename(hostFile, extname(hostFile)),
   );
   return `${basepath}__${idx++}_extracted_style${extension}`;
 }

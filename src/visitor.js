@@ -1,12 +1,10 @@
 import { relative, dirname } from 'path';
-import * as t from 'babel-types';
-import template from 'babel-template';
+import * as t from '@babel/types';
+import template from '@babel/template';
 
 const buildImport = template('require(FILENAME);');
 
-export default function cssLiteralVisitor(
-  styles = [], getFilename
-) {
+export default function cssLiteralVisitor(styles = [], getFilename) {
   return {
     TaggedTemplateExpression(path, { opts, file }) {
       const { tagName = 'css' } = opts;
@@ -17,7 +15,7 @@ export default function cssLiteralVisitor(
       }
 
       const parseError = path.buildCodeFrameError(
-        'Could not evaluate css. inline css must be statically analyzable'
+        'Could not evaluate css. inline css must be statically analyzable',
       );
 
       const { start, end } = node;
@@ -44,7 +42,7 @@ export default function cssLiteralVisitor(
         }
 
         path.replaceWith(
-          buildImport({ FILENAME: t.StringLiteral(filename) }) // eslint-disable-line new-cap
+          buildImport({ FILENAME: t.StringLiteral(filename) }), // eslint-disable-line new-cap
         );
       }
 
