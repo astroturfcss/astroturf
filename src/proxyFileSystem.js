@@ -1,9 +1,14 @@
 const uniq = require('lodash/uniq');
 
-const withSyncMethod = (methods, name) => ([...methods, name, `${name}Sync`]);
+const withSyncMethod = (methods, name) => [...methods, name, `${name}Sync`];
 
 const TO_PROXY = [
-  'exists', 'readFile', 'writeFile', 'stat', 'unlink', 'readlink',
+  'exists',
+  'readFile',
+  'writeFile',
+  'stat',
+  'unlink',
+  'readlink',
 ]
   .reduce(withSyncMethod, [])
   .concat(['createReadStream', 'createWriteStream']);
@@ -17,7 +22,7 @@ export default function proxyFileSystem(realFs, virtualFs) {
   const fs = Object.create(proto);
   const proxiedMethods = { __isProxiedFileSystem: true };
 
-  TO_PROXY.forEach((method) => {
+  TO_PROXY.forEach(method => {
     proxiedMethods[method] = function proxy(path, ...args) {
       if (!virtualFs.existsSync(path)) {
         return realFs[method](path, ...args);
@@ -26,7 +31,8 @@ export default function proxyFileSystem(realFs, virtualFs) {
       if (!virtualFs[method]) {
         const err = new Error(
           `[VirtualModulePlugin] unsupport method: \`${method}\`` +
-          ` on virtual file: \`${path}\`.`);
+            ` on virtual file: \`${path}\`.`,
+        );
 
         if (method.match(/Sync$/)) throw err;
         else return args.pop()(err);
@@ -37,12 +43,10 @@ export default function proxyFileSystem(realFs, virtualFs) {
 
   proxiedMethods.readdirSync = function readdirSync(dirPath) {
     const virtualFiles = virtualFs.existsSync(dirPath)
-      ? virtualFs.readdirSync(dirPath) : [];
+      ? virtualFs.readdirSync(dirPath)
+      : [];
 
-    return uniq([
-      ...realFs.readdirSync(dirPath),
-      ...virtualFiles,
-    ]);
+    return uniq([...realFs.readdirSync(dirPath), ...virtualFiles]);
   };
 
   proxiedMethods.readdir = function readdir(dirPath, cb) {
@@ -50,7 +54,8 @@ export default function proxyFileSystem(realFs, virtualFs) {
       if (err) return cb(err);
 
       const virtualFiles = virtualFs.existsSync(dirPath)
-        ? virtualFs.readdirSync(dirPath) : [];
+        ? virtualFs.readdirSync(dirPath)
+        : [];
 
       return cb(null, uniq([...realFiles, ...virtualFiles]));
     });

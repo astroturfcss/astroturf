@@ -1,9 +1,25 @@
-
-extends: "4catalyzer"
-globals:
-  css: false
-rules:
-  no-param-reassign: off
-  import/no-extraneous-dependencies:
-    - error
-    - devDependencies: true
+{
+  "extends": ["4catalyzer", "prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "no-param-reassign": "off",
+    "prettier/prettier": "error"
+  },
+  "overrides": [
+    {
+      "files": ["test/**"],
+      "globals": {
+        "css": false,
+        "less": false
+      },
+      "rules": {
+        "global-require": "off",
+        "no-console": "off",
+        "import/no-extraneous-dependencies": [
+          "error",
+          { "devDependencies": true }
+        ]
+      }
+    }
+  ]
+}

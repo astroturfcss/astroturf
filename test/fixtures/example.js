@@ -1,4 +1,3 @@
-
 const SIZE = 75;
 
 const styles = less`
@@ -18,5 +17,5 @@ const styles = less`
 export default function Component() {
   const name = styles.foo;
 
-  return <div className={name} width={SIZE}/>;
+  return <div className={name} width={SIZE} />;
 }

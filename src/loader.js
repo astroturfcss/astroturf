@@ -22,9 +22,8 @@ function replaceStyleTemplates(src, styles) {
   let offset = 0;
 
   function splice(str, start, end, replace) {
-    const result = (
-      str.slice(0, start + offset) + replace + str.slice(end + offset)
-    );
+    const result =
+      str.slice(0, start + offset) + replace + str.slice(end + offset);
 
     offset += replace.length - (end - start);
     return result;
@@ -39,28 +38,26 @@ function replaceStyleTemplates(src, styles) {
 
 const LOADER_PLUGIN = Symbol('loader added VM plugin');
 
-
 module.exports = function loader(content) {
   if (this.cacheable) this.cacheable();
 
-
   const { tagName, extension = '.css' } = loaderUtils.getOptions(this) || {};
-  
+
   const styles = collectStyles(content, tagName);
 
   if (!styles.length) return content;
 
   const basepath = join(
     dirname(this.resource),
-    basename(this.resource, extname(this.resource))
+    basename(this.resource, extname(this.resource)),
   );
 
   const compilation = this._compilation; // eslint-disable-line no-underscore-dangle
   let plugin = compilation[LOADER_PLUGIN];
 
   if (!plugin) {
-    plugin = compilation[LOADER_PLUGIN] =
-      VirtualModulePlugin.bootstrap(compilation);
+    plugin = VirtualModulePlugin.bootstrap(compilation);
+    compilation[LOADER_PLUGIN] = plugin;
   }
 
   styles.forEach((style, idx) => {
