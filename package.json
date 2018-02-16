@@ -66,6 +66,7 @@
     "webpack": "^3.10.0"
   },
   "dependencies": {
+    "@babel/code-frame": "^7.0.0-beta.40",
     "@babel/generator": "^7.0.0-beta.38",
     "@babel/template": "^7.0.0-beta.38",
     "@babel/traverse": "^7.0.0-beta.38",
