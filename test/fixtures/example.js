@@ -14,6 +14,7 @@ const styles = less`
   }
 `;
 
+
 export default function Component() {
   const name = styles.foo;
 

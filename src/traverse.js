@@ -42,7 +42,7 @@ export default function traverse(source, visitors, opts) {
   // https://github.com/babel/babel/issues/4640 (closed but reverted)
   const hub = new Hub({
     buildCodeFrameError(node, message) {
-      let msg = `[css-literal-loader] ${message}`;
+      let msg = message;
       // eslint-disable-next-line no-underscore-dangle
       const loc = node && (node.loc || node._loc);
       if (loc) {
@@ -61,12 +61,5 @@ export default function traverse(source, visitors, opts) {
     key: 'program',
   });
 
-  try {
-    return _traverse(ast, visitors, path.setContext().scope, { opts });
-  } catch (err) {
-    if (!err.message || !err.message.includes('[css-literal-loader]')) {
-      err.message += `[css-literal-loader] ${err.message || ''}`;
-    }
-    throw err;
-  }
+  return _traverse(ast, visitors, path.setContext().scope, { opts });
 }
