@@ -1,41 +1,58 @@
 import { parse } from 'babylon';
+import { codeFrameColumns } from '@babel/code-frame';
 import _traverse, { Hub, NodePath } from '@babel/traverse';
-
-function buildCodeFrameError(node, message, Error) {
-  // eslint-disable-next-line no-underscore-dangle
-  const loc = node && (node.loc || node._loc);
-  if (loc) {
-    return new Error(`${message} (${loc.start.line}:${loc.start.column})`);
-  }
-  return new Error(message);
-}
 
 function parseSource(src) {
   return parse(src, {
-    sourceType: 'module',
+    allowImportExportEverywhere: true,
+    allowReturnOutsideFunction: true,
+    allowSuperOutsideMethod: true,
+    sourceType: 'unambigious',
+    sourceFilename: true,
     plugins: [
-      'asyncFunctions',
       'jsx',
       'flow',
-      'classConstructorCall',
       'doExpressions',
-      'trailingFunctionCommas',
       'objectRestSpread',
       'decorators',
       'classProperties',
-      'exportExtensions',
-      'exponentiationOperator',
+      'classPrivateProperties',
+      'classPrivateMethods',
+      'exportDefaultFrom',
+      'exportNamespaceFrom',
       'asyncGenerators',
       'functionBind',
       'functionSent',
+      'dynamicImport',
+      'numericSeparator',
+      'optionalChaining',
+      'importMeta',
+      'bigInt',
+      'optionalCatchBinding',
+      'throwExpressions',
+      'pipelineOperator',
+      'nullishCoalescingOperator',
     ],
   });
 }
 
 export default function traverse(source, visitors, opts) {
   const ast = parseSource(source);
-  // https://github.com/babel/babel/issues/4640
-  const hub = new Hub({ buildCodeFrameError });
+
+  // https://github.com/babel/babel/issues/4640 (closed but reverted)
+  const hub = new Hub({
+    buildCodeFrameError(node, message) {
+      let msg = message;
+      // eslint-disable-next-line no-underscore-dangle
+      const loc = node && (node.loc || node._loc);
+      if (loc) {
+        msg = `${msg} (${loc.start.line}:${loc.start.column})\n`;
+        msg += codeFrameColumns(source, loc);
+      }
+      return new Error(msg);
+    },
+  });
+
   const path = NodePath.get({
     hub,
     parentPath: null,

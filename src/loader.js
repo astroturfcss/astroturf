@@ -5,6 +5,25 @@ import traverse from './traverse';
 import visitor from './visitor';
 import VirtualModulePlugin from './VirtualModulePlugin';
 
+// can'ts use class syntax b/c babel doesn't transpile it correctly for Error
+function CssLiteralLoaderError(error) {
+  Error.call(this);
+  this.name = 'CssLiteralLoaderError';
+
+  this.message = error.message;
+  if (error.codeFrame) this.message += `\n\n ${error.codeFrame} \n`;
+
+  this.error = error;
+  try {
+    this.stack = error.stack.replace(/^(.*?):/, `${this.name}:`);
+  } catch (err) {
+    Error.captureStackTrace(this, CssLiteralLoaderError);
+  }
+}
+
+CssLiteralLoaderError.prototype = Object.create(Error.prototype);
+CssLiteralLoaderError.prototype.constructor = CssLiteralLoaderError;
+
 function collectStyles(src, tagName = 'css') {
   const styles = [];
 
@@ -13,8 +32,11 @@ function collectStyles(src, tagName = 'css') {
     return styles;
   }
 
-  traverse(src, visitor(styles), { tagName });
-
+  try {
+    traverse(src, visitor(styles), { tagName });
+  } catch (err) {
+    throw new CssLiteralLoaderError(err);
+  }
   return styles;
 }
 
