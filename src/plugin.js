@@ -34,7 +34,7 @@ export default function plugin() {
 
       file.metadata['css-literal-loader'] = { styles };
 
-      if (opts.writeFiles) {
+      if (opts.writeFiles !== false) {
         styles.forEach(({ path, value }) => {
           writeFileSync(path, stripIndent([value]));
         });
@@ -52,7 +52,7 @@ export default function plugin() {
         }
 
         const parseError = path.buildCodeFrameError(
-          'Could not evaluate css. inline css must be statically analyzable',
+          'Could not evaluate css. Inline css must be statically analyzable',
         );
 
         const { start, end } = node;
