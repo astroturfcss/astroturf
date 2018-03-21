@@ -3,6 +3,10 @@ import MemoryFileSystem from 'memory-fs';
 
 import proxyFileSystem from './proxyFileSystem';
 
+const PLUGIN = 'css-literal-loader';
+
+export const AUGMENTED = Symbol('VM plugin');
+
 class VirtualModulePlugin {
   /**
    * Apply an instance of the plugin to compilation.
@@ -14,6 +18,15 @@ class VirtualModulePlugin {
 
     plugin.augmentCompilerFileSystem(compiler);
     compilation.inputFileSystem = compiler.inputFileSystem;
+
+    // v3
+    if (!compiler.resolverFactory) return plugin;
+
+    // this is suuuch a hack
+    if (compiler.resolverFactory.cache1)
+      compiler.resolverFactory.cache1 = new WeakMap();
+    if (compiler.resolverFactory.cache1)
+      compiler.resolverFactory.cache2.clear();
 
     return plugin;
   }
@@ -41,29 +54,38 @@ class VirtualModulePlugin {
     const fs = proxyFileSystem(compiler.inputFileSystem, this.fs);
 
     compiler.inputFileSystem = fs;
-    compiler.resolvers.normal.fileSystem = fs;
-    compiler.resolvers.context.fileSystem = fs;
-    compiler.resolvers.loader.fileSystem = fs;
+
+    if (!compiler.hooks) {
+      compiler.resolvers.normal.fileSystem = fs;
+      compiler.resolvers.context.fileSystem = fs;
+      compiler.resolvers.loader.fileSystem = fs;
+    }
+
     this.augmented = true;
   }
 
   apply(compiler) {
+    const augmentOnCompile = () => {
+      this.augmentCompilerFileSystem(compiler);
+    };
+    const augmentLoaderCOntext = loaderContext => {
+      loaderContext.emitVirtualFile = this.addFile;
+    };
+
     // if the fs is already present then immediately augment it
-    if (compiler.inputFileSystem) {
-      this.augmentCompilerFileSystem(compiler);
-    }
+    if (compiler.inputFileSystem) this.augmentCompilerFileSystem(compiler);
 
-    compiler.plugin('compile', () => {
-      this.augmentCompilerFileSystem(compiler);
-    });
-
-    // Augment the loader context so that loaders can neatly
-    // extract source strings to virtual files.
-    compiler.plugin('compilation', compilation => {
-      compilation.plugin('normal-module-loader', loaderContext => {
-        loaderContext.emitVirtualFile = this.addFile;
+    if (compiler.hooks) {
+      compiler.hooks.compile.tap(PLUGIN, augmentOnCompile);
+      compiler.hooks.compilation.tap(PLUGIN, compilation => {
+        compilation.hooks.normalModuleLoader.tap(PLUGIN, augmentLoaderCOntext);
       });
-    });
+    } else {
+      compiler.plugin('compile', augmentOnCompile);
+      compiler.plugin('compilation', compilation => {
+        compilation.plugin('normal-module-loader', augmentLoaderCOntext);
+      });
+    }
   }
 }
 

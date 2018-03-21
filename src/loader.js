@@ -74,17 +74,23 @@ module.exports = function loader(content) {
     basename(this.resource, extname(this.resource)),
   );
 
-  const compilation = this._compilation; // eslint-disable-line no-underscore-dangle
-  let plugin = compilation[LOADER_PLUGIN];
+  let { emitVirtualFile } = this;
 
-  if (!plugin) {
-    plugin = VirtualModulePlugin.bootstrap(compilation);
-    compilation[LOADER_PLUGIN] = plugin;
+  // The plugin isn't loaded
+  if (!emitVirtualFile) {
+    const compilation = this._compilation; // eslint-disable-line no-underscore-dangle
+    let plugin = compilation[LOADER_PLUGIN];
+
+    if (!plugin) {
+      plugin = VirtualModulePlugin.bootstrap(compilation);
+      compilation[LOADER_PLUGIN] = plugin;
+    }
+    emitVirtualFile = plugin.addFile;
   }
 
   styles.forEach((style, idx) => {
     style.path = `${basepath}__css_literal_loader_${idx++}${extension}`;
-    plugin.addFile(style.path, style.value);
+    emitVirtualFile(style.path, style.value);
   });
 
   return replaceStyleTemplates(content, styles);

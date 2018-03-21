@@ -1,11 +1,13 @@
 import path from 'path';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+
+import VmPlugin from '../src/VirtualModulePlugin';
 
 // eslint-disable-next-line max-len
 const cssLoader =
   'css-loader?modules&camelCase&importLoaders=1&localIdentName="[name]--[local]--[hash:base64:5]"';
 
-export default function getConfig(entry, extract = true) {
+export default function getConfig() {
   return {
     entry: './test/fixtures/example',
     output: {
@@ -17,11 +19,7 @@ export default function getConfig(entry, extract = true) {
       rules: [
         {
           test: /\.css$/,
-          use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: cssLoader,
-            disable: !extract,
-          }),
+          use: [MiniCssExtractPlugin.loader, cssLoader],
         },
         {
           test: /\.js$/,
@@ -38,6 +36,12 @@ export default function getConfig(entry, extract = true) {
         },
       ],
     },
-    plugins: [new ExtractTextPlugin('styles.css')],
+    mode: 'development',
+    plugins: [
+      new VmPlugin(),
+      new MiniCssExtractPlugin({
+        filename: 'styles.css',
+      }),
+    ],
   };
 }

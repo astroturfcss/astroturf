@@ -11,70 +11,67 @@
     "build": "rimraf lib/* && babel src --out-dir lib"
   },
   "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ]
+    "*.js": ["eslint --fix", "git add"]
   },
   "prettier": {
     "printWidth": 79,
     "singleQuote": true,
     "trailingComma": "all"
   },
-  "eslintIgnore": [
-    "test/*/**"
-  ],
+  "eslintIgnore": ["test/*/**"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/4Catalyzer/css-literal-loader.git"
   },
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
   "author": "4Catalyzer",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jquense/inline-module-loader/issues"
   },
   "homepage": "https://github.com/jquense/inline-module-loader#readme",
+  "peerDependencies": {
+    "webpack": ">=2"
+  },
   "devDependencies": {
-    "@4c/babel-preset-4catalyzer": "^1.0.0",
-    "@babel/cli": "^7.0.0-beta.38",
-    "@babel/core": "^7.0.0-beta.38",
-    "@babel/node": "^7.0.0-beta.38",
+    "@4c/babel-preset-4catalyzer": "^1.2.1",
+    "@babel/cli": "^7.0.0-beta.42",
+    "@babel/core": "^7.0.0-beta.42",
+    "@babel/node": "^7.0.0-beta.42",
     "babel-core": "^7.0.0-0",
-    "babel-eslint": "^8.2.1",
+    "babel-eslint": "^8.2.2",
     "babel-jest": "^22.1.0",
-    "babel-loader": "^7.1.2",
-    "css-loader": "^0.28.9",
-    "eslint": "^4.16.0",
-    "eslint-config-4catalyzer": "^0.3.3",
+    "babel-loader": "^7.1.4",
+    "css-loader": "^0.28.11",
+    "eslint": "^4.19.0",
+    "eslint-config-4catalyzer": "^0.4.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-babel": "^4.1.2",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jsx-a11y": "^5.1.0",
-    "eslint-plugin-prettier": "^2.5.0",
-    "eslint-plugin-react": "^7.5.1",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.7.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "husky": "^0.14.3",
-    "jest": "^22.1.4",
-    "lint-staged": "^6.0.1",
-    "prettier": "^1.10.2",
+    "jest": "^22.4.2",
+    "lint-staged": "^7.0.0",
+    "mini-css-extract-plugin": "^0.2.0",
+    "prettier": "^1.11.1",
     "react": "^16.2.0",
     "rimraf": "^2.6.2",
-    "style-loader": "^0.19.1",
-    "webpack": "^3.10.0"
+    "style-loader": "^0.20.3",
+    "webpack": "^4.2.0"
   },
   "dependencies": {
-    "@babel/code-frame": "^7.0.0-beta.40",
-    "@babel/generator": "^7.0.0-beta.38",
-    "@babel/template": "^7.0.0-beta.38",
-    "@babel/traverse": "^7.0.0-beta.38",
-    "@babel/types": "^7.0.0-beta.38",
+    "@babel/code-frame": "^7.0.0-beta.42",
+    "@babel/generator": "^7.0.0-beta.42",
+    "@babel/template": "^7.0.0-beta.42",
+    "@babel/traverse": "^7.0.0-beta.42",
+    "@babel/types": "^7.0.0-beta.42",
     "babylon": "^7.0.0-beta.38",
     "common-tags": "^1.7.2",
     "loader-utils": "^1.1.0",
-    "lodash": "^4.17.2",
+    "lodash": "^4.17.5",
     "memory-fs": "^0.4.1"
   }
 }

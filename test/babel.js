@@ -1,7 +1,7 @@
 const { transform } = require('@babel/core');
 const { readFileSync } = require('fs');
 
-const code = transform(
+const { code } = transform(
   readFileSync(`${__dirname}/fixtures/example.js`, 'utf8'),
   {
     filename: `${__dirname}/fixtures/example.js`,
@@ -9,6 +9,6 @@ const code = transform(
     // eslint-ignore-next-line
     plugins: [require('../src/plugin.js')],
   },
-).code;
+);
 
 console.log(code);
