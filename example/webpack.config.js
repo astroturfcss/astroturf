@@ -1,14 +1,22 @@
 const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlPlugin = require('html-webpack-plugin');
 
-// eslint-disable-next-line max-len
-const cssLoader =
-  'css-loader?modules&camelCase&importLoaders=1&localIdentName="[name]--[local]--[hash:base64:5]"';
+const { rules, plugins } = require('webpack-atoms').createAtoms({
+  env: 'development',
+  useMiniExtract: true,
+});
+
+const inlineRule = rules.js();
+inlineRule.use = [
+  ...inlineRule.use,
+  {
+    loader: require.resolve('../lib/loader'),
+    options: { extension: '.module.scss' },
+  },
+];
 
 module.exports = {
-  entry: './example/client.js',
-  devtool: false,
+  entry: './src/client.js',
+  devtool: 'cheap-module-source-map',
   output: {
     path: path.join(__dirname, 'build'),
     filename: '[name].js',
@@ -16,22 +24,10 @@ module.exports = {
 
   module: {
     rules: [
+      inlineRule,
+      rules.css.modules(),
       {
-        test: /\.css$/,
-        use: ['style-loader', cssLoader],
-      },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: 'babel-loader',
-      },
-      {
-        test: /\.js$/,
-        use: [
-          {
-            loader: require.resolve('../lib/loader'),
-          },
-        ],
+        oneOf: [rules.sass.external(), rules.sass.modules()],
       },
     ],
   },
@@ -41,10 +37,5 @@ module.exports = {
       'css-literal-loader': path.resolve(__dirname, '../'),
     },
   },
-  plugins: [
-    new HtmlPlugin({ inject: true }),
-    // new MiniCssExtractPlugin({
-    //   filename: 'styles.css',
-    // }),
-  ],
+  plugins: [plugins.html()],
 };

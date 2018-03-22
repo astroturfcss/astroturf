@@ -17,3 +17,15 @@ const FancyBox = styled('div')`
     color: palevioletred;
   `}
 `;
+
+const FancyHeader = styled('h2')`
+  color: red;
+  width: ${SIZE}px;
+
+  ${props =>
+    props.primary &&
+    css`
+      background: white;
+      color: palevioletred;
+    `};
+`;

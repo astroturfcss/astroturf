@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint .",
     "precommit": "lint-staged",
-    "test": "rimraf test/build/* && babel-node ./test/babel.js",
+    "test": "jest",
+    "tdd": "jest --watch",
     "prepublishOnly": "npm run build",
     "build":
       "rimraf lib/* && babel src --out-dir lib && node tools/compile-regex.js",
@@ -37,6 +38,9 @@
     "react": "^16.2.0",
     "webpack": ">=2"
   },
+  "jest": {
+    "roots": ["<rootDir>/test"]
+  },
   "devDependencies": {
     "@4c/babel-preset-4catalyzer": "^1.2.1",
     "@babel/cli": "^7.0.0-beta.42",
@@ -50,6 +54,7 @@
     "css-loader": "^0.28.11",
     "eslint": "^4.19.0",
     "eslint-config-4catalyzer": "^0.4.1",
+    "eslint-config-4catalyzer-react": "^0.4.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-babel": "^4.1.2",
     "eslint-plugin-import": "^2.9.0",
@@ -79,7 +84,6 @@
     "fs-extra": "^5.0.0",
     "loader-utils": "^1.1.0",
     "lodash": "^4.17.5",
-    "memory-fs": "^0.4.1",
-    "stylis": "^3.5.0"
+    "memory-fs": "^0.4.1"
   }
 }

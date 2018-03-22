@@ -57,10 +57,10 @@ function replaceStyleTemplates(src, styles) {
   }
 
   styles.forEach(
-    ({ start, end, filename, tagName, displayName, interpolations }) => {
+    ({ start, end, filename, tagName, identifier, interpolations }) => {
       let replace = `require('${filename}')`;
       if (tagName)
-        replace = `styled(${tagName}, ${displayName}, ${replace}, ${interpolations})`;
+        replace = `styled(${tagName}, "${identifier}", ${replace}, ${interpolations})`;
 
       src = splice(src, start, end, replace);
     },
@@ -75,7 +75,7 @@ module.exports = function loader(content) {
   if (this.cacheable) this.cacheable();
 
   const options = loaderUtils.getOptions(this) || {};
-  const { tagName, extension = '.css' } = options;
+  const { tagName = 'css', extension = '.css' } = options;
 
   const { styles } = collectStyles(content, this.resourcePath, {
     tagName,
@@ -100,7 +100,7 @@ module.exports = function loader(content) {
 
   styles.forEach(style => {
     // style.path = `${basepath}__css_literal_loader_${idx++}${extension}`;
-    console.log(style);
+
     emitVirtualFile(style.path, style.value);
   });
 

@@ -8,9 +8,8 @@
   "overrides": [
     {
       "files": ["test/**"],
-      "globals": {
-        "css": false,
-        "less": false
+      "env": {
+        "jest": true
       },
       "rules": {
         "global-require": "off",
