@@ -1,4 +1,3 @@
-import { basename } from 'path';
 import loaderUtils from 'loader-utils';
 
 import traverse from './traverse';
@@ -25,7 +24,11 @@ CssLiteralLoaderError.prototype.constructor = CssLiteralLoaderError;
 
 function collectStyles(src, filename, opts) {
   // quick regex as an optimization to avoid parsing each file
-  if (!src.match(new RegExp(`${opts.tagName}\`([\\s\\S]*?)\``, 'gmi'))) {
+  if (
+    !src.match(
+      new RegExp(`(${opts.tagName}|styled\\(.+\\))\`([\\s\\S]*?)\``, 'gmi'),
+    )
+  ) {
     return { styles: [] };
   }
 
@@ -34,6 +37,7 @@ function collectStyles(src, filename, opts) {
     const { metadata } = traverse(src, filename, {
       ...opts,
       writeFiles: false,
+      generateInterpolations: true,
     });
     return { styles: metadata['css-literal-loader'].styles || [] };
   } catch (err) {
@@ -52,9 +56,15 @@ function replaceStyleTemplates(src, styles) {
     return result;
   }
 
-  styles.forEach(({ start, end, path }) => {
-    src = splice(src, start, end, `require('./${basename(path)}')`);
-  });
+  styles.forEach(
+    ({ start, end, filename, tagName, displayName, interpolations }) => {
+      let replace = `require('${filename}')`;
+      if (tagName)
+        replace = `styled(${tagName}, ${displayName}, ${replace}, ${interpolations})`;
+
+      src = splice(src, start, end, replace);
+    },
+  );
 
   return src;
 }
@@ -90,6 +100,7 @@ module.exports = function loader(content) {
 
   styles.forEach(style => {
     // style.path = `${basepath}__css_literal_loader_${idx++}${extension}`;
+    console.log(style);
     emitVirtualFile(style.path, style.value);
   });
 
