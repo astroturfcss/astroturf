@@ -179,11 +179,13 @@ export default function plugin() {
           path.get('tag.callee').referencesImport('css-literal-loader/styled')
         ) {
           path.replaceWith(buildStyledComponent(path, state));
+          path.addComment('leading', '#__PURE__');
         } else if (
           node.tag.name === tagName &&
           path.scope.hasGlobal(tagName)
         ) {
           path.replaceWith(buildStyleRequire(path, state));
+          path.addComment('leading', '#__PURE__');
         }
       },
     },
