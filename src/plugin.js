@@ -205,7 +205,7 @@ export default function plugin() {
 
     visitor: {
       TaggedTemplateExpression(path, state) {
-        const { tagName = 'css', allowGlobal } = state.opts;
+        const { tagName = 'css', allowGlobal = true } = state.opts;
         const { node } = path;
 
         if (

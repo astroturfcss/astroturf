@@ -35,7 +35,6 @@
   "homepage": "https://github.com/jquense/inline-module-loader#readme",
   "peerDependencies": {
     "@babel/core": "^7.0.0-beta.42",
-    "react": "^16.2.0",
     "webpack": ">=2"
   },
   "jest": {
@@ -44,13 +43,11 @@
   "devDependencies": {
     "@4c/babel-preset-4catalyzer": "^1.2.1",
     "@babel/cli": "^7.0.0-beta.42",
-    "@babel/core": "^7.0.0-beta.42",
     "@babel/node": "^7.0.0-beta.42",
     "babel-core": "^7.0.0-0",
     "babel-eslint": "^8.2.2",
     "babel-jest": "^22.1.0",
     "babel-loader": "^7.1.4",
-    "babel-plugin-codegen": "^1.2.1",
     "css-loader": "^0.28.11",
     "eslint": "^4.19.0",
     "eslint-config-4catalyzer": "^0.4.1",
@@ -76,6 +73,7 @@
     "webpack-dev-server": "^3.1.1"
   },
   "dependencies": {
+    "@babel/core": "^7.0.0-beta.42",
     "@babel/generator": "^7.0.0-beta.42",
     "@babel/template": "^7.0.0-beta.42",
     "@babel/types": "^7.0.0-beta.42",
