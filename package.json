@@ -11,32 +11,25 @@
     "build": "rimraf lib/* && babel src --out-dir lib"
   },
   "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ]
+    "*.js": ["eslint --fix", "git add"]
   },
   "prettier": {
     "printWidth": 79,
     "singleQuote": true,
     "trailingComma": "all"
   },
-  "eslintIgnore": [
-    "test/*/**"
-  ],
+  "eslintIgnore": ["test/*/**"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/4Catalyzer/css-literal-loader.git"
   },
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
   "author": "4Catalyzer",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jquense/inline-module-loader/issues"
+    "url": "https://github.com/4Catalyzer/css-literal-loader/issues"
   },
-  "homepage": "https://github.com/jquense/inline-module-loader#readme",
+  "homepage": "https://github.com/4Catalyzer/css-literal-loader#readme",
   "peerDependencies": {
     "webpack": ">=2",
     "@babel/core": "^7.0.0-beta.42"
