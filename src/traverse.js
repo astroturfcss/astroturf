@@ -1,4 +1,3 @@
-// import { codeFrameColumns } from '@babel/code-frame';
 import { transformSync } from '@babel/core';
 
 import plugin from './plugin';

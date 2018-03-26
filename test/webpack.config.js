@@ -7,9 +7,9 @@ import VmPlugin from '../src/VirtualModulePlugin';
 const cssLoader =
   'css-loader?modules&camelCase&importLoaders=1&localIdentName="[name]--[local]--[hash:base64:5]"';
 
-export default function getConfig() {
+export default function getConfig(fixture) {
   return {
-    entry: './test/fixtures/example',
+    entry: { [fixture]: `./test/fixtures/${fixture}.js` },
     devtool: false,
     output: {
       path: path.join(__dirname, 'build'),
@@ -38,6 +38,11 @@ export default function getConfig() {
       ],
     },
     mode: 'development',
+    resolve: {
+      alias: {
+        'css-literal-loader': path.resolve(__dirname, '../'),
+      },
+    },
     plugins: [
       new VmPlugin(),
       new MiniCssExtractPlugin({

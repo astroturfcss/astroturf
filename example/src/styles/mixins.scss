@@ -1,0 +1,26 @@
+@mixin button-variant($color, $bg-color, $active-color) {
+  color: $color;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.5);
+  background-color: $bg-color;
+  border-color: $bg-color;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:not([disabled]) {
+    &:hover,
+    &:focus {
+      color: $color;
+      border-color: $active-color;
+      background-color: $active-color;
+    }
+
+    &:active,
+    &:global(.active) {
+      color: $color;
+      border-color: $active-color;
+      background-color: darken($active-color, 7%);
+    }
+  }
+}
