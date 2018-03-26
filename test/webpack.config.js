@@ -10,6 +10,7 @@ const cssLoader =
 export default function getConfig() {
   return {
     entry: './test/fixtures/example',
+    devtool: false,
     output: {
       path: path.join(__dirname, 'build'),
       filename: '[name].js',

@@ -1,8 +1,7 @@
-import { join, dirname, extname, basename } from 'path';
+import { basename } from 'path';
 import loaderUtils from 'loader-utils';
 
 import traverse from './traverse';
-import visitor from './visitor';
 import VirtualModulePlugin from './VirtualModulePlugin';
 
 // can'ts use class syntax b/c babel doesn't transpile it correctly for Error
@@ -24,20 +23,22 @@ function CssLiteralLoaderError(error) {
 CssLiteralLoaderError.prototype = Object.create(Error.prototype);
 CssLiteralLoaderError.prototype.constructor = CssLiteralLoaderError;
 
-function collectStyles(src, tagName = 'css') {
-  const styles = [];
-
+function collectStyles(src, filename, opts) {
   // quick regex as an optimization to avoid parsing each file
-  if (!src.match(new RegExp(`${tagName}\`([\\s\\S]*?)\``, 'gmi'))) {
-    return styles;
+  if (!src.match(new RegExp(`${opts.tagName}\`([\\s\\S]*?)\``, 'gmi'))) {
+    return { styles: [] };
   }
 
+  // maybe eventually return the ast directly if babel-loader supports it
   try {
-    traverse(src, visitor(styles), { tagName });
+    const { metadata } = traverse(src, filename, {
+      ...opts,
+      writeFiles: false,
+    });
+    return { styles: metadata['css-literal-loader'].styles || [] };
   } catch (err) {
     throw new CssLiteralLoaderError(err);
   }
-  return styles;
 }
 
 function replaceStyleTemplates(src, styles) {
@@ -63,16 +64,15 @@ const LOADER_PLUGIN = Symbol('loader added VM plugin');
 module.exports = function loader(content) {
   if (this.cacheable) this.cacheable();
 
-  const { tagName, extension = '.css' } = loaderUtils.getOptions(this) || {};
+  const options = loaderUtils.getOptions(this) || {};
+  const { tagName, extension = '.css' } = options;
 
-  const styles = collectStyles(content, tagName);
+  const { styles } = collectStyles(content, this.resourcePath, {
+    tagName,
+    extension,
+  });
 
   if (!styles.length) return content;
-
-  const basepath = join(
-    dirname(this.resource),
-    basename(this.resource, extname(this.resource)),
-  );
 
   let { emitVirtualFile } = this;
 
@@ -88,8 +88,8 @@ module.exports = function loader(content) {
     emitVirtualFile = plugin.addFile;
   }
 
-  styles.forEach((style, idx) => {
-    style.path = `${basepath}__css_literal_loader_${idx++}${extension}`;
+  styles.forEach(style => {
+    // style.path = `${basepath}__css_literal_loader_${idx++}${extension}`;
     emitVirtualFile(style.path, style.value);
   });
 

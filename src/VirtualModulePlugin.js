@@ -5,8 +5,6 @@ import proxyFileSystem from './proxyFileSystem';
 
 const PLUGIN = 'css-literal-loader';
 
-export const AUGMENTED = Symbol('VM plugin');
-
 class VirtualModulePlugin {
   /**
    * Apply an instance of the plugin to compilation.
