@@ -1,6 +1,6 @@
 {
   "name": "css-literal-loader",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Extract and process inline CSS literals in JavaScript files",
   "main": "lib/loader.js",
   "scripts": {
@@ -9,8 +9,7 @@
     "test": "jest",
     "tdd": "jest --watch",
     "prepublishOnly": "npm run build",
-    "build":
-      "rimraf lib/* && babel src --out-dir lib && node tools/compile-regex.js",
+    "build": "rimraf lib/* && babel src --out-dir lib && node tools/compile-regex.js",
     "start": "webpack-dev-server --config ./example/webpack.config.js"
   },
   "lint-staged": {
@@ -31,7 +30,11 @@
     "type": "git",
     "url": "git+https://github.com/4Catalyzer/css-literal-loader.git"
   },
-  "files": ["lib", "styled.js", "babel.js"],
+  "files": [
+    "lib",
+    "styled.js",
+    "babel.js"
+  ],
   "author": "4Catalyzer",
   "license": "MIT",
   "bugs": {
@@ -43,7 +46,9 @@
     "webpack": ">=2"
   },
   "jest": {
-    "roots": ["<rootDir>/test"]
+    "roots": [
+      "<rootDir>/test"
+    ]
   },
   "devDependencies": {
     "@4c/babel-preset-4catalyzer": "^1.2.1",
