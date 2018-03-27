@@ -1,3 +1,5 @@
+import { css as less } from 'css-literal-loader/styled';
+
 const SIZE = 75;
 
 const styles = less`
@@ -13,10 +15,3 @@ const styles = less`
     font-style: italic;
   }
 `;
-
-
-export default function Component() {
-  const name = styles.foo;
-
-  return <div className={name} width={SIZE} />;
-}

@@ -1,0 +1,25 @@
+{
+  "name": "css-literal-loader-example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.42",
+    "@babel/core": "^7.0.0-beta.42",
+    "babel-core": "^7.0.0-bridge.0",
+    "mini-css-extract-plugin": "^0.2.0",
+
+    "webpack": "^4.2.0",
+    "webpack-atoms": "^6.0.5",
+    "webpack-cli": "^2.0.12",
+    "webpack-dev-server": "^3.1.1"
+  },
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  }
+}

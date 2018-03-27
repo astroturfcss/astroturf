@@ -1,1 +1,1 @@
-module.exports = require('./lib/plugin');
+module.exports = require('./lib/plugin'); // eslint-disable-line
