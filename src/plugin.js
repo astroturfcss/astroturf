@@ -65,9 +65,8 @@ function createFileName(hostFile, { extension = '.css' }, id) {
 function isTag(path, tagName, allowGlobal = false) {
   return (
     path.get('tag.name').node === tagName &&
-    (allowGlobal
-      ? path.scope.hasGlobal(tagName)
-      : path.get('tag').referencesImport('css-literal-loader/styled'))
+    (path.get('tag').referencesImport('css-literal-loader/styled') ||
+      (allowGlobal && path.scope.hasGlobal(tagName)))
   );
 }
 
@@ -207,7 +206,6 @@ export default function plugin() {
       TaggedTemplateExpression(path, state) {
         const { tagName = 'css', allowGlobal = true } = state.opts;
         const { node } = path;
-
         if (
           t.isCallExpression(node.tag) &&
           path.get('tag.callee').referencesImport('css-literal-loader/styled')

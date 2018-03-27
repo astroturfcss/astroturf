@@ -43,7 +43,9 @@ export function babelRunFixture(fixture) {
 
     it('js ', () => {
       expect(code).toMatchSnapshot(`Compiled JS`);
-      expect(styles.length).toBeGreaterThan(0);
+
+      if (options.TEST_SHOULD_FAIL) expect(styles.length).toEqual(0);
+      else expect(styles.length).toBeGreaterThan(0);
     });
 
     styles.forEach(s => {

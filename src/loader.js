@@ -75,12 +75,7 @@ module.exports = function loader(content) {
   if (this.cacheable) this.cacheable();
 
   const options = loaderUtils.getOptions(this) || {};
-  const { tagName = 'css', extension = '.css' } = options;
-
-  const { styles } = collectStyles(content, this.resourcePath, {
-    tagName,
-    extension,
-  });
+  const { styles } = collectStyles(content, this.resourcePath, options);
 
   if (!styles.length) return content;
 
@@ -99,8 +94,6 @@ module.exports = function loader(content) {
   }
 
   styles.forEach(style => {
-    // style.path = `${basepath}__css_literal_loader_${idx++}${extension}`;
-
     emitVirtualFile(style.path, style.value);
   });
 
