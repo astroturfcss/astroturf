@@ -75,7 +75,7 @@ const Button = styled('div', 'Button', require('./FileName-Button.css'), styles 
 ]
 ```
 
-Styles are still extracted to a seperate file, and any arrow function interpolations are turned into an array that's passed directly to the react `classNames()` library (with further `css` templates turned into styles references).
+Styles are still extracted to a seperate file, and any arrow function interpolations are turned into an array that's passed directly to the react `classNames()` library (with further `css` templates turned into styles references). At runtime `styled()` returns a React component with the static css classes applied. You can check out the ["runtime"](https://github.com/4Catalyzer/css-literal-loader/blob/master/src/runtime/styled.js#L14) it just creates a component: 
 
 There are a whole bucket of caveats of course, to keep the above statically extractable, and limit runtime code.
 
