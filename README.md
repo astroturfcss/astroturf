@@ -88,14 +88,14 @@ There are a whole bucket of caveats of course, to keep the above statically extr
 The goal of this API is not to mimic or reimplement the features of other css-in-js libraries, but to provide
 a more ergonomic way to write normal css/less/sass next to your javascript.
 
-What does that mean? css-in-js libraries are trying to _replace_ css preprocessors to some extent. This means they need to provide ways of doing variables, composition, mixins, imports etc. Usually they do this by leaning
-on JS language features where appropraite, and inventing some DSL where needed.
+What does that mean? css-in-js libraries are often a _replacement_ for css preprocessors, in that they provide ways of doing variables, composition, mixins, imports etc. Usually they accomplish this by leaning
+on JS language features where appropriate, and adding there own domain-specific language bits when needed.
 
-css-literal-loader **doesn't need to do any of that** because it's not trying to replace preprocessors but instead, make it nicer to use **existing** tooling in a Component based context. This means at a minimum we need to help you map styles to your component API (props), which the above does.
+css-literal-loader **doesn't try to do any of that** because it's not trying to replace preprocessors but rather, make  component-centric javascript work better with **existing** styling tooling. This means at a minimum it needs to scope styles to the component (handled by css-modules) and map those styles to your component's API (props), which is what the above API strives for.
 
-#### how do I do all those things then?
+#### Composition, variables, etc?
 
-Well that really depends on your preprocessor. css-modules as a base provides a great way to compose styles, and
+How you accomplish that is mostly up to your preprocessor. Leaverage Sass variables, Less mixins, postcss nesting polyfills, whatever. The css you'r writing is treated just like a normal style file so all the tooling your used to works here. For composition specifically around classes you can also use css-modules `composes` to compose styles, since
 css-literal-loader extracts styles to consistent names;
 
 ```js
@@ -114,11 +114,28 @@ const Title = styled('h3')`
 `;
 ```
 
-You can also not be afraid to mix and match real `css` files and inline ones. Use Less or Sass mixins and variables, etc.
+You can also don't have to define everything in a `.js` file. Where it makes sense just use normal css (or which tfile type) is appropriate.
+
+```scss
+// mixins.scss
+@mixin heavy() {
+  font-weight: 900;
+}
+```
+and then:
+```
+// Button.js
+const Title = styled('h3')`
+  @import './mixins.scss';
+  
+  @include heavy();
+  font-size: 12%;
+`;
+```
 
 ### With props
 
-It can also beuseful to create components with props already applied, like the example below. We recommend using recompose's `withProps` higher-order component to do this.
+It can also be useful to create components with props already applied, like the example below. We recommend using recompose's `withProps` higher-order component to do this.
 
 **[`withProps` documentation](https://github.com/acdlite/recompose/blob/master/docs/API.md#withprops)**
 
