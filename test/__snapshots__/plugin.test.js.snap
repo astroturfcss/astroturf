@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`css-literal-loader example js : Compiled JS 1`] = `
+exports[`Plugin example js : Compiled JS 1`] = `
 "import { css as less } from 'css-literal-loader/styled';
 const SIZE = 75;
 
@@ -9,7 +9,7 @@ const styles =
 require(\\"./example-styles.less\\");"
 `;
 
-exports[`css-literal-loader example styles: example-styles.less 1`] = `
+exports[`Plugin example styles: example-styles.less 1`] = `
 "
   .foo {
     color: red;
@@ -25,7 +25,7 @@ exports[`css-literal-loader example styles: example-styles.less 1`] = `
 "
 `;
 
-exports[`css-literal-loader hoist-import ButtonBase: hoist-import-ButtonBase.css 1`] = `
+exports[`Plugin hoist-import ButtonBase: hoist-import-ButtonBase.css 1`] = `
 "@import '~./styles/mixins.scss';
 .button-base {
 
@@ -39,14 +39,14 @@ exports[`css-literal-loader hoist-import ButtonBase: hoist-import-ButtonBase.css
 }"
 `;
 
-exports[`css-literal-loader hoist-import js : Compiled JS 1`] = `
+exports[`Plugin hoist-import js : Compiled JS 1`] = `
 "import { styled } from 'css-literal-loader/styled';
 const ButtonBase =
 /*#__PURE__*/
 styled('button', \\"ButtonBase\\", require(\\"./hoist-import-ButtonBase.css\\"), s => [s[\\"buttonBase\\"] || s[\\"button-base\\"]]);"
 `;
 
-exports[`css-literal-loader multiple-components FancyBox: multiple-components-FancyBox.css 1`] = `
+exports[`Plugin multiple-components FancyBox: multiple-components-FancyBox.css 1`] = `
 ".fancy-box {
 
   color: red;
@@ -68,7 +68,7 @@ exports[`css-literal-loader multiple-components FancyBox: multiple-components-Fa
 }"
 `;
 
-exports[`css-literal-loader multiple-components FancyHeader: multiple-components-FancyHeader.css 1`] = `
+exports[`Plugin multiple-components FancyHeader: multiple-components-FancyHeader.css 1`] = `
 ".fancy-header {
 
   color: red;
@@ -85,7 +85,7 @@ exports[`css-literal-loader multiple-components FancyHeader: multiple-components
 }"
 `;
 
-exports[`css-literal-loader multiple-components js : Compiled JS 1`] = `
+exports[`Plugin multiple-components js : Compiled JS 1`] = `
 "import { styled, css } from 'css-literal-loader/styled';
 const SIZE = 75; // prettier-ignore
 
@@ -97,7 +97,7 @@ const FancyHeader =
 styled('h2', \\"FancyHeader\\", require(\\"./multiple-components-FancyHeader.css\\"), s => [s[\\"fancyHeader\\"] || s[\\"fancy-header\\"], props => props.primary && (s[\\"fancyHeaderVariant1\\"] || s[\\"fancy-header-variant-1\\"])]);"
 `;
 
-exports[`css-literal-loader no-global js : Compiled JS 1`] = `
+exports[`Plugin no-global js : Compiled JS 1`] = `
 "const SIZE = 75;
 const styles = less\`
   .foo {
@@ -114,7 +114,15 @@ const styles = less\`
 \`;"
 `;
 
-exports[`css-literal-loader styled FancyBox: styled-FancyBox.css 1`] = `
+exports[`Plugin styled FancierBox: styled-FancierBox.css 1`] = `
+".fancier-box {
+
+  color: ultra-red;
+
+}"
+`;
+
+exports[`Plugin styled FancyBox: styled-FancyBox.css 1`] = `
 ".fancy-box {
 
   color: red;
@@ -136,11 +144,14 @@ exports[`css-literal-loader styled FancyBox: styled-FancyBox.css 1`] = `
 }"
 `;
 
-exports[`css-literal-loader styled js : Compiled JS 1`] = `
+exports[`Plugin styled js : Compiled JS 1`] = `
 "import { styled, css } from 'css-literal-loader/styled';
 const SIZE = 75; // prettier-ignore
 
 const FancyBox =
 /*#__PURE__*/
-styled('div', \\"FancyBox\\", require(\\"./styled-FancyBox.css\\"), s => [s[\\"fancyBox\\"] || s[\\"fancy-box\\"], props => props.primary && (s[\\"fancyBoxVariant0\\"] || s[\\"fancy-box-variant-0\\"])]);"
+styled('div', \\"FancyBox\\", require(\\"./styled-FancyBox.css\\"), s => [s[\\"fancyBox\\"] || s[\\"fancy-box\\"], props => props.primary && (s[\\"fancyBoxVariant0\\"] || s[\\"fancy-box-variant-0\\"])]);
+const FancierBox =
+/*#__PURE__*/
+styled(FancyBox, \\"FancierBox\\", require(\\"./styled-FancierBox.css\\"), s => [s[\\"fancierBox\\"] || s[\\"fancier-box\\"]]);"
 `;

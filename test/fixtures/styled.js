@@ -17,3 +17,7 @@ const FancyBox = styled('div')`
     color: palevioletred;
   `}
 `;
+
+const FancierBox = styled(FancyBox)`
+  color: ultra-red;
+`;

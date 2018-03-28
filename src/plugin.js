@@ -135,6 +135,9 @@ export default function plugin() {
     const quasiPath = path.get('quasi');
     const style = createStyleNode(path, state, getIdentifier(path));
     style.value = evaluate(quasiPath);
+
+    style.code = `require('${style.filename}')`;
+
     styles.add(style);
     return buildImport({ FILENAME: t.StringLiteral(style.filename) }); // eslint-disable-line new-cap
   }
@@ -162,12 +165,7 @@ export default function plugin() {
       t.ArrayExpression([buildStyleExpression(className), ...interpolations]),
     );
 
-    if (state.opts.generateInterpolations)
-      style.interpolations = generate(interpolations).code;
-
-    cssState.styles.add(style);
-
-    return buildComponent({
+    const runtimeNode = buildComponent({
       TAGNAME: tagName,
       DISPLAYNAME: t.stringLiteral(displayName),
       IMPORT: buildImport({
@@ -175,6 +173,13 @@ export default function plugin() {
       }).expression,
       INTERPOLATION: interpolations,
     });
+
+    if (state.opts.generateInterpolations)
+      style.code = generate(runtimeNode).code;
+
+    cssState.styles.add(style);
+
+    return runtimeNode;
   }
 
   return {

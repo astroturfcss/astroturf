@@ -59,15 +59,9 @@ function replaceStyleTemplates(src, styles) {
     return result;
   }
 
-  styles.forEach(
-    ({ start, end, filename, tagName, identifier, interpolations }) => {
-      let replace = `require('${filename}')`;
-      if (tagName)
-        replace = `styled(${tagName}, "${identifier}", ${replace}, ${interpolations})`;
-
-      src = splice(src, start, end, replace);
-    },
-  );
+  styles.forEach(({ start, end, code }) => {
+    src = splice(src, start, end, code);
+  });
 
   return src;
 }
