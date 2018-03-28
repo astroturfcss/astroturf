@@ -6,6 +6,7 @@ A webpack loader and babel plugin for extracting and processing css defined in o
 
 ```js
 import React from 'react';
+import { css } from 'css-literal-loader/styled';
 
 const styles = css`
   .button {
@@ -25,6 +26,8 @@ When processed, the `css` block will be extracted and treated as a `.css` file, 
 It even handles statically analyzable interpolations!
 
 ```js
+import { css } from 'css-literal-loader/styled';
+
 const margin = 10;
 const height = 50;
 const bottom = height + margin;
