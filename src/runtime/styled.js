@@ -16,7 +16,7 @@ export const styled = (type, displayName, styles, getStyles) => {
   const omit = typeof type === 'string' ? omitNonHostProps : null;
 
   function Styled(_props) {
-    const props = omit ? omit(_props) : _props;
+    const props = omit ? omit(_props) : { ..._props };
     delete props.innerRef;
     props.ref = _props.innerRef;
     props.className = classNames(
