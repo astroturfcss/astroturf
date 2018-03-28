@@ -46,7 +46,7 @@ const styles = css`
 
 For those that want something a bit more like styled-components, there is an experimental component API!
 
-```
+```js
 import { styled, css } from 'css-literal-loader/styled'; // import needed!
 
 const Button = styled('button')`
@@ -72,7 +72,7 @@ const Button = styled('div', 'Button', require('./FileName-Button.css'), styles 
 ]
 ```
 
-Styles are still extracted to a seperate file, and any arrow function intopolations are turned into an array that's passed directly to the react `classNames()` library (with further `css` templates turned into styles references).
+Styles are still extracted to a seperate file, and any arrow function interpolations are turned into an array that's passed directly to the react `classNames()` library (with further `css` templates turned into styles references).
 
 There are a whole bucket of caveats of course, to keep the above statically extractable, and limit runtime code.
 
@@ -112,6 +112,22 @@ const Title = styled('h3')`
 ```
 
 You can also not be afraid to mix and match real `css` files and inline ones. Use Less or Sass mixins and variables, etc.
+
+### With props
+
+It can also beuseful to create components with props already applied, like the example below. We recommend using recompose's `withProps` higher-order component to do this.
+
+**[`withProps` documentation](https://github.com/acdlite/recompose/blob/master/docs/API.md#withprops)**
+
+```jsx
+import { styled } from 'css-literal-loader/styled';
+import withProps from 'recompose/withProps'
+
+const PasswordInput = withProps({ type: 'password' })(styled('input')`
+  background-color: #ccc;
+`)
+
+```
 
 ## Setup
 
