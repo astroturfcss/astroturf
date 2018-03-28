@@ -95,7 +95,7 @@ css-literal-loader **doesn't try to do any of that** because it's not trying to 
 
 #### Composition, variables, etc?
 
-How you accomplish that is mostly up to your preprocessor. Leaverage Sass variables, Less mixins, postcss nesting polyfills, whatever. The css you'r writing is treated just like a normal style file so all the tooling your used to works here. For composition specifically around classes you can also use css-modules `composes` to compose styles, since
+How you accomplish that is mostly up to your preprocessor. Leverage Sass variables, or Less mixins, orpostcss nesting polyfills, or whatever. The css you'r writing is treated just like a normal style file so all the tooling your used to works here. For composition specifically around classes you can also use css-modules `composes` to compose styles, since
 css-literal-loader extracts styles to consistent names;
 
 ```js
