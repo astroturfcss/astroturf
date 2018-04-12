@@ -76,6 +76,7 @@
     "prettier": "^1.11.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "recompose": "^0.26.0",
     "rimraf": "^2.6.2",
     "style-loader": "^0.20.3",
     "webpack": "^4.2.0",

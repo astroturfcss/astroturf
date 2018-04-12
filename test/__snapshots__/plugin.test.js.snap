@@ -155,3 +155,21 @@ const FancierBox =
 /*#__PURE__*/
 styled(FancyBox, \\"FancierBox\\", require(\\"./styled-FancierBox.css\\"), s => [s[\\"fancierBox\\"] || s[\\"fancier-box\\"]]);"
 `;
+
+exports[`Plugin with-props RedPasswordInput: with-props-RedPasswordInput.css 1`] = `
+".red-password-input {
+
+  background-color: red;
+
+}"
+`;
+
+exports[`Plugin with-props js : Compiled JS 1`] = `
+"import { styled } from 'css-literal-loader/styled';
+import withProps from 'recompose/withProps';
+const RedPasswordInput = withProps({
+  type: 'password'
+})(
+/*#__PURE__*/
+styled('input', \\"RedPasswordInput\\", require(\\"./with-props-RedPasswordInput.css\\"), s => [s[\\"redPasswordInput\\"] || s[\\"red-password-input\\"]]));"
+`;
