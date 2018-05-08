@@ -42,7 +42,7 @@ exports[`Loader hoist-import 0: hoist-import-ButtonBase.css 1`] = `
 exports[`Loader hoist-import js : Compiled JS 1`] = `
 "import { styled } from 'css-literal-loader/styled';
 
-const ButtonBase = styled('button', \\"ButtonBase\\", require(\\"./hoist-import-ButtonBase.css\\"), s => [s[\\"buttonBase\\"] || s[\\"button-base\\"]]);;
+const ButtonBase = styled('button', \\"ButtonBase\\", require(\\"./hoist-import-ButtonBase.css\\"), s => [s[\\"buttonBase\\"] || s[\\"button-base\\"]]);
 "
 `;
 
@@ -91,9 +91,9 @@ exports[`Loader multiple-components js : Compiled JS 1`] = `
 const SIZE = 75;
 
 // prettier-ignore
-const FancyBox = styled('div', \\"FancyBox\\", require(\\"./multiple-components-FancyBox.css\\"), s => [s[\\"fancyBox\\"] || s[\\"fancy-box\\"], props => props.primary && (s[\\"fancyBoxVariant0\\"] || s[\\"fancy-box-variant-0\\"])]);;
+const FancyBox = styled('div', \\"FancyBox\\", require(\\"./multiple-components-FancyBox.css\\"), s => [s[\\"fancyBox\\"] || s[\\"fancy-box\\"], props => props.primary && (s[\\"fancyBoxVariant0\\"] || s[\\"fancy-box-variant-0\\"])]);
 
-const FancyHeader = styled('h2', \\"FancyHeader\\", require(\\"./multiple-components-FancyHeader.css\\"), s => [s[\\"fancyHeader\\"] || s[\\"fancy-header\\"], props => props.primary && (s[\\"fancyHeaderVariant1\\"] || s[\\"fancy-header-variant-1\\"])]);;
+const FancyHeader = styled('h2', \\"FancyHeader\\", require(\\"./multiple-components-FancyHeader.css\\"), s => [s[\\"fancyHeader\\"] || s[\\"fancy-header\\"], props => props.primary && (s[\\"fancyHeaderVariant1\\"] || s[\\"fancy-header-variant-1\\"])]);
 "
 `;
 
@@ -152,9 +152,9 @@ exports[`Loader styled js : Compiled JS 1`] = `
 const SIZE = 75;
 
 // prettier-ignore
-const FancyBox = styled('div', \\"FancyBox\\", require(\\"./styled-FancyBox.css\\"), s => [s[\\"fancyBox\\"] || s[\\"fancy-box\\"], props => props.primary && (s[\\"fancyBoxVariant0\\"] || s[\\"fancy-box-variant-0\\"])]);;
+const FancyBox = styled('div', \\"FancyBox\\", require(\\"./styled-FancyBox.css\\"), s => [s[\\"fancyBox\\"] || s[\\"fancy-box\\"], props => props.primary && (s[\\"fancyBoxVariant0\\"] || s[\\"fancy-box-variant-0\\"])]);
 
-const FancierBox = styled(FancyBox, \\"FancierBox\\", require(\\"./styled-FancierBox.css\\"), s => [s[\\"fancierBox\\"] || s[\\"fancier-box\\"]]);;
+const FancierBox = styled(FancyBox, \\"FancierBox\\", require(\\"./styled-FancierBox.css\\"), s => [s[\\"fancierBox\\"] || s[\\"fancier-box\\"]]);
 "
 `;
 
@@ -172,6 +172,6 @@ import withProps from 'recompose/withProps';
 
 const RedPasswordInput = withProps({
   type: 'password',
-})(styled('input', \\"RedPasswordInput\\", require(\\"./with-props-RedPasswordInput.css\\"), s => [s[\\"redPasswordInput\\"] || s[\\"red-password-input\\"]]););
+})(styled('input', \\"RedPasswordInput\\", require(\\"./with-props-RedPasswordInput.css\\"), s => [s[\\"redPasswordInput\\"] || s[\\"red-password-input\\"]]));
 "
 `;

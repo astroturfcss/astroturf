@@ -178,7 +178,6 @@ export default function plugin() {
       style.code = generate(runtimeNode).code;
 
     cssState.styles.add(style);
-
     return runtimeNode;
   }
 

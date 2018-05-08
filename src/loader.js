@@ -60,6 +60,7 @@ function replaceStyleTemplates(src, styles) {
   }
 
   styles.forEach(({ start, end, code }) => {
+    if (code.endsWith(';')) code = code.slice(0, -1); // remove trailing semicolon
     src = splice(src, start, end, code);
   });
 
