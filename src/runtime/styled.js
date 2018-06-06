@@ -27,12 +27,18 @@ export const styled = (type, displayName, styles, getStyles) => {
   }
 
   Styled.displayName = displayName;
-  Styled.withComponent = nextType =>
-    styled(nextType, displayName, styles, getStyles);
-  return React.forwardRef
+
+  const decorated = React.forwardRef
     ? React.forwardRef((props, ref) => <Styled innerRef={ref} {...props} />)
     : Styled;
+
+  decorated.withComponent = nextType =>
+    styled(nextType, displayName, styles, getStyles);
+
+  return decorated;
 };
+
+export default styled;
 
 export const css = () => {
   throw new Error('`css` template literal evaluated at runtime!');
