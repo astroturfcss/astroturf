@@ -1,4 +1,4 @@
-import { styled, css } from 'css-literal-loader/styled';
+import styled from 'css-literal-loader/styled';
 
 const SIZE = 75;
 
@@ -16,11 +16,6 @@ const FancyBox = styled('div')`
     background: white;
     color: palevioletred;
   }
-
-  ${props => props.primary && css`
-    background: white;
-    color: palevioletred;
-  `}
 `;
 
 const FancierBox = styled(FancyBox)`
