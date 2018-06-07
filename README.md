@@ -50,37 +50,72 @@ const styles = css`
 For those that want something a bit more like styled-components, there is an experimental component API!
 
 ```js
-import { styled, css } from 'css-literal-loader/styled'; // import needed!
+import styled from 'css-literal-loader/styled'; // import needed!
 
 const Button = styled('button')`
   color: black;
   border: 1px solid black;
   background-color: white;
 
-  ${props => props.primary && css`
+  &.primary {
     color: blue;
     border: 1px solid blue;
-  `}
-`;
+  }
 
-render(<Button>A styled button</Button>, mountNode);
+  &.color.green {
+    color: green;
+  }
+`;
 ```
 
-The above transpiles to
+You can render this with:
 
 ```js
-const Button = styled('div', 'Button', require('./FileName-Button.css'), styles => [
-  styles.button,
-  props => props.primary && styles.buttonVariant1
-]
+render(<Button primary color="green">A styled button</Button>, mountNode);
 ```
 
-Styles are still extracted to a seperate file, and any arrow function interpolations are turned into an array that's passed directly to the react `classNames()` library (with further `css` templates turned into styles references). At runtime `styled()` returns a React component with the static css classes applied. You can check out the ["runtime"](https://github.com/4Catalyzer/css-literal-loader/blob/master/src/runtime/styled.js#L14) it just creates a component: 
+The above transpiles to something like:
+
+```js
+const styles = css`
+  .button {
+    color: black;
+    border: 1px solid black;
+    background-color: white;
+
+    &.primary {
+      color: blue;
+      border: 1px solid blue;
+    }
+
+    &.color.green {
+      color: green;
+    }
+  }
+`;
+
+function Button({ primary, color, className, ...props }) {
+  return (
+    <div
+      {...props}
+      className={classNames(
+        className,
+        styles.button,
+        primary && styles.primary,
+        color === 'green' && styles.color,
+        color === 'green' && styles.green,
+      )}
+    />
+  );
+}
+```
+
+Styles are still extracted to a separate file, any props matching other defined classes are passed into the `classNames()` library. At runtime `styled()` returns a React component with the static CSS classes applied. You can check out the ["runtime"](https://github.com/4Catalyzer/css-literal-loader/blob/master/src/runtime/styled.js#L16) it just creates a component.
 
 There are a whole bucket of caveats of course, to keep the above statically extractable, and limit runtime code.
 
 * We assume you are using css-modules in your css pipeline to return classes from the style files, we don't do any of that ourselves.
-* Function interpolations are limited to one level of nesting
+* Prop value handling requires the nesting transform
 * All "top level" styles have any @import statements hoisted up (via a regex)
 
 ### WHY?!
