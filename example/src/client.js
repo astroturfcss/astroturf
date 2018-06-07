@@ -1,19 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { css } from 'css-literal-loader/styled'; // eslint-disable-line
 
 import 'bootstrap/scss/bootstrap-reboot.scss';
 
 import Button from './Button';
 
-const _ = css`
+// eslint-disable-next-line no-unused-expressions
+css`
   html,
   body {
     margin: 0;
   }
 `;
-
-// prettier-ignore
 
 function App() {
   return (

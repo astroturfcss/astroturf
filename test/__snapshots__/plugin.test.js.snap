@@ -129,9 +129,14 @@ exports[`Plugin styled FancyBox: styled-FancyBox.css 1`] = `
   width: 75px;
 
   @media (min-width: 420px) {
-		width: 96px;
-		height: 96px;
-	}
+    width: 96px;
+    height: 96px;
+  }
+
+  &.primary {
+    background: white;
+    color: palevioletred;
+  }
 
   
 

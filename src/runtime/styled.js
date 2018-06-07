@@ -1,7 +1,9 @@
 import classNames from 'classnames';
-import React from 'react'; // eslint-disable-line
+import React from 'react'; // eslint-disable-line import/no-extraneous-dependencies
 
 import reactPropsRegex from './props';
+
+const has = Object.prototype.hasOwnProperty;
 
 function omitNonHostProps(props) {
   const result = {};
@@ -11,19 +13,55 @@ function omitNonHostProps(props) {
   return result;
 }
 
-export const styled = (type, displayName, styles, getStyles) => {
-  const styleMap = getStyles(styles);
+function styled(type, displayName, styles, camelName, kebabName) {
+  const componentClassName = has.call(styles, camelName)
+    ? styles[camelName]
+    : styles[kebabName];
   const omit = typeof type === 'string' ? omitNonHostProps : null;
 
-  function Styled(_props) {
-    const props = omit ? omit(_props) : { ..._props };
-    delete props.innerRef;
-    props.ref = _props.innerRef;
-    props.className = classNames(
-      props.className,
-      styleMap.map(s => (typeof s === 'string' ? s : s(_props))),
-    );
-    return React.createElement(type, props);
+  const hasModifiers = Object.keys(styles).some(
+    className => className !== camelName && className !== kebabName,
+  );
+
+  function Styled(props) {
+    const childProps = omit ? omit(props) : { ...props };
+
+    delete childProps.innerRef;
+    childProps.ref = props.innerRef;
+
+    if (hasModifiers) {
+      const modifierClassNames = [];
+
+      Object.keys(props).forEach(propName => {
+        const propValue = props[propName];
+
+        if (
+          (typeof propValue === 'boolean' || typeof propValue === 'string') &&
+          has.call(styles, propName)
+        ) {
+          if (propValue === true) {
+            modifierClassNames.push(styles[propName]);
+          } else if (propValue !== false && has.call(styles, propValue)) {
+            modifierClassNames.push(styles[propName], styles[propValue]);
+          }
+
+          delete childProps[propName];
+        }
+      });
+
+      childProps.className = classNames(
+        childProps.className,
+        componentClassName,
+        ...modifierClassNames,
+      );
+    } else {
+      childProps.className = classNames(
+        childProps.className,
+        componentClassName,
+      );
+    }
+
+    return React.createElement(type, childProps);
   }
 
   Styled.displayName = displayName;
@@ -33,13 +71,9 @@ export const styled = (type, displayName, styles, getStyles) => {
     : Styled;
 
   decorated.withComponent = nextType =>
-    styled(nextType, displayName, styles, getStyles);
+    styled(nextType, displayName, styles, camelName, kebabName);
 
   return decorated;
-};
+}
 
 export default styled;
-
-export const css = () => {
-  throw new Error('`css` template literal evaluated at runtime!');
-};

@@ -8,9 +8,14 @@ const FancyBox = styled('div')`
   width: ${SIZE}px;
 
   @media (min-width: 420px) {
-		width: 96px;
-		height: 96px;
-	}
+    width: 96px;
+    height: 96px;
+  }
+
+  &.primary {
+    background: white;
+    color: palevioletred;
+  }
 
   ${props => props.primary && css`
     background: white;
