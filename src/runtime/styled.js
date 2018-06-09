@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import camelCase from 'lodash/camelCase';
 import React from 'react'; // eslint-disable-line import/no-extraneous-dependencies
 
 import reactPropsRegex from './props';
@@ -13,10 +14,10 @@ function omitNonHostProps(props) {
   return result;
 }
 
-function styled(type, displayName, styles, camelName, kebabName) {
-  const componentClassName = has.call(styles, camelName)
-    ? styles[camelName]
-    : styles[kebabName];
+export function styled(type, displayName, styles, kebabName, camelName) {
+  const componentClassName = has.call(styles, kebabName)
+    ? styles[kebabName]
+    : styles[camelName];
   const omit = typeof type === 'string' ? omitNonHostProps : null;
 
   const hasModifiers = Object.keys(styles).some(
@@ -35,17 +36,26 @@ function styled(type, displayName, styles, camelName, kebabName) {
       Object.keys(props).forEach(propName => {
         const propValue = props[propName];
 
-        if (
-          (typeof propValue === 'boolean' || typeof propValue === 'string') &&
-          has.call(styles, propName)
-        ) {
+        if (typeof propValue === 'boolean') {
           if (propValue === true) {
             modifierClassNames.push(styles[propName]);
-          } else if (propValue !== false && has.call(styles, propValue)) {
-            modifierClassNames.push(styles[propName], styles[propValue]);
           }
 
           delete childProps[propName];
+        } else if (typeof propValue === 'string') {
+          const propKey = `${propName}-${propValue}`;
+          if (has.call(styles, propKey)) {
+            modifierClassNames.push(styles[propKey]);
+
+            delete childProps[propName];
+          } else {
+            const camelPropKey = camelCase(propKey);
+            if (has.call(styles, camelPropKey)) {
+              modifierClassNames.push(styles[camelPropKey]);
+
+              delete childProps[propName];
+            }
+          }
         }
       });
 
@@ -71,7 +81,7 @@ function styled(type, displayName, styles, camelName, kebabName) {
     : Styled;
 
   decorated.withComponent = nextType =>
-    styled(nextType, displayName, styles, camelName, kebabName);
+    styled(nextType, displayName, styles, kebabName, camelName);
 
   return decorated;
 }

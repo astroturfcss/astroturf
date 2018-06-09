@@ -50,7 +50,7 @@ const styles = css`
 For those that want something a bit more like styled-components, there is an experimental component API!
 
 ```js
-import styled from 'css-literal-loader/styled'; // import needed!
+import { styled, css } from 'css-literal-loader/styled'; // import needed!
 
 const Button = styled('button')`
   color: black;
@@ -62,7 +62,7 @@ const Button = styled('button')`
     border: 1px solid blue;
   }
 
-  &.color.green {
+  &.color-green {
     color: green;
   }
 `;
@@ -88,7 +88,7 @@ const styles = css`
       border: 1px solid blue;
     }
 
-    &.color.green {
+    &.color-green {
       color: green;
     }
   }
@@ -102,8 +102,7 @@ function Button({ primary, color, className, ...props }) {
         className,
         styles.button,
         primary && styles.primary,
-        color === 'green' && styles.color,
-        color === 'green' && styles.green,
+        color === 'green' && styles.colorGreen,
       )}
     />
   );

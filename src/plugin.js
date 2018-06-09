@@ -1,17 +1,16 @@
+import { stripIndent } from 'common-tags';
 import { outputFileSync } from 'fs-extra';
+import camelCase from 'lodash/camelCase';
+import get from 'lodash/get';
 import kebabCase from 'lodash/kebabCase';
 import { dirname, extname, basename, join, relative } from 'path';
-
 import * as t from '@babel/types';
 import template from '@babel/template';
 import generate from '@babel/generator';
-import { stripIndent } from 'common-tags';
-import get from 'lodash/get';
-import camelCase from 'lodash/camelCase';
 
 const buildImport = template('require(FILENAME);');
 const buildComponent = template(
-  `styled(TAGNAME, DISPLAYNAME, IMPORT, CAMELNAME, KEBABNAME)`,
+  `styled(TAGNAME, DISPLAYNAME, IMPORT, KEBABNAME, CAMELNAME)`,
 );
 
 const STYLES = Symbol('CSSLiteralLoader');
@@ -113,8 +112,8 @@ export default function plugin() {
       IMPORT: buildImport({
         FILENAME: t.StringLiteral(style.filename),
       }).expression,
-      CAMELNAME: t.stringLiteral(camelCase(kebabName)),
       KEBABNAME: t.StringLiteral(kebabName),
+      CAMELNAME: t.stringLiteral(camelCase(kebabName)),
     });
 
     if (state.opts.generateInterpolations)

@@ -2,8 +2,5 @@
   "extends": "4catalyzer-react",
   "env": {
     "browser": true
-  },
-  globals: {
-    "css": false
   }
 }
