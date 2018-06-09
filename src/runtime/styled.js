@@ -37,7 +37,7 @@ export function styled(type, displayName, styles, kebabName, camelName) {
         const propValue = props[propName];
 
         if (typeof propValue === 'boolean') {
-          if (propValue === true) {
+          if (propValue) {
             modifierClassNames.push(styles[propName]);
           }
 
