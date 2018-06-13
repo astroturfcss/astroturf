@@ -87,3 +87,7 @@ export function styled(type, displayName, styles, kebabName, camelName) {
 }
 
 export default styled;
+
+export const css = () => {
+  throw new Error('`css` template literal evaluated at runtime!');
+};
