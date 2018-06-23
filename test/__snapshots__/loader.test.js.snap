@@ -42,7 +42,52 @@ exports[`Loader hoist-import 0: hoist-import-ButtonBase.css 1`] = `
 exports[`Loader hoist-import js : Compiled JS 1`] = `
 "import { styled } from 'css-literal-loader/styled';
 
-const ButtonBase = styled('button', \\"ButtonBase\\", require(\\"./hoist-import-ButtonBase.css\\"), \\"buttonBase\\", \\"button-base\\");
+const ButtonBase = styled('button', \\"ButtonBase\\", require(\\"./hoist-import-ButtonBase.css\\"), \\"button-base\\", \\"buttonBase\\");
+"
+`;
+
+exports[`Loader multiple-components 0: multiple-components-FancyBox.css 1`] = `
+".fancy-box {
+
+  color: red;
+  width: 75px;
+
+  @media (min-width: 420px) {
+		width: 96px;
+		height: 96px;
+	}
+
+  &.primary {
+    background: white;
+    color: palevioletred;
+  }
+
+}"
+`;
+
+exports[`Loader multiple-components 1: multiple-components-FancyHeader.css 1`] = `
+".fancy-header {
+
+  color: red;
+  width: 75px;
+
+  &.primary {
+    background: white;
+    color: palevioletred;
+  }
+
+}"
+`;
+
+exports[`Loader multiple-components js : Compiled JS 1`] = `
+"import { styled, css } from 'css-literal-loader/styled';
+
+const SIZE = 75;
+
+// prettier-ignore
+const FancyBox = styled('div', \\"FancyBox\\", require(\\"./multiple-components-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
+
+const FancyHeader = styled('h2', \\"FancyHeader\\", require(\\"./multiple-components-FancyHeader.css\\"), \\"fancy-header\\", \\"fancyHeader\\");
 "
 `;
 
@@ -98,9 +143,9 @@ exports[`Loader styled js : Compiled JS 1`] = `
 const SIZE = 75;
 
 // prettier-ignore
-const FancyBox = styled('div', \\"FancyBox\\", require(\\"./styled-FancyBox.css\\"), \\"fancyBox\\", \\"fancy-box\\");
+const FancyBox = styled('div', \\"FancyBox\\", require(\\"./styled-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
 
-const FancierBox = styled(FancyBox, \\"FancierBox\\", require(\\"./styled-FancierBox.css\\"), \\"fancierBox\\", \\"fancier-box\\");
+const FancierBox = styled(FancyBox, \\"FancierBox\\", require(\\"./styled-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");
 "
 `;
 
@@ -118,6 +163,6 @@ import withProps from 'recompose/withProps';
 
 const RedPasswordInput = withProps({
   type: 'password',
-})(styled('input', \\"RedPasswordInput\\", require(\\"./with-props-RedPasswordInput.css\\"), \\"redPasswordInput\\", \\"red-password-input\\"));
+})(styled('input', \\"RedPasswordInput\\", require(\\"./with-props-RedPasswordInput.css\\"), \\"red-password-input\\", \\"redPasswordInput\\"));
 "
 `;

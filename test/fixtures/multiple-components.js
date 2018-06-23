@@ -12,20 +12,18 @@ const FancyBox = styled('div')`
 		height: 96px;
 	}
 
-  ${props => props.primary && css`
+  &.primary {
     background: white;
     color: palevioletred;
-  `}
+  }
 `;
 
 const FancyHeader = styled('h2')`
   color: red;
   width: ${SIZE}px;
 
-  ${props =>
-    props.primary &&
-    css`
-      background: white;
-      color: palevioletred;
-    `};
+  &.primary {
+    background: white;
+    color: palevioletred;
+  }
 `;

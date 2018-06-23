@@ -54,6 +54,7 @@ function isTag(path, tagName, allowGlobal = false) {
 export default function plugin() {
   function evaluate(path) {
     const { confident, value } = path.evaluate();
+
     if (!confident) {
       throw path.buildCodeFrameError(
         'Could not evaluate css. Inline css must be statically analyzable',
