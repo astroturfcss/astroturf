@@ -1,7 +1,6 @@
 import React from 'react';
-import { styled, css } from 'css-literal-loader/styled'; // eslint-disable-line
+import styled from 'css-literal-loader/styled'; // eslint-disable-line import/no-extraneous-dependencies
 
-// prettier-ignore
 const ButtonBase = styled('button')`
   @import '~./styles/mixins.scss';
 
@@ -20,13 +19,17 @@ const ButtonBase = styled('button')`
   white-space: nowrap;
   user-select: none;
 
-  ${p => p.theme === 'primary' && css`
+  &.theme-primary {
     @include button-variant(white, #33ad13, #298f0f);
-  `}
+  }
 
-  ${p => p.theme === 'secondary' && css`
+  &.theme-secondary {
     @include button-variant(#33ad13, white, white);
-  `}
+  }
+
+  &.bold {
+    font-weight: bold;
+  }
 `;
 
 function Button(props) {

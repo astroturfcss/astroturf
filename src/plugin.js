@@ -1,56 +1,37 @@
+import { stripIndent } from 'common-tags';
 import { outputFileSync } from 'fs-extra';
+import camelCase from 'lodash/camelCase';
+import get from 'lodash/get';
 import kebabCase from 'lodash/kebabCase';
 import { dirname, extname, basename, join, relative } from 'path';
-
 import * as t from '@babel/types';
 import template from '@babel/template';
 import generate from '@babel/generator';
-import { stripIndent } from 'common-tags';
-import get from 'lodash/get';
-import camelCase from 'lodash/camelCase';
 
 const buildImport = template('require(FILENAME);');
 const buildComponent = template(
-  `styled(TAGNAME, DISPLAYNAME, IMPORT, INTERPOLATION)`,
+  `styled(TAGNAME, DISPLAYNAME, IMPORT, KEBABNAME, CAMELNAME)`,
 );
 
 const STYLES = Symbol('CSSLiteralLoader');
-
-/**
- * Build a logical expression returning a class, trying both the
- * kebab and camel case names: `s['fooBar'] || s['foo-bar']
- *
- * @param {String} className
- */
-const buildStyleExpression = className =>
-  t.logicalExpression(
-    '||',
-    t.memberExpression(
-      t.identifier('s'),
-      t.StringLiteral(camelCase(className.slice(1))), // remove the `.`
-      true,
-    ),
-    t.memberExpression(
-      t.identifier('s'),
-      t.StringLiteral(className.slice(1)), // remove the `.`
-      true,
-    ),
-  );
 
 function getIdentifier(path) {
   const parent = path.findParent(p => p.isVariableDeclarator());
   return parent && t.isIdentifier(parent.node.id) ? parent.node.id.name : '';
 }
 
-function wrapInClass(className, value, hoistImports) {
+function wrapInClass(className, value) {
   const imports = [];
-  if (hoistImports) {
-    let match;
-    const matcher = /@import.*?(?:$|;)/g;
-    // eslint-disable-next-line
-    while ((match = matcher.exec(value))) imports.push(match[0]);
-    value = value.replace(matcher, '');
+
+  let match;
+  const matcher = /@import.*?(?:$|;)/g;
+
+  // eslint-disable-next-line no-cond-assign
+  while ((match = matcher.exec(value))) {
+    imports.push(match[0]);
   }
+
+  value = value.replace(matcher, '');
 
   let val = `${className} {\n${value}\n}`;
   if (imports.length) val = `${imports.join('\n')}\n${val}`;
@@ -99,37 +80,6 @@ export default function plugin() {
     return style;
   }
 
-  function extractNestedClasses(path, className, cssState, hoistImport) {
-    const classNodes = [];
-    const quasiPath = path.get('quasi');
-
-    quasiPath.get('expressions').forEach(exprPath => {
-      if (!t.isArrowFunctionExpression(exprPath.node)) return;
-      exprPath.traverse({
-        TaggedTemplateExpression(innerPath) {
-          if (!isTag(innerPath, 'css')) return;
-
-          const innerClass = `${className}-variant-${cssState.id++}`;
-          const [classNode] = extractNestedClasses(innerPath, innerClass);
-          const { node } = exprPath;
-          exprPath.remove();
-
-          innerPath.replaceWith(buildStyleExpression(innerClass));
-
-          classNodes.push({ ...classNode, node });
-        },
-      });
-    });
-
-    return [
-      {
-        value: wrapInClass(className, evaluate(quasiPath), hoistImport),
-        className,
-      },
-      ...classNodes,
-    ];
-  }
-
   function buildStyleRequire(path, state) {
     const { styles } = state.file.get(STYLES);
     const quasiPath = path.get('quasi');
@@ -148,30 +98,22 @@ export default function plugin() {
     const tagName = get(path.get('tag'), 'node.arguments[0]');
     const displayName = getIdentifier(path) || tagName.value;
 
-    const className = `.${kebabCase(displayName)}`;
-
-    const classNodes = extractNestedClasses(path, className, cssState, true);
-
     const style = createStyleNode(path, state, displayName);
     style.tagName = t.isStringLiteral(tagName)
       ? `"${tagName.value}"`
       : tagName;
 
-    style.value = classNodes.map(f => f.value).join('\n');
-    let interpolations = classNodes.map(v => v.node).filter(Boolean);
-
-    interpolations = t.ArrowFunctionExpression(
-      [t.Identifier('s')],
-      t.ArrayExpression([buildStyleExpression(className), ...interpolations]),
-    );
+    const kebabName = kebabCase(displayName);
+    style.value = wrapInClass(`.${kebabName}`, evaluate(path.get('quasi')));
 
     const runtimeNode = buildComponent({
       TAGNAME: tagName,
-      DISPLAYNAME: t.stringLiteral(displayName),
+      DISPLAYNAME: t.StringLiteral(displayName),
       IMPORT: buildImport({
         FILENAME: t.StringLiteral(style.filename),
       }).expression,
-      INTERPOLATION: interpolations,
+      KEBABNAME: t.StringLiteral(kebabName),
+      CAMELNAME: t.stringLiteral(camelCase(kebabName)),
     });
 
     if (state.opts.generateInterpolations)
