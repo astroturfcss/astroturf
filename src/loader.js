@@ -27,7 +27,7 @@ function collectStyles(src, filename, opts) {
   if (
     !src.match(
       new RegExp(
-        `(${opts.tagName || 'css'}|styled\\(.+\\))\`([\\s\\S]*?)\``,
+        `(${opts.tagName || 'css'}|styled\\(.+\\))\\s*\`([\\s\\S]*?)\``,
         'gmi',
       ),
     )
