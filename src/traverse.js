@@ -1,8 +1,10 @@
+import path from 'path';
 import { transformSync } from '@babel/core';
-
 import plugin from './plugin';
 
 export default function traverse(source, filename, opts) {
+  const extname = path.extname(filename);
+
   return transformSync(source, {
     filename,
     babelrc: false,
@@ -17,7 +19,7 @@ export default function traverse(source, filename, opts) {
       sourceFilename: true,
       plugins: [
         'jsx',
-        'flow',
+        extname === '.ts' || extname === '.tsx' ? 'typescript' : 'flow',
         'doExpressions',
         'objectRestSpread',
         'decorators',

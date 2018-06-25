@@ -71,7 +71,12 @@ const Button = styled('button')`
 You can render this with:
 
 ```js
-render(<Button primary color="green">A styled button</Button>, mountNode);
+render(
+  <Button primary color="green">
+    A styled button
+  </Button>,
+  mountNode,
+);
 ```
 
 The above transpiles to something like:
@@ -125,7 +130,7 @@ a more ergonomic way to write normal css/less/sass next to your javascript.
 What does that mean? css-in-js libraries are often a _replacement_ for css preprocessors, in that they provide ways of doing variables, composition, mixins, imports etc. Usually they accomplish this by leaning
 on JS language features where appropriate, and adding there own domain-specific language bits when needed.
 
-css-literal-loader **doesn't try to do any of that** because it's not trying to replace preprocessors but rather, make  component-centric javascript work better with **existing** styling tooling. This means at a minimum it needs to scope styles to the component (handled by css-modules) and map those styles to your component's API (props), which is what the above API strives for.
+css-literal-loader **doesn't try to do any of that** because it's not trying to replace preprocessors but rather, make component-centric javascript work better with **existing** styling tooling. This means at a minimum it needs to scope styles to the component (handled by css-modules) and map those styles to your component's API (props), which is what the above API strives for.
 
 #### Composition, variables, etc?
 
@@ -156,12 +161,14 @@ You can also don't have to define everything in a `.js` file. Where it makes sen
   font-weight: 900;
 }
 ```
+
 and then:
+
 ```
 // Button.js
 const Title = styled('h3')`
   @import './mixins.scss';
-  
+
   @include heavy();
   font-size: 12%;
 `;
@@ -175,12 +182,11 @@ It can also be useful to create components with props already applied, like the 
 
 ```jsx
 import { styled } from 'css-literal-loader/styled';
-import withProps from 'recompose/withProps'
+import withProps from 'recompose/withProps';
 
 const PasswordInput = withProps({ type: 'password' })(styled('input')`
   background-color: #ccc;
-`)
-
+`);
 ```
 
 ## Setup
@@ -201,6 +207,11 @@ Add the css-literal-loader to JavaScript loader configuration, and whatever you 
      {
        test: /\.js$/,
        use: ['babel-loader','css-literal-loader'],
+     },
+     // css-literal-laoder works out of the box with typescript (.ts or .tsx files).
+     {
+       test: /\.tsx?$/,
+       use: ['ts-loader','css-literal-loader'],
      },
    }
  }

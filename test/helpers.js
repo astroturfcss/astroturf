@@ -19,31 +19,35 @@ const PARSER_OPTS = {
   ],
 };
 
+const getOptions = f => {
+  try {
+    return fs.readJsonSync(
+      `${__dirname}/fixtures/${basename(f, extname(f))}.json`,
+    );
+  } catch (err) {
+    return {};
+  }
+};
+
 export const fixtures = fs
   .readdirSync(`${__dirname}/fixtures`)
-  .filter(f => f.endsWith('.js'))
-  .map(f => basename(f, extname(f)));
+  .map(file => `${__dirname}/fixtures/${file}`)
+  .filter(f => !f.endsWith('.json'));
 
 export function babelRunFixture(fixture) {
-  describe(fixture, () => {
-    let options = {};
-    try {
-      options = fs.readJsonSync(`${__dirname}/fixtures/${fixture}.json`);
-    } catch (err) {
-      /* ignore */
-    }
+  const options = getOptions(fixture);
 
-    const { code, metadata } = transformFileSync(
-      `${__dirname}/fixtures/${fixture}.js`,
-      {
-        babelrc: false,
-        // eslint-ignore-next-line
-        plugins: [
-          [require('../src/plugin.js'), { ...options, writeFiles: false }],
-        ],
-        parserOpts: PARSER_OPTS,
-      },
-    );
+  if (options.loaderOnly) return;
+
+  describe(basename(fixture, extname(fixture)), () => {
+    const { code, metadata } = transformFileSync(fixture, {
+      babelrc: false,
+      // eslint-ignore-next-line
+      plugins: [
+        [require('../src/plugin.js'), { ...options, writeFiles: false }],
+      ],
+      parserOpts: PARSER_OPTS,
+    });
 
     const { styles } = metadata['css-literal-loader'] || {};
 
@@ -63,31 +67,24 @@ export function babelRunFixture(fixture) {
 }
 
 export function webpackRunFixture(fixture) {
-  describe(fixture, () => {
-    const fixturePath = `${__dirname}/fixtures/${fixture}.js`;
-    let options = {};
-    try {
-      options = fs.readJsonSync(`${__dirname}/fixtures/${fixture}.json`);
-    } catch (err) {
-      /* ignore */
-    }
+  const options = getOptions(fixture);
 
+  if (options.pluginOnly) return;
+
+  describe(basename(fixture, extname(fixture)), () => {
     const styles = [];
     const loaderContext = {
       query: options,
       loaders: [{ request: '/path/css-literal-loader' }],
       loaderIndex: 0,
       context: '',
-      resource: fixturePath,
-      resourcePath: fixturePath,
-      request: `babel-loader!css-literal-loader!${fixturePath}`,
+      resource: fixture,
+      resourcePath: fixture,
+      request: `babel-loader!css-literal-loader!${fixture}`,
       emitVirtualFile: (path, value) => styles.push({ path, value }),
     };
 
-    const code = loader.call(
-      loaderContext,
-      fs.readFileSync(fixturePath, 'utf-8'),
-    );
+    const code = loader.call(loaderContext, fs.readFileSync(fixture, 'utf-8'));
 
     it('js ', () => {
       expect(code).toMatchSnapshot(`Compiled JS`);
