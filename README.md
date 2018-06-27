@@ -208,7 +208,7 @@ Add the css-literal-loader to JavaScript loader configuration, and whatever you 
        test: /\.js$/,
        use: ['babel-loader','css-literal-loader'],
      },
-     // css-literal-laoder works out of the box with typescript (.ts or .tsx files).
+     // css-literal-loader works out of the box with typescript (.ts or .tsx files).
      {
        test: /\.tsx?$/,
        use: ['ts-loader','css-literal-loader'],
