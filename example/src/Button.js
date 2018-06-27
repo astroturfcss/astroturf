@@ -30,6 +30,11 @@ const ButtonBase = styled('button')`
   &.bold {
     font-weight: bold;
   }
+
+  &.size-2 {
+    font-size: 24px;
+    line-height: calc(4rem - 2px);
+  }
 `;
 
 function Button(props) {

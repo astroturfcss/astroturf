@@ -18,8 +18,8 @@ function App() {
     <div>
       <Button theme="secondary">Styled button</Button>
       <Button theme="primary">Primary button</Button>
-      <Button theme="secondary" bold>
-        Bold button
+      <Button theme="secondary" bold size={2}>
+        Big bold button
       </Button>
     </div>
   );
