@@ -42,7 +42,10 @@ export function styled(type, displayName, styles, kebabName, camelName) {
           }
 
           delete childProps[propName];
-        } else if (typeof propValue === 'string') {
+        } else if (
+          typeof propValue === 'string' ||
+          typeof propValue === 'number'
+        ) {
           const propKey = `${propName}-${propValue}`;
           if (has.call(styles, propKey)) {
             modifierClassNames.push(styles[propKey]);
