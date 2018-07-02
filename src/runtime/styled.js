@@ -37,11 +37,23 @@ export function styled(type, displayName, styles, kebabName, camelName) {
         const propValue = props[propName];
 
         if (typeof propValue === 'boolean') {
-          if (propValue) {
-            modifierClassNames.push(styles[propName]);
-          }
+          if (has.call(styles, propName)) {
+            if (propValue) {
+              modifierClassNames.push(styles[propName]);
+            }
 
-          delete childProps[propName];
+            delete childProps[propName];
+          } else {
+            const camelPropName = camelCase(propName);
+
+            if (has.call(styles, camelPropName)) {
+              if (propValue) {
+                modifierClassNames.push(styles[camelPropName]);
+              }
+
+              delete childProps[propName];
+            }
+          }
         } else if (
           typeof propValue === 'string' ||
           typeof propValue === 'number'

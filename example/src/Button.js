@@ -1,7 +1,6 @@
-import React from 'react';
 import styled from 'css-literal-loader/styled'; // eslint-disable-line import/no-extraneous-dependencies
 
-const ButtonBase = styled('button')`
+const Button = styled('button')`
   @import '~./styles/mixins.scss';
 
   display: inline-flex;
@@ -36,9 +35,5 @@ const ButtonBase = styled('button')`
     line-height: calc(4rem - 2px);
   }
 `;
-
-function Button(props) {
-  return <ButtonBase {...props} />;
-}
 
 export default Button;
