@@ -38,7 +38,7 @@ export default function traverse(source, filename, opts) {
         'bigInt',
         'optionalCatchBinding',
         'throwExpressions',
-        'pipelineOperator',
+        ['pipelineOperator', { proposal: 'minimal' }],
         'nullishCoalescingOperator',
       ],
     },
