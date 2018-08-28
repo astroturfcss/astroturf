@@ -17,12 +17,13 @@ export default function traverse(source, filename, opts) {
       allowSuperOutsideMethod: true,
       sourceType: 'unambigious',
       sourceFilename: true,
+
       plugins: [
         'jsx',
         extname === '.ts' || extname === '.tsx' ? 'typescript' : 'flow',
         'doExpressions',
         'objectRestSpread',
-        'decorators',
+        ['decorators', { decoratorsBeforeExport: true }],
         'classProperties',
         'classPrivateProperties',
         'classPrivateMethods',
