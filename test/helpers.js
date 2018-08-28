@@ -9,7 +9,6 @@ const PARSER_OPTS = {
     'flow',
     'doExpressions',
     'objectRestSpread',
-    'decorators',
     'classProperties',
     'exportDefaultFrom',
     'exportNamespaceFrom',
