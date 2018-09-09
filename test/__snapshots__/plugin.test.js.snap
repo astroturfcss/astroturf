@@ -147,6 +147,37 @@ const FancierBox =
 styled(FancyBox, \\"FancierBox\\", require(\\"./styled-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");"
 `;
 
+exports[`Plugin styled-global FancierBox: styled-global-FancierBox.css 1`] = `
+".fancier-box {
+
+  color: ultra-red;
+
+}"
+`;
+
+exports[`Plugin styled-global FancyBox: styled-global-FancyBox.css 1`] = `
+".fancy-box {
+
+  color: red;
+  width: 75px;
+  &.primary {
+    background: white;
+    color: palevioletred;
+  }
+
+}"
+`;
+
+exports[`Plugin styled-global js : Compiled JS 1`] = `
+"// prettier-ignore
+const FancyBox =
+/*#__PURE__*/
+styled('div', \\"FancyBox\\", require(\\"./styled-global-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
+const FancierBox =
+/*#__PURE__*/
+styled(FancyBox, \\"FancierBox\\", require(\\"./styled-global-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");"
+`;
+
 exports[`Plugin styled-tag FancierBox: styled-tag-FancierBox.css 1`] = `
 ".fancier-box {
 
@@ -169,7 +200,8 @@ exports[`Plugin styled-tag FancyBox: styled-tag-FancyBox.css 1`] = `
 `;
 
 exports[`Plugin styled-tag js : Compiled JS 1`] = `
-"// prettier-ignore
+"import s from 'css-literal-loader/styled'; // prettier-ignore
+
 const FancyBox =
 /*#__PURE__*/
 styled('div', \\"FancyBox\\", require(\\"./styled-tag-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");

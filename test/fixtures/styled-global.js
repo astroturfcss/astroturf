@@ -1,5 +1,3 @@
-import s from 'css-literal-loader/styled';
-
 // prettier-ignore
 const FancyBox = s('div')`
   color: red;

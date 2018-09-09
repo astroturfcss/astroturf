@@ -51,8 +51,8 @@ function isTag(path, tagName, allowGlobal = false) {
   );
 }
 
-function isStyled(path, styledTag) {
-  if (styledTag) {
+function isStyled(path, styledTag, allowGlobal) {
+  if (allowGlobal) {
     return (
       t.isCallExpression(path.node.tag) &&
       path.get('tag.callee.name').node === styledTag
@@ -164,8 +164,12 @@ export default function plugin() {
 
     visitor: {
       TaggedTemplateExpression(path, state) {
-        const { tagName = 'css', allowGlobal = true, styledTag } = state.opts;
-        if (isStyled(path, styledTag)) {
+        const {
+          tagName = 'css',
+          allowGlobal = true,
+          styledTag = 'styled',
+        } = state.opts;
+        if (isStyled(path, styledTag, allowGlobal)) {
           path.replaceWith(buildStyledComponent(path, state));
           path.addComment('leading', '#__PURE__');
         } else if (isTag(path, tagName, allowGlobal)) {
