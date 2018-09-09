@@ -149,6 +149,35 @@ const FancierBox = styled(FancyBox, \\"FancierBox\\", require(\\"./styled-Fancie
 "
 `;
 
+exports[`Loader styled-tag 0: styled-tag-FancyBox.css 1`] = `
+".fancy-box {
+
+  color: red;
+  width: 75px;
+  &.primary {
+    background: white;
+    color: palevioletred;
+  }
+
+}"
+`;
+
+exports[`Loader styled-tag 1: styled-tag-FancierBox.css 1`] = `
+".fancier-box {
+
+  color: ultra-red;
+
+}"
+`;
+
+exports[`Loader styled-tag js : Compiled JS 1`] = `
+"// prettier-ignore
+const FancyBox = styled('div', \\"FancyBox\\", require(\\"./styled-tag-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
+
+const FancierBox = styled(FancyBox, \\"FancierBox\\", require(\\"./styled-tag-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");
+"
+`;
+
 exports[`Loader typescript 0: typescript-styles.css 1`] = `
 "
   .foo {
