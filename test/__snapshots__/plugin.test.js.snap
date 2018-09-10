@@ -1,5 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Plugin element-shorthand FancyBox: element-shorthand-FancyBox.css 1`] = `
+".fancy-box {
+
+  color: red;
+  width: 75px;
+
+  @media (min-width: 420px) {
+    width: 96px;
+    height: 96px;
+  }
+
+  &.primary {
+    background: white;
+    color: palevioletred;
+  }
+
+}"
+`;
+
+exports[`Plugin element-shorthand js : Compiled JS 1`] = `
+"import styled from 'css-literal-loader/styled';
+const SIZE = 75;
+const FancyBox =
+/*#__PURE__*/
+styled(\\"div\\", null, \\"FancyBox\\", require(\\"./element-shorthand-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");"
+`;
+
 exports[`Plugin example js : Compiled JS 1`] = `
 "import { css as less } from 'css-literal-loader/styled';
 const SIZE = 75;
@@ -43,7 +70,7 @@ exports[`Plugin hoist-import js : Compiled JS 1`] = `
 "import { styled } from 'css-literal-loader/styled';
 const ButtonBase =
 /*#__PURE__*/
-styled('button', \\"ButtonBase\\", require(\\"./hoist-import-ButtonBase.css\\"), \\"button-base\\", \\"buttonBase\\");"
+styled('button', null, \\"ButtonBase\\", require(\\"./hoist-import-ButtonBase.css\\"), \\"button-base\\", \\"buttonBase\\");"
 `;
 
 exports[`Plugin multiple-components FancyBox: multiple-components-FancyBox.css 1`] = `
@@ -85,10 +112,10 @@ const SIZE = 75; // prettier-ignore
 
 const FancyBox =
 /*#__PURE__*/
-styled('div', \\"FancyBox\\", require(\\"./multiple-components-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
+styled('div', null, \\"FancyBox\\", require(\\"./multiple-components-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
 const FancyHeader =
 /*#__PURE__*/
-styled('h2', \\"FancyHeader\\", require(\\"./multiple-components-FancyHeader.css\\"), \\"fancy-header\\", \\"fancyHeader\\");"
+styled('h2', null, \\"FancyHeader\\", require(\\"./multiple-components-FancyHeader.css\\"), \\"fancy-header\\", \\"fancyHeader\\");"
 `;
 
 exports[`Plugin no-global js : Compiled JS 1`] = `
@@ -106,6 +133,48 @@ const styles = less\`
     font-style: italic;
   }
 \`;"
+`;
+
+exports[`Plugin pass-options FancierBox: pass-options-FancierBox.css 1`] = `
+".fancier-box {
+
+  color: ultra-red;
+
+}"
+`;
+
+exports[`Plugin pass-options FancyBox: pass-options-FancyBox.css 1`] = `
+".fancy-box {
+
+  color: red;
+  width: 75px;
+
+  @media (min-width: 420px) {
+    width: 96px;
+    height: 96px;
+  }
+
+  &.primary {
+    background: white;
+    color: palevioletred;
+  }
+
+}"
+`;
+
+exports[`Plugin pass-options js : Compiled JS 1`] = `
+"import styled from 'css-literal-loader/styled';
+const SIZE = 75; // prettier-ignore
+
+const FancyBox =
+/*#__PURE__*/
+styled('div', {
+  someOption: true
+}, \\"FancyBox\\", require(\\"./pass-options-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
+const options = {};
+const FancierBox =
+/*#__PURE__*/
+styled(FancyBox, options, \\"FancierBox\\", require(\\"./pass-options-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");"
 `;
 
 exports[`Plugin styled FancierBox: styled-FancierBox.css 1`] = `
@@ -141,10 +210,10 @@ const SIZE = 75; // prettier-ignore
 
 const FancyBox =
 /*#__PURE__*/
-styled('div', \\"FancyBox\\", require(\\"./styled-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
+styled('div', null, \\"FancyBox\\", require(\\"./styled-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
 const FancierBox =
 /*#__PURE__*/
-styled(FancyBox, \\"FancierBox\\", require(\\"./styled-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");"
+styled(FancyBox, null, \\"FancierBox\\", require(\\"./styled-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");"
 `;
 
 exports[`Plugin with-props RedPasswordInput: with-props-RedPasswordInput.css 1`] = `
@@ -162,5 +231,5 @@ const RedPasswordInput = withProps({
   type: 'password'
 })(
 /*#__PURE__*/
-styled('input', \\"RedPasswordInput\\", require(\\"./with-props-RedPasswordInput.css\\"), \\"red-password-input\\", \\"redPasswordInput\\"));"
+styled('input', null, \\"RedPasswordInput\\", require(\\"./with-props-RedPasswordInput.css\\"), \\"red-password-input\\", \\"redPasswordInput\\"));"
 `;
