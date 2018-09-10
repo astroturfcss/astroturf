@@ -4,7 +4,14 @@ import React from 'react'; // eslint-disable-line import/no-extraneous-dependenc
 
 const has = Object.prototype.hasOwnProperty;
 
-export function styled(type, displayName, styles, kebabName, camelName) {
+export function styled(
+  type,
+  options,
+  displayName,
+  styles,
+  kebabName,
+  camelName,
+) {
   const componentClassName = has.call(styles, kebabName)
     ? styles[kebabName]
     : styles[camelName];

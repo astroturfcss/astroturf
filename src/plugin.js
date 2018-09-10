@@ -10,7 +10,7 @@ import generate from '@babel/generator';
 
 const buildImport = template('require(FILENAME);');
 const buildComponent = template(
-  `styled(TAGNAME, DISPLAYNAME, IMPORT, KEBABNAME, CAMELNAME)`,
+  `styled(TAGNAME, OPTIONS, DISPLAYNAME, IMPORT, KEBABNAME, CAMELNAME)`,
 );
 
 const STYLES = Symbol('CSSLiteralLoader');
@@ -93,7 +93,7 @@ export default function plugin() {
     return buildImport({ FILENAME: t.StringLiteral(style.filename) }); // eslint-disable-line new-cap
   }
 
-  function buildStyledComponent(path, tagName, state) {
+  function buildStyledComponent(path, tagName, options, state) {
     const cssState = state.file.get(STYLES);
     const displayName = getIdentifier(path) || tagName.value;
 
@@ -107,6 +107,7 @@ export default function plugin() {
 
     const runtimeNode = buildComponent({
       TAGNAME: tagName,
+      OPTIONS: options || t.NullLiteral(),
       DISPLAYNAME: t.StringLiteral(displayName),
       IMPORT: buildImport({
         FILENAME: t.StringLiteral(style.filename),
@@ -158,8 +159,10 @@ export default function plugin() {
           path.get('tag.callee').referencesImport('css-literal-loader/styled')
         ) {
           const componentType = get(path.get('tag'), 'node.arguments[0]');
-
-          path.replaceWith(buildStyledComponent(path, componentType, state));
+          const options = get(path.get('tag'), 'node.arguments[1]');
+          path.replaceWith(
+            buildStyledComponent(path, componentType, options, state),
+          );
           path.addComment('leading', '#__PURE__');
 
           // styled.button` ... `
@@ -172,7 +175,9 @@ export default function plugin() {
             path.get('tag.property').node.name,
           );
 
-          path.replaceWith(buildStyledComponent(path, componentType, state));
+          path.replaceWith(
+            buildStyledComponent(path, componentType, null, state),
+          );
           path.addComment('leading', '#__PURE__');
 
           // lone css`` tag
