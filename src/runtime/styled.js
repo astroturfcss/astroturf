@@ -2,30 +2,19 @@ import classNames from 'classnames';
 import camelCase from 'lodash/camelCase';
 import React from 'react'; // eslint-disable-line import/no-extraneous-dependencies
 
-import reactPropsRegex from './props';
-
 const has = Object.prototype.hasOwnProperty;
-
-function omitNonHostProps(props) {
-  const result = {};
-  Object.keys(props).forEach(key => {
-    if (reactPropsRegex.test(key)) result[key] = props[key];
-  });
-  return result;
-}
 
 export function styled(type, displayName, styles, kebabName, camelName) {
   const componentClassName = has.call(styles, kebabName)
     ? styles[kebabName]
     : styles[camelName];
-  const omit = typeof type === 'string' ? omitNonHostProps : null;
 
   const hasModifiers = Object.keys(styles).some(
     className => className !== camelName && className !== kebabName,
   );
 
   function Styled(props) {
-    const childProps = omit ? omit(props) : { ...props };
+    const childProps = { ...props };
 
     delete childProps.innerRef;
     childProps.ref = props.innerRef;

@@ -10,7 +10,7 @@
     "test": "jest",
     "tdd": "jest --watch",
     "prepublishOnly": "npm run build",
-    "build": "rimraf lib/* && babel src --out-dir lib && node tools/compile-regex.js",
+    "build": "rimraf lib/* && babel src --out-dir lib --delete-dir-on-start",
     "start": "webpack-dev-server --config ./example/webpack.config.js"
   },
   "lint-staged": {
