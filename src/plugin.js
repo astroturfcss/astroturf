@@ -10,7 +10,7 @@ import generate from '@babel/generator';
 
 const buildImport = template('require(FILENAME);');
 const buildComponent = template(
-  `styled(TAGNAME, DISPLAYNAME, IMPORT, KEBABNAME, CAMELNAME)`,
+  `styled(TAGNAME, OPTIONS, DISPLAYNAME, IMPORT, KEBABNAME, CAMELNAME)`,
 );
 
 const STYLES = Symbol('CSSLiteralLoader');
@@ -106,10 +106,8 @@ export default function plugin() {
     return buildImport({ FILENAME: t.StringLiteral(style.filename) }); // eslint-disable-line new-cap
   }
 
-  function buildStyledComponent(path, state) {
+  function buildStyledComponent(path, tagName, options, state) {
     const cssState = state.file.get(STYLES);
-
-    const tagName = get(path.get('tag'), 'node.arguments[0]');
     const displayName = getIdentifier(path) || tagName.value;
 
     const style = createStyleNode(path, state, displayName);
@@ -122,12 +120,13 @@ export default function plugin() {
 
     const runtimeNode = buildComponent({
       TAGNAME: tagName,
+      OPTIONS: options || t.NullLiteral(),
       DISPLAYNAME: t.StringLiteral(displayName),
       IMPORT: buildImport({
         FILENAME: t.StringLiteral(style.filename),
       }).expression,
       KEBABNAME: t.StringLiteral(kebabName),
-      CAMELNAME: t.stringLiteral(camelCase(kebabName)),
+      CAMELNAME: t.StringLiteral(camelCase(kebabName)),
     });
 
     if (state.opts.generateInterpolations)
@@ -172,6 +171,23 @@ export default function plugin() {
         if (isStyled(path, styledTag, allowGlobal)) {
           path.replaceWith(buildStyledComponent(path, state));
           path.addComment('leading', '#__PURE__');
+
+          // styled.button` ... `
+        } else if (
+          t.isMemberExpression(node.tag) &&
+          t.isIdentifier(path.get('tag.property').node) &&
+          path.get('tag.object').referencesImport('css-literal-loader/styled')
+        ) {
+          const componentType = t.StringLiteral(
+            path.get('tag.property').node.name,
+          );
+
+          path.replaceWith(
+            buildStyledComponent(path, componentType, null, state),
+          );
+          path.addComment('leading', '#__PURE__');
+
+          // lone css`` tag
         } else if (isTag(path, tagName, allowGlobal)) {
           path.replaceWith(buildStyleRequire(path, state));
           path.addComment('leading', '#__PURE__');

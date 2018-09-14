@@ -174,6 +174,38 @@ const Title = styled('h3')`
 `;
 ```
 
+#### Keyframes and global
+
+Everything in `css` will be used as normal CSS Modules styles.
+So, if you need to insert some CSS without isolation (like reset with [postcss-normalize](https://github.com/csstools/postcss-normalize)):
+
+```js
+css`
+  @import-normalize;
+
+  :global(.btn) {
+    background: blue;
+  }
+`
+```
+
+With [postcss-nested](https://github.com/postcss/postcss-nested) you can
+add keyframes to specific component (and keyframes name will not be global):
+
+```js
+const Loader = styled('div')`
+  @keyframes rotation {
+    animation-name: rotation;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    to {
+      transform: rotate(360deg);
+    }
+  }
+`;
+```
+
 ### With props
 
 It can also be useful to create components with props already applied, like the example below. We recommend using recompose's `withProps` higher-order component to do this.

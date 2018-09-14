@@ -1,5 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Loader element-shorthand 0: element-shorthand-FancyBox.css 1`] = `
+".fancy-box {
+
+  color: red;
+  width: 75px;
+
+  @media (min-width: 420px) {
+    width: 96px;
+    height: 96px;
+  }
+
+  &.primary {
+    background: white;
+    color: palevioletred;
+  }
+
+}"
+`;
+
+exports[`Loader element-shorthand js : Compiled JS 1`] = `
+"import styled from 'css-literal-loader/styled';
+
+const SIZE = 75;
+
+const FancyBox = styled(\\"div\\", null, \\"FancyBox\\", require(\\"./element-shorthand-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
+"
+`;
+
 exports[`Loader example 0: example-styles.less 1`] = `
 "
   .foo {
@@ -42,7 +70,7 @@ exports[`Loader hoist-import 0: hoist-import-ButtonBase.css 1`] = `
 exports[`Loader hoist-import js : Compiled JS 1`] = `
 "import { styled } from 'css-literal-loader/styled';
 
-const ButtonBase = styled('button', \\"ButtonBase\\", require(\\"./hoist-import-ButtonBase.css\\"), \\"button-base\\", \\"buttonBase\\");
+const ButtonBase = styled('button', null, \\"ButtonBase\\", require(\\"./hoist-import-ButtonBase.css\\"), \\"button-base\\", \\"buttonBase\\");
 "
 `;
 
@@ -85,9 +113,9 @@ exports[`Loader multiple-components js : Compiled JS 1`] = `
 const SIZE = 75;
 
 // prettier-ignore
-const FancyBox = styled('div', \\"FancyBox\\", require(\\"./multiple-components-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
+const FancyBox = styled('div', null, \\"FancyBox\\", require(\\"./multiple-components-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
 
-const FancyHeader = styled('h2', \\"FancyHeader\\", require(\\"./multiple-components-FancyHeader.css\\"), \\"fancy-header\\", \\"fancyHeader\\");
+const FancyHeader = styled('h2', null, \\"FancyHeader\\", require(\\"./multiple-components-FancyHeader.css\\"), \\"fancy-header\\", \\"fancyHeader\\");
 "
 `;
 
@@ -107,6 +135,49 @@ const styles = less\`
     font-style: italic;
   }
 \`;
+"
+`;
+
+exports[`Loader pass-options 0: pass-options-FancyBox.css 1`] = `
+".fancy-box {
+
+  color: red;
+  width: 75px;
+
+  @media (min-width: 420px) {
+    width: 96px;
+    height: 96px;
+  }
+
+  &.primary {
+    background: white;
+    color: palevioletred;
+  }
+
+}"
+`;
+
+exports[`Loader pass-options 1: pass-options-FancierBox.css 1`] = `
+".fancier-box {
+
+  color: ultra-red;
+
+}"
+`;
+
+exports[`Loader pass-options js : Compiled JS 1`] = `
+"import styled from 'css-literal-loader/styled';
+
+const SIZE = 75;
+
+// prettier-ignore
+const FancyBox = styled('div', {
+  someOption: true
+}, \\"FancyBox\\", require(\\"./pass-options-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
+
+const options = {};
+
+const FancierBox = styled(FancyBox, options, \\"FancierBox\\", require(\\"./pass-options-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");
 "
 `;
 
@@ -143,9 +214,9 @@ exports[`Loader styled js : Compiled JS 1`] = `
 const SIZE = 75;
 
 // prettier-ignore
-const FancyBox = styled('div', \\"FancyBox\\", require(\\"./styled-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
+const FancyBox = styled('div', null, \\"FancyBox\\", require(\\"./styled-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
 
-const FancierBox = styled(FancyBox, \\"FancierBox\\", require(\\"./styled-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");
+const FancierBox = styled(FancyBox, null, \\"FancierBox\\", require(\\"./styled-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");
 "
 `;
 
@@ -267,6 +338,6 @@ import withProps from 'recompose/withProps';
 
 const RedPasswordInput = withProps({
   type: 'password',
-})(styled('input', \\"RedPasswordInput\\", require(\\"./with-props-RedPasswordInput.css\\"), \\"red-password-input\\", \\"redPasswordInput\\"));
+})(styled('input', null, \\"RedPasswordInput\\", require(\\"./with-props-RedPasswordInput.css\\"), \\"red-password-input\\", \\"redPasswordInput\\"));
 "
 `;
