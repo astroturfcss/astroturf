@@ -198,6 +198,7 @@ const Loader = styled('div')`
   animation-duration: 1s;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
+
   @keyframes rotation {
     to {
       transform: rotate(360deg);
