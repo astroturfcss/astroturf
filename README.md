@@ -194,11 +194,12 @@ add keyframes to specific component (and keyframes name will not be global):
 
 ```js
 const Loader = styled('div')`
+  animation-name: rotation;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
   @keyframes rotation {
-    animation-name: rotation;
-    animation-duration: 1s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
     to {
       transform: rotate(360deg);
     }
