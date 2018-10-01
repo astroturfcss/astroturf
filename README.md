@@ -256,7 +256,7 @@ Add the css-literal-loader to JavaScript loader configuration, and whatever you 
 css-literal-loader accepts a few query options.
 
 * **tagName**: (default: `'css'`) The tag identifier used to locate inline css literals and extract them.
-* **styledTag**: (default: `undefined`) The tag identifier used to locate components. By default it will auto-detect variables based on `import`.
+* **styledTag**: (default: `'styled'`) The tag identifier used to locate components.
 * **extension**: (default: `'.css'`) the extension used for extracted "virtual" files. Change to whatever file type you want webpack to process extracted literals as.
 
 **Note:** css-literal-loader expects uncompiled JavaScript code, If you are using babel or Typescript to transform tagged template literals, ensure the loader runs _before_ babel or typescript loaders.

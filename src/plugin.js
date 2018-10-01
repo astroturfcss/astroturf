@@ -51,6 +51,19 @@ function isTag(path, tagName, allowGlobal = false) {
   );
 }
 
+function isStyled(path, styledTag, allowGlobal) {
+  if (allowGlobal) {
+    return (
+      t.isCallExpression(path.node.tag) &&
+      path.get('tag.callee.name').node === styledTag
+    );
+  }
+  return (
+    t.isCallExpression(path.node.tag) &&
+    path.get('tag.callee').referencesImport('css-literal-loader/styled')
+  );
+}
+
 export default function plugin() {
   function evaluate(path) {
     const { confident, value } = path.evaluate();
@@ -150,19 +163,13 @@ export default function plugin() {
 
     visitor: {
       TaggedTemplateExpression(path, state) {
-        const { tagName = 'css', allowGlobal = true } = state.opts;
-        const { node } = path;
-
-        // styled('button')` ... `
-        if (
-          t.isCallExpression(node.tag) &&
-          path.get('tag.callee').referencesImport('css-literal-loader/styled')
-        ) {
-          const componentType = get(path.get('tag'), 'node.arguments[0]');
-          const options = get(path.get('tag'), 'node.arguments[1]');
-          path.replaceWith(
-            buildStyledComponent(path, componentType, options, state),
-          );
+        const {
+          tagName = 'css',
+          allowGlobal = true,
+          styledTag = 'styled',
+        } = state.opts;
+        if (isStyled(path, styledTag, allowGlobal)) {
+          path.replaceWith(buildStyledComponent(path, state));
           path.addComment('leading', '#__PURE__');
 
           // styled.button` ... `

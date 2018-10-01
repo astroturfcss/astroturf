@@ -23,11 +23,13 @@ CssLiteralLoaderError.prototype = Object.create(Error.prototype);
 CssLiteralLoaderError.prototype.constructor = CssLiteralLoaderError;
 
 function collectStyles(src, filename, opts) {
+  const tagName = opts.tagName || 'css';
+  const styledTag = opts.styledTag || 'styled';
   // quick regex as an optimization to avoid parsing each file
   if (
     !src.match(
       new RegExp(
-        `(${opts.tagName || 'css'}|styled.+?)\\s*\`([\\s\\S]*?)\``,
+        `(${tagName}|${styledTag}\\(.+\\))\\s*\`([\\s\\S]*?)\``,
         'gmi',
       ),
     )
