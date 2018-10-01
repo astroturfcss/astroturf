@@ -147,22 +147,22 @@ The goal of this API is not to mimic or reimplement the features of other css-in
 a more ergonomic way to write normal css/less/sass next to your javascript.
 
 What does that mean? css-in-js libraries are often a _replacement_ for css preprocessors, in that they provide ways of doing variables, composition, mixins, imports etc. Usually they accomplish this by leaning
-on JS language features where appropriate, and adding there own domain-specific language bits when needed.
+on JS language features where appropriate, and adding their own domain-specific language bits when needed.
 
 astroturf **doesn't try to do any of that** because it's not trying to replace preprocessors but rather, make component-centric javascript work better with **existing** styling tooling. This means at a minimum it needs to scope styles to the component (handled by css-modules) and map those styles to your component's API (props), which is what the above API strives for.
 
 This approach **gains** us:
 
 - No additional work to extract styles for further optimization (autoprefixer, minifying, moving them to a CDN, etc)
-- The smallest runtime, its essentially zero.
-- Blazing Fast™ because there is zero runtime evaluation of styles.
-- Leverage the well trod and huge css preprocesser ecosystems
+- The smallest runtime, it's essentially zero
+- Blazing Fast™ because there is zero runtime evaluation of styles
+- Leverage the well-trod and huge css preprocesser ecosystems
 
 It also means we **sacrifice**:
 
-- A fine grained style mapping to props. Props map to classes, its all very BEM-y but automatted
+- A fine-grained style mapping to props. Props map to classes, its all very BEM-y but automated
 - Dynamism in sharing values between js and css
-- A unified js only headspace, you still need to think in terms of JS and CSS
+- A unified JS-only headspace, you still need to think in terms of JS and CSS
 
 ### Composition, variables, etc?
 
@@ -242,7 +242,7 @@ class App extends React.Component {
 This works great for local variables, since the compiler can determine their
 value at compile time and share them. For cases when you want to share things a bit more globally, such as in a theme, we recommend leaning on your css preprocesser again.
 
-css-modules provides a syntax for exporting values from styles, generally this is used for class names, but you can leaverage it for whatever values you want. Combined with something like Sass's variables it ends up being a powerful tool.
+css-modules provides a syntax for exporting values from styles, generally this is used for class names, but you can leverage it for whatever values you want. Combined with something like Sass's variables it ends up being a powerful tool.
 
 ```js
 const breakpointValues = css`
@@ -366,7 +366,7 @@ If you want the simplest, most bare-bones setup you can use the included `css-lo
 }
 ```
 
-You can add on here as you would normally for additional preprocesser setup. Here's how'd might setup Sass.
+You can add on here as you would normally for additional preprocesser setup. Here's how you might set up Sass:
 
 ```js
 {
