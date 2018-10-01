@@ -20,7 +20,7 @@ exports[`Loader element-shorthand 0: element-shorthand-FancyBox.css 1`] = `
 `;
 
 exports[`Loader element-shorthand js : Compiled JS 1`] = `
-"import styled from 'css-literal-loader/styled';
+"import styled from 'astroturf';
 
 const SIZE = 75;
 
@@ -45,7 +45,7 @@ exports[`Loader example 0: example-styles.less 1`] = `
 `;
 
 exports[`Loader example js : Compiled JS 1`] = `
-"import { css as less } from 'css-literal-loader/styled';
+"import { css as less } from 'astroturf';
 
 const SIZE = 75;
 
@@ -68,7 +68,7 @@ exports[`Loader hoist-import 0: hoist-import-ButtonBase.css 1`] = `
 `;
 
 exports[`Loader hoist-import js : Compiled JS 1`] = `
-"import { styled } from 'css-literal-loader/styled';
+"import { styled } from 'astroturf';
 
 const ButtonBase = styled('button', null, \\"ButtonBase\\", require(\\"./hoist-import-ButtonBase.css\\"), \\"button-base\\", \\"buttonBase\\");
 "
@@ -108,7 +108,7 @@ exports[`Loader multiple-components 1: multiple-components-FancyHeader.css 1`] =
 `;
 
 exports[`Loader multiple-components js : Compiled JS 1`] = `
-"import { styled, css } from 'css-literal-loader/styled';
+"import styled, { css } from 'astroturf';
 
 const SIZE = 75;
 
@@ -166,7 +166,7 @@ exports[`Loader pass-options 1: pass-options-FancierBox.css 1`] = `
 `;
 
 exports[`Loader pass-options js : Compiled JS 1`] = `
-"import styled from 'css-literal-loader/styled';
+"import styled from 'astroturf';
 
 const SIZE = 75;
 
@@ -209,7 +209,7 @@ exports[`Loader styled 1: styled-FancierBox.css 1`] = `
 `;
 
 exports[`Loader styled js : Compiled JS 1`] = `
-"import styled from 'css-literal-loader/styled';
+"import styled from 'astroturf';
 
 const SIZE = 75;
 
@@ -271,7 +271,7 @@ exports[`Loader styled-tag 1: styled-tag-FancierBox.css 1`] = `
 `;
 
 exports[`Loader styled-tag js : Compiled JS 1`] = `
-"import s from 'css-literal-loader/styled';
+"import s from 'astroturf';
 
 // prettier-ignore
 const FancyBox = styled('div', null, \\"FancyBox\\", require(\\"./styled-tag-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
@@ -297,7 +297,7 @@ exports[`Loader typescript 0: typescript-styles.css 1`] = `
 `;
 
 exports[`Loader typescript js : Compiled JS 1`] = `
-"import { css } from 'css-literal-loader/styled';
+"import { css } from 'astroturf';
 import React from 'react';
 
 const SIZE = 75;
@@ -333,7 +333,7 @@ exports[`Loader with-props 0: with-props-RedPasswordInput.css 1`] = `
 `;
 
 exports[`Loader with-props js : Compiled JS 1`] = `
-"import { styled } from 'css-literal-loader/styled';
+"import { styled } from 'astroturf';
 import withProps from 'recompose/withProps';
 
 const RedPasswordInput = withProps({

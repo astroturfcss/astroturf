@@ -1,4 +1,4 @@
-import styled from 'css-literal-loader/styled'; // eslint-disable-line import/no-extraneous-dependencies
+import styled from 'astroturf'; // eslint-disable-line import/no-extraneous-dependencies
 
 const Button = styled('button')`
   @import '~./styles/mixins.scss';

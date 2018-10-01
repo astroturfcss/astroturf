@@ -1,4 +1,4 @@
-import { css } from 'css-literal-loader/styled';
+import { css } from 'astroturf';
 import React from 'react';
 
 const SIZE = 75;

@@ -1,4 +1,4 @@
-import { styled, css } from 'css-literal-loader/styled';
+import styled, { css } from 'astroturf';
 
 const SIZE = 75;
 

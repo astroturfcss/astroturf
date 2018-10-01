@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { css } from 'css-literal-loader/styled'; // eslint-disable-line import/no-extraneous-dependencies
+import { css } from 'astroturf'; // eslint-disable-line import/no-extraneous-dependencies
 
-import 'bootstrap/scss/bootstrap-reboot.scss';
+// import 'bootstrap/scss/bootstrap-reboot.scss';
 
 import Button from './Button';
 

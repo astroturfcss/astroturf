@@ -1,4 +1,4 @@
-import s from 'css-literal-loader/styled';
+import s from 'astroturf';
 
 // prettier-ignore
 const FancyBox = s('div')`

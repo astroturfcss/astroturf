@@ -48,7 +48,7 @@ export function babelRunFixture(fixture) {
       parserOpts: PARSER_OPTS,
     });
 
-    const { styles } = metadata['css-literal-loader'] || {};
+    const { styles } = metadata.astroturf || {};
 
     it('js ', () => {
       expect(code).toMatchSnapshot(`Compiled JS`);

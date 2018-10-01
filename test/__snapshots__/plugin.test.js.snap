@@ -20,7 +20,7 @@ exports[`Plugin element-shorthand FancyBox: element-shorthand-FancyBox.css 1`] =
 `;
 
 exports[`Plugin element-shorthand js : Compiled JS 1`] = `
-"import styled from 'css-literal-loader/styled';
+"import styled from 'astroturf';
 const SIZE = 75;
 const FancyBox =
 /*#__PURE__*/
@@ -28,7 +28,7 @@ styled(\\"div\\", null, \\"FancyBox\\", require(\\"./element-shorthand-FancyBox.
 `;
 
 exports[`Plugin example js : Compiled JS 1`] = `
-"import { css as less } from 'css-literal-loader/styled';
+"import { css as less } from 'astroturf';
 const SIZE = 75;
 
 const styles =
@@ -67,7 +67,7 @@ exports[`Plugin hoist-import ButtonBase: hoist-import-ButtonBase.css 1`] = `
 `;
 
 exports[`Plugin hoist-import js : Compiled JS 1`] = `
-"import { styled } from 'css-literal-loader/styled';
+"import { styled } from 'astroturf';
 const ButtonBase =
 /*#__PURE__*/
 styled('button', null, \\"ButtonBase\\", require(\\"./hoist-import-ButtonBase.css\\"), \\"button-base\\", \\"buttonBase\\");"
@@ -107,7 +107,7 @@ exports[`Plugin multiple-components FancyHeader: multiple-components-FancyHeader
 `;
 
 exports[`Plugin multiple-components js : Compiled JS 1`] = `
-"import { styled, css } from 'css-literal-loader/styled';
+"import styled, { css } from 'astroturf';
 const SIZE = 75; // prettier-ignore
 
 const FancyBox =
@@ -163,7 +163,7 @@ exports[`Plugin pass-options FancyBox: pass-options-FancyBox.css 1`] = `
 `;
 
 exports[`Plugin pass-options js : Compiled JS 1`] = `
-"import styled from 'css-literal-loader/styled';
+"import styled from 'astroturf';
 const SIZE = 75; // prettier-ignore
 
 const FancyBox =
@@ -205,7 +205,7 @@ exports[`Plugin styled FancyBox: styled-FancyBox.css 1`] = `
 `;
 
 exports[`Plugin styled js : Compiled JS 1`] = `
-"import styled from 'css-literal-loader/styled';
+"import styled from 'astroturf';
 const SIZE = 75; // prettier-ignore
 
 const FancyBox =
@@ -269,7 +269,7 @@ exports[`Plugin styled-tag FancyBox: styled-tag-FancyBox.css 1`] = `
 `;
 
 exports[`Plugin styled-tag js : Compiled JS 1`] = `
-"import s from 'css-literal-loader/styled'; // prettier-ignore
+"import s from 'astroturf'; // prettier-ignore
 
 const FancyBox =
 /*#__PURE__*/
@@ -288,7 +288,7 @@ exports[`Plugin with-props RedPasswordInput: with-props-RedPasswordInput.css 1`]
 `;
 
 exports[`Plugin with-props js : Compiled JS 1`] = `
-"import { styled } from 'css-literal-loader/styled';
+"import { styled } from 'astroturf';
 import withProps from 'recompose/withProps';
 const RedPasswordInput = withProps({
   type: 'password'

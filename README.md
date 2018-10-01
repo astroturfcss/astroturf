@@ -1,7 +1,27 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [astroturf](#astroturf)
+  - [Usage](#usage)
+  - [Component API](#component-api)
+    - [WHY?!](#why)
+    - [Composition, variables, etc?](#composition-variables-etc)
+    - [Sharing values between styles and JavaScript](#sharing-values-between-styles-and-javascript)
+    - [Keyframes and global](#keyframes-and-global)
+    - [With props](#with-props)
+  - [Setup](#setup)
+    - [Options](#options)
+    - [Use without webpack](#use-without-webpack)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # astroturf
 
 A close enough aproximation of a css-in-js library that's actually plain css. It's "Inline css" that
 just works with CSS, PostCSS, Less, Sass, or any other css preprocessor, and plays nicely with existing style tooling like `mini-css-extract-plugin`.
+
+## Usage
 
 ```js
 import React from 'react';
@@ -44,7 +64,7 @@ const styles = css`
 `;
 ```
 
-### Component API
+## Component API
 
 For those that want something a bit more like styled-components or emotion, there is a component API!
 
@@ -144,7 +164,7 @@ It also means we **sacrifice**:
 - Dynamism in sharing values between js and css
 - A unified js only headspace, you still need to think in terms of JS and CSS
 
-#### Composition, variables, etc?
+### Composition, variables, etc?
 
 How you accomplish that is mostly up to your preprocessor. Leverage Sass variables, or Less mixins, or postcss nesting polyfills, or whatever. The css you're writing is treated exactly like a normal style file so all the tooling you're used to works as expected. For composition, specifically around classes, you can also use css-modules `composes` to compose styles, since astroturf extracts styles to consistent names;
 
@@ -185,7 +205,7 @@ const Title = styled('h3')`
 `;
 ```
 
-#### Sharing values between styles and JavaScript
+### Sharing values between styles and JavaScript
 
 We've found that in practice, you rarely have to share values between the two, but there are times when it's
 very convenient. Astroturf ofters two ways to do this, the first is string interpolations.
@@ -252,7 +272,7 @@ class Responsive extends React.Component {
 }
 ```
 
-#### Keyframes and global
+### Keyframes and global
 
 Everything in `css` will be used as normal CSS Modules styles.
 So, if you need to insert some CSS without isolation (like reset with [postcss-normalize](https://github.com/csstools/postcss-normalize)):
@@ -302,31 +322,65 @@ const PasswordInput = withProps({ type: 'password' })(styled('input')`
 
 ## Setup
 
-Add the astroturf to JavaScript loader configuration, and whatever you want to handle `.css` files:
+If you want the simplest, most bare-bones setup you can use the included `css-loader` which will setup css-modules and postcss-nested. This is the minimum setup necessary to get it working. Any options passed to the loader are passed to the official webpack `css-loader`
 
 ```js
 {
- module: {
-   rules: {
-     {
-       test: /\.css$/,
-       use: [
-         'style-loader',
-        { loader: 'css-loader', options: { modules: true } }
-      ],
-     },
-     {
-       test: /\.js$/,
-       use: ['babel-loader', 'astroturf/loader'],
-     },
-     // astroturf works out of the box with typescript (.ts or .tsx files).
-     {
-       test: /\.tsx?$/,
-       use: ['ts-loader', 'astroturf/loader'],
-     },
-   }
- }
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'astroturf/css-loader'],
+      },
+      {
+        test: /\.jsx?$/,
+        use: ['babel-loader', 'astroturf/loader'],
+      },
+      // astroturf works out of the box with typescript (.ts or .tsx files).
+      {
+        test: /\.tsx?$/,
+        use: ['ts-loader', 'astroturf/loader'],
+      },
+    }
+  ]
 }
+```
+
+You can add on here as you would normally for addiitional preprocesser setup. Here's how'd might setup Sass.
+
+```js
+{
+  module: {
+    rules: [
+      {
+        test: /\module\.scss$/,
+        use: ['style-loader', 'astroturf/css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.jsx?$/,
+        use: [
+          'babel-loader',
+          {
+            loader: 'astroturf/loader',
+            options: { extension: '.module.scss' },
+          },
+        ],
+      },
+    ];
+  }
+}
+```
+
+You can also skip the included `css-loader` entirely if your preprocessor handles nesting out of the box (like most do).
+
+```js
+[
+  {
+    test: /\.scss$/,
+    use: ['style-loader', 'css-loader?modules=true', 'sass-loader'],
+  },
+  ...
+]
 ```
 
 ### Options
@@ -339,7 +393,7 @@ astroturf accepts a few query options.
 
 **Note:** astroturf expects uncompiled JavaScript code, If you are using babel or Typescript to transform tagged template literals, ensure the loader runs _before_ babel or typescript loaders.
 
-## Use without webpack
+### Use without webpack
 
 If you aren't using webpack and still want to define styles inline, there is a babel plugin for that.
 
