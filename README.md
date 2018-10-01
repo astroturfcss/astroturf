@@ -7,7 +7,6 @@ just works with CSS, PostCSS, Less, Sass, or any other css preprocessor, and pla
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-<<<<<<< HEAD
 - [Usage](#usage)
 - [Component API](#component-api)
   - [WHY?!](#why)
@@ -15,23 +14,10 @@ just works with CSS, PostCSS, Less, Sass, or any other css preprocessor, and pla
   - [Sharing values between styles and JavaScript](#sharing-values-between-styles-and-javascript)
   - [Keyframes and global](#keyframes-and-global)
   - [With props](#with-props)
+  - [`as` prop](#as-prop)
 - [Setup](#setup)
   - [Options](#options)
   - [Use without webpack](#use-without-webpack)
-=======
-- [astroturf](#astroturf)
-  - [Usage](#usage)
-  - [Component API](#component-api)
-    - [WHY?!](#why)
-    - [Composition, variables, etc?](#composition-variables-etc)
-    - [Sharing values between styles and JavaScript](#sharing-values-between-styles-and-javascript)
-    - [Keyframes and global](#keyframes-and-global)
-    - [With props](#with-props)
-    - [`as` prop](#as-prop)
-  - [Setup](#setup)
-    - [Options](#options)
-    - [Use without webpack](#use-without-webpack)
->>>>>>> add 'as' prop
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
