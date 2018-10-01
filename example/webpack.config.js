@@ -1,8 +1,7 @@
 const path = require('path');
 
-const { rules, plugins } = require('webpack-atoms').createAtoms({
+const { rules, plugins, loaders } = require('webpack-atoms').createAtoms({
   env: 'development',
-  useMiniExtract: true,
 });
 
 const inlineRule = rules.js();
@@ -25,16 +24,25 @@ module.exports = {
   module: {
     rules: [
       inlineRule,
-      rules.css.modules(),
       {
-        oneOf: [rules.sass.external(), rules.sass.modules()],
+        oneOf: [
+          rules.sass.external(),
+          {
+            test: /\.module\.scss/,
+            use: [
+              loaders.style(),
+              require.resolve('../lib/css-loader'),
+              loaders.sass(),
+            ],
+          },
+        ],
       },
     ],
   },
   mode: 'development',
   resolve: {
     alias: {
-      'css-literal-loader': path.resolve(__dirname, '../'),
+      astroturf: path.resolve(__dirname, '../lib/index.js'),
     },
   },
   plugins: [plugins.html()],

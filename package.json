@@ -10,7 +10,7 @@
     "tdd": "jest --watch",
     "prepublishOnly": "npm run build",
     "build": "rimraf lib/* && babel src --out-dir lib --delete-dir-on-start",
-    "start": "webpack-dev-server --config ./example/webpack.config.js"
+    "start": "npm run -C ./example start"
   },
   "lint-staged": {
     "*.js": [
@@ -64,6 +64,7 @@
     "eslint-config-4catalyzer": "^0.4.4",
     "eslint-config-4catalyzer-react": "^0.4.4",
     "eslint-config-prettier": "^3.0.1",
+    "eslint-import-resolver-webpack": "^0.10.1",
     "eslint-plugin-babel": "^5.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
@@ -94,7 +95,9 @@
     "fs-extra": "^7.0.0",
     "loader-utils": "^1.1.0",
     "lodash": "^4.17.10",
-    "memory-fs": "^0.4.1"
+    "memory-fs": "^0.4.1",
+    "postcss-loader": "^3.0.0",
+    "postcss-nested": "^4.1.0"
   },
   "release": {
     "publishDir": "lib"

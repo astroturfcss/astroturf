@@ -302,31 +302,65 @@ const PasswordInput = withProps({ type: 'password' })(styled('input')`
 
 ## Setup
 
-Add the astroturf to JavaScript loader configuration, and whatever you want to handle `.css` files:
+If you want the simplest, most bare-bones setup you can use the included `css-loader` which will setup css-modules and postcss-nested. This is the minimun setup necessary to get it working. Any options passed to the loader are passed to the official webpack `css-loader`
 
 ```js
 {
- module: {
-   rules: {
-     {
-       test: /\.css$/,
-       use: [
-         'style-loader',
-        { loader: 'css-loader', options: { modules: true } }
-      ],
-     },
-     {
-       test: /\.js$/,
-       use: ['babel-loader', 'astroturf/loader'],
-     },
-     // astroturf works out of the box with typescript (.ts or .tsx files).
-     {
-       test: /\.tsx?$/,
-       use: ['ts-loader', 'astroturf/loader'],
-     },
-   }
- }
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'astroturf/css-loader'],
+      },
+      {
+        test: /\.jsx?$/,
+        use: ['babel-loader', 'astroturf/loader'],
+      },
+      // astroturf works out of the box with typescript (.ts or .tsx files).
+      {
+        test: /\.tsx?$/,
+        use: ['ts-loader', 'astroturf/loader'],
+      },
+    }
+  ]
 }
+```
+
+You can add on here as you would normally for addiitional preprocesser setup. Here's how'd might setup Sass.
+
+```js
+{
+  module: {
+    rules: [
+      {
+        test: /\module\.scss$/,
+        use: ['style-loader', 'astroturf/css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.jsx?$/,
+        use: [
+          'babel-loader',
+          {
+            loader: 'astroturf/loader',
+            options: { extension: '.module.scss' },
+          },
+        ],
+      },
+    ];
+  }
+}
+```
+
+You can also skip the included `css-loader` entirely if your preprocessor handles nesting out of the box (like most do).
+
+```js
+[
+  {
+    test: /\.scss$/,
+    use: ['style-loader', 'css-loader?modules=true', 'sass-loader'],
+  },
+  ...
+]
 ```
 
 ### Options
