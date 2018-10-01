@@ -1,25 +1,24 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-- [astroturf](#astroturf)
-  - [Usage](#usage)
-  - [Component API](#component-api)
-    - [WHY?!](#why)
-    - [Composition, variables, etc?](#composition-variables-etc)
-    - [Sharing values between styles and JavaScript](#sharing-values-between-styles-and-javascript)
-    - [Keyframes and global](#keyframes-and-global)
-    - [With props](#with-props)
-  - [Setup](#setup)
-    - [Options](#options)
-    - [Use without webpack](#use-without-webpack)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 # astroturf
 
 A close enough aproximation of a css-in-js library that's actually plain css. It's "Inline css" that
 just works with CSS, PostCSS, Less, Sass, or any other css preprocessor, and plays nicely with existing style tooling like `mini-css-extract-plugin`.
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Usage](#usage)
+- [Component API](#component-api)
+  - [WHY?!](#why)
+  - [Composition, variables, etc?](#composition-variables-etc)
+  - [Sharing values between styles and JavaScript](#sharing-values-between-styles-and-javascript)
+  - [Keyframes and global](#keyframes-and-global)
+  - [With props](#with-props)
+- [Setup](#setup)
+  - [Options](#options)
+  - [Use without webpack](#use-without-webpack)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Usage
 
@@ -346,7 +345,7 @@ If you want the simplest, most bare-bones setup you can use the included `css-lo
 }
 ```
 
-You can add on here as you would normally for addiitional preprocesser setup. Here's how'd might setup Sass.
+You can add on here as you would normally for additional preprocesser setup. Here's how'd might setup Sass.
 
 ```js
 {
