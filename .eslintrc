@@ -1,9 +1,10 @@
 {
-  "extends": ["4catalyzer", "prettier"],
+  "extends": ["4catalyzer-react", "prettier"],
   "plugins": ["prettier"],
   "rules": {
     "no-param-reassign": "off",
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "react/prop-types": "off"
   },
   "overrides": [
     {

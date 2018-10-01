@@ -7,6 +7,7 @@ just works with CSS, PostCSS, Less, Sass, or any other css preprocessor, and pla
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
+<<<<<<< HEAD
 - [Usage](#usage)
 - [Component API](#component-api)
   - [WHY?!](#why)
@@ -17,6 +18,20 @@ just works with CSS, PostCSS, Less, Sass, or any other css preprocessor, and pla
 - [Setup](#setup)
   - [Options](#options)
   - [Use without webpack](#use-without-webpack)
+=======
+- [astroturf](#astroturf)
+  - [Usage](#usage)
+  - [Component API](#component-api)
+    - [WHY?!](#why)
+    - [Composition, variables, etc?](#composition-variables-etc)
+    - [Sharing values between styles and JavaScript](#sharing-values-between-styles-and-javascript)
+    - [Keyframes and global](#keyframes-and-global)
+    - [With props](#with-props)
+    - [`as` prop](#as-prop)
+  - [Setup](#setup)
+    - [Options](#options)
+    - [Use without webpack](#use-without-webpack)
+>>>>>>> add 'as' prop
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -317,6 +332,26 @@ import withProps from 'recompose/withProps';
 const PasswordInput = withProps({ type: 'password' })(styled('input')`
   background-color: #ccc;
 `);
+```
+
+### `as` prop
+
+`astroturf` supports the `as` prop to control the underlying element type at runtime.
+
+```js
+const Button styled('button')`
+  color: red;
+`
+
+<Button as="a" href="#link"/>
+```
+
+**This feature is only enabled by default for host components**, e.g. native DOM elements. We do this to prevent annoying conflicts with other UI libraries like react-bootstrap or semantic-ui which also use the the `as` prop. If you want to enable it for any styled component you can do so via the `allowAs` option.
+
+```js
+const StyledFooter styled(Footer, { allowAs: true })`
+  color: red;
+`
 ```
 
 ## Setup
