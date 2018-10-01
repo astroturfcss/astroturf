@@ -1,6 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Plugin element-shorthand FancyBox: element-shorthand-FancyBox.css 1`] = `
+exports[`Plugin display-name js : Compiled JS 1`] = `
+"import styled from 'astroturf';
+export default
+/*#__PURE__*/
+styled(FancyBox, null, \\"DisplayName\\", require(\\"./display-name-DisplayName.css\\"), \\"display-name\\", \\"displayName\\");"
+`;
+
+exports[`Plugin display-name undefined: display-name-DisplayName.css 1`] = `
+".display-name {
+
+  color: ultra-red;
+
+}"
+`;
+
+exports[`Plugin element-shorthand js : Compiled JS 1`] = `
+"import styled from 'astroturf';
+const SIZE = 75;
+const FancyBox =
+/*#__PURE__*/
+styled(\\"div\\", null, \\"FancyBox\\", require(\\"./element-shorthand-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");"
+`;
+
+exports[`Plugin element-shorthand undefined: element-shorthand-FancyBox.css 1`] = `
 ".fancy-box {
 
   color: red;
@@ -19,14 +42,6 @@ exports[`Plugin element-shorthand FancyBox: element-shorthand-FancyBox.css 1`] =
 }"
 `;
 
-exports[`Plugin element-shorthand js : Compiled JS 1`] = `
-"import styled from 'astroturf';
-const SIZE = 75;
-const FancyBox =
-/*#__PURE__*/
-styled(\\"div\\", null, \\"FancyBox\\", require(\\"./element-shorthand-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");"
-`;
-
 exports[`Plugin example js : Compiled JS 1`] = `
 "import { css as less } from 'astroturf';
 const SIZE = 75;
@@ -36,7 +51,7 @@ const styles =
 require(\\"./example-styles.less\\");"
 `;
 
-exports[`Plugin example styles: example-styles.less 1`] = `
+exports[`Plugin example undefined: example-styles.less 1`] = `
 "
   .foo {
     color: red;
@@ -52,7 +67,14 @@ exports[`Plugin example styles: example-styles.less 1`] = `
 "
 `;
 
-exports[`Plugin hoist-import ButtonBase: hoist-import-ButtonBase.css 1`] = `
+exports[`Plugin hoist-import js : Compiled JS 1`] = `
+"import { styled } from 'astroturf';
+const ButtonBase =
+/*#__PURE__*/
+styled('button', null, \\"ButtonBase\\", require(\\"./hoist-import-ButtonBase.css\\"), \\"button-base\\", \\"buttonBase\\");"
+`;
+
+exports[`Plugin hoist-import undefined: hoist-import-ButtonBase.css 1`] = `
 "@import '~./styles/mixins.scss';
 .button-base {
 
@@ -66,14 +88,19 @@ exports[`Plugin hoist-import ButtonBase: hoist-import-ButtonBase.css 1`] = `
 }"
 `;
 
-exports[`Plugin hoist-import js : Compiled JS 1`] = `
-"import { styled } from 'astroturf';
-const ButtonBase =
+exports[`Plugin multiple-components js : Compiled JS 1`] = `
+"import styled, { css } from 'astroturf';
+const SIZE = 75; // prettier-ignore
+
+const FancyBox =
 /*#__PURE__*/
-styled('button', null, \\"ButtonBase\\", require(\\"./hoist-import-ButtonBase.css\\"), \\"button-base\\", \\"buttonBase\\");"
+styled('div', null, \\"FancyBox\\", require(\\"./multiple-components-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
+const FancyHeader =
+/*#__PURE__*/
+styled('h2', null, \\"FancyHeader\\", require(\\"./multiple-components-FancyHeader.css\\"), \\"fancy-header\\", \\"fancyHeader\\");"
 `;
 
-exports[`Plugin multiple-components FancyBox: multiple-components-FancyBox.css 1`] = `
+exports[`Plugin multiple-components undefined: multiple-components-FancyBox.css 1`] = `
 ".fancy-box {
 
   color: red;
@@ -92,7 +119,7 @@ exports[`Plugin multiple-components FancyBox: multiple-components-FancyBox.css 1
 }"
 `;
 
-exports[`Plugin multiple-components FancyHeader: multiple-components-FancyHeader.css 1`] = `
+exports[`Plugin multiple-components undefined: multiple-components-FancyHeader.css 1`] = `
 ".fancy-header {
 
   color: red;
@@ -104,18 +131,6 @@ exports[`Plugin multiple-components FancyHeader: multiple-components-FancyHeader
   }
 
 }"
-`;
-
-exports[`Plugin multiple-components js : Compiled JS 1`] = `
-"import styled, { css } from 'astroturf';
-const SIZE = 75; // prettier-ignore
-
-const FancyBox =
-/*#__PURE__*/
-styled('div', null, \\"FancyBox\\", require(\\"./multiple-components-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
-const FancyHeader =
-/*#__PURE__*/
-styled('h2', null, \\"FancyHeader\\", require(\\"./multiple-components-FancyHeader.css\\"), \\"fancy-header\\", \\"fancyHeader\\");"
 `;
 
 exports[`Plugin no-global js : Compiled JS 1`] = `
@@ -135,33 +150,6 @@ const styles = less\`
 \`;"
 `;
 
-exports[`Plugin pass-options FancierBox: pass-options-FancierBox.css 1`] = `
-".fancier-box {
-
-  color: ultra-red;
-
-}"
-`;
-
-exports[`Plugin pass-options FancyBox: pass-options-FancyBox.css 1`] = `
-".fancy-box {
-
-  color: red;
-  width: 75px;
-
-  @media (min-width: 420px) {
-    width: 96px;
-    height: 96px;
-  }
-
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
-}"
-`;
-
 exports[`Plugin pass-options js : Compiled JS 1`] = `
 "import styled from 'astroturf';
 const SIZE = 75; // prettier-ignore
@@ -177,7 +165,7 @@ const FancierBox =
 styled(FancyBox, options, \\"FancierBox\\", require(\\"./pass-options-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");"
 `;
 
-exports[`Plugin styled FancierBox: styled-FancierBox.css 1`] = `
+exports[`Plugin pass-options undefined: pass-options-FancierBox.css 1`] = `
 ".fancier-box {
 
   color: ultra-red;
@@ -185,7 +173,7 @@ exports[`Plugin styled FancierBox: styled-FancierBox.css 1`] = `
 }"
 `;
 
-exports[`Plugin styled FancyBox: styled-FancyBox.css 1`] = `
+exports[`Plugin pass-options undefined: pass-options-FancyBox.css 1`] = `
 ".fancy-box {
 
   color: red;
@@ -216,7 +204,7 @@ const FancierBox =
 styled(FancyBox, null, \\"FancierBox\\", require(\\"./styled-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");"
 `;
 
-exports[`Plugin styled-global FancierBox: styled-global-FancierBox.css 1`] = `
+exports[`Plugin styled undefined: styled-FancierBox.css 1`] = `
 ".fancier-box {
 
   color: ultra-red;
@@ -224,11 +212,17 @@ exports[`Plugin styled-global FancierBox: styled-global-FancierBox.css 1`] = `
 }"
 `;
 
-exports[`Plugin styled-global FancyBox: styled-global-FancyBox.css 1`] = `
+exports[`Plugin styled undefined: styled-FancyBox.css 1`] = `
 ".fancy-box {
 
   color: red;
   width: 75px;
+
+  @media (min-width: 420px) {
+    width: 96px;
+    height: 96px;
+  }
+
   &.primary {
     background: white;
     color: palevioletred;
@@ -247,7 +241,7 @@ const FancierBox =
 styled(FancyBox, null, \\"FancierBox\\", require(\\"./styled-global-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");"
 `;
 
-exports[`Plugin styled-tag FancierBox: styled-tag-FancierBox.css 1`] = `
+exports[`Plugin styled-global undefined: styled-global-FancierBox.css 1`] = `
 ".fancier-box {
 
   color: ultra-red;
@@ -255,7 +249,7 @@ exports[`Plugin styled-tag FancierBox: styled-tag-FancierBox.css 1`] = `
 }"
 `;
 
-exports[`Plugin styled-tag FancyBox: styled-tag-FancyBox.css 1`] = `
+exports[`Plugin styled-global undefined: styled-global-FancyBox.css 1`] = `
 ".fancy-box {
 
   color: red;
@@ -279,10 +273,23 @@ const FancierBox =
 styled(FancyBox, null, \\"FancierBox\\", require(\\"./styled-tag-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");"
 `;
 
-exports[`Plugin with-props RedPasswordInput: with-props-RedPasswordInput.css 1`] = `
-".red-password-input {
+exports[`Plugin styled-tag undefined: styled-tag-FancierBox.css 1`] = `
+".fancier-box {
 
-  background-color: red;
+  color: ultra-red;
+
+}"
+`;
+
+exports[`Plugin styled-tag undefined: styled-tag-FancyBox.css 1`] = `
+".fancy-box {
+
+  color: red;
+  width: 75px;
+  &.primary {
+    background: white;
+    color: palevioletred;
+  }
 
 }"
 `;
@@ -295,4 +302,12 @@ const RedPasswordInput = withProps({
 })(
 /*#__PURE__*/
 styled('input', null, \\"RedPasswordInput\\", require(\\"./with-props-RedPasswordInput.css\\"), \\"red-password-input\\", \\"redPasswordInput\\"));"
+`;
+
+exports[`Plugin with-props undefined: with-props-RedPasswordInput.css 1`] = `
+".red-password-input {
+
+  background-color: red;
+
+}"
 `;

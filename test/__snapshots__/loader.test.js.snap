@@ -1,5 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Loader display-name 0: display-name-DisplayName.css 1`] = `
+".display-name {
+
+  color: ultra-red;
+
+}"
+`;
+
+exports[`Loader display-name js : Compiled JS 1`] = `
+"import styled from 'astroturf';
+
+export default styled(FancyBox, null, \\"DisplayName\\", require(\\"./display-name-DisplayName.css\\"), \\"display-name\\", \\"displayName\\");
+"
+`;
+
 exports[`Loader element-shorthand 0: element-shorthand-FancyBox.css 1`] = `
 ".fancy-box {
 

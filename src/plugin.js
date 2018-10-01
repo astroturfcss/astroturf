@@ -1,12 +1,15 @@
 import { stripIndent } from 'common-tags';
 import { outputFileSync } from 'fs-extra';
 import camelCase from 'lodash/camelCase';
+import upperFirst from 'lodash/upperFirst';
 import get from 'lodash/get';
 import kebabCase from 'lodash/kebabCase';
 import { dirname, extname, basename, join, relative } from 'path';
 import * as t from '@babel/types';
 import template from '@babel/template';
 import generate from '@babel/generator';
+import getIdentifier from './utils/getIdentifier';
+import getMembers from './utils/getMembers';
 
 const buildImport = template('require(FILENAME);');
 const buildComponent = template(
@@ -15,9 +18,23 @@ const buildComponent = template(
 
 const STYLES = Symbol('Astroturf');
 
-function getIdentifier(path) {
-  const parent = path.findParent(p => p.isVariableDeclarator());
-  return parent && t.isIdentifier(parent.node.id) ? parent.node.id.name : '';
+function getNameFromFile(fileName) {
+  const name = basename(fileName, extname(fileName));
+  if (name !== 'index') return upperFirst(camelCase(name));
+  return upperFirst(camelCase(basename(dirname(fileName))));
+}
+
+function getDisplayName(path, { file }) {
+  let displayName = getIdentifier(path);
+  if (displayName) return displayName;
+
+  const exprPath = path.findParent(p => p.isAssignmentExpression());
+  if (exprPath)
+    displayName = getMembers(exprPath)
+      .map(p => p.path.node.name)
+      .join('.');
+
+  return displayName || getNameFromFile(file.opts.filename);
 }
 
 function wrapInClass(className, value) {
@@ -91,7 +108,6 @@ export default function plugin() {
       filename = `./${filename}`;
     }
     style.filename = filename;
-    style.identifier = identifier;
 
     return style;
   }
@@ -99,7 +115,7 @@ export default function plugin() {
   function buildStyleRequire(path, state) {
     const { styles } = state.file.get(STYLES);
     const quasiPath = path.get('quasi');
-    const style = createStyleNode(path, state, getIdentifier(path));
+    const style = createStyleNode(path, state, getDisplayName(path, state));
     style.value = evaluate(quasiPath);
 
     style.code = `require('${style.filename}')`;
@@ -110,12 +126,11 @@ export default function plugin() {
 
   function buildStyledComponent(path, tagName, options, state) {
     const cssState = state.file.get(STYLES);
-    const displayName = getIdentifier(path) || tagName.value;
-
+    const displayName = getDisplayName(path, state);
     const style = createStyleNode(path, state, displayName);
-    style.tagName = t.isStringLiteral(tagName)
-      ? `"${tagName.value}"`
-      : tagName;
+    // style.tagName = t.isStringLiteral(tagName)
+    //   ? `"${tagName.value}"`
+    //   : tagName.name;
 
     const kebabName = kebabCase(displayName);
     style.value = wrapInClass(`.${kebabName}`, evaluate(path.get('quasi')));
