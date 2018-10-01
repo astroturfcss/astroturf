@@ -1,9 +1,8 @@
 {
-  "name": "css-literal-loader",
+  "name": "astroturf",
   "version": "0.6.0",
   "description": "Extract and process inline CSS literals in JavaScript files",
-  "main": "lib/loader.js",
-  "browser": "./styled.js",
+  "main": "lib/index.js",
   "scripts": {
     "lint": "eslint .",
     "precommit": "lint-staged",
@@ -96,5 +95,8 @@
     "loader-utils": "^1.1.0",
     "lodash": "^4.17.10",
     "memory-fs": "^0.4.1"
+  },
+  "release": {
+    "publishDir": "lib"
   }
 }

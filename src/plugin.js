@@ -13,7 +13,7 @@ const buildComponent = template(
   `styled(TAGNAME, OPTIONS, DISPLAYNAME, IMPORT, KEBABNAME, CAMELNAME)`,
 );
 
-const STYLES = Symbol('CSSLiteralLoader');
+const STYLES = Symbol('Astroturf');
 
 function getIdentifier(path) {
   const parent = path.findParent(p => p.isVariableDeclarator());
@@ -46,32 +46,25 @@ function createFileName(hostFile, { extension = '.css' }, id) {
 function isCssTag(path, tagName, allowGlobal = false) {
   return (
     path.get('tag.name').node === tagName &&
-    (path.get('tag').referencesImport('css-literal-loader/styled') ||
+    (path.get('tag').referencesImport('astroturf') ||
       (allowGlobal && path.scope.hasGlobal(tagName)))
   );
 }
 
 const isStyledTag = (path, styledTag, allowGlobal) => {
   const { node } = path.get('tag');
-
   return (
     t.isCallExpression(node) &&
     node.callee.name === styledTag &&
-    (allowGlobal ||
-      path.get('tag.callee').referencesImport('css-literal-loader/styled'))
+    (allowGlobal || path.get('tag.callee').referencesImport('astroturf'))
   );
 };
 
-const isStyledTagShorthand = (path, styledTag, allowGlobal) => {
-  console.log();
-  return (
-    t.isMemberExpression(path.get('tag').node) &&
-    t.isIdentifier(path.get('tag.property').node) &&
-    path.get('tag.object').node.name === styledTag &&
-    (allowGlobal ||
-      path.get('tag.object').referencesImport('css-literal-loader/styled'))
-  );
-};
+const isStyledTagShorthand = (path, styledTag, allowGlobal) =>
+  t.isMemberExpression(path.get('tag').node) &&
+  t.isIdentifier(path.get('tag.property').node) &&
+  path.get('tag.object').node.name === styledTag &&
+  (allowGlobal || path.get('tag.object').referencesImport('astroturf'));
 
 export default function plugin() {
   function evaluate(path) {
@@ -79,7 +72,7 @@ export default function plugin() {
 
     if (!confident) {
       throw path.buildCodeFrameError(
-        'Could not evaluate css. Inline css must be statically analyzable',
+        'Could not evaluate css. Inline styles must be statically analyzable',
       );
     }
     return value;
@@ -161,7 +154,7 @@ export default function plugin() {
       let { styles } = file.get(STYLES);
       styles = Array.from(styles.values());
 
-      file.metadata['css-literal-loader'] = { styles };
+      file.metadata.astroturf = { styles };
 
       if (opts.writeFiles !== false) {
         styles.forEach(({ path, value }) => {

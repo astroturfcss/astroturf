@@ -4,9 +4,9 @@ import traverse from './traverse';
 import VirtualModulePlugin from './VirtualModulePlugin';
 
 // can'ts use class syntax b/c babel doesn't transpile it correctly for Error
-function CssLiteralLoaderError(error) {
+function AstroTurfLoaderError(error) {
   Error.call(this);
-  this.name = 'CssLiteralLoaderError';
+  this.name = 'AstroTurfLoaderError';
 
   this.message = error.message;
   if (error.codeFrame) this.message += `\n\n ${error.codeFrame} \n`;
@@ -15,12 +15,12 @@ function CssLiteralLoaderError(error) {
   try {
     this.stack = error.stack.replace(/^(.*?):/, `${this.name}:`);
   } catch (err) {
-    Error.captureStackTrace(this, CssLiteralLoaderError);
+    Error.captureStackTrace(this, AstroTurfLoaderError);
   }
 }
 
-CssLiteralLoaderError.prototype = Object.create(Error.prototype);
-CssLiteralLoaderError.prototype.constructor = CssLiteralLoaderError;
+AstroTurfLoaderError.prototype = Object.create(Error.prototype);
+AstroTurfLoaderError.prototype.constructor = AstroTurfLoaderError;
 
 function collectStyles(src, filename, opts) {
   const tagName = opts.tagName || 'css';
@@ -41,9 +41,9 @@ function collectStyles(src, filename, opts) {
       writeFiles: false,
       generateInterpolations: true,
     });
-    return { styles: metadata['css-literal-loader'].styles || [] };
+    return { styles: metadata.astroturf.styles || [] };
   } catch (err) {
-    throw new CssLiteralLoaderError(err);
+    throw new AstroTurfLoaderError(err);
   }
 }
 
