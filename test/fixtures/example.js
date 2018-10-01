@@ -1,4 +1,4 @@
-import { css as less } from 'css-literal-loader/styled';
+import { css as less } from 'astroturf';
 
 const SIZE = 75;
 

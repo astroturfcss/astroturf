@@ -45,7 +45,7 @@ function createFileName(hostFile, { extension = '.css' }, id) {
 
 function isCssTag(path, tagName, allowGlobal = false) {
   return (
-    path.get('tag.name').node === tagName &&
+    path.get('tag').node.name === tagName &&
     (path.get('tag').referencesImport('astroturf') ||
       (allowGlobal && path.scope.hasGlobal(tagName)))
   );

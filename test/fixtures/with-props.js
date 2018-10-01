@@ -1,4 +1,4 @@
-import { styled } from 'css-literal-loader/styled';
+import { styled } from 'astroturf';
 import withProps from 'recompose/withProps';
 
 const RedPasswordInput = withProps({
