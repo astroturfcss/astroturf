@@ -1,12 +1,11 @@
-# css-literal-loader
+# astroturf
 
-A webpack loader and babel plugin for extracting and processing css defined in other files.
-
-"Inline css" that just works with CSS, PostCSS, Less, Sass, or any other css preprocessor, and plays nicely with existing style tooling like `extract-text-webpack-plugin`.
+A close enough aproximation of a css-in-js library that's actually plain css. It's "Inline css" that
+just works with CSS, PostCSS, Less, Sass, or any other css preprocessor, and plays nicely with existing style tooling like `mini-css-extract-plugin`.
 
 ```js
 import React from 'react';
-import { css } from 'css-literal-loader/styled';
+import { css } from 'astroturf';
 
 const styles = css`
   .button {
@@ -21,12 +20,12 @@ export default function Button({ children }) {
 }
 ```
 
-When processed, the `css` block will be extracted and treated as a `.css` file, taking advantage of any and all of the other loaders configured to handle css.
+When processed, the `css` block will be extracted into a `.css` file, taking advantage of any and all of the other loaders configured to handle css.
 
 It even handles statically analyzable interpolations!
 
 ```js
-import { css } from 'css-literal-loader/styled';
+import { css } from 'astroturf';
 
 const margin = 10;
 const height = 50;
@@ -45,12 +44,12 @@ const styles = css`
 `;
 ```
 
-### Experimental component API
+### Component API
 
-For those that want something a bit more like styled-components, there is an experimental component API!
+For those that want something a bit more like styled-components or emotion, there is a component API!
 
 ```js
-import { styled, css } from 'css-literal-loader/styled'; // import needed!
+import styled, { css } from 'astroturf';
 
 const Button = styled('button')`
   color: black;
@@ -114,13 +113,13 @@ function Button({ primary, color, className, ...props }) {
 }
 ```
 
-Styles are still extracted to a separate file, any props matching other defined classes are passed to the `classNames()` library. At runtime `styled()` returns a React component with the static CSS classes applied. You can check out the ["runtime"](https://github.com/4Catalyzer/css-literal-loader/blob/master/src/runtime/styled.js#L16) it just creates a component.
+Styles are still extracted to a separate file, any props matching other defined classes are passed to the `classNames()` library. At runtime `styled()` returns a React component with the static CSS classes applied. You can check out the ["runtime"](https://github.com/4Catalyzer/astroturf/blob/master/src/runtime/styled.js#L16) it just creates a component.
 
 There are a whole bucket of caveats of course, to keep the above statically extractable, and limit runtime code.
 
-* We assume you are using css-modules in your css pipeline to return classes from the style files, we don't do any of that ourselves.
-* Prop value handling requires the nesting transform
-* All "top level" styles have any @import statements hoisted up (via a regex)
+- We assume you are using css-modules in your css pipeline to return classes from the style files, we don't do any of that ourselves.
+- Prop value handling requires the nesting transform
+- All "top level" styles have any @import statements hoisted up (via a regex)
 
 ### WHY?!
 
@@ -130,12 +129,24 @@ a more ergonomic way to write normal css/less/sass next to your javascript.
 What does that mean? css-in-js libraries are often a _replacement_ for css preprocessors, in that they provide ways of doing variables, composition, mixins, imports etc. Usually they accomplish this by leaning
 on JS language features where appropriate, and adding there own domain-specific language bits when needed.
 
-css-literal-loader **doesn't try to do any of that** because it's not trying to replace preprocessors but rather, make component-centric javascript work better with **existing** styling tooling. This means at a minimum it needs to scope styles to the component (handled by css-modules) and map those styles to your component's API (props), which is what the above API strives for.
+astroturf **doesn't try to do any of that** because it's not trying to replace preprocessors but rather, make component-centric javascript work better with **existing** styling tooling. This means at a minimum it needs to scope styles to the component (handled by css-modules) and map those styles to your component's API (props), which is what the above API strives for.
+
+This approach **gains** us:
+
+- No additional work to extract styles for further optimization (autoprefixer, minifying, moving them to a CDN, etc)
+- The smallest runtime, its essentially zero.
+- Blazing Fast™ because there is zero runtime evaluation of styles.
+- Leverage the well trod and huge css preprocesser ecosystems
+
+It also means we **sacrifice**:
+
+- A fine grained style mapping to props. Props map to classes, its all very BEM-y but automatted
+- Dynamism in sharing values between js and css
+- A unified js only headspace, you still need to think in terms of JS and CSS
 
 #### Composition, variables, etc?
 
-How you accomplish that is mostly up to your preprocessor. Leverage Sass variables, or Less mixins, orpostcss nesting polyfills, or whatever. The css you'r writing is treated just like a normal style file so all the tooling your used to works here. For composition specifically around classes you can also use css-modules `composes` to compose styles, since
-css-literal-loader extracts styles to consistent names;
+How you accomplish that is mostly up to your preprocessor. Leverage Sass variables, or Less mixins, or postcss nesting polyfills, or whatever. The css you're writing is treated exactly like a normal style file so all the tooling you're used to works as expected. For composition, specifically around classes, you can also use css-modules `composes` to compose styles, since astroturf extracts styles to consistent names;
 
 ```js
 // Button.js
@@ -153,7 +164,7 @@ const Title = styled('h3')`
 `;
 ```
 
-You can also don't have to define everything in a `.js` file. Where it makes sense just use normal css (or which tfile type) is appropriate.
+You can also don't have to define everything in a `.js` file. Where it makes sense just use normal css (or which file type) is appropriate.
 
 ```scss
 // mixins.scss
@@ -164,7 +175,7 @@ You can also don't have to define everything in a `.js` file. Where it makes sen
 
 and then:
 
-```
+```js
 // Button.js
 const Title = styled('h3')`
   @import './mixins.scss';
@@ -172,6 +183,73 @@ const Title = styled('h3')`
   @include heavy();
   font-size: 12%;
 `;
+```
+
+#### Sharing values between styles and JavaScript
+
+We've found that in practice, you rarely have to share values between the two, but there are times when it's
+very convenient. Astroturf ofters two ways to do this, the first is string interpolations.
+
+```js
+const DURATION = 500;
+
+const ColorTransition = styled('nav')`
+  color: red;
+  transition: color ${DURATION}ms;
+
+  &.blue {
+    color: blue;
+  }
+`;
+
+class App extends React.Component {
+  state = { blue: false }
+  toggle = () => {
+    this.setState(s => ({ blue: !s.blue }), () => {
+      setTimeout(() => console.log('done!'), DURATION)
+    })
+  }
+  render() {
+    const { blue } = this.state
+    <div>
+      <ColorTransition blue={blue} />
+      <button onClick={this.toggle}>Toggle Color</button>
+    </div>;
+  }
+}
+```
+
+This works great for local variables, since the compiler can determine their
+value at compile time and share them. For cases when you want to share things a bit more globally, such as in a theme, we recommend leaning on your css preprocesser again.
+
+css-modules provides a syntax for exporting values from styles, generally this is used for class names, but you can leaverage it for whatever values you want. Combined with something like Sass's variables it ends up being a powerful tool.
+
+```js
+const breakpointValues = css`
+  @import '../styles/theme';
+
+  :export {
+    @each $breakpoint, $px in $grid-breakpoints {
+      #{$breakpoint}: $px;
+    }
+  }
+`
+
+class Responsive extends React.Component {
+  state = { blue: false }
+  componentDidMount() {
+    this.setState({
+      isMobile: window.clientWidth < parseInt(breakpoints.md, 10)
+    }
+  }
+
+  render() {
+    const { isMobile } = this.state
+    <div>
+      {isMobile ? 'A small screen!' : 'A big screen!'}
+    </div>;
+  }
+}
 ```
 
 #### Keyframes and global
@@ -186,7 +264,7 @@ css`
   :global(.btn) {
     background: blue;
   }
-`
+`;
 ```
 
 With [postcss-nested](https://github.com/postcss/postcss-nested) you can
@@ -214,7 +292,7 @@ It can also be useful to create components with props already applied, like the 
 **[`withProps` documentation](https://github.com/acdlite/recompose/blob/master/docs/API.md#withprops)**
 
 ```jsx
-import { styled } from 'css-literal-loader/styled';
+import styled from 'astroturf';
 import withProps from 'recompose/withProps';
 
 const PasswordInput = withProps({ type: 'password' })(styled('input')`
@@ -224,7 +302,7 @@ const PasswordInput = withProps({ type: 'password' })(styled('input')`
 
 ## Setup
 
-Add the css-literal-loader to JavaScript loader configuration, and whatever you want to handle `.css` files:
+Add the astroturf to JavaScript loader configuration, and whatever you want to handle `.css` files:
 
 ```js
 {
@@ -239,12 +317,12 @@ Add the css-literal-loader to JavaScript loader configuration, and whatever you 
      },
      {
        test: /\.js$/,
-       use: ['babel-loader','css-literal-loader'],
+       use: ['babel-loader', 'astroturf/loader'],
      },
-     // css-literal-loader works out of the box with typescript (.ts or .tsx files).
+     // astroturf works out of the box with typescript (.ts or .tsx files).
      {
        test: /\.tsx?$/,
-       use: ['ts-loader','css-literal-loader'],
+       use: ['ts-loader', 'astroturf/loader'],
      },
    }
  }
@@ -253,13 +331,13 @@ Add the css-literal-loader to JavaScript loader configuration, and whatever you 
 
 ### Options
 
-css-literal-loader accepts a few query options.
+astroturf accepts a few query options.
 
-* **tagName**: (default: `'css'`) The tag identifier used to locate inline css literals and extract them.
-* **styledTag**: (default: `'styled'`) The tag identifier used to locate components.
-* **extension**: (default: `'.css'`) the extension used for extracted "virtual" files. Change to whatever file type you want webpack to process extracted literals as.
+- **tagName**: (default: `'css'`) The tag identifier used to locate inline css literals and extract them.
+- **styledTag**: (default: `'styled'`) The tag identifier used to locate components.
+- **extension**: (default: `'.css'`) the extension used for extracted "virtual" files. Change to whatever file type you want webpack to process extracted literals as.
 
-**Note:** css-literal-loader expects uncompiled JavaScript code, If you are using babel or Typescript to transform tagged template literals, ensure the loader runs _before_ babel or typescript loaders.
+**Note:** astroturf expects uncompiled JavaScript code, If you are using babel or Typescript to transform tagged template literals, ensure the loader runs _before_ babel or typescript loaders.
 
 ## Use without webpack
 
@@ -272,7 +350,7 @@ Config shown below with the default options.
 module.exports = {
   plugins: [
     [
-      'css-literal-loader/babel',
+      'astroturf/plugin',
       {
         tagName: 'css',
         extension: '.css',
@@ -295,5 +373,5 @@ The extracted styles are also available on the `metadata` object returned from `
 ```js
 const { metadata } = babel.transformFile(myJsfile);
 
-metadata['css-literal-loader'].styles; // [{ path, value }]
+metadata['astroturf'].styles; // [{ path, value }]
 ```
