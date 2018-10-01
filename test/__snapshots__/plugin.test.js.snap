@@ -241,10 +241,10 @@ exports[`Plugin styled-global js : Compiled JS 1`] = `
 "// prettier-ignore
 const FancyBox =
 /*#__PURE__*/
-styled('div', \\"FancyBox\\", require(\\"./styled-global-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
+styled('div', null, \\"FancyBox\\", require(\\"./styled-global-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
 const FancierBox =
 /*#__PURE__*/
-styled(FancyBox, \\"FancierBox\\", require(\\"./styled-global-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");"
+styled(FancyBox, null, \\"FancierBox\\", require(\\"./styled-global-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");"
 `;
 
 exports[`Plugin styled-tag FancierBox: styled-tag-FancierBox.css 1`] = `
@@ -273,10 +273,10 @@ exports[`Plugin styled-tag js : Compiled JS 1`] = `
 
 const FancyBox =
 /*#__PURE__*/
-styled('div', \\"FancyBox\\", require(\\"./styled-tag-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
+styled('div', null, \\"FancyBox\\", require(\\"./styled-tag-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
 const FancierBox =
 /*#__PURE__*/
-styled(FancyBox, \\"FancierBox\\", require(\\"./styled-tag-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");"
+styled(FancyBox, null, \\"FancierBox\\", require(\\"./styled-tag-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");"
 `;
 
 exports[`Plugin with-props RedPasswordInput: with-props-RedPasswordInput.css 1`] = `

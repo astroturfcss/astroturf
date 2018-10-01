@@ -43,7 +43,7 @@ function createFileName(hostFile, { extension = '.css' }, id) {
   return join(dirname(hostFile), `${base}-${id}${extension}`);
 }
 
-function isTag(path, tagName, allowGlobal = false) {
+function isCssTag(path, tagName, allowGlobal = false) {
   return (
     path.get('tag.name').node === tagName &&
     (path.get('tag').referencesImport('css-literal-loader/styled') ||
@@ -51,18 +51,27 @@ function isTag(path, tagName, allowGlobal = false) {
   );
 }
 
-function isStyled(path, styledTag, allowGlobal) {
-  if (allowGlobal) {
-    return (
-      t.isCallExpression(path.node.tag) &&
-      path.get('tag.callee.name').node === styledTag
-    );
-  }
+const isStyledTag = (path, styledTag, allowGlobal) => {
+  const { node } = path.get('tag');
+
   return (
-    t.isCallExpression(path.node.tag) &&
-    path.get('tag.callee').referencesImport('css-literal-loader/styled')
+    t.isCallExpression(node) &&
+    node.callee.name === styledTag &&
+    (allowGlobal ||
+      path.get('tag.callee').referencesImport('css-literal-loader/styled'))
   );
-}
+};
+
+const isStyledTagShorthand = (path, styledTag, allowGlobal) => {
+  console.log();
+  return (
+    t.isMemberExpression(path.get('tag').node) &&
+    t.isIdentifier(path.get('tag.property').node) &&
+    path.get('tag.object').node.name === styledTag &&
+    (allowGlobal ||
+      path.get('tag.object').referencesImport('css-literal-loader/styled'))
+  );
+};
 
 export default function plugin() {
   function evaluate(path) {
@@ -168,16 +177,18 @@ export default function plugin() {
           allowGlobal = true,
           styledTag = 'styled',
         } = state.opts;
-        if (isStyled(path, styledTag, allowGlobal)) {
-          path.replaceWith(buildStyledComponent(path, state));
+
+        if (isStyledTag(path, styledTag, allowGlobal)) {
+          const componentType = get(path.get('tag'), 'node.arguments[0]');
+          const options = get(path.get('tag'), 'node.arguments[1]');
+
+          path.replaceWith(
+            buildStyledComponent(path, componentType, options, state),
+          );
           path.addComment('leading', '#__PURE__');
 
           // styled.button` ... `
-        } else if (
-          t.isMemberExpression(node.tag) &&
-          t.isIdentifier(path.get('tag.property').node) &&
-          path.get('tag.object').referencesImport('css-literal-loader/styled')
-        ) {
+        } else if (isStyledTagShorthand(path, styledTag, allowGlobal)) {
           const componentType = t.StringLiteral(
             path.get('tag.property').node.name,
           );
@@ -188,7 +199,7 @@ export default function plugin() {
           path.addComment('leading', '#__PURE__');
 
           // lone css`` tag
-        } else if (isTag(path, tagName, allowGlobal)) {
+        } else if (isCssTag(path, tagName, allowGlobal)) {
           path.replaceWith(buildStyleRequire(path, state));
           path.addComment('leading', '#__PURE__');
         }

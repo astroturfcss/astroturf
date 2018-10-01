@@ -243,9 +243,9 @@ exports[`Loader styled-global 1: styled-global-FancierBox.css 1`] = `
 
 exports[`Loader styled-global js : Compiled JS 1`] = `
 "// prettier-ignore
-const FancyBox = styled('div', \\"FancyBox\\", require(\\"./styled-global-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
+const FancyBox = styled('div', null, \\"FancyBox\\", require(\\"./styled-global-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
 
-const FancierBox = styled(FancyBox, \\"FancierBox\\", require(\\"./styled-global-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");
+const FancierBox = styled(FancyBox, null, \\"FancierBox\\", require(\\"./styled-global-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");
 "
 `;
 
@@ -274,9 +274,9 @@ exports[`Loader styled-tag js : Compiled JS 1`] = `
 "import s from 'css-literal-loader/styled';
 
 // prettier-ignore
-const FancyBox = styled('div', \\"FancyBox\\", require(\\"./styled-tag-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
+const FancyBox = styled('div', null, \\"FancyBox\\", require(\\"./styled-tag-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
 
-const FancierBox = styled(FancyBox, \\"FancierBox\\", require(\\"./styled-tag-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");
+const FancierBox = styled(FancyBox, null, \\"FancierBox\\", require(\\"./styled-tag-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");
 "
 `;
 
