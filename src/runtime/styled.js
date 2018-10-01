@@ -12,9 +12,13 @@ export function styled(
   kebabName,
   camelName,
 ) {
+  options = options || { allowAs: typeof type === 'string' };
   const componentClassName = has.call(styles, kebabName)
     ? styles[kebabName]
     : styles[camelName];
+
+  // always passthrough if the type is a styled component
+  const allowAs = type.isAstroturf ? false : options.allowAs;
 
   const hasModifiers = Object.keys(styles).some(
     className => className !== camelName && className !== kebabName,
@@ -22,13 +26,12 @@ export function styled(
 
   function Styled(props) {
     const childProps = { ...props };
-
+    if (allowAs) delete childProps.as;
     delete childProps.innerRef;
     childProps.ref = props.innerRef;
+    const modifierClassNames = [];
 
     if (hasModifiers) {
-      const modifierClassNames = [];
-
       Object.keys(props).forEach(propName => {
         const propValue = props[propName];
 
@@ -69,20 +72,18 @@ export function styled(
           }
         }
       });
-
-      childProps.className = classNames(
-        childProps.className,
-        componentClassName,
-        ...modifierClassNames,
-      );
-    } else {
-      childProps.className = classNames(
-        childProps.className,
-        componentClassName,
-      );
     }
 
-    return React.createElement(type, childProps);
+    childProps.className = classNames(
+      childProps.className,
+      componentClassName,
+      ...modifierClassNames,
+    );
+
+    return React.createElement(
+      allowAs && props.as ? props.as : type,
+      childProps,
+    );
   }
 
   Styled.displayName = displayName;
@@ -92,7 +93,9 @@ export function styled(
     : Styled;
 
   decorated.withComponent = nextType =>
-    styled(nextType, displayName, styles, kebabName, camelName);
+    styled(nextType, options, displayName, styles, kebabName, camelName);
+
+  decorated.isAstroturf = true;
 
   return decorated;
 }
