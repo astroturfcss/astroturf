@@ -39,27 +39,42 @@ export function babelRunFixture(fixture) {
   if (options.loaderOnly) return;
 
   describe(basename(fixture, extname(fixture)), () => {
-    const { code, metadata } = transformFileSync(fixture, {
-      babelrc: false,
-      // eslint-ignore-next-line
-      plugins: [
-        [require('../src/plugin.js'), { ...options, writeFiles: false }],
-      ],
-      parserOpts: PARSER_OPTS,
-    });
+    let error = null;
+    let output;
+    try {
+      output = transformFileSync(fixture, {
+        babelrc: false,
+        // eslint-ignore-next-line
+        plugins: [
+          [require('../src/plugin.js'), { ...options, writeFiles: false }],
+        ],
+        parserOpts: PARSER_OPTS,
+      });
+    } catch (err) {
+      error = err;
+    }
 
-    const { styles } = metadata.astroturf || {};
+    const styles = output ? output.metadata.astroturf.styles : [];
 
     it('js ', () => {
-      expect(code).toMatchSnapshot(`Compiled JS`);
-
-      if (options.TEST_SHOULD_FAIL) expect(styles.length).toEqual(0);
-      else expect(styles.length).toBeGreaterThan(0);
+      if (options.TEST_SHOULD_FAIL) {
+        expect(styles.length).toEqual(0);
+        // There may be an error, or may just be styles weren't extracted
+        expect(
+          error
+            ? error.message.slice(error.message.indexOf(':') + 1).trim() // remove file path
+            : output.code,
+        ).toMatchSnapshot('Compilation Error');
+      } else {
+        if (error) throw error;
+        expect(output.code).toMatchSnapshot('Compiled JS');
+        expect(styles.length).toBeGreaterThan(0);
+      }
     });
 
     styles.forEach(s => {
       it(`${s.identifier}`, () => {
-        expect(s.value).toMatchSnapshot(`${basename(s.path)}`);
+        expect(s.value).toMatchSnapshot(`${basename(s.absoluteFilePath)}`);
       });
     });
   });
