@@ -120,7 +120,7 @@ const styles = css`
 
 function Button({ primary, color, className, ...props }) {
   return (
-    <div
+    <button
       {...props}
       className={classNames(
         className,
