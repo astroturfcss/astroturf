@@ -109,11 +109,6 @@ describe('styled', () => {
       'outer',
     );
 
-    console.log(
-      mount(<Component as="p" green red />)
-        .find('p.red.green')
-        .html(),
-    );
     expect(
       mount(<Component as="p" green red />).find('p.red.green:not([as])'),
     ).toHaveLength(1);

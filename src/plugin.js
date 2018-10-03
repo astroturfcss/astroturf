@@ -7,6 +7,9 @@ import { dirname, extname, basename, join, relative } from 'path';
 import * as t from '@babel/types';
 import template from '@babel/template';
 import generate from '@babel/generator';
+import pascalCase from './utils/pascalCase';
+import getNameFromPath from './utils/getNameFromPath';
+import wrapInClass from './utils/wrapInClass';
 
 const buildImport = template('require(FILENAME);');
 const buildComponent = template(
@@ -15,32 +18,35 @@ const buildComponent = template(
 
 const STYLES = Symbol('Astroturf');
 
-function getIdentifier(path) {
-  const parent = path.findParent(p => p.isVariableDeclarator());
-  return parent && t.isIdentifier(parent.node.id) ? parent.node.id.name : '';
+function getNameFromFile(fileName) {
+  const name = basename(fileName, extname(fileName));
+  if (name !== 'index') return pascalCase(name);
+  return pascalCase(basename(dirname(fileName)));
 }
 
-function wrapInClass(className, value) {
-  const imports = [];
-
-  let match;
-  const matcher = /@import.*?(?:$|;)/g;
-
+function getDisplayName(
+  path,
+  { file },
+  defaultName = getNameFromFile(file.opts.filename),
+) {
   // eslint-disable-next-line no-cond-assign
-  while ((match = matcher.exec(value))) {
-    imports.push(match[0]);
+  while ((path = path.parentPath)) {
+    if (path.isVariableDeclarator()) return getNameFromPath(path.get('id'));
+    if (path.isAssignmentExpression())
+      return getNameFromPath(path.get('left'));
+    if (path.isExportDefaultDeclaration())
+      return getNameFromFile(file.opts.filename);
   }
-
-  value = value.replace(matcher, '');
-
-  let val = `${className} {\n${value}\n}`;
-  if (imports.length) val = `${imports.join('\n')}\n${val}`;
-  return val;
+  return defaultName || null;
 }
 
 function createFileName(hostFile, { extension = '.css' }, id) {
-  const base = basename(hostFile, extname(hostFile));
-  return join(dirname(hostFile), `${base}-${id}${extension}`);
+  let base;
+
+  if (getNameFromFile(hostFile) === id) base = id;
+  else base = `${basename(hostFile, extname(hostFile))}-${id}`;
+
+  return join(dirname(hostFile), base + extension);
 }
 
 function isCssTag(path, tagName, allowGlobal = false) {
@@ -84,38 +90,50 @@ export default function plugin() {
     const getFileName = opts.getFileName || createFileName;
 
     const hostFile = file.opts.filename;
-    style.path = getFileName(hostFile, opts, identifier);
+    style.absoluteFilePath = getFileName(hostFile, opts, identifier);
 
-    let filename = relative(dirname(hostFile), style.path);
+    let filename = relative(dirname(hostFile), style.absoluteFilePath);
     if (!filename.startsWith('.')) {
       filename = `./${filename}`;
     }
-    style.filename = filename;
+    style.relativeFilePath = filename;
     style.identifier = identifier;
 
     return style;
   }
 
-  function buildStyleRequire(path, state) {
+  function buildStyleRequire(path, state, tagName) {
     const { styles } = state.file.get(STYLES);
     const quasiPath = path.get('quasi');
-    const style = createStyleNode(path, state, getIdentifier(path));
+    const style = createStyleNode(path, state, getDisplayName(path, state));
     style.value = evaluate(quasiPath);
 
-    style.code = `require('${style.filename}')`;
+    style.code = `require('${style.relativeFileName}')`;
 
-    styles.add(style);
-    return buildImport({ FILENAME: t.StringLiteral(style.filename) }); // eslint-disable-line new-cap
+    if (styles.has(style.absoluteFilePath))
+      throw path.buildCodeFrameError(
+        path.findParent(p => p.isExpressionStatement())
+          ? `There are multiple anonymous ${tagName} tags that would conflict. Differentiate each tag by assigning the output to a unique identifier`
+          : `There are multiple ${tagName} tags with the same inferred identifier. Differentiate each tag by assigning the output to a unique identifier`,
+      );
+
+    styles.set(style.absoluteFilePath, style);
+    return buildImport({ FILENAME: t.StringLiteral(style.relativeFilePath) }); // eslint-disable-line new-cap
   }
 
   function buildStyledComponent(path, tagName, options, state) {
     const cssState = state.file.get(STYLES);
-    const displayName = getIdentifier(path) || tagName.value;
+    const displayName = getDisplayName(path, state, null);
+
+    if (!displayName)
+      throw path.buildCodeFrameError(
+        // the expression case should always be the problem but just in case, let's avoid a potentially weird error.
+        path.findParent(p => p.isExpressionStatement())
+          ? 'The output of this styled component is never used. Either assign it to a variable or export it.'
+          : 'Could not determine a displayName for this styled component. Each component must be uniquely identifiable, either as the default export of the module or by assigning it to a unique identifier',
+      );
 
     const style = createStyleNode(path, state, displayName);
-    style.tagName = t.isStringLiteral(tagName)
-      ? `"${tagName.value}"`
-      : tagName;
 
     const kebabName = kebabCase(displayName);
     style.value = wrapInClass(`.${kebabName}`, evaluate(path.get('quasi')));
@@ -125,7 +143,7 @@ export default function plugin() {
       OPTIONS: options || t.NullLiteral(),
       DISPLAYNAME: t.StringLiteral(displayName),
       IMPORT: buildImport({
-        FILENAME: t.StringLiteral(style.filename),
+        FILENAME: t.StringLiteral(style.relativeFilePath),
       }).expression,
       KEBABNAME: t.StringLiteral(kebabName),
       CAMELNAME: t.StringLiteral(camelCase(kebabName)),
@@ -134,7 +152,7 @@ export default function plugin() {
     if (state.opts.generateInterpolations)
       style.code = generate(runtimeNode).code;
 
-    cssState.styles.add(style);
+    cssState.styles.set(style.absoluteFilePath, style);
     return runtimeNode;
   }
 
@@ -143,7 +161,7 @@ export default function plugin() {
       if (!file.has(STYLES)) {
         file.set(STYLES, {
           id: 0,
-          styles: new Set(),
+          styles: new Map(),
         });
       }
     },
@@ -157,8 +175,8 @@ export default function plugin() {
       file.metadata.astroturf = { styles };
 
       if (opts.writeFiles !== false) {
-        styles.forEach(({ path, value }) => {
-          outputFileSync(path, stripIndent([value]));
+        styles.forEach(({ absoluteFilePath, value }) => {
+          outputFileSync(absoluteFilePath, stripIndent([value]));
         });
       }
     },
@@ -193,7 +211,7 @@ export default function plugin() {
 
           // lone css`` tag
         } else if (isCssTag(path, tagName, allowGlobal)) {
-          path.replaceWith(buildStyleRequire(path, state));
+          path.replaceWith(buildStyleRequire(path, state, tagName));
           path.addComment('leading', '#__PURE__');
         }
       },
