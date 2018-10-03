@@ -87,6 +87,9 @@ export function webpackRunFixture(fixture) {
 
   describe(basename(fixture, extname(fixture)), () => {
     const styles = [];
+    let error = null;
+    let code;
+
     const loaderContext = {
       query: options,
       loaders: [{ request: '/path/css-literal-loader' }],
@@ -95,20 +98,35 @@ export function webpackRunFixture(fixture) {
       resource: fixture,
       resourcePath: fixture,
       request: `babel-loader!css-literal-loader!${fixture}`,
-      emitVirtualFile: (path, value) => styles.push({ path, value }),
+      emitVirtualFile: (absoluteFilePath, value) =>
+        styles.push({ absoluteFilePath, value }),
     };
 
-    const code = loader.call(loaderContext, fs.readFileSync(fixture, 'utf-8'));
+    try {
+      code = loader.call(loaderContext, fs.readFileSync(fixture, 'utf-8'));
+    } catch (err) {
+      error = err;
+    }
 
     it('js ', () => {
-      expect(code).toMatchSnapshot(`Compiled JS`);
-      if (options.TEST_SHOULD_FAIL) expect(styles.length).toEqual(0);
-      else expect(styles.length).toBeGreaterThan(0);
+      if (options.TEST_SHOULD_FAIL) {
+        expect(styles.length).toEqual(0);
+        // There may be an error, or may just be styles weren't extracted
+        expect(
+          error
+            ? error.message.slice(error.message.indexOf(':') + 1).trim() // remove file path
+            : code,
+        ).toMatchSnapshot('Compilation Error');
+      } else {
+        if (error) throw error;
+        expect(code).toMatchSnapshot('Compiled JS');
+        expect(styles.length).toBeGreaterThan(0);
+      }
     });
 
     styles.forEach((s, idx) => {
       it(`${idx}`, () => {
-        expect(s.value).toMatchSnapshot(`${basename(s.path)}`);
+        expect(s.value).toMatchSnapshot(`${basename(s.absoluteFilePath)}`);
       });
     });
   });

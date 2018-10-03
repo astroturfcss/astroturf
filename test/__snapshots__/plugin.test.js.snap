@@ -1,28 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Plugin css-no-assignment CssNoAssignment: CssNoAssignment.css 1`] = `
-"
-  .blue {
-    color: blue;
-  }
-"
-`;
-
 exports[`Plugin css-no-assignment js : Compilation Error 1`] = `
-"The output of this styled component is never used. Either assign it to a variable or export it.
-[0m[31m[1m>[22m[39m[90m 1 | [39mstyled([32m'p'[39m)[32m\`[39m[0m
-[0m [90m   | [39m[31m[1m^[22m[39m[0m
-[0m [90m 2 | [39m[32m  color: blue;[39m[0m
-[0m [90m 3 | [39m[32m\`[39m[33m;[39m[0m
-[0m [90m 4 | [39m[0m"
-`;
-
-exports[`Plugin css-no-assignment undefined: CssNoAssignment.css 1`] = `
-"
-  .blue {
-    color: blue;
-  }
-"
+"There are multiple anonymous css tags that would conflict. Differentiate each tag by assigning the output to a unique identifier
+[0m [90m  7 | [39m[32m\`[39m[33m;[39m[0m
+[0m [90m  8 | [39m[0m
+[0m[31m[1m>[22m[39m[90m  9 | [39mcss[32m\`[39m[0m
+[0m [90m    | [39m[31m[1m^[22m[39m[0m
+[0m [90m 10 | [39m[32m  .red {[39m[0m
+[0m [90m 11 | [39m[32m    color: red;[39m[0m
+[0m [90m 12 | [39m[32m  }[39m[0m"
 `;
 
 exports[`Plugin display-name DisplayName: DisplayName.css 1`] = `
@@ -55,22 +41,6 @@ export default
 styled(FancyBox, null, \\"DisplayName\\", require(\\"./DisplayName.css\\"), \\"display-name\\", \\"displayName\\");"
 `;
 
-exports[`Plugin display-name undefined: DisplayName.css 1`] = `
-".display-name {
-
-  color: ultra-red;
-
-}"
-`;
-
-exports[`Plugin display-name undefined: display-name-FooBarBaz.css 1`] = `
-".foo-bar-baz {
-
-  color: red;
-
-}"
-`;
-
 exports[`Plugin element-shorthand FancyBox: element-shorthand-FancyBox.css 1`] = `
 ".fancy-box {
 
@@ -98,25 +68,6 @@ const FancyBox =
 styled(\\"div\\", null, \\"FancyBox\\", require(\\"./element-shorthand-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");"
 `;
 
-exports[`Plugin element-shorthand undefined: element-shorthand-FancyBox.css 1`] = `
-".fancy-box {
-
-  color: red;
-  width: 75px;
-
-  @media (min-width: 420px) {
-    width: 96px;
-    height: 96px;
-  }
-
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
-}"
-`;
-
 exports[`Plugin example js : Compiled JS 1`] = `
 "import { css as less } from 'astroturf';
 const SIZE = 75;
@@ -127,22 +78,6 @@ require(\\"./example-styles.less\\");"
 `;
 
 exports[`Plugin example styles: example-styles.less 1`] = `
-"
-  .foo {
-    color: red;
-    width: 75px;
-  }
-
-  .bar {
-    composes: foo;
-
-    font-weight: bold;
-    font-style: italic;
-  }
-"
-`;
-
-exports[`Plugin example undefined: example-styles.less 1`] = `
 "
   .foo {
     color: red;
@@ -179,20 +114,6 @@ const ButtonBase =
 styled('button', null, \\"ButtonBase\\", require(\\"./hoist-import-ButtonBase.css\\"), \\"button-base\\", \\"buttonBase\\");"
 `;
 
-exports[`Plugin hoist-import undefined: hoist-import-ButtonBase.css 1`] = `
-"@import '~./styles/mixins.scss';
-.button-base {
-
-  
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid transparent;
-
-}"
-`;
-
 exports[`Plugin index ButtonBase: index-ButtonBase.css 1`] = `
 "@import '~./styles/mixins.scss';
 .button-base {
@@ -223,28 +144,6 @@ styled('button', null, \\"ButtonBase\\", require(\\"./index-ButtonBase.css\\"), 
 export default
 /*#__PURE__*/
 styled(FancyBox, null, \\"Fixtures\\", require(\\"./Fixtures.css\\"), \\"fixtures\\", \\"fixtures\\");"
-`;
-
-exports[`Plugin index undefined: Fixtures.css 1`] = `
-".fixtures {
-
-  color: ultra-red;
-
-}"
-`;
-
-exports[`Plugin index undefined: index-ButtonBase.css 1`] = `
-"@import '~./styles/mixins.scss';
-.button-base {
-
-  
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid transparent;
-
-}"
 `;
 
 exports[`Plugin multiple-components FancyBox: multiple-components-FancyBox.css 1`] = `
@@ -290,39 +189,6 @@ styled('div', null, \\"FancyBox\\", require(\\"./multiple-components-FancyBox.cs
 const FancyHeader =
 /*#__PURE__*/
 styled('h2', null, \\"FancyHeader\\", require(\\"./multiple-components-FancyHeader.css\\"), \\"fancy-header\\", \\"fancyHeader\\");"
-`;
-
-exports[`Plugin multiple-components undefined: multiple-components-FancyBox.css 1`] = `
-".fancy-box {
-
-  color: red;
-  width: 75px;
-
-  @media (min-width: 420px) {
-		width: 96px;
-		height: 96px;
-	}
-
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
-}"
-`;
-
-exports[`Plugin multiple-components undefined: multiple-components-FancyHeader.css 1`] = `
-".fancy-header {
-
-  color: red;
-  width: 75px;
-
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
-}"
 `;
 
 exports[`Plugin no-global js : Compilation Error 1`] = `
@@ -384,33 +250,6 @@ const FancierBox =
 styled(FancyBox, options, \\"FancierBox\\", require(\\"./pass-options-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");"
 `;
 
-exports[`Plugin pass-options undefined: pass-options-FancierBox.css 1`] = `
-".fancier-box {
-
-  color: ultra-red;
-
-}"
-`;
-
-exports[`Plugin pass-options undefined: pass-options-FancyBox.css 1`] = `
-".fancy-box {
-
-  color: red;
-  width: 75px;
-
-  @media (min-width: 420px) {
-    width: 96px;
-    height: 96px;
-  }
-
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
-}"
-`;
-
 exports[`Plugin styled FancierBox: styled-FancierBox.css 1`] = `
 ".fancier-box {
 
@@ -450,33 +289,6 @@ const FancierBox =
 styled(FancyBox, null, \\"FancierBox\\", require(\\"./styled-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");"
 `;
 
-exports[`Plugin styled undefined: styled-FancierBox.css 1`] = `
-".fancier-box {
-
-  color: ultra-red;
-
-}"
-`;
-
-exports[`Plugin styled undefined: styled-FancyBox.css 1`] = `
-".fancy-box {
-
-  color: red;
-  width: 75px;
-
-  @media (min-width: 420px) {
-    width: 96px;
-    height: 96px;
-  }
-
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
-}"
-`;
-
 exports[`Plugin styled-global FancierBox: styled-global-FancierBox.css 1`] = `
 ".fancier-box {
 
@@ -508,34 +320,13 @@ const FancierBox =
 styled(FancyBox, null, \\"FancierBox\\", require(\\"./styled-global-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");"
 `;
 
-exports[`Plugin styled-global undefined: styled-global-FancierBox.css 1`] = `
-".fancier-box {
-
-  color: ultra-red;
-
-}"
-`;
-
-exports[`Plugin styled-global undefined: styled-global-FancyBox.css 1`] = `
-".fancy-box {
-
-  color: red;
-  width: 75px;
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
-}"
-`;
-
 exports[`Plugin styled-no-assignment js : Compilation Error 1`] = `
-[SyntaxError: /Users/jason/src/css-literal-loader/test/fixtures/styled-no-assignment.js: The output of this styled component is never used. Either assign it to a variable or export it.
+"The output of this styled component is never used. Either assign it to a variable or export it.
 [0m[31m[1m>[22m[39m[90m 1 | [39mstyled([32m'p'[39m)[32m\`[39m[0m
 [0m [90m   | [39m[31m[1m^[22m[39m[0m
 [0m [90m 2 | [39m[32m  color: blue;[39m[0m
 [0m [90m 3 | [39m[32m\`[39m[33m;[39m[0m
-[0m [90m 4 | [39m[0m]
+[0m [90m 4 | [39m[0m"
 `;
 
 exports[`Plugin styled-tag FancierBox: styled-tag-FancierBox.css 1`] = `
@@ -570,27 +361,6 @@ const FancierBox =
 styled(FancyBox, null, \\"FancierBox\\", require(\\"./styled-tag-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");"
 `;
 
-exports[`Plugin styled-tag undefined: styled-tag-FancierBox.css 1`] = `
-".fancier-box {
-
-  color: ultra-red;
-
-}"
-`;
-
-exports[`Plugin styled-tag undefined: styled-tag-FancyBox.css 1`] = `
-".fancy-box {
-
-  color: red;
-  width: 75px;
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
-}"
-`;
-
 exports[`Plugin with-props RedPasswordInput: with-props-RedPasswordInput.css 1`] = `
 ".red-password-input {
 
@@ -607,12 +377,4 @@ const RedPasswordInput = withProps({
 })(
 /*#__PURE__*/
 styled('input', null, \\"RedPasswordInput\\", require(\\"./with-props-RedPasswordInput.css\\"), \\"red-password-input\\", \\"redPasswordInput\\"));"
-`;
-
-exports[`Plugin with-props undefined: with-props-RedPasswordInput.css 1`] = `
-".red-password-input {
-
-  background-color: red;
-
-}"
 `;

@@ -91,7 +91,7 @@ module.exports = function loader(content) {
   }
 
   styles.forEach(style => {
-    emitVirtualFile(style.path, style.value);
+    emitVirtualFile(style.absoluteFilePath, style.value);
   });
 
   return replaceStyleTemplates(content, styles);

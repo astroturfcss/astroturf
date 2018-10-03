@@ -108,7 +108,7 @@ export default function plugin() {
     const style = createStyleNode(path, state, getDisplayName(path, state));
     style.value = evaluate(quasiPath);
 
-    style.code = `require('${style.relativeFileName}')`;
+    style.code = `require('${style.relativeFilePath}')`;
 
     if (styles.has(style.absoluteFilePath))
       throw path.buildCodeFrameError(
