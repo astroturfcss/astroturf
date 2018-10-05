@@ -9,9 +9,9 @@ export default function wrapInClass(className, value) {
     imports.push(match[0]);
   }
 
-  value = value.replace(matcher, '');
+  value = value.replace(/\n\s*@import.*?(?:$|;)/gm, ''); // remove the entire line
 
-  let val = `${className} {\n${value}\n}`;
+  let val = `${className} {${value}}`;
   if (imports.length) val = `${imports.join('\n')}\n${val}`;
   return val;
 }

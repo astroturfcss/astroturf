@@ -1,0 +1,3 @@
+{
+  "presets": [["@4c/4catalyzer", { "target": "web-app" }]]
+}

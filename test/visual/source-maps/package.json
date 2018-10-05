@@ -1,0 +1,7 @@
+{
+  "name": "source-map-test",
+  "private": true,
+  "scripts": {
+    "start": "yarn --cwd ../../../ run build && webpack-dev-server"
+  }
+}

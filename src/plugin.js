@@ -9,7 +9,7 @@ import template from '@babel/template';
 import generate from '@babel/generator';
 import pascalCase from './utils/pascalCase';
 import getNameFromPath from './utils/getNameFromPath';
-import wrapInClass from './utils/wrapInClass';
+import getValueForStyledTag from './utils/getValueForStyledTag';
 
 const buildImport = template('require(FILENAME);');
 const buildComponent = template(
@@ -136,7 +136,13 @@ export default function plugin() {
     const style = createStyleNode(path, state, displayName);
 
     const kebabName = kebabCase(displayName);
-    style.value = wrapInClass(`.${kebabName}`, evaluate(path.get('quasi')));
+
+    style.value = getValueForStyledTag(
+      path.get('quasi'),
+      style,
+      state.file,
+      kebabName,
+    );
 
     const runtimeNode = buildComponent({
       TAGNAME: tagName,

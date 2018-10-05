@@ -1,5 +1,4 @@
 import loaderUtils from 'loader-utils';
-
 import traverse from './traverse';
 import VirtualModulePlugin from './VirtualModulePlugin';
 
@@ -38,7 +37,7 @@ function collectStyles(src, filename, opts) {
   try {
     const { metadata } = traverse(src, filename, {
       ...opts,
-      writeFiles: false,
+      writeFiles: opts.writeFiles === true || false,
       generateInterpolations: true,
     });
     return { styles: metadata.astroturf.styles || [] };
@@ -91,6 +90,7 @@ module.exports = function loader(content) {
   }
 
   styles.forEach(style => {
+    console.log(style.value);
     emitVirtualFile(style.absoluteFilePath, style.value);
   });
 
