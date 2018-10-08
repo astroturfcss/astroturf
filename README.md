@@ -184,7 +184,7 @@ const Title = styled('h3')`
 `;
 ```
 
-You can also don't have to define everything in a `.js` file. Where it makes sense just use normal css (or which file type) is appropriate.
+You don't have to define everything in a `.js` file. Where it makes sense just use normal css (or any other file type).
 
 ```scss
 // mixins.scss
