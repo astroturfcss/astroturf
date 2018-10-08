@@ -1,7 +1,11 @@
 # astroturf
 
-A close enough aproximation of a css-in-js library that's actually plain css. It's "Inline css" that
-just works with CSS, PostCSS, Less, Sass, or any other css preprocessor, and plays nicely with existing style tooling like `mini-css-extract-plugin`.
+**astroturf** lets you write CSS in your JavaScript files without adding any runtime layer, and with your existing CSS processing pipeline.
+
+- **Zero runtime CSS-in-JS.** Get many of the same benefits as CSS-in-JS, but without the loss of flexibility in requiring framework-specific CSS processing, and while keeping your CSS fully static with no runtime style parsing.
+- Use your existing tools – **Sass, PostCSS, Less** – but still write your style definitions in your JavaScript files
+- **Whole component in the single file**. Write CSS in a template literal, then use it as if it were in a separate file
+
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
