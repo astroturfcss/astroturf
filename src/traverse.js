@@ -15,7 +15,7 @@ export default function traverse(source, filename, opts) {
       allowImportExportEverywhere: true,
       allowReturnOutsideFunction: true,
       allowSuperOutsideMethod: true,
-      sourceType: 'unambigious',
+      sourceType: 'unambiguous',
       sourceFilename: true,
 
       plugins: [
