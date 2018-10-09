@@ -36,7 +36,11 @@ export function styled(
         const propValue = props[propName];
         const propType = typeof propValue;
 
-        if (propType === 'boolean' || propType === 'undefined') {
+        if (
+          propType === 'boolean' ||
+          propType === 'undefined' ||
+          propValue == null
+        ) {
           if (has.call(styles, propName)) {
             if (propValue) {
               modifierClassNames.push(styles[propName]);
