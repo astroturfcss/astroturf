@@ -9,15 +9,20 @@ describe('styled', () => {
       'div',
       null,
       'FancyBox',
-      { green: 'green', themePrimary: 'primary', 'size-sm': 'small' },
+      {
+        green: 'green',
+        big: 'big',
+        themePrimary: 'primary',
+        'size-sm': 'small',
+      },
       'fancy-box',
       'fancyBox',
     );
 
     expect(
-      mount(<Component green size="sm" theme="primary" />).find(
-        'div.green.primary.small',
-      ),
+      mount(
+        <Component green big={undefined} size="sm" theme="primary" />,
+      ).find('div.green.primary.small'),
     ).toHaveLength(1);
   });
 
