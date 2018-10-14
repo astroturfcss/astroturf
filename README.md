@@ -12,6 +12,7 @@
 
 
 - [Usage](#usage)
+- [Extensions](#extensions)
 - [Component API](#component-api)
   - [WHY?!](#why)
   - [Composition, variables, etc?](#composition-variables-etc)
@@ -67,6 +68,10 @@ const styles = css`
   }
 `;
 ```
+
+## Extensions
+
+- [gatsby-plugin-astroturf](https://github.com/silvenon/gatsby-plugin-astroturf)
 
 ## Component API
 
