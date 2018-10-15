@@ -83,7 +83,7 @@ exports[`Loader example 0: example-styles.less 1`] = `
 `;
 
 exports[`Loader example js : Compiled JS 1`] = `
-"import { css as less } from 'astroturf';
+"
 
 const SIZE = 75;
 
@@ -109,6 +109,36 @@ exports[`Loader hoist-import js : Compiled JS 1`] = `
 "import { styled } from 'astroturf';
 
 const ButtonBase = styled('button', null, \\"ButtonBase\\", require(\\"./hoist-import-ButtonBase.css\\"), \\"button-base\\", \\"buttonBase\\");
+"
+`;
+
+exports[`Loader imports-css 0: imports-css-styles.css 1`] = `
+"
+  .blue {
+    color: blue;
+  }
+"
+`;
+
+exports[`Loader imports-css js : Compiled JS 1`] = `
+"
+
+const styles = require('./imports-css-styles.css');
+"
+`;
+
+exports[`Loader imports-mixed 0: imports-mixed-styles.css 1`] = `
+"
+  .blue {
+    color: blue;
+  }
+"
+`;
+
+exports[`Loader imports-mixed js : Compiled JS 1`] = `
+"import styled from 'astroturf'
+
+const styles = require('./imports-mixed-styles.css');
 "
 `;
 
@@ -177,7 +207,7 @@ exports[`Loader multiple-components 1: multiple-components-FancyHeader.css 1`] =
 `;
 
 exports[`Loader multiple-components js : Compiled JS 1`] = `
-"import styled, { css } from 'astroturf';
+"import styled from 'astroturf'
 
 const SIZE = 75;
 
@@ -375,7 +405,7 @@ exports[`Loader typescript 0: typescript-styles.css 1`] = `
 `;
 
 exports[`Loader typescript js : Compiled JS 1`] = `
-"import { css } from 'astroturf';
+"
 import React from 'react';
 
 const SIZE = 75;

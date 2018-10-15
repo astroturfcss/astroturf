@@ -41,13 +41,13 @@ function collectStyles(src, filename, opts) {
       writeFiles: false,
       generateInterpolations: true,
     });
-    return { styles: metadata.astroturf.styles || [] };
+    return metadata.astroturf;
   } catch (err) {
     throw new AstroTurfLoaderError(err);
   }
 }
 
-function replaceStyleTemplates(src, styles) {
+function replaceStyleTemplates(src, locations) {
   let offset = 0;
 
   function splice(str, start, end, replace) {
@@ -58,7 +58,7 @@ function replaceStyleTemplates(src, styles) {
     return result;
   }
 
-  styles.forEach(({ start, end, code }) => {
+  locations.forEach(({ start, end, code }) => {
     if (code.endsWith(';')) code = code.slice(0, -1); // remove trailing semicolon
     src = splice(src, start, end, code);
   });
@@ -72,7 +72,11 @@ module.exports = function loader(content) {
   if (this.cacheable) this.cacheable();
 
   const options = loaderUtils.getOptions(this) || {};
-  const { styles } = collectStyles(content, this.resourcePath, options);
+  const { styles = [], imports } = collectStyles(
+    content,
+    this.resourcePath,
+    options,
+  );
 
   if (!styles.length) return content;
 
@@ -94,5 +98,5 @@ module.exports = function loader(content) {
     emitVirtualFile(style.absoluteFilePath, style.value);
   });
 
-  return replaceStyleTemplates(content, styles);
+  return replaceStyleTemplates(content, [...imports, ...styles]);
 };

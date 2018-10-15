@@ -17,6 +17,7 @@ const buildComponent = template(
 );
 
 const STYLES = Symbol('Astroturf');
+const IMPORTS = Symbol('Astroturf imports');
 
 function getNameFromFile(fileName) {
   const name = basename(fileName, extname(fileName));
@@ -158,6 +159,7 @@ export default function plugin() {
 
   return {
     pre(file) {
+      file.set(IMPORTS, []);
       if (!file.has(STYLES)) {
         file.set(STYLES, {
           id: 0,
@@ -168,11 +170,32 @@ export default function plugin() {
 
     post(file) {
       const { opts } = this;
+      const importNodes = file.get(IMPORTS);
+      const imports = [];
+
+      importNodes.forEach(path => {
+        const decl = !path.isImportDeclaration()
+          ? path.findParent(p => p.isImportDeclaration())
+          : path;
+
+        const { start, end } = decl.node;
+
+        path.remove();
+
+        if (opts.generateInterpolations)
+          imports.push({
+            start,
+            end,
+            // if the path is just a removed specifier we need to regenerate
+            // the import statement otherwise we remove the entire declaration
+            code: !path.isImportDeclaration() ? generate(decl.node).code : '',
+          });
+      });
 
       let { styles } = file.get(STYLES);
       styles = Array.from(styles.values());
 
-      file.metadata.astroturf = { styles };
+      file.metadata.astroturf = { styles, imports };
 
       if (opts.writeFiles !== false) {
         styles.forEach(({ absoluteFilePath, value }) => {
@@ -214,6 +237,27 @@ export default function plugin() {
           path.replaceWith(buildStyleRequire(path, state, tagName));
           path.addComment('leading', '#__PURE__');
         }
+      },
+
+      ImportDeclaration: {
+        exit(path, state) {
+          const { tagName = 'css' } = state.opts;
+          const specifiers = path.get('specifiers');
+          const tagImport = path
+            .get('specifiers')
+            .find(
+              p =>
+                p.isImportSpecifier() &&
+                p.node.imported.name === 'css' &&
+                p.node.local.name === tagName,
+            );
+
+          if (tagImport) {
+            state.file
+              .get(IMPORTS)
+              .push(specifiers.length === 1 ? path : tagImport);
+          }
+        },
       },
     },
   };
