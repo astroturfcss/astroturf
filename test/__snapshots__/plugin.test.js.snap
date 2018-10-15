@@ -69,8 +69,7 @@ styled(\\"div\\", null, \\"FancyBox\\", require(\\"./element-shorthand-FancyBox.
 `;
 
 exports[`Plugin example js : Compiled JS 1`] = `
-"import { css as less } from 'astroturf';
-const SIZE = 75;
+"const SIZE = 75;
 
 const styles =
 /*#__PURE__*/
@@ -112,6 +111,36 @@ exports[`Plugin hoist-import js : Compiled JS 1`] = `
 const ButtonBase =
 /*#__PURE__*/
 styled('button', null, \\"ButtonBase\\", require(\\"./hoist-import-ButtonBase.css\\"), \\"button-base\\", \\"buttonBase\\");"
+`;
+
+exports[`Plugin imports-css js : Compiled JS 1`] = `
+"const styles =
+/*#__PURE__*/
+require(\\"./imports-css-styles.css\\");"
+`;
+
+exports[`Plugin imports-css styles: imports-css-styles.css 1`] = `
+"
+  .blue {
+    color: blue;
+  }
+"
+`;
+
+exports[`Plugin imports-mixed js : Compiled JS 1`] = `
+"import styled from 'astroturf';
+
+const styles =
+/*#__PURE__*/
+require(\\"./imports-mixed-styles.css\\");"
+`;
+
+exports[`Plugin imports-mixed styles: imports-mixed-styles.css 1`] = `
+"
+  .blue {
+    color: blue;
+  }
+"
 `;
 
 exports[`Plugin index ButtonBase: index-ButtonBase.css 1`] = `
@@ -180,7 +209,7 @@ exports[`Plugin multiple-components FancyHeader: multiple-components-FancyHeader
 `;
 
 exports[`Plugin multiple-components js : Compiled JS 1`] = `
-"import styled, { css } from 'astroturf';
+"import styled from 'astroturf';
 const SIZE = 75; // prettier-ignore
 
 const FancyBox =
