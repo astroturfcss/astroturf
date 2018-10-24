@@ -100,6 +100,7 @@
     "@babel/types": "^7.1.2",
     "classnames": "^2.2.6",
     "common-tags": "^1.8.0",
+    "errno": "^0.1.7",
     "fs-extra": "^7.0.0",
     "loader-utils": "^1.1.0",
     "lodash": "^4.17.11",

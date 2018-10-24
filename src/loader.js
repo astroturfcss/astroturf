@@ -1,7 +1,9 @@
 import loaderUtils from 'loader-utils';
-
+import util from 'util';
 import traverse from './traverse';
 import VirtualModulePlugin from './VirtualModulePlugin';
+
+const debug = util.debuglog('astroturf:loader');
 
 // can'ts use class syntax b/c babel doesn't transpile it correctly for Error
 function AstroTurfLoaderError(error) {
@@ -84,12 +86,12 @@ module.exports = function loader(content) {
 
   // The plugin isn't loaded
   if (!emitVirtualFile) {
-    const compilation = this._compilation; // eslint-disable-line no-underscore-dangle
-    let plugin = compilation[LOADER_PLUGIN];
-
+    const { compiler } = this._compilation; // eslint-disable-line no-underscore-dangle
+    let plugin = compiler[LOADER_PLUGIN];
     if (!plugin) {
-      plugin = VirtualModulePlugin.bootstrap(compilation);
-      compilation[LOADER_PLUGIN] = plugin;
+      debug('adding plugin to compiiler');
+      plugin = VirtualModulePlugin.bootstrap(this._compilation);
+      compiler[LOADER_PLUGIN] = plugin;
     }
     emitVirtualFile = plugin.addFile;
   }

@@ -2,14 +2,7 @@ const uniq = require('lodash/uniq');
 
 const withSyncMethod = (methods, name) => [...methods, name, `${name}Sync`];
 
-const TO_PROXY = [
-  'exists',
-  'readFile',
-  'writeFile',
-  'stat',
-  'unlink',
-  'readlink',
-]
+const TO_PROXY = ['exists', 'readFile', 'writeFile', 'stat', 'unlink']
   .reduce(withSyncMethod, [])
   .concat(['createReadStream', 'createWriteStream']);
 
@@ -23,6 +16,9 @@ export default function proxyFileSystem(realFs, virtualFs) {
   const proxiedMethods = { __isProxiedFileSystem: true };
 
   TO_PROXY.forEach(method => {
+    // only proxy methods present in the real fs
+    if (typeof realFs[method] !== 'function') return;
+
     proxiedMethods[method] = function proxy(path, ...args) {
       if (!virtualFs.existsSync(path)) {
         return realFs[method](path, ...args);
@@ -34,7 +30,7 @@ export default function proxyFileSystem(realFs, virtualFs) {
             ` on virtual file: \`${path}\`.`,
         );
 
-        if (method.match(/Sync$/)) throw err;
+        if (method.endsWith('Sync')) throw err;
         else return args.pop()(err);
       }
       return virtualFs[method](path, ...args);
