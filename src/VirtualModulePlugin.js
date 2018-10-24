@@ -1,6 +1,4 @@
-import path from 'path';
-import MemoryFileSystem from 'memory-fs';
-
+import MemoryFs from './memory-fs';
 import proxyFileSystem from './proxyFileSystem';
 
 const PLUGIN = 'css-literal-loader';
@@ -30,7 +28,7 @@ class VirtualModulePlugin {
   }
 
   constructor(files) {
-    this.fs = new MemoryFileSystem();
+    this.fs = new MemoryFs();
 
     if (files) {
       Object.keys(files).forEach(key => {
@@ -40,8 +38,7 @@ class VirtualModulePlugin {
   }
 
   addFile = (virtualPath, content) => {
-    this.fs.mkdirpSync(path.dirname(virtualPath));
-    this.fs.writeFileSync(virtualPath, content);
+    this.fs.addFile(virtualPath, content);
   };
 
   augmentCompilerFileSystem(compiler) {
@@ -66,7 +63,7 @@ class VirtualModulePlugin {
     const augmentOnCompile = () => {
       this.augmentCompilerFileSystem(compiler);
     };
-    const augmentLoaderCOntext = loaderContext => {
+    const augmentLoaderContext = loaderContext => {
       loaderContext.emitVirtualFile = this.addFile;
     };
 
@@ -76,12 +73,12 @@ class VirtualModulePlugin {
     if (compiler.hooks) {
       compiler.hooks.compile.tap(PLUGIN, augmentOnCompile);
       compiler.hooks.compilation.tap(PLUGIN, compilation => {
-        compilation.hooks.normalModuleLoader.tap(PLUGIN, augmentLoaderCOntext);
+        compilation.hooks.normalModuleLoader.tap(PLUGIN, augmentLoaderContext);
       });
     } else {
       compiler.plugin('compile', augmentOnCompile);
       compiler.plugin('compilation', compilation => {
-        compilation.plugin('normal-module-loader', augmentLoaderCOntext);
+        compilation.plugin('normal-module-loader', augmentLoaderContext);
       });
     }
   }
