@@ -1,6 +1,6 @@
 const path = require('path');
 
-const { createHash } = require(`crypto`);
+const { createHash } = require('crypto');
 const errors = require('errno');
 const util = require('util');
 const { ReadableStream, WritableStream } = require('stream');
@@ -67,7 +67,7 @@ class MemoryFs {
 
     this.paths.set(p, {
       hash,
-      contents: Buffer.from(data),
+      contents: Buffer.isBuffer(data) ? data : Buffer.from(data),
 
       birthtime: existing ? existing.birthtime : new Date(),
       ctime: existing ? existing.ctime : new Date(),
@@ -97,7 +97,6 @@ class MemoryFs {
         ctimeMs: file.ctime.getTime(),
         birthtimeMs: file.birthtime.getTime(),
 
-        // birthtime: file.birthtime,
         isFile: returnsTrue,
         isDirectory: returnsFalse,
         isBlockDevice: returnsFalse,

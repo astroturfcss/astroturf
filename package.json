@@ -42,9 +42,9 @@
   "author": "4Catalyzer",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/4Catalyzer/css-literal-loader/issues"
+    "url": "https://github.com/4Catalyzer/astroturf/issues"
   },
-  "homepage": "https://github.com/4Catalyzer/css-literal-loader#readme",
+  "homepage": "https://github.com/4Catalyzer/astroturf#readme",
   "peerDependencies": {
     "@babel/core": "^7.0.0-beta.42",
     "webpack": ">=2"
