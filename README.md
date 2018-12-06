@@ -269,7 +269,7 @@ class Responsive extends React.Component {
   componentDidMount() {
     this.setState({
       isMobile: window.clientWidth < parseInt(breakpoints.md, 10)
-    }
+    })
   }
 
   render() {
