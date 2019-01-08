@@ -66,6 +66,10 @@ declare module 'astroturf' {
     ExtraProps
   > extends CreateStyledComponentBase<StyledPropsOf<Tag>, ExtraProps> {}
 
+  export type StyledTags = {
+    readonly [P in keyof JSXInEl]: CreateStyledComponentIntrinsic<P, {}>
+  };
+
   /**
    * @desc
    * This function accepts `InnerProps`/`Tag` to infer the type of `tag`,
@@ -76,7 +80,7 @@ declare module 'astroturf' {
    * If your tool support syntax highlighting for `` styled('button')<ExtraProps>`...` ``
    * it could be more efficient.
    */
-  export interface CreateStyled {
+  export interface CreateStyled extends StyledTags {
     <Tag extends React.ComponentType<any>, ExtraProps = {}>(
       tag: Tag,
       options?: StyledOptions,

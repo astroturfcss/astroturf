@@ -3,6 +3,15 @@
 import React from 'react';
 import styled from 'astroturf';
 
+// $ExpectType CreateStyledComponentIntrinsic<"a", {}>
+styled.a;
+// $ExpectType CreateStyledComponentIntrinsic<"body", {}>
+styled.body;
+// $ExpectType CreateStyledComponentIntrinsic<"div", {}>
+styled.div;
+// $ExpectType CreateStyledComponentIntrinsic<"svg", {}>
+styled.svg;
+
 // tslint:disable-next-line: interface-over-type-literal
 type ReactClassProps0 = {
   readonly column: boolean;
