@@ -15,7 +15,7 @@
       "check-type-operator",
       "check-preblock"
     ],
-
+    "no-single-declare-module": false,
     "no-unnecessary-generics": false,
     "no-unnecessary-class": false
   }
