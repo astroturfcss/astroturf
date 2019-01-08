@@ -10,20 +10,14 @@
     "test:ts": "dtslint types",
     "tdd": "jest --watch",
     "prepublishOnly": "npm run build",
-    "build": "rimraf lib/* && babel src --out-dir lib --delete-dir-on-start",
+    "build": "rimraf lib/* && babel src --out-dir lib --delete-dir-on-start && cpy types/index.d.ts lib",
     "start": "npm run -C ./example start"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/4Catalyzer/astroturf.git"
   },
-  "files": [
-    "lib",
-    "styled.js",
-    "babel.js",
-    "types/index.d.ts"
-  ],
-  "types": "types/index.d.ts",
+  "types": "index.d.ts",
   "author": "4Catalyzer",
   "license": "MIT",
   "bugs": {
@@ -70,6 +64,7 @@
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.4",
+    "cpy-cli": "^2.0.0",
     "css-loader": "^1.0.0",
     "doctoc": "^1.3.1",
     "dtslint": "^0.4.2",
