@@ -80,7 +80,7 @@ For those that want something a bit more like styled-components or emotion, ther
 ```js
 import styled, { css } from 'astroturf';
 
-const Button = styled('button')`
+const Button = styled.button`
   color: black;
   border: 1px solid black;
   background-color: white;
@@ -186,7 +186,7 @@ const helpers = css`
   }
 `;
 
-const Title = styled('h3')`
+const Title = styled.h3`
   composes: heavy from './Button-helpers.css';
 
   font-size: 12%;
@@ -206,7 +206,7 @@ and then:
 
 ```js
 // Button.js
-const Title = styled('h3')`
+const Title = styled.h3`
   @import './mixins.scss';
 
   @include heavy();
@@ -222,7 +222,7 @@ very convenient. Astroturf ofters two ways to do this, the first is string inter
 ```js
 const DURATION = 500;
 
-const ColorTransition = styled('nav')`
+const ColorTransition = styled.nav`
   color: red;
   transition: color ${DURATION}ms;
 
@@ -300,7 +300,7 @@ With [postcss-nested](https://github.com/postcss/postcss-nested) you can
 add keyframes to specific component (and keyframes name will not be global):
 
 ```js
-const Loader = styled('div')`
+const Loader = styled.div`
   animation-name: rotation;
   animation-duration: 1s;
   animation-timing-function: linear;
@@ -324,7 +324,7 @@ It can also be useful to create components with props already applied, like the 
 import styled from 'astroturf';
 import withProps from 'recompose/withProps';
 
-const PasswordInput = withProps({ type: 'password' })(styled('input')`
+const PasswordInput = withProps({ type: 'password' })(styled.input`
   background-color: #ccc;
 `);
 ```
@@ -334,7 +334,7 @@ const PasswordInput = withProps({ type: 'password' })(styled('input')`
 `astroturf` supports the `as` prop to control the underlying element type at runtime.
 
 ```js
-const Button styled('button')`
+const Button styled.button`
   color: red;
 `
 
