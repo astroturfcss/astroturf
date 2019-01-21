@@ -6,7 +6,6 @@
 - Use your existing tools – **Sass, PostCSS, Less** – but still write your style definitions in your JavaScript files
 - **Whole component in the single file**. Write CSS in a template literal, then use it as if it were in a separate file
 
-
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
@@ -18,7 +17,7 @@
   - [Composition, variables, etc?](#composition-variables-etc)
   - [Sharing values between styles and JavaScript](#sharing-values-between-styles-and-javascript)
   - [Keyframes and global](#keyframes-and-global)
-  - [With props](#with-props)
+  - [Helpers](#helpers)
   - [`as` prop](#as-prop)
 - [Setup](#setup)
   - [Options](#options)
@@ -314,17 +313,30 @@ const Loader = styled('div')`
 `;
 ```
 
-### With props
+### Helpers
 
-It can also be useful to create components with props already applied, like the example below. We recommend using recompose's `withProps` higher-order component to do this.
-
-**[`withProps` documentation](https://github.com/acdlite/recompose/blob/master/docs/API.md#withprops)**
+A common task with styled components is to configure or map their props. We include a few helpers you can
+optionally include to do this if you want, they are extra and if you don't use them they won't be included in your bundle. There are a few advantages to using the included helpers over a more general solution
+like `recompose`. They automatically forward `refs`, and don't muck with the `as` prop passthrough.
 
 ```jsx
 import styled from 'astroturf';
-import withProps from 'recompose/withProps';
+import { withProps, defaultProps, mapProps } from 'astroturf/helpers';
 
+// Map the incoming props to a new set of props
+const TextInput = mapProps(props => ({ ...props, type: 'password' }))(
+  styled('input')`
+    background-color: #ccc;
+  `,
+);
+
+// Provides `type` automatically and passes through everything else
 const PasswordInput = withProps({ type: 'password' })(styled('input')`
+  background-color: #ccc;
+`);
+
+// Sets the default `type` to `text` but allow overrides to it
+const TextInput = withProps({ type: 'text' })(styled('input')`
   background-color: #ccc;
 `);
 ```

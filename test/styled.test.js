@@ -2,6 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 
 import styled from '../src/index';
+import { defaultProps } from '../src/helpers';
 
 describe('styled', () => {
   it('should render the component with styles', () => {
@@ -113,7 +114,7 @@ describe('styled', () => {
       'fancyBox',
     );
     const Component = styled(
-      Inner,
+      defaultProps({})(Inner),
       null,
       'Outer',
       { green: 'green' },

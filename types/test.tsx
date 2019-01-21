@@ -3,6 +3,8 @@
 import React from 'react';
 import styled from 'astroturf';
 
+import { defaultProps, mapProps, withProps } from 'astroturf/helpers';
+
 // $ExpectType CreateStyledComponentIntrinsic<"a", {}>
 styled.a;
 // $ExpectType CreateStyledComponentIntrinsic<"body", {}>
@@ -207,3 +209,60 @@ declare const ref3_2: (element: HTMLDivElement | null) => void;
 <StyledClass3 column={true} ref={ref3_1} />;
 // $ExpectError
 <StyledClass3 column={true} ref={ref3_2} />;
+
+{
+  interface InnerProps {
+    inn: number;
+    other: string;
+  }
+  interface OutterProps {
+    out: string;
+  }
+  const InnerComponent = ({ inn }: InnerProps) => <div>{inn}</div>;
+
+  const enhancer = mapProps((props: OutterProps) => ({ inn: 123 }));
+  const Enhanced = enhancer(InnerComponent);
+
+  <Enhanced other="foo" out="bar" />;
+}
+
+{
+  interface InnerProps {
+    inn: number;
+    other?: string;
+  }
+  interface OutterProps {
+    out: number;
+  }
+  const InnerComponent = ({ inn }: InnerProps) => <div>{inn}</div>;
+
+  const enhancer = withProps((props: OutterProps) => ({ inn: props.out }));
+  const Enhanced = enhancer(InnerComponent);
+  <Enhanced out={123} />;
+
+  const enhancer2 = withProps({ inn: 123 });
+  const Enhanced2 = enhancer2(InnerComponent);
+  <Enhanced2 other="1" />;
+  <Enhanced2 />;
+  // $ExpectError
+  <Enhanced2 inn={124} />;
+}
+{
+  interface Props {
+    a: string;
+    b: number;
+    c: number;
+  }
+  const innerComponent = ({ a, b }: Props) => (
+    <div>
+      {a}, {b}
+    </div>
+  );
+
+  const enhancer = defaultProps({ a: 'answer', b: 42 });
+  const Enhanced = enhancer(innerComponent);
+  <Enhanced c={42} />;
+
+  // $ExpectError
+  <Enhanced />;
+}
