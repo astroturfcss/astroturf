@@ -2,8 +2,6 @@ import * as React from 'react';
 
 export type Omit<T, U> = Pick<T, Exclude<keyof T, U>>;
 
-type mapper<TInner, TOutter> = (input: TInner) => TOutter;
-
 export interface InferableComponentEnhancerWithProps<
   TInjectedProps,
   TNeedsProps
@@ -14,11 +12,11 @@ export interface InferableComponentEnhancerWithProps<
 }
 
 export function mapProps<TInner, TOutter>(
-  propsMapper: mapper<TOutter, TInner>,
+  propsMapper: (input: TInner) => TOutter,
 ): InferableComponentEnhancerWithProps<TInner, TOutter>;
 
 export function withProps<TInner, TOutter>(
-  createProps: TInner | mapper<TOutter, TInner>,
+  createProps: TInner | ((input: TInner) => TOutter),
 ): InferableComponentEnhancerWithProps<TInner & TOutter, TOutter>;
 
 export function defaultProps<TDefaultProps = {}>(

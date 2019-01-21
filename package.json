@@ -10,7 +10,7 @@
     "test:ts": "dtslint types",
     "tdd": "jest --watch",
     "prepublishOnly": "npm run build",
-    "build": "rimraf lib/* && babel src --out-dir lib --delete-dir-on-start && cpy types/index.d.ts lib",
+    "build": "rimraf lib/* && babel src --out-dir lib --delete-dir-on-start && cpy types/*.d.ts lib",
     "start": "npm run -C ./example start"
   },
   "repository": {
