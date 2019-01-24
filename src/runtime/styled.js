@@ -25,7 +25,9 @@ export function styled(
   );
 
   function Styled(props) {
-    const childProps = { ...props };
+    let childProps = { ...props };
+    if (options.mapProps) childProps = options.mapProps(childProps);
+
     if (allowAs) delete childProps.as;
     delete childProps.innerRef;
     childProps.ref = props.innerRef;
@@ -96,6 +98,7 @@ export function styled(
     styled(nextType, options, displayName, styles, kebabName, camelName);
 
   decorated.isAstroturf = true;
+  decorated.defaultProps = options.defaultProps;
 
   return decorated;
 }

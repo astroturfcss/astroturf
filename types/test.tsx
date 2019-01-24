@@ -88,30 +88,52 @@ const Button2 = styled<'button', PrimaryProps>('button')`
     color: red;
   }
 `;
-
-<div>
-  <Button2 primary />
-  <Button2 primary type="button" />
-</div>;
+<Button2 primary type="button" />;
 
 // $ExpectError
 <Button2 />;
 // $ExpectError
 <Button2 type="button" />;
 
+interface MapperProps {
+  foo: string;
+}
+
+const Button3 = styled<'button', MapperProps>('button', {
+  mapProps: p => ({ foo: 'string', type: p.type }),
+})``;
+
+<Button3 foo="fooo" type="button" />;
+
+// $ExpectError
+<Button3 />;
+
+const ComponentFoo = ({ foo }: { foo: string }) => <button />;
+
+const WrappedFoo = styled(ComponentFoo, {
+  mapProps: p => ({
+    foo: 'foo',
+  }),
+})``;
+
+<ComponentFoo foo="b" />;
+<WrappedFoo />;
+
+// $ExpectError
+<Button3b primary />;
+
 const Button4 = styled<typeof ReactClassComponent0, PrimaryProps>(
   ReactClassComponent0,
 )``;
 
 const Button5 = styled<typeof ReactSFC0, PrimaryProps>(ReactSFC0)``;
-<div>
-  <Button4 column={true} primary />
-  <Button4 column={false} primary />
-</div>;
-<div>
-  <Button5 column={true} primary />
-  <Button5 column={false} primary />
-</div>;
+
+<Button4 column={true} primary />;
+<Button4 column={false} primary />;
+
+<Button5 column={true} primary />;
+<Button5 column={false} primary />;
+
 // $ExpectError
 <Button4 />;
 // $ExpectError

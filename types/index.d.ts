@@ -18,9 +18,14 @@ declare module 'astroturf' {
   type StyledOmit<T, U> = Pick<T, Exclude<keyof T, U>>;
   type Overwrapped<T, U> = Pick<T, Extract<keyof T, keyof U>>;
 
-  export interface StyledOptions {
+  type mapper<TInput, TProps> = (input: TInput) => TProps;
+
+  export interface StyledOptions<TInputProps, TProps> {
     allowAs?: boolean;
+    mapProps?: mapper<TInputProps, TProps>;
   }
+
+  interface StyledOptionsNoInput<TProps> extends StyledOptions<any, TProps> {}
 
   export interface StyledComponent<InnerProps, StyleProps>
     extends React.SFC<InnerProps & StyleProps> {
@@ -37,20 +42,26 @@ declare module 'astroturf' {
 
   type ReactClassPropKeys = keyof React.ClassAttributes<any>;
 
-  interface CreateStyledComponentBase<InnerProps, ExtraProps> {
+  interface CreateStyledComponentBase<InnerProps, ExtraProps, InjectedProps> {
     <
       StyleProps extends StyledOmit<
         Overwrapped<InnerProps, StyleProps>,
-        ReactClassPropKeys
-      > = StyledOmit<InnerProps & ExtraProps, ReactClassPropKeys>
+        ReactClassPropKeys & InjectedProps
+      > = StyledOmit<
+        InnerProps & ExtraProps,
+        ReactClassPropKeys & InjectedProps
+      >
     >(
       ...styles: any[]
     ): StyledComponent<InnerProps, StyleProps>;
     <
       StyleProps extends StyledOmit<
         Overwrapped<InnerProps, StyleProps>,
-        ReactClassPropKeys
-      > = StyledOmit<InnerProps & ExtraProps, ReactClassPropKeys>
+        ReactClassPropKeys & InjectedProps
+      > = StyledOmit<
+        InnerProps & ExtraProps,
+        ReactClassPropKeys & InjectedProps
+      >
     >(
       template: TemplateStringsArray,
       ...styles: any[]
@@ -58,16 +69,28 @@ declare module 'astroturf' {
   }
   interface CreateStyledComponentIntrinsic<
     Tag extends keyof JSXInEl,
-    ExtraProps
-  > extends CreateStyledComponentBase<JSXInEl[Tag], ExtraProps> {}
+    ExtraProps,
+    InjectedProps
+  >
+    extends CreateStyledComponentBase<
+        JSXInEl[Tag],
+        ExtraProps,
+        InjectedProps
+      > {}
 
   interface CreateStyledComponentExtrinsic<
     Tag extends React.ComponentType<any>,
-    ExtraProps
-  > extends CreateStyledComponentBase<StyledPropsOf<Tag>, ExtraProps> {}
+    ExtraProps,
+    InjectedProps
+  >
+    extends CreateStyledComponentBase<
+        StyledPropsOf<Tag>,
+        ExtraProps,
+        InjectedProps
+      > {}
 
   export type StyledTags = {
-    readonly [P in keyof JSXInEl]: CreateStyledComponentIntrinsic<P, {}>
+    readonly [P in keyof JSXInEl]: CreateStyledComponentIntrinsic<P, {}, {}>
   };
 
   /**
@@ -81,15 +104,32 @@ declare module 'astroturf' {
    * it could be more efficient.
    */
   export interface CreateStyled extends StyledTags {
-    <Tag extends React.ComponentType<any>, ExtraProps = {}>(
+    <Tag extends React.ComponentType<any>, ExtraProps>(
       tag: Tag,
-      options?: StyledOptions,
-    ): CreateStyledComponentExtrinsic<Tag, ExtraProps>;
+      options?: StyledOptions<StyledPropsOf<Tag> & ExtraProps, {}>,
+    ): CreateStyledComponentExtrinsic<Tag, ExtraProps, {}>;
+    <
+      Tag extends React.ComponentType<any>,
+      ExtraProps,
+      InjectedProps extends StyledPropsOf<Tag> & ExtraProps
+    >(
+      tag: Tag,
+      options?: StyledOptions<StyledPropsOf<Tag> & ExtraProps, InjectedProps>,
+    ): CreateStyledComponentExtrinsic<Tag, ExtraProps, InjectedProps>;
 
-    <Tag extends keyof JSXInEl, ExtraProps = {}>(
+    <Tag extends keyof JSXInEl, ExtraProps>(
       tag: Tag,
-      options?: StyledOptions,
-    ): CreateStyledComponentIntrinsic<Tag, ExtraProps>;
+      options?: StyledOptions<JSXInEl[Tag] & ExtraProps, {}>,
+    ): CreateStyledComponentIntrinsic<Tag, ExtraProps, {}>;
+
+    <
+      Tag extends keyof JSXInEl,
+      ExtraProps,
+      InjectedProps extends JSXInEl[Tag] & ExtraProps
+    >(
+      tag: Tag,
+      options?: StyledOptions<JSXInEl[Tag] & ExtraProps, InjectedProps>,
+    ): CreateStyledComponentIntrinsic<Tag, ExtraProps, InjectedProps>;
   }
 
   export function css(
