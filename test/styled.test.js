@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import styled from '../src/index';
 
 describe('styled', () => {
-  it('should render the component with styles', () => {
+  it.only('should render the component with styles', () => {
     const Component = styled(
       'div',
       null,
@@ -15,6 +15,7 @@ describe('styled', () => {
         dangerous: 'dangerous',
         themePrimary: 'primary',
         'size-sm': 'small',
+        'foo-1': 'foo',
       },
       'fancy-box',
       'fancyBox',
@@ -28,8 +29,9 @@ describe('styled', () => {
           dangerous={null}
           size="sm"
           theme="primary"
+          foo={1}
         />,
-      ).find('div.green.primary.small'),
+      ).find('div.green.primary.small.foo'),
     ).toHaveLength(1);
   });
 
