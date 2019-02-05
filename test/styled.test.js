@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import styled from '../src/index';
 
 describe('styled', () => {
-  it.only('should render the component with styles', () => {
+  it('should render the component with styles', () => {
     const Component = styled(
       'div',
       null,
