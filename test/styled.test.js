@@ -3,22 +3,33 @@ import { mount } from 'enzyme';
 
 import styled from '../src/index';
 
+const toSettings = (displayName, styles, kebabName, camelName) => ({
+  displayName,
+  styles,
+  kebabName,
+  camelName,
+  vars: [],
+});
+
 describe('styled', () => {
   it('should render the component with styles', () => {
     const Component = styled(
       'div',
       null,
-      'FancyBox',
-      {
-        green: 'green',
-        big: 'big',
-        dangerous: 'dangerous',
-        themePrimary: 'primary',
-        'size-sm': 'small',
-        'foo-1': 'foo',
-      },
-      'fancy-box',
-      'fancyBox',
+
+      toSettings(
+        'FancyBox',
+        {
+          green: 'green',
+          big: 'big',
+          dangerous: 'dangerous',
+          themePrimary: 'primary',
+          'size-sm': 'small',
+          'foo-1': 'foo',
+        },
+        'fancy-box',
+        'fancyBox',
+      ),
     );
 
     expect(
@@ -35,14 +46,39 @@ describe('styled', () => {
     ).toHaveLength(1);
   });
 
+  it('should add dynamic values to style', () => {
+    const Component = styled('div', null, {
+      displayName: 'FancyBox',
+      kebabName: 'fancy-box',
+      camelName: 'fancyBox',
+      vars: [
+        ['varname1', p => (p.green ? 'green' : 'red')],
+        ['varname2', p => (p.size === 'sm' ? 15 : 30), 'rem'],
+      ],
+      styles: {
+        big: 'big',
+        themePrimary: 'primary',
+        'size-sm': 'small',
+        'foo-1': 'foo',
+      },
+    });
+
+    const comp = mount(<Component size="sm" green foo={1} />).find(
+      'div.small.foo',
+    );
+
+    expect(comp).toHaveLength(1);
+    expect(comp.props().style).toEqual({
+      '--varname1': 'green',
+      '--varname2': '15rem',
+    });
+  });
+
   it('should allow withComponent', () => {
     const Div = styled(
       'div',
       null,
-      'FancyBox',
-      { green: 'green' },
-      'fancy-box',
-      'fancyBox',
+      toSettings('FancyBox', { green: 'green' }, 'fancy-box', 'fancyBox'),
     );
 
     const P = Div.withComponent('p');
@@ -55,10 +91,7 @@ describe('styled', () => {
     const Component = styled(
       'div',
       null,
-      'FancyBox',
-      { green: 'green' },
-      'fancy-box',
-      'fancyBox',
+      toSettings('FancyBox', { green: 'green' }, 'fancy-box', 'fancyBox'),
     );
 
     expect(mount(<Component as="p" green />).find('p.green')).toHaveLength(1);
@@ -68,10 +101,7 @@ describe('styled', () => {
     const Component = styled(
       () => <div />,
       null,
-      'FancyBox',
-      { green: 'green' },
-      'fancy-box',
-      'fancyBox',
+      toSettings('FancyBox', { green: 'green' }, 'fancy-box', 'fancyBox'),
     );
 
     expect(mount(<Component as="p" green />).find('div')).toHaveLength(1);
@@ -81,10 +111,7 @@ describe('styled', () => {
     const Component = styled(
       () => <div />,
       { allowAs: true },
-      'FancyBox',
-      { green: 'green' },
-      'fancy-box',
-      'fancyBox',
+      toSettings('FancyBox', { green: 'green' }, 'fancy-box', 'fancyBox'),
     );
 
     expect(mount(<Component as="p" green />).find('p.green')).toHaveLength(1);
@@ -94,10 +121,7 @@ describe('styled', () => {
     const Component = styled(
       'div',
       { allowAs: false },
-      'FancyBox',
-      { green: 'green' },
-      'fancy-box',
-      'fancyBox',
+      toSettings('FancyBox', { green: 'green' }, 'fancy-box', 'fancyBox'),
     );
 
     expect(mount(<Component as="p" green />).find('div.green')).toHaveLength(
@@ -109,18 +133,12 @@ describe('styled', () => {
     const Inner = styled(
       'div',
       null,
-      'FancyBox',
-      { red: 'red' },
-      'fancy-box',
-      'fancyBox',
+      toSettings('FancyBox', { red: 'red' }, 'fancy-box', 'fancyBox'),
     );
     const Component = styled(
       Inner,
       null,
-      'Outer',
-      { green: 'green' },
-      'outer',
-      'outer',
+      toSettings('Outer', { green: 'green' }, 'outer', 'outer'),
     );
 
     expect(

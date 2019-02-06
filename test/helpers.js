@@ -1,3 +1,5 @@
+import _traverse, { Hub, NodePath } from '@babel/traverse';
+
 const fs = require('fs-extra');
 const { transformFileSync } = require('@babel/core');
 const { basename, extname } = require('path');
@@ -26,6 +28,20 @@ const getOptions = f => {
   } catch (err) {
     return {};
   }
+};
+
+export const traverse = (ast, visitors) => {
+  const path = NodePath.get({
+    hub: new Hub({
+      buildCodeFrameError: (node, message, Error) => new Error(message),
+    }),
+    parentPath: null,
+    parent: ast,
+    container: ast,
+    key: 'program',
+  });
+
+  return _traverse(ast, visitors, path.setContext().scope);
 };
 
 export const fixtures = fs

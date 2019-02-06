@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import isValidProp from '@emotion/is-prop-valid';
 import React from 'react'; // eslint-disable-line import/no-extraneous-dependencies
 
 const has = Object.prototype.hasOwnProperty;
@@ -11,24 +12,19 @@ const camelCase = str =>
     '',
   );
 
-export function styled(
-  type,
-  options,
-  displayName,
-  styles,
-  kebabName,
-  camelName,
-) {
+export function styled(type, options, settings) {
+  const { displayName, styles, kebabClass, camelClass, vars } = settings;
   options = options || { allowAs: typeof type === 'string' };
-  const componentClassName = has.call(styles, kebabName)
-    ? styles[kebabName]
-    : styles[camelName];
+
+  const componentClassName = has.call(styles, kebabClass)
+    ? styles[kebabClass]
+    : styles[camelClass];
 
   // always passthrough if the type is a styled component
   const allowAs = type.isAstroturf ? false : options.allowAs;
 
   const hasModifiers = Object.keys(styles).some(
-    className => className !== camelName && className !== kebabName,
+    className => className !== camelClass && className !== kebabClass,
   );
 
   function Styled(props) {
@@ -38,7 +34,15 @@ export function styled(
     childProps.ref = props.innerRef;
     const modifierClassNames = [];
 
-    if (hasModifiers) {
+    if (vars.length) {
+      childProps.style = { ...childProps.style };
+      vars.forEach(([id, value, unit = '']) => {
+        const result = typeof value === 'function' ? value(props) : value;
+        childProps.style[`--${id}`] = `${result}${unit}`;
+      });
+    }
+
+    if (hasModifiers || vars.length) {
       Object.keys(props).forEach(propName => {
         const propValue = props[propName];
 
@@ -79,6 +83,10 @@ export function styled(
             }
           }
         }
+
+        if (vars.length && !isValidProp(propName)) {
+          delete childProps[propName];
+        }
       });
     }
 
@@ -100,8 +108,7 @@ export function styled(
     ? React.forwardRef((props, ref) => <Styled innerRef={ref} {...props} />)
     : Styled;
 
-  decorated.withComponent = nextType =>
-    styled(nextType, options, displayName, styles, kebabName, camelName);
+  decorated.withComponent = nextType => styled(nextType, options, settings);
 
   decorated.isAstroturf = true;
 

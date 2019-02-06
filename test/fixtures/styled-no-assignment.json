@@ -1,3 +1,4 @@
 {
-  "TEST_SHOULD_FAIL": true
+  "TEST_SHOULD_FAIL": true,
+  "allowGlobal": true
 }
