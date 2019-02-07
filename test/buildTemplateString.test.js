@@ -57,11 +57,11 @@ describe('builtTemplateString', () => {
     expect(() => {
       buildTemplateString(tag, 'Foo', { allowInterpolation: false });
     }).toThrowError(
-      "Functional styled tag interpolations are not enabled. To allow compiling dynamic interpolations to CSS custom properties set the 'allowInterpolations` option to true.",
+      "Dynamic styled tag interpolations are not enabled. To allow compiling dynamic interpolations to CSS custom properties set the 'allowInterpolations` option to true.",
     );
   });
 
-  it('should throw for function interpolations in css tag', () => {
+  it('should throw for dynamic interpolations in css tag', () => {
     const tag = run(stripIndents`
       css\`
         font-size: \${() => 5}px;
@@ -71,21 +71,7 @@ describe('builtTemplateString', () => {
     expect(() => {
       buildTemplateString(tag, 'Foo', { allowInterpolation: false });
     }).toThrowError(
-      'Functional interpolations are not allowed in css tags, only the styled api supports this.',
-    );
-  });
-
-  it('should throw none statically determinable values', () => {
-    const tag = run(stripIndents`
-      css\`
-        font-size: \${foo}px;
-      \`;
-    `);
-
-    expect(() => {
-      buildTemplateString(tag, 'Foo');
-    }).toThrowError(
-      'This css tagged template contains interpolations that cannot be statically evaluated.',
+      'Dynamic interpolations are not allowed in css template tags. All interpolations must be statically determinable at compile time.',
     );
   });
 });

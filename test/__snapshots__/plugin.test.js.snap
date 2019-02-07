@@ -14,7 +14,7 @@ exports[`Plugin css-no-assignment js : Compilation Error 1`] = `
 exports[`Plugin custom-properties FancyDiv: custom-properties-FancyDiv.css 1`] = `
 ".fancy-div {
 
-  color: var(--1nmhfux);
+  color: var(--f1nmhfux);
   width: 75px;
 
 }"
@@ -24,7 +24,7 @@ exports[`Plugin custom-properties FancyP: custom-properties-FancyP.css 1`] = `
 ".fancy-p {
 
   color: red;
-  width: var(--1sprkh6);
+  width: var(--f1sprkh6);
 
 }"
 `;
@@ -35,7 +35,7 @@ const FancyDiv =
 /*#__PURE__*/
 styled('div', null, {
   styles: require(\\"./custom-properties-FancyDiv.css\\"),
-  vars: [[\\"1nmhfux\\", props => props.primary ? 'palevioletred' : 'red']],
+  vars: [[\\"f1nmhfux\\", props => props.primary ? 'palevioletred' : 'red']],
   displayName: \\"FancyDiv\\",
   kebabClass: \\"fancy-div\\",
   camelClass: \\"fancyDiv\\"
@@ -44,7 +44,7 @@ const FancyP =
 /*#__PURE__*/
 styled('p', null, {
   styles: require(\\"./custom-properties-FancyP.css\\"),
-  vars: [[\\"1sprkh6\\", props => props.primary ? 75 : 50, \\"px\\"]],
+  vars: [[\\"f1sprkh6\\", props => props.primary ? 75 : 50, \\"px\\"]],
   displayName: \\"FancyP\\",
   kebabClass: \\"fancy-p\\",
   camelClass: \\"fancyP\\"

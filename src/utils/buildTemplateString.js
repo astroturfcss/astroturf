@@ -4,6 +4,7 @@ import { getDefaults } from './defaults';
 
 // Match any valid CSS units followed by a separator such as ;, newline etc.
 const unitRegex = new RegExp(`^(${units.join('|')})(;|,|\n| |\\))`);
+const toValidCSSIdentifier = s => s.replace(/[^_0-9a-z]/gi, '_');
 
 export default (path, displayName, options) => {
   const { allowInterpolation, cssTag, styledTag } = getDefaults(options);
@@ -44,23 +45,12 @@ export default (path, displayName, options) => {
         return;
       }
 
-      const resolved = expr.resolve();
-      if (
-        resolved.isFunctionExpression() ||
-        resolved.isArrowFunctionExpression()
-      ) {
-        const isCssTag = tag.name === cssTag;
-        if (!allowInterpolation || isCssTag) {
-          throw expr.buildCodeFrameError(
-            isCssTag
-              ? 'Functional interpolations are not allowed in css tags, only the styled api supports this.'
-              : `Functional ${styledTag} tag interpolations are not enabled. ` +
-                  'To allow compiling dynamic interpolations to CSS custom ' +
-                  "properties set the 'allowInterpolations` option to true.",
-          );
-        }
-
-        const id = hash(`${displayName}-${idx}`);
+      const isCssTag = tag.name === cssTag;
+      if (allowInterpolation && !isCssTag) {
+        // custom properties need to start with a letter
+        const id =
+          toValidCSSIdentifier(displayName[0].toLowerCase()) +
+          hash(`${displayName}-${idx}`);
 
         interpolations.push({ id, node, unit: '' });
         text += `var(--${id})`;
@@ -68,10 +58,13 @@ export default (path, displayName, options) => {
         return;
       }
 
-      const isCssTag = tag.name === cssTag;
       throw expr.buildCodeFrameError(
-        `This ${isCssTag ? cssTag : styledTag} tagged template contains ` +
-          `interpolations that cannot be statically evaluated.`,
+        isCssTag
+          ? `Dynamic interpolations are not allowed in ${cssTag} template tags. ` +
+              'All interpolations must be statically determinable at compile time.'
+          : `Dynamic ${styledTag} tag interpolations are not enabled. ` +
+              'To allow compiling dynamic interpolations to CSS custom ' +
+              "properties set the 'allowInterpolations` option to true.",
       );
     }
   });
