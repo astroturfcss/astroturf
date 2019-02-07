@@ -20,7 +20,3 @@ export function mapProps<TInner, TOutter>(
 export function withProps<TInner, TOutter>(
   createProps: TInner | mapper<TOutter, TInner>,
 ): InferableComponentEnhancerWithProps<TInner & TOutter, TOutter>;
-
-export function defaultProps<TDefaultProps = {}>(
-  props: TDefaultProps,
-): InferableComponentEnhancerWithProps<TDefaultProps, Partial<TDefaultProps>>;

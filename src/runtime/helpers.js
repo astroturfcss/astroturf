@@ -1,37 +1,36 @@
-import React from 'react'; // eslint-disable-line import/no-extraneous-dependencies
+/* eslint-disable react/no-multi-comp */
+const React = require('react'); // eslint-disable-line import/no-extraneous-dependencies
 
-const returnsArg = p => p;
+const getName = (name, C) => `${name}(${C.displayName || C.name || C})`;
 
-const decorate = (C, displayName, mapper = returnsArg) => {
-  const render = (p, ref) => <C ref={ref} {...mapper(p)} />;
-  const decorated = React.forwardRef(render);
-  decorated.isAstroturf = C.isAstroturf;
-  decorated.setName = name => {
-    render.displayName = `${name}(${C.displayName || C.name || C})`;
-  };
-  decorated.setName(displayName);
-  return decorated;
-};
-
-export function mapProps(mapper) {
-  return Component => decorate(Component, `mapProps`, mapper);
-}
-
-export function withProps(objOrMapper) {
-  const hoc = mapProps(props => ({
-    ...props,
-    ...(typeof objOrMapper === 'function' ? objOrMapper(props) : objOrMapper),
-  }));
-
-  return Component => {
-    const decorated = hoc(Component);
-    decorated.setName(`withProps`);
-    return decorated;
-  };
-}
-
-// eslint-disable-next-line no-shadow
-export function defaultProps(defaultProps) {
+function mapProps(mapper) {
   return Component =>
-    Object.assign(decorate(Component, `defaultProps`), { defaultProps });
+    Object.assign(
+      React.forwardRef((p, ref) => <Component ref={ref} {...mapper(p)} />),
+      {
+        isAstroturf: true,
+        displayName: getName('mapProps', Component),
+      },
+    );
 }
+
+function withProps(objOrMapper) {
+  return Component =>
+    Object.assign(
+      React.forwardRef((p, ref) => (
+        <Component
+          ref={ref}
+          {...p}
+          {...(typeof objOrMapper === 'function'
+            ? objOrMapper(p)
+            : objOrMapper)}
+        />
+      )),
+      {
+        isAstroturf: true,
+        displayName: getName('withProps', Component),
+      },
+    );
+}
+
+module.exports = { mapProps, withProps };

@@ -3,7 +3,7 @@
 import React from 'react';
 import styled from 'astroturf';
 
-import { defaultProps, mapProps, withProps } from 'astroturf/helpers';
+import { mapProps, withProps } from 'astroturf/helpers';
 
 // $ExpectType CreateStyledComponentIntrinsic<"a", {}>
 styled.a;
@@ -14,10 +14,11 @@ styled.div;
 // $ExpectType CreateStyledComponentIntrinsic<"svg", {}>
 styled.svg;
 
-// tslint:disable-next-line: interface-over-type-literal
+// tslint:disable-next-line:interface-over-type-literal
 type ReactClassProps0 = {
   readonly column: boolean;
 };
+
 declare class ReactClassComponent0 extends React.Component<ReactClassProps0> {}
 
 interface ReactClassProps1 {
@@ -246,23 +247,4 @@ declare const ref3_2: (element: HTMLDivElement | null) => void;
   <Enhanced2 />;
   // $ExpectError
   <Enhanced2 inn={124} />;
-}
-{
-  interface Props {
-    a: string;
-    b: number;
-    c: number;
-  }
-  const innerComponent = ({ a, b }: Props) => (
-    <div>
-      {a}, {b}
-    </div>
-  );
-
-  const enhancer = defaultProps({ a: 'answer', b: 42 });
-  const Enhanced = enhancer(innerComponent);
-  <Enhanced c={42} />;
-
-  // $ExpectError
-  <Enhanced />;
 }

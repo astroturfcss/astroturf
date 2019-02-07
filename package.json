@@ -43,9 +43,8 @@
     "test/*/**"
   ],
   "jest": {
-    "setupTestFrameworkScriptFile": "./test/setup.js",
-    "roots": [
-      "<rootDir>/test"
+    "setupFilesAfterEnv": [
+      "./test/setup.js"
     ]
   },
   "release": {

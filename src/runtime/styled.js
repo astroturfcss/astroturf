@@ -24,11 +24,10 @@ export function styled(
     className => className !== camelName && className !== kebabName,
   );
 
-  function Styled(props) {
-    const childProps = { ...props };
+  function Styled(props, ref) {
+    const childProps = { ...props, ref };
     if (allowAs) delete childProps.as;
-    delete childProps.innerRef;
-    childProps.ref = props.innerRef;
+
     const modifierClassNames = [];
 
     if (hasModifiers) {
@@ -86,11 +85,11 @@ export function styled(
     );
   }
 
-  Styled.displayName = displayName;
-
   const decorated = React.forwardRef
-    ? React.forwardRef((props, ref) => <Styled innerRef={ref} {...props} />)
-    : Styled;
+    ? React.forwardRef(Styled)
+    : props => Styled(props, null);
+
+  decorated.displayName = displayName;
 
   decorated.withComponent = nextType =>
     styled(nextType, options, displayName, styles, kebabName, camelName);

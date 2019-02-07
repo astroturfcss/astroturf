@@ -1,50 +1,18 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import { defaultProps, mapProps, withProps } from '../src/helpers';
+import { mapProps, withProps } from '../src/helpers';
 
 describe('helpers', () => {
-  describe('defaultProps', () => {
+  describe('mapProps', () => {
     it('should set displayName', () => {
-      const DoReMi = defaultProps()('div');
+      const DoReMi = mapProps(p => p)('div');
 
-      const div = mount(<DoReMi />).find('ForwardRef(defaultProps(div))');
+      const div = mount(<DoReMi />).find('mapProps(div)');
 
       expect(div).toHaveLength(1);
     });
 
-    it('should accept a ref', () => {
-      const DoReMi = defaultProps()('div');
-      const ref = React.createRef();
-      mount(<DoReMi ref={ref} />);
-
-      expect(ref.current).toBeDefined();
-    });
-
-    it('should pass additional props to base component', () => {
-      const DoReMi = defaultProps({ 'data-so': 'do', 'data-la': 'fa' })('div');
-
-      const div = mount(<DoReMi />).find('div');
-
-      expect(div.equals(<div data-so="do" data-la="fa" />)).toBe(true);
-    });
-
-    it('should have lower precendence than props from owner', () => {
-      const DoReMi = defaultProps({ 'data-so': 'do', 'data-la': 'fa' })('div');
-
-      const div = mount(<DoReMi data-la="ti" />).find('div');
-      expect(div.equals(<div data-so="do" data-la="ti" />)).toBe(true);
-    });
-
-    it('should override undefined owner props', () => {
-      const DoReMi = defaultProps({ 'data-so': 'do', 'data-la': 'fa' })('div');
-
-      const div = mount(<DoReMi data-la={undefined} />).find('div');
-      expect(div.equals(<div data-so="do" data-la="fa" />)).toBe(true);
-    });
-  });
-
-  describe('mapProps', () => {
     test('mapProps maps owner props to child props', () => {
       const mapper = jest.fn(props => ({
         ...props,
@@ -63,7 +31,7 @@ describe('helpers', () => {
     });
 
     it('should accept a ref', () => {
-      const DoReMi = mapProps()('div');
+      const DoReMi = mapProps(p => p)('div');
       const ref = React.createRef();
       mount(<DoReMi ref={ref} />);
 
@@ -75,7 +43,7 @@ describe('helpers', () => {
     it('should set displayName', () => {
       const DoReMi = withProps({})('div');
 
-      const div = mount(<DoReMi />).find('ForwardRef(withProps(div))');
+      const div = mount(<DoReMi />).find('withProps(div)');
 
       expect(div).toHaveLength(1);
     });
