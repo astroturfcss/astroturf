@@ -14,7 +14,8 @@ const camelCase = str =>
 
 export function styled(type, options, settings) {
   const { displayName, styles, kebabClass, camelClass, vars } = settings;
-  options = options || { allowAs: typeof type === 'string' };
+  const isHost = typeof type === 'string';
+  options = options || { allowAs: isHost };
 
   const componentClassName = has.call(styles, kebabClass)
     ? styles[kebabClass]
@@ -84,7 +85,7 @@ export function styled(type, options, settings) {
           }
         }
 
-        if (vars.length && !isValidProp(propName)) {
+        if (isHost && vars.length && !isValidProp(propName)) {
           delete childProps[propName];
         }
       });
