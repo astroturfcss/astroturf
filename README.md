@@ -346,7 +346,7 @@ const TextInput = withProps({ type: 'text' })(styled('input')`
 `astroturf` supports the `as` prop to control the underlying element type at runtime.
 
 ```js
-const Button styled('button')`
+const Button = styled('button')`
   color: red;
 `
 
@@ -356,7 +356,7 @@ const Button styled('button')`
 **This feature is only enabled by default for host components**, e.g. native DOM elements. We do this to prevent annoying conflicts with other UI libraries like react-bootstrap or semantic-ui which also use the the `as` prop. If you want to enable it for any styled component you can do so via the `allowAs` option.
 
 ```js
-const StyledFooter styled(Footer, { allowAs: true })`
+const StyledFooter = styled(Footer, { allowAs: true })`
   color: red;
 `
 ```
