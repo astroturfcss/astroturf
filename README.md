@@ -20,6 +20,7 @@
   - [Keyframes and global](#keyframes-and-global)
   - [With props](#with-props)
   - [`as` prop](#as-prop)
+- [Installation](#installation)
 - [Setup](#setup)
   - [Options](#options)
   - [Use without webpack](#use-without-webpack)
@@ -347,6 +348,12 @@ const Button = styled('button')`
 const StyledFooter = styled(Footer, { allowAs: true })`
   color: red;
 `
+```
+
+## Installation
+
+```shell
+npm install --save-dev astroturf
 ```
 
 ## Setup
