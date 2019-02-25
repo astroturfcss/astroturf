@@ -1,6 +1,6 @@
 {
   "name": "astroturf",
-  "version": "0.8.5",
+  "version": "0.9.0",
   "description": "Extract and process inline CSS literals in JavaScript files",
   "main": "lib/index.js",
   "scripts": {
@@ -43,7 +43,9 @@
     "test/*/**"
   ],
   "jest": {
-    "roots": ["<rootDir>/test"],
+    "roots": [
+      "<rootDir>/test"
+    ],
     "setupFilesAfterEnv": [
       "./test/setup.js"
     ]
