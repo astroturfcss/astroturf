@@ -13,8 +13,12 @@
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "target": "es5",
-    "typeRoots": ["../"],
-    "types": []
+    "types": [],
+    "paths": {
+      "astroturf": ["./types/index.d.ts"],
+      "astroturf/helpers": ["./types/helpers.d.ts"]
+    }
   },
-  "include": ["./**/*.ts", "./**/*.tsx"]
+  "include": ["./types/**/*.ts", "./types/**/*.tsx"],
+  "exclude": ["node_modules"]
 }
