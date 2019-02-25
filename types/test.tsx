@@ -1,17 +1,17 @@
-// TypeScript Version: 3.0
+// TypeScript Version: 3.2
 
 import React from 'react';
 import styled from 'astroturf';
 
 import { mapProps, withProps } from 'astroturf/helpers';
 
-// $ExpectType CreateStyledComponentIntrinsic<"a", {}>
+// $ExpectType StyledFunction<"a", {}>
 styled.a;
-// $ExpectType CreateStyledComponentIntrinsic<"body", {}>
+// $ExpectType StyledFunction<"body", {}>
 styled.body;
-// $ExpectType CreateStyledComponentIntrinsic<"div", {}>
+// $ExpectType StyledFunction<"div", {}>
 styled.div;
-// $ExpectType CreateStyledComponentIntrinsic<"svg", {}>
+// $ExpectType StyledFunction<"svg", {}>
 styled.svg;
 
 // tslint:disable-next-line:interface-over-type-literal
@@ -69,7 +69,6 @@ const Input0 = styled('input', {
 `;
 
 <Input0 />;
-const Input2 = Button0.withComponent('input');
 
 interface PrimaryProps {
   readonly primary: boolean;
@@ -97,16 +96,17 @@ const Button2 = styled<'button', PrimaryProps>('button')`
   <Button2 primary type="button" />
 </div>;
 
-// $ExpectError
-<Button2 />;
-// $ExpectError
-<Button2 type="button" />;
+// missing primary
+<Button2 />; // $ExpectError
 
-const Button4 = styled<typeof ReactClassComponent0, PrimaryProps>(
-  ReactClassComponent0,
-)``;
+// missing primary
+<Button2 type="button" />; // $ExpectError
 
-const Button5 = styled<typeof ReactSFC0, PrimaryProps>(ReactSFC0)``;
+const Button4 = styled<typeof ReactClassComponent0>(ReactClassComponent0)<
+  PrimaryProps
+>``;
+
+const Button5 = styled<typeof ReactSFC0>(ReactSFC0)<PrimaryProps>``;
 <div>
   <Button4 column={true} primary />
   <Button4 column={false} primary />
@@ -115,38 +115,45 @@ const Button5 = styled<typeof ReactSFC0, PrimaryProps>(ReactSFC0)``;
   <Button5 column={true} primary />
   <Button5 column={false} primary />
 </div>;
-// $ExpectError
-<Button4 />;
-// $ExpectError
-<Button4 colume={true} />;
-// $ExpectError
-<Button5 />;
-// $ExpectError
-<Button5 colume={true} />;
+
+// missing primary, column
+<Button4 />; // $ExpectError
+
+// - missing primary
+<Button4 column={true} />; // $ExpectError
+
+// - missing primary, column
+<Button5 />; // $ExpectError
+
+// - missing primary
+<Button5 column={true} />; // $ExpectError
 
 const Container0 = styled(ReactClassComponent0)``;
 <Container0 column={false} />;
 
-// $ExpectError
-<Container0 />;
+// column missing
+<Container0 />; // $ExpectError
 
 const Container1 = Container0.withComponent('span');
-<Container1 column={true} />;
-<Container1 column={true} onClick={undefined as any} />;
-// $ExpectError
-<Container1 contentEditable />;
+<Container1 onClick={undefined as any} />;
+
+// not a valid span attribute
+<Container1 href="foo" />; // $ExpectError
 
 const Container2 = Container0.withComponent(ReactSFC0);
 <Container2 column={true} />;
-// $ExpectError
-<Container2 />;
+
+// column missing
+<Container2 />; // $ExpectError
 
 const Container3 = Container0.withComponent(ReactClassComponent1);
-<Container3 column={false} value="123" />;
-// $ExpectError
-<Container3 colume={true} />;
-// $ExpectError
-<Container3 value="5" />;
+<Container3 value="123" />;
+
+// value is a string
+<Container3 value={5} />; // $ExpectError
+
+// value is not a number
+<Container3 value={5} />; // $ExpectError
 
 interface ContainerProps {
   extraWidth: string;
@@ -154,62 +161,71 @@ interface ContainerProps {
 const Container4 = styled(ReactSFC2)<ContainerProps>``;
 
 <Container4 extraWidth="20px" value={123} />;
-// $ExpectError
-<Container4 />;
-// $ExpectError
-<Container4 value="5" />;
+
+// value missing
+<Container4 />; // $ExpectError
+
+// value is not a string
+<Container4 value="5" />; // $ExpectError
 
 const Container5 = Container3.withComponent(ReactSFC2);
-<Container5 column={true} value={123} />;
-// $ExpectError
-<Container5 />;
-// $ExpectError
-<Container5 column={true} />;
-// $ExpectError
-<Container5 value={242} />;
+<Container5 value={123} />;
 
-// $ExpectError
-styled(ReactSFC2)<ReactSFCProps1>();
+// value missing
+<Container5 />; // $ExpectError
 
-const StyledClass0 = styled(ReactClassComponent0)({});
+// column not assignable
+<Container5 column={true} />; // $ExpectError
+
+const StyledClass0 = styled(ReactClassComponent0)``;
 declare const ref0_0: (element: ReactClassComponent0 | null) => void;
 declare const ref0_1: (element: ReactClassComponent1 | null) => void;
 declare const ref0_2: (element: HTMLDivElement | null) => void;
 <StyledClass0 column={true} ref={ref0_0} />;
-// $ExpectError
-<StyledClass0 column={true} ref={ref0_1} />;
-// $ExpectError
-<StyledClass0 column={true} ref={ref0_2} />;
+
+// wrong ref types
+<StyledClass0 column={true} ref={ref0_1} />; // $ExpectError
+<StyledClass0 column={true} ref={ref0_2} />; // $ExpectError
 
 const StyledClass1 = StyledClass0.withComponent(ReactClassComponent1);
 declare const ref1_0: (element: ReactClassComponent1 | null) => void;
 declare const ref1_1: (element: ReactClassComponent0 | null) => void;
 declare const ref1_2: (element: HTMLDivElement | null) => void;
-<StyledClass1 column={true} value="" ref={ref1_0} />;
-// $ExpectError
-<StyledClass1 column={true} value="" ref={ref1_1} />;
-// $ExpectError
-<StyledClass1 column={true} value="" ref={ref1_2} />;
+
+<StyledClass1 value="" ref={ref1_0} />;
+
+// wrong ref types
+<StyledClass1 value="" ref={ref1_1} />; // $ExpectError
+<StyledClass1 value="" ref={ref1_2} />; // $ExpectError
 
 const StyledClass2 = StyledClass0.withComponent('div');
 declare const ref2_0: (element: HTMLDivElement | null) => void;
 declare const ref2_1: (element: ReactClassComponent0 | null) => void;
 declare const ref2_2: (element: ReactClassComponent1 | null) => void;
-<StyledClass2 column={true} ref={ref2_0} />;
-// $ExpectError
-<StyledClass2 column={true} ref={ref2_1} />;
-// $ExpectError
-<StyledClass2 column={true} ref={ref2_2} />;
+
+<StyledClass2 ref={ref2_0} />;
+// wrong ref types
+<StyledClass2 ref={ref2_1} />; // $ExpectError
+<StyledClass2 ref={ref2_2} />; // $ExpectError
 
 const StyledClass3 = StyledClass1.withComponent('label');
 declare const ref3_0: (element: HTMLLabelElement | null) => void;
 declare const ref3_1: (element: ReactClassComponent0 | null) => void;
 declare const ref3_2: (element: HTMLDivElement | null) => void;
-<StyledClass3 column={true} ref={ref3_0} />;
-// $ExpectError
-<StyledClass3 column={true} ref={ref3_1} />;
-// $ExpectError
-<StyledClass3 column={true} ref={ref3_2} />;
+<StyledClass3 ref={ref3_0} />;
+
+// wrong ref types
+<StyledClass3 ref={ref3_1} />; // $ExpectError
+<StyledClass3 ref={ref3_2} />; // $ExpectError
+
+const AsComponent1 = styled('input')``;
+
+<AsComponent1 value="" />;
+// href not assignable
+<AsComponent1 value="" href="a" />; // $ExpectError
+
+<AsComponent1<'a'> as="a" href="#" />;
+<AsComponent1<'a'> as="a" size="4" />; // $ExpectError
 
 {
   interface InnerProps {
@@ -243,8 +259,10 @@ declare const ref3_2: (element: HTMLDivElement | null) => void;
 
   const enhancer2 = withProps({ inn: 123 });
   const Enhanced2 = enhancer2(InnerComponent);
+
   <Enhanced2 other="1" />;
-  <Enhanced2 />;
-  // $ExpectError
-  <Enhanced2 inn={124} />;
+  <InnerComponent inn={23} other="1" />;
+
+  // inn not assignable
+  <Enhanced2 inn={124} />; // $ExpectError
 }
