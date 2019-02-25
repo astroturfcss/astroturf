@@ -1,6 +1,9 @@
 {
   "extends": ["4catalyzer-react", "prettier"],
   "plugins": ["prettier"],
+  "globals": {
+    "__DEV__": false
+  },
   "rules": {
     "no-param-reassign": "off",
     "prettier/prettier": "error",

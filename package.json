@@ -101,7 +101,6 @@
     "@babel/generator": "^7.3.2",
     "@babel/template": "^7.2.2",
     "@babel/types": "^7.3.2",
-    "classnames": "^2.2.6",
     "common-tags": "^1.8.0",
     "errno": "^0.1.7",
     "fs-extra": "^7.0.1",
