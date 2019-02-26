@@ -382,8 +382,8 @@ If you want the simplest, most bare-bones setup you can use the included `css-lo
         test: /\.tsx?$/,
         use: ['ts-loader', 'astroturf/loader'],
       },
-    }
-  ]
+    ]
+  }
 }
 ```
 
@@ -407,7 +407,7 @@ You can add on here as you would normally for additional preprocesser setup. Her
           },
         ],
       },
-    ];
+    ],
   }
 }
 ```
