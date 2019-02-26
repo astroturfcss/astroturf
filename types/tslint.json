@@ -1,22 +1,3 @@
 {
-  "extends": "dtslint/dtslint.json",
-  "rules": {
-    "array-type": false,
-    "semicolon": false,
-    "whitespace": [
-      true,
-      "check-branch",
-      "check-decl",
-      "check-operator",
-      "check-module",
-      "check-rest-spread",
-      "check-type",
-      "check-typecast",
-      "check-type-operator",
-      "check-preblock"
-    ],
-    "no-single-declare-module": false,
-    "no-unnecessary-generics": false,
-    "no-unnecessary-class": false
-  }
+  "extends": "dtslint/dtslint.json"
 }

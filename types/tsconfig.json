@@ -19,6 +19,6 @@
       "astroturf/helpers": ["./types/helpers.d.ts"]
     }
   },
-  "include": ["./types/**/*.ts", "./types/**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": ["./**/*.ts", "./**/*.tsx"],
+  "exclude": ["../node_modules/*"]
 }

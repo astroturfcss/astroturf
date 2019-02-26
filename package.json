@@ -5,28 +5,34 @@
   "main": "lib/index.js",
   "scripts": {
     "lint": "eslint .",
-    "precommit": "lint-staged",
     "test": "yarn test:ts && jest",
-    "test:ts": "dtslint types",
+    "test:ts": "tslint -p ./types",
     "tdd": "jest --watch",
-    "prepublishOnly": "npm run build",
-    "build": "rimraf lib/* && babel src --out-dir lib --delete-dir-on-start && cpy types/*.d.ts lib",
-    "start": "npm run -C ./example start"
+    "prepublishOnly": "yarn build",
+    "build": "4c build && cpy types/*.d.ts lib",
+    "release": "4c release",
+    "start": "yarn --cwd ./example start"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/4Catalyzer/astroturf.git"
   },
-  "types": "index.d.ts",
+  "types": "lib/index.d.ts",
   "author": "4Catalyzer",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/4Catalyzer/astroturf/issues"
   },
   "homepage": "https://github.com/4Catalyzer/astroturf#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
     "*.js": [
       "eslint --fix",
+      "yarn 4c format",
       "git add"
     ],
     "README.md": [
@@ -39,9 +45,6 @@
     "singleQuote": true,
     "trailingComma": "all"
   },
-  "eslintIgnore": [
-    "test/*/**"
-  ],
   "jest": {
     "roots": [
       "<rootDir>/test"
@@ -58,10 +61,10 @@
   },
   "devDependencies": {
     "@4c/babel-preset-4catalyzer": "^4.1.1",
-    "@4c/rollout": "^1.2.1",
+    "@4c/cli": "^0.7.1",
     "@babel/cli": "^7.2.3",
     "@babel/node": "^7.2.2",
-    "@types/react": "^16.8.4",
+    "@types/react": "^16.8.5",
     "babel-core": "^7.0.0-0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.1.0",
@@ -71,7 +74,7 @@
     "doctoc": "^1.4.0",
     "dtslint": "^0.5.0",
     "enzyme": "^3.9.0",
-    "enzyme-adapter-react-16": "^1.9.1",
+    "enzyme-adapter-react-16": "^1.10.0",
     "eslint": "^5.14.1",
     "eslint-config-4catalyzer-react": "^0.8.3",
     "eslint-config-prettier": "^4.0.0",
@@ -99,10 +102,10 @@
     "webpack-dev-server": "^3.2.1"
   },
   "dependencies": {
-    "@babel/core": "^7.2.2",
-    "@babel/generator": "^7.3.2",
+    "@babel/core": "^7.3.4",
+    "@babel/generator": "^7.3.4",
     "@babel/template": "^7.2.2",
-    "@babel/types": "^7.3.2",
+    "@babel/types": "^7.3.4",
     "common-tags": "^1.8.0",
     "errno": "^0.1.7",
     "fs-extra": "^7.0.1",

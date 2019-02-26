@@ -1,7 +1,7 @@
 // TypeScript Version: 3.2
 
 import React from 'react';
-import styled from 'astroturf';
+import styled, { css } from 'astroturf';
 
 import { mapProps, withProps } from 'astroturf/helpers';
 
@@ -266,3 +266,9 @@ const AsComponent1 = styled('input')``;
   // inn not assignable
   <Enhanced2 inn={124} />; // $ExpectError
 }
+
+css`
+  .color {
+    color: red;
+  }
+`;
