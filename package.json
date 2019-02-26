@@ -76,7 +76,7 @@
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.10.0",
     "eslint": "^5.14.1",
-    "eslint-config-4catalyzer-react": "^0.8.3",
+    "eslint-config-4catalyzer-react": "^0.9.0",
     "eslint-config-prettier": "^4.0.0",
     "eslint-import-resolver-webpack": "^0.11.0",
     "eslint-plugin-babel": "^5.3.0",
