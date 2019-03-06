@@ -20,23 +20,24 @@
     browserslist "^4.2.1"
     lodash "^4.17.10"
 
-"@4c/build@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@4c/build/-/build-1.1.0.tgz#53790c56ad3746aa1519037394d8eebd5fbeaf7c"
-  integrity sha512-EiS66HeaxbQu/o6a6wlG19BmA4Jo+wew0Q3N7Lflv9QcvoZhpNN8qUjX5frXnKo+Bp+qq+SF8ZXnq/hwt6DQrg==
+"@4c/build@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@4c/build/-/build-1.1.1.tgz#682850767f6c9368d0bca3e0980f077bc5646355"
+  integrity sha512-g4HsMxunuuH1rksWfDx+eAnzUCGx4jVEK190iYJOOwHFnxXXUUAD/9BgEI9k6xpgQF4RMjiOTxbwaR9qucN1rQ==
   dependencies:
-    "@4c/cli-core" "^1.3.0"
+    "@4c/cli-core" "^1.4.0"
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.3.3"
     execa "^1.0.0"
     find-up "^3.0.0"
     fs-extra "^7.0.1"
 
-"@4c/cli-core@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@4c/cli-core/-/cli-core-1.3.0.tgz#d7bcdf2263cd7f26fa322e5e1c1b9644c1db9ba8"
-  integrity sha512-5MTLXvZ+8QMchebxPhSbsxQYOBntzJt7BFznSNmdugz1RM0t1oguUWzwmG825kdHdBwgylksBhDdGBm9oRXLkA==
+"@4c/cli-core@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@4c/cli-core/-/cli-core-1.4.0.tgz#3293a52a30a523dd4f87862782ece78123c47f75"
+  integrity sha512-GNU8h8VLrFcWYVOvOlYydEL8p9yVy2zwgpPmNpqC4icyT2pAJvf9sxuVzCn2qe4+t3PZqMQCx+D7g3yYC4P7vg==
   dependencies:
+    chalk "^2.4.2"
     execa "^1.0.0"
     fs-extra "^7.0.1"
     globby "^9.0.0"
@@ -44,25 +45,27 @@
     is-ci "^2.0.0"
     ora "^3.1.0"
     slash "^2.0.0"
+    strip-ansi "^5.0.0"
+    text-table "^0.2.0"
     yargs "^13.2.1"
 
 "@4c/cli@^0.7.1":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@4c/cli/-/cli-0.7.2.tgz#0ead88158256bd2413ea3e85018f3f6b427d464e"
-  integrity sha512-zd6QyOxZ0aWOa007w0ZpszJ9dZ6mRW8bBgmi5xFpCChDzR7xainxP7hb4A0b12NRScH0TYbs/vJN57ZBYXrM/A==
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/@4c/cli/-/cli-0.7.5.tgz#6dff92871a0db690b5327cb6d33e4fe543c13863"
+  integrity sha512-ASiUQbEzNS/WtdMNO27kH3Ler8WkzVSlN0N1MVD4Gaq9UGbAbOEEbEaDRKGLbTza11nnCnElTDWZui/gGM6orw==
   dependencies:
-    "@4c/build" "^1.1.0"
-    "@4c/cli-core" "^1.3.0"
+    "@4c/build" "^1.1.1"
+    "@4c/cli-core" "^1.4.0"
     "@4c/file-butler" "^2.3.0"
-    "@4c/init" "^1.6.0"
-    "@4c/intl" "^1.2.0"
-    "@4c/rollout" "^1.3.1"
+    "@4c/init" "^1.6.1"
+    "@4c/intl" "^1.2.1"
+    "@4c/rollout" "^1.3.2"
     chalk "^2.4.2"
     execa "^1.0.0"
     fs-extra "^7.0.1"
     inquirer "^6.2.2"
     ora "^3.1.0"
-    pedantic "^1.2.1"
+    pedantic "^2.0.2"
     semver "^5.6.0"
     slash "^2.0.0"
     yargs "^13.2.1"
@@ -88,12 +91,12 @@
     find-line-column "^0.5.2"
     typescript "^3.2.1"
 
-"@4c/init@^1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@4c/init/-/init-1.6.0.tgz#eae075c23371e594c0ab4213cb3b052441a7d293"
-  integrity sha512-MkedMe4/leKKRyYFQsfjoxf3di2167Xa72ivfS4Eh79ZrQh4XHUiHN+BGV34zboBWJZZbYEQR9qlOkZbhH/s0w==
+"@4c/init@^1.6.1":
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/@4c/init/-/init-1.6.1.tgz#98c2226ad09f0b2ea2a8d66ff4670c8a1024118b"
+  integrity sha512-bQ8UFD7sPhuY1C+oIWTUN3rrCUfEACaVITLGIMpBckYx2tuJ9uv+rnArfzRoiMWvzDnl8LOltjhvuJ/brKmbJg==
   dependencies:
-    "@4c/cli-core" "^1.3.0"
+    "@4c/cli-core" "^1.4.0"
     execa "^1.0.0"
     find-yarn-workspace-root "^1.2.1"
     fs-extra "^7.0.1"
@@ -103,21 +106,21 @@
     prettier "^1.16.4"
     yargs "^13.2.1"
 
-"@4c/intl@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@4c/intl/-/intl-1.2.0.tgz#81c5cd2cc6a65419e98f232a95e836511600df07"
-  integrity sha512-F9qUQx37P6HtjNXf+AFm8jIBOnIxlZkyauqvn846yuZS5cnGI3eRRlofv3BSKWbDBHkcrR4wsz40KIe2BVaiUw==
+"@4c/intl@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@4c/intl/-/intl-1.2.1.tgz#a641aa2a0439e19fb789096a28d54f89f24155b3"
+  integrity sha512-QUPm1xigI0Nf6eFd+R/SeceYGnr/JQDgo3b3mV4KKieUqsJH8jouUVpRhOYyK636KGZEgkKheMWZDmSqh6OSIw==
   dependencies:
-    "@4c/cli-core" "^1.3.0"
+    "@4c/cli-core" "^1.4.0"
     chalk "^2.4.2"
     glob "^7.1.3"
 
-"@4c/rollout@^1.3.1":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@4c/rollout/-/rollout-1.3.1.tgz#ebc5999e4593c1095be5da24bf33f705ce41c688"
-  integrity sha512-9cIO5yYjPAAh++n9/nu4/93uNj+OQGuvYUfwGTxHW54htyc4pO4r2hkTWeeoGC91WqjB9LlIbpDJ6ZjwiO/DEw==
+"@4c/rollout@^1.3.2":
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@4c/rollout/-/rollout-1.3.2.tgz#16fe7bf6c662649ed84f23ee4703dd4495b61876"
+  integrity sha512-+2ocPc2GyoKTHPrIT52L28KWlPqIFpls9PBaN6s/OotvBA7fsEo+mp5j/HbMBGCTwswdxHdHkjCzU1A7vT2t1w==
   dependencies:
-    "@4c/cli-core" "^1.3.0"
+    "@4c/cli-core" "^1.4.0"
     "@4c/file-butler" "^2.3.0"
     chalk "^2.4.2"
     common-tags "^1.8.0"
@@ -7330,18 +7333,20 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-pedantic@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/pedantic/-/pedantic-1.2.1.tgz#c3d361c9228b6e1f91e1bcd2191672bdf905e4dc"
-  integrity sha512-5pGq03a8iDJVbNCz0tPqtelPizT2TiYoForKTJFFPykVF6laATBm9k84vrxYDHYyagpYOy9TCR3xD0B0U+qDSA==
+pedantic@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/pedantic/-/pedantic-2.0.2.tgz#9d246b0cd7fa79cc447f712e42612119bfa5b858"
+  integrity sha512-yc6/HgKyKdXig+rP8R7B/B0Y7YXfI6QD/rnMBXkw8S5qsj4+XdyRAtv9YXq0NJSOdv0mWk/n31gyTDA71vq3AQ==
   dependencies:
-    "@4c/cli-core" "^1.3.0"
+    "@4c/cli-core" "^1.4.0"
     "@4c/import-sort" "^4.3.1"
     chalk "^2.4.2"
+    eslint "^5.14.1"
     import-sort "^6.0.0"
     import-sort-config "^6.0.0"
     import-sort-parser-babylon "^6.0.0"
     prettier "^1.16.4"
+    yargs "^13.2.1"
 
 performance-now@^2.1.0:
   version "2.1.0"
