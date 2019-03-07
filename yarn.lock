@@ -50,9 +50,9 @@
     yargs "^13.2.1"
 
 "@4c/cli@^0.7.1":
-  version "0.7.5"
-  resolved "https://registry.yarnpkg.com/@4c/cli/-/cli-0.7.5.tgz#6dff92871a0db690b5327cb6d33e4fe543c13863"
-  integrity sha512-ASiUQbEzNS/WtdMNO27kH3Ler8WkzVSlN0N1MVD4Gaq9UGbAbOEEbEaDRKGLbTza11nnCnElTDWZui/gGM6orw==
+  version "0.7.6"
+  resolved "https://registry.yarnpkg.com/@4c/cli/-/cli-0.7.6.tgz#51a22e0fbbe1792afa286340e706db4282893275"
+  integrity sha512-9hIyokGFIggdaHg9echZY6bLgsmGiP/YYZ7gZq/duqAbaR22mXQasFW0pS9LIaoc3rk6/MuyJ+43VaVcEglZNw==
   dependencies:
     "@4c/build" "^1.1.1"
     "@4c/cli-core" "^1.4.0"
@@ -65,7 +65,7 @@
     fs-extra "^7.0.1"
     inquirer "^6.2.2"
     ora "^3.1.0"
-    pedantic "^2.0.2"
+    pedantic "^2.1.0"
     semver "^5.6.0"
     slash "^2.0.0"
     yargs "^13.2.1"
@@ -7333,10 +7333,10 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-pedantic@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/pedantic/-/pedantic-2.0.2.tgz#9d246b0cd7fa79cc447f712e42612119bfa5b858"
-  integrity sha512-yc6/HgKyKdXig+rP8R7B/B0Y7YXfI6QD/rnMBXkw8S5qsj4+XdyRAtv9YXq0NJSOdv0mWk/n31gyTDA71vq3AQ==
+pedantic@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/pedantic/-/pedantic-2.1.0.tgz#d67c33206f9bfc993d3298dbc17721a8f84ff5ac"
+  integrity sha512-H+yGlxM+AbungC1Vw4XlZ9sJMrokfRcd92Y+3z4Uy/0Jbc9fYKslObj+IQWjVTZAHLlQ7DxBdF/xjizTlJGciw==
   dependencies:
     "@4c/cli-core" "^1.4.0"
     "@4c/import-sort" "^4.3.1"
