@@ -20,22 +20,23 @@
     browserslist "^4.2.1"
     lodash "^4.17.10"
 
-"@4c/build@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@4c/build/-/build-1.1.1.tgz#682850767f6c9368d0bca3e0980f077bc5646355"
-  integrity sha512-g4HsMxunuuH1rksWfDx+eAnzUCGx4jVEK190iYJOOwHFnxXXUUAD/9BgEI9k6xpgQF4RMjiOTxbwaR9qucN1rQ==
+"@4c/build@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@4c/build/-/build-1.1.2.tgz#f6bdfccd54efabb5d34c744cc9e7a52ef6cbcff3"
+  integrity sha512-Rar2hUb3hCIjdxa5xtM60PzJbhxW06EjJ7DdrPyyy37TOjE6z9zJW0k22Fv7IRjY0bsQYSn6xPa4ToPQJmuhVQ==
   dependencies:
-    "@4c/cli-core" "^1.4.0"
+    "@4c/cli-core" "^1.4.1"
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.3.3"
     execa "^1.0.0"
     find-up "^3.0.0"
     fs-extra "^7.0.1"
+    listr "^0.14.3"
 
-"@4c/cli-core@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@4c/cli-core/-/cli-core-1.4.0.tgz#3293a52a30a523dd4f87862782ece78123c47f75"
-  integrity sha512-GNU8h8VLrFcWYVOvOlYydEL8p9yVy2zwgpPmNpqC4icyT2pAJvf9sxuVzCn2qe4+t3PZqMQCx+D7g3yYC4P7vg==
+"@4c/cli-core@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@4c/cli-core/-/cli-core-1.4.1.tgz#6332992eb8ce449490672913b288e9b44e08ac2d"
+  integrity sha512-kspKUkcha24mBNux5T3i9E4eLPgX1nWtvbu0t4hE4epAK/fkzshvShmhN8An5S80o4ZxzPXUce0PF61Ey+ZjnQ==
   dependencies:
     chalk "^2.4.2"
     execa "^1.0.0"
@@ -43,6 +44,7 @@
     globby "^9.0.0"
     inquirer "^6.2.2"
     is-ci "^2.0.0"
+    log-symbols "^2.2.0"
     ora "^3.1.0"
     slash "^2.0.0"
     strip-ansi "^5.0.0"
@@ -50,22 +52,22 @@
     yargs "^13.2.1"
 
 "@4c/cli@^0.7.1":
-  version "0.7.6"
-  resolved "https://registry.yarnpkg.com/@4c/cli/-/cli-0.7.6.tgz#51a22e0fbbe1792afa286340e706db4282893275"
-  integrity sha512-9hIyokGFIggdaHg9echZY6bLgsmGiP/YYZ7gZq/duqAbaR22mXQasFW0pS9LIaoc3rk6/MuyJ+43VaVcEglZNw==
+  version "0.7.7"
+  resolved "https://registry.yarnpkg.com/@4c/cli/-/cli-0.7.7.tgz#b50f8b13debf0aa23a4f93121e599650151bcfd1"
+  integrity sha512-unqd4Ylf+rqmdagDxe9b34evC9heNzV0NEIxSQR0w+LNs4p9KpN7Tp3N5VYG9rQonZRspgrPjWztZ7lrPq60WQ==
   dependencies:
-    "@4c/build" "^1.1.1"
-    "@4c/cli-core" "^1.4.0"
+    "@4c/build" "^1.1.2"
+    "@4c/cli-core" "^1.4.1"
     "@4c/file-butler" "^2.3.0"
-    "@4c/init" "^1.6.1"
-    "@4c/intl" "^1.2.1"
-    "@4c/rollout" "^1.3.2"
+    "@4c/init" "^1.6.2"
+    "@4c/intl" "^1.2.2"
+    "@4c/rollout" "^1.3.3"
     chalk "^2.4.2"
     execa "^1.0.0"
     fs-extra "^7.0.1"
     inquirer "^6.2.2"
     ora "^3.1.0"
-    pedantic "^2.1.0"
+    pedantic "^2.1.1"
     semver "^5.6.0"
     slash "^2.0.0"
     yargs "^13.2.1"
@@ -91,12 +93,12 @@
     find-line-column "^0.5.2"
     typescript "^3.3.3333"
 
-"@4c/init@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/@4c/init/-/init-1.6.1.tgz#98c2226ad09f0b2ea2a8d66ff4670c8a1024118b"
-  integrity sha512-bQ8UFD7sPhuY1C+oIWTUN3rrCUfEACaVITLGIMpBckYx2tuJ9uv+rnArfzRoiMWvzDnl8LOltjhvuJ/brKmbJg==
+"@4c/init@^1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@4c/init/-/init-1.6.2.tgz#77668431ab3e80a911254aa81ae27f158c6bd353"
+  integrity sha512-lyLDlnxKWWV1uzDt8ZYVLFhB9qpeYCKXt2Em/NVqamvuMx4tRHAv+Iwk/3weUYm74c6vhXaS2ACzW28egPuqug==
   dependencies:
-    "@4c/cli-core" "^1.4.0"
+    "@4c/cli-core" "^1.4.1"
     execa "^1.0.0"
     find-yarn-workspace-root "^1.2.1"
     fs-extra "^7.0.1"
@@ -106,21 +108,21 @@
     prettier "^1.16.4"
     yargs "^13.2.1"
 
-"@4c/intl@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@4c/intl/-/intl-1.2.1.tgz#a641aa2a0439e19fb789096a28d54f89f24155b3"
-  integrity sha512-QUPm1xigI0Nf6eFd+R/SeceYGnr/JQDgo3b3mV4KKieUqsJH8jouUVpRhOYyK636KGZEgkKheMWZDmSqh6OSIw==
+"@4c/intl@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@4c/intl/-/intl-1.2.2.tgz#77c33f795b50545ef360c0f3f9404157c3d5121d"
+  integrity sha512-OOIzpn5zxG0qTXpwILE/0brXJPNuAULQ0pb7at6wNOH3WaDcAba6HJKRW4k4p02r6RHbYbRE6/BrPuYAOJGCTw==
   dependencies:
-    "@4c/cli-core" "^1.4.0"
+    "@4c/cli-core" "^1.4.1"
     chalk "^2.4.2"
     glob "^7.1.3"
 
-"@4c/rollout@^1.3.2":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@4c/rollout/-/rollout-1.3.2.tgz#16fe7bf6c662649ed84f23ee4703dd4495b61876"
-  integrity sha512-+2ocPc2GyoKTHPrIT52L28KWlPqIFpls9PBaN6s/OotvBA7fsEo+mp5j/HbMBGCTwswdxHdHkjCzU1A7vT2t1w==
+"@4c/rollout@^1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@4c/rollout/-/rollout-1.3.3.tgz#073fad725354377127791a6c336cd8321e94c6ca"
+  integrity sha512-4vmsm8Kx9xy/u3gNvMq53ol919n46Q41nebLn8UO4cnVIm7uS6Aw77rDQOPcES8c2VRui+CFDNO2my6dQO312A==
   dependencies:
-    "@4c/cli-core" "^1.4.0"
+    "@4c/cli-core" "^1.4.1"
     "@4c/file-butler" "^2.3.0"
     chalk "^2.4.2"
     common-tags "^1.8.0"
@@ -6204,7 +6206,7 @@ listr-verbose-renderer@^0.5.0:
     date-fns "^1.27.2"
     figures "^2.0.0"
 
-listr@^0.14.2:
+listr@^0.14.2, listr@^0.14.3:
   version "0.14.3"
   resolved "https://registry.yarnpkg.com/listr/-/listr-0.14.3.tgz#2fea909604e434be464c50bddba0d496928fa586"
   integrity sha512-RmAl7su35BFd/xoMamRjpIE4j3v+L28o8CT5YhAXQJm1fD+1l9ngXY8JAQRJ+tFK2i5njvi0iRUKV09vPwA0iA==
@@ -7533,12 +7535,12 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-pedantic@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/pedantic/-/pedantic-2.1.0.tgz#d67c33206f9bfc993d3298dbc17721a8f84ff5ac"
-  integrity sha512-H+yGlxM+AbungC1Vw4XlZ9sJMrokfRcd92Y+3z4Uy/0Jbc9fYKslObj+IQWjVTZAHLlQ7DxBdF/xjizTlJGciw==
+pedantic@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/pedantic/-/pedantic-2.1.1.tgz#ccadc638295755a33adbe88bd43b2dc2c705d26f"
+  integrity sha512-RwmdrRTQGiWEjntSS54yIIVo2CuwKjdtBxoKD+eftm55EqoN5EBnl1P+mr6s1SBNk8zu0ORge4qCpIoTA1ltoQ==
   dependencies:
-    "@4c/cli-core" "^1.4.0"
+    "@4c/cli-core" "^1.4.1"
     "@4c/import-sort" "^4.3.1"
     chalk "^2.4.2"
     eslint "^5.14.1"
