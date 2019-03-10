@@ -434,6 +434,34 @@ astroturf accepts a few query options.
 
 **Note:** astroturf expects uncompiled JavaScript code, If you are using babel or Typescript to transform tagged template literals, ensure the loader runs _before_ babel or typescript loaders.
 
+### Use with Parcel
+
+Add these lines to `package.json` to work with [Parcel](https://parceljs.org/) builder:
+
+```json
+  "postcss": {
+    "modules": true,
+    "plugins": [
+      "postcss-nested"
+    ]
+  },
+  "babel": {
+    "plugins": [
+      "astroturf/plugin"
+    ]
+  },
+```
+
+### Use with Preact
+
+Add these lines to `package.json` to work with [Preact](https://preactjs.com/):
+
+```json
+  "browser": {
+    "react": "preact"
+  },
+```
+
 ### Use without webpack
 
 If you aren't using webpack and still want to define styles inline, there is a babel plugin for that.
