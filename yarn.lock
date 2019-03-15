@@ -3478,9 +3478,9 @@ entities@^1.1.1, entities@~1.1.1:
   integrity sha512-f2LZMYl1Fzu7YSBKg+RoROelpOaNrcGmE9AZubeDfrCEia483oW4MI4VyFd5VNHIgQ/7qm1I0wUHK1eJnn2y2w==
 
 enzyme-adapter-react-16@^1.10.0:
-  version "1.11.1"
-  resolved "https://registry.yarnpkg.com/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.11.1.tgz#f4b39595e85701449089f85ad9575ec0fa36f677"
-  integrity sha512-hrWYkk6m4gZCAMkybklMsCvxnzMX65/ZXg/g5q506HKvrGp/uRIZzLxM3cKtnoQDK16pbqOXmGcOXgyXfbtZBg==
+  version "1.11.2"
+  resolved "https://registry.yarnpkg.com/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.11.2.tgz#8efeafb27e96873a5492fdef3f423693182eb9d4"
+  integrity sha512-2ruTTCPRb0lPuw/vKTXGVZVBZqh83MNDnakMhzxhpJcIbneEwNy2Cv0KvL97pl57/GOazJHflWNLjwWhex5AAA==
   dependencies:
     enzyme-adapter-utils "^1.10.1"
     object.assign "^4.1.0"
