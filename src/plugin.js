@@ -1,14 +1,15 @@
+import { basename, dirname, extname, join, relative } from 'path';
 import { stripIndent } from 'common-tags';
 import { outputFileSync } from 'fs-extra';
 import camelCase from 'lodash/camelCase';
 import get from 'lodash/get';
 import kebabCase from 'lodash/kebabCase';
-import { dirname, extname, basename, join, relative } from 'path';
-import * as t from '@babel/types';
-import template from '@babel/template';
 import generate from '@babel/generator';
-import pascalCase from './utils/pascalCase';
+import template from '@babel/template';
+import * as t from '@babel/types';
+
 import getNameFromPath from './utils/getNameFromPath';
+import pascalCase from './utils/pascalCase';
 import wrapInClass from './utils/wrapInClass';
 
 const buildImport = template('require(FILENAME);');
@@ -177,6 +178,8 @@ export default function plugin() {
         const decl = !path.isImportDeclaration()
           ? path.findParent(p => p.isImportDeclaration())
           : path;
+
+        if (!decl) return;
 
         const { start, end } = decl.node;
 
