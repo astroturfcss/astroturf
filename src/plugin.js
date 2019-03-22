@@ -11,6 +11,7 @@ import * as t from '@babel/types';
 import getNameFromPath from './utils/getNameFromPath';
 import pascalCase from './utils/pascalCase';
 import wrapInClass from './utils/wrapInClass';
+import { isCssTag, isStyledTag, isStyledTagShorthand } from './utils/Tags';
 
 const buildImport = template('require(FILENAME);');
 const buildComponent = template(
@@ -50,29 +51,6 @@ function createFileName(hostFile, { extension = '.css' }, id) {
 
   return join(dirname(hostFile), base + extension);
 }
-
-function isCssTag(path, tagName, allowGlobal = false) {
-  return (
-    path.get('tag').node.name === tagName &&
-    (path.get('tag').referencesImport('astroturf') ||
-      (allowGlobal && path.scope.hasGlobal(tagName)))
-  );
-}
-
-const isStyledTag = (path, styledTag, allowGlobal) => {
-  const { node } = path.get('tag');
-  return (
-    t.isCallExpression(node) &&
-    node.callee.name === styledTag &&
-    (allowGlobal || path.get('tag.callee').referencesImport('astroturf'))
-  );
-};
-
-const isStyledTagShorthand = (path, styledTag, allowGlobal) =>
-  t.isMemberExpression(path.get('tag').node) &&
-  t.isIdentifier(path.get('tag.property').node) &&
-  path.get('tag.object').node.name === styledTag &&
-  (allowGlobal || path.get('tag.object').referencesImport('astroturf'));
 
 export default function plugin() {
   function evaluate(path) {
@@ -208,14 +186,22 @@ export default function plugin() {
     },
 
     visitor: {
+      CallExpression(path, state) {
+        const {
+          tagName = 'css',
+          allowGlobal = true,
+          styledTag = 'styled',
+        } = state.opts;
+      },
       TaggedTemplateExpression(path, state) {
         const {
           tagName = 'css',
           allowGlobal = true,
           styledTag = 'styled',
         } = state.opts;
+        const tag = path.get('tag');
 
-        if (isStyledTag(path, styledTag, allowGlobal)) {
+        if (isStyledTag(tag, styledTag, allowGlobal)) {
           const componentType = get(path.get('tag'), 'node.arguments[0]');
           const options = get(path.get('tag'), 'node.arguments[1]');
 
@@ -225,7 +211,7 @@ export default function plugin() {
           path.addComment('leading', '#__PURE__');
 
           // styled.button` ... `
-        } else if (isStyledTagShorthand(path, styledTag, allowGlobal)) {
+        } else if (isStyledTagShorthand(tag, styledTag, allowGlobal)) {
           const componentType = t.StringLiteral(
             path.get('tag.property').node.name,
           );
@@ -236,7 +222,7 @@ export default function plugin() {
           path.addComment('leading', '#__PURE__');
 
           // lone css`` tag
-        } else if (isCssTag(path, tagName, allowGlobal)) {
+        } else if (isCssTag(tag, tagName, allowGlobal)) {
           path.replaceWith(buildStyleRequire(path, state, tagName));
           path.addComment('leading', '#__PURE__');
         }
