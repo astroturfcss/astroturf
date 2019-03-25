@@ -3104,7 +3104,7 @@ define-property@^2.0.2:
     is-descriptor "^1.0.2"
     isobject "^3.0.1"
 
-definitelytyped-header-parser@^1.0.0, definitelytyped-header-parser@^1.0.1:
+definitelytyped-header-parser@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/definitelytyped-header-parser/-/definitelytyped-header-parser-1.0.1.tgz#1b9f4ac132b62ae391cd3e1ada3f4cd38630fa8f"
   integrity sha512-dotNYEd/IXw1LftTVKzjbbN/5TzsVhcmFJJi1W/L2IBgS1TaDcv3ZVh9Z8Zr0AFYC2T7OfdBT8vp0iDaUUlTyA==
@@ -3334,22 +3334,27 @@ dot-prop@^3.0.0:
   dependencies:
     is-obj "^1.0.0"
 
-dts-critic@^1.0.1:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/dts-critic/-/dts-critic-1.0.3.tgz#f3fae0729a1ecbf1c9bce51c2deacf1ffd4b5126"
-  integrity sha512-lMU1Lwvzq0dxIj9tNIBA15yYTXNFO2l4zdbiBWhhkW/VAo7h5hlTBIDHYVr6XhhRNkWsd5RCsisVwFJOIOU5IA==
+download-file-sync@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/download-file-sync/-/download-file-sync-1.0.4.tgz#d3e3c543f836f41039455b9034c72e355b036019"
+  integrity sha1-0+PFQ/g29BA5RVuQNMcuNVsDYBk=
+
+dts-critic@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/dts-critic/-/dts-critic-1.0.4.tgz#75aa92e59602a36a8fda113964fce24f80241591"
+  integrity sha512-pBIkn1L8fFtYnoftv6e6KYO9zieDQU0AbbdKZWEp/M3VFvDyythNfcAUv+QRncboQQxmo3bDGBoVkZbSXdzBBA==
   dependencies:
-    definitelytyped-header-parser "^1.0.0"
-    request-promise-native "^1.0.5"
+    definitelytyped-header-parser "^1.0.1"
+    download-file-sync "^1.0.4"
     yargs "^12.0.5"
 
 dtslint@^0.5.0:
-  version "0.5.5"
-  resolved "https://registry.yarnpkg.com/dtslint/-/dtslint-0.5.5.tgz#24b16835290d785e242a9d7b994cf6359a8e5bd4"
-  integrity sha512-uhb2qU9RpIO4dIKh8QbSoOWq5dOibtiM/DgHsy7DUNw1um4gesZX/nRZkoWq5DeS0bYAzRRXOhNRrNdhJKi8Uw==
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/dtslint/-/dtslint-0.5.6.tgz#141e25e605275834db00fcaf12b15fc3237117b0"
+  integrity sha512-vlzPzD/4IHlOIOIXL6bB4ye84Ri8eRUakhn3hC4/y0pFdvdGW7rvmIv/4jXhRQEkI4XIEArSuWYayOWQ6R/x7w==
   dependencies:
     definitelytyped-header-parser "^1.0.1"
-    dts-critic "^1.0.1"
+    dts-critic "^1.0.4"
     fs-extra "^6.0.1"
     request "^2.88.0"
     strip-json-comments "^2.0.1"
