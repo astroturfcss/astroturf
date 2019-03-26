@@ -265,6 +265,7 @@ const breakpointValues = css`
 
 class Responsive extends React.Component {
   state = { isMobile: false }
+
   componentDidMount() {
     this.setState({
       isMobile: window.clientWidth < parseInt(breakpoints.md, 10)
