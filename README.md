@@ -337,7 +337,7 @@ const PasswordInput = withProps({ type: 'password' })(styled('input')`
 `);
 
 // Sets the default `type` to `text` but allow overrides to it
-const TextInput = withProps({ type: 'text' })(styled('input')`
+const TextInput = defaultProps({ type: 'text' })(styled('input')`
   background-color: #ccc;
 `);
 ```
