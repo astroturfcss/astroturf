@@ -21,6 +21,7 @@
   - [`as` prop](#as-prop)
 - [Setup](#setup)
   - [Options](#options)
+  - [Use with Next.js](#use-with-next.js)
   - [Use without webpack](#use-without-webpack)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -462,6 +463,10 @@ Add these lines to `package.json` to work with [Preact](https://preactjs.com/):
     "react": "preact"
   },
 ```
+
+### Use with Next.js
+
+See [example](https://github.com/zeit/next.js/tree/canary/examples/with-astroturf)
 
 ### Use without webpack
 
