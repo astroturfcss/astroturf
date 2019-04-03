@@ -3415,17 +3415,17 @@ dts-critic@^1.0.4:
     download-file-sync "^1.0.4"
     yargs "^12.0.5"
 
-dtslint@^0.5.0:
-  version "0.5.9"
-  resolved "https://registry.yarnpkg.com/dtslint/-/dtslint-0.5.9.tgz#462299c97f675a224758a3aafa2a519737584f9c"
-  integrity sha512-/RU8h05QMS1DLZsMsDpJ6rvtEXrXQ0KRGT0q7IkqvDbCDa3fJRGLqGrVFLLaUTCl/4p2+sgsOEBCPsFqV5BRXA==
+dtslint@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/dtslint/-/dtslint-0.6.0.tgz#d0d5721fda57bcd39a8254ac33d5dbab34585bb2"
+  integrity sha512-VxXI9OyEJvKhyXvJj7elCI6BE9j0cwQizSgGoolWPQQwNdNxYCH998a68vBv3hioiKaTKG/yIaRdygJYwltgMg==
   dependencies:
     definitelytyped-header-parser "^1.0.1"
     dts-critic "^1.0.4"
     fs-extra "^6.0.1"
     request "^2.88.0"
     strip-json-comments "^2.0.1"
-    tslint "^5.14.0"
+    tslint "5.14.0"
     typescript next
 
 duplexify@^3.4.2, duplexify@^3.6.0:
@@ -9487,7 +9487,7 @@ tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
   integrity sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==
 
-tslint@^5.14.0:
+tslint@5.14.0:
   version "5.14.0"
   resolved "https://registry.yarnpkg.com/tslint/-/tslint-5.14.0.tgz#be62637135ac244fc9b37ed6ea5252c9eba1616e"
   integrity sha512-IUla/ieHVnB8Le7LdQFRGlVJid2T/gaJe5VkjzRVSRR6pA2ODYrnfR1hmxi+5+au9l50jBwpbBL34txgv4NnTQ==
