@@ -9539,9 +9539,9 @@ typescript@^3.3.3333:
   integrity sha512-JjSKsAfuHBE/fB2oZ8NxtRTk5iGcg6hkYXMnZ3Wc+b2RSqejEqTaem11mHASMnFilHrax3sLK0GDzcJrekZYLw==
 
 typescript@next:
-  version "3.4.0-dev.20190403"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.0-dev.20190403.tgz#f6a4c89b0d553458a75ce2f1bd9024a7fe8a5900"
-  integrity sha512-4X/fjZf/2S6MHGRyQeFf5IouVlnILqe8Jp5qgTlWwWOaAMZx3zI3IjAhW5mq8XOfu9+DiQdRLawhDy230BRlZQ==
+  version "3.5.0-dev.20190404"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.0-dev.20190404.tgz#1df88a13900bc4400ab93c2a810895125b2bdf98"
+  integrity sha512-rhkt+Ct3EnoRcaFEDm/MoCfrtmf3tXzyCn5ARB+XXxDac32Cj605gM7SNbaJEbDA6txVOuyCSsLVON+KYmGkCA==
 
 ua-parser-js@^0.7.18:
   version "0.7.19"
