@@ -24,7 +24,9 @@ function styled(type, options, displayName, styles, kebabName, camelName) {
     const childProps = { ...props, ref };
     if (allowAs) delete childProps.as;
 
-    const classNames = [childProps.className || '', componentClassName];
+    let className = childProps.className
+      ? `${childProps.className} ${componentClassName}`
+      : componentClassName;
 
     if (hasModifiers) {
       Object.keys(props).forEach(propName => {
@@ -34,7 +36,7 @@ function styled(type, options, displayName, styles, kebabName, camelName) {
         if (typeOf === 'boolean' || propValue == null) {
           if (styles[propName]) {
             if (propValue) {
-              classNames.push(styles[propName]);
+              className += ` ${styles[propName]}`;
             }
 
             delete childProps[propName];
@@ -43,7 +45,7 @@ function styled(type, options, displayName, styles, kebabName, camelName) {
 
             if (styles[camelPropName]) {
               if (propValue) {
-                classNames.push(styles[camelPropName]);
+                className += ` ${styles[camelPropName]}`;
               }
               delete childProps[propName];
             }
@@ -52,13 +54,13 @@ function styled(type, options, displayName, styles, kebabName, camelName) {
           const propKey = `${propName}-${propValue}`;
 
           if (styles[propKey]) {
-            classNames.push(styles[propKey]);
+            className += ` ${styles[propKey]}`;
             delete childProps[propName];
           } else {
             const camelPropKey = camelCase(propKey);
 
             if (styles[camelPropKey]) {
-              classNames.push(styles[camelPropKey]);
+              className += ` ${styles[camelPropKey]}`;
               delete childProps[propName];
             }
           }
@@ -66,7 +68,7 @@ function styled(type, options, displayName, styles, kebabName, camelName) {
       });
     }
 
-    childProps.className = classNames.join(' ');
+    childProps.className = className;
 
     return React.createElement(
       allowAs && props.as ? props.as : type,
