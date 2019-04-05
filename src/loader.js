@@ -1,14 +1,15 @@
-import loaderUtils from 'loader-utils';
 import util from 'util';
+import loaderUtils from 'loader-utils';
+
 import traverse from './traverse';
 import VirtualModulePlugin from './VirtualModulePlugin';
 
 const debug = util.debuglog('astroturf:loader');
 
 // can'ts use class syntax b/c babel doesn't transpile it correctly for Error
-function AstroTurfLoaderError(error) {
+function AstroturfLoaderError(error) {
   Error.call(this);
-  this.name = 'AstroTurfLoaderError';
+  this.name = 'AstroturfLoaderError';
 
   this.message = error.message;
   if (error.codeFrame) this.message += `\n\n ${error.codeFrame} \n`;
@@ -17,12 +18,12 @@ function AstroTurfLoaderError(error) {
   try {
     this.stack = error.stack.replace(/^(.*?):/, `${this.name}:`);
   } catch (err) {
-    Error.captureStackTrace(this, AstroTurfLoaderError);
+    Error.captureStackTrace(this, AstroturfLoaderError);
   }
 }
 
-AstroTurfLoaderError.prototype = Object.create(Error.prototype);
-AstroTurfLoaderError.prototype.constructor = AstroTurfLoaderError;
+AstroturfLoaderError.prototype = Object.create(Error.prototype);
+AstroturfLoaderError.prototype.constructor = AstroturfLoaderError;
 
 function collectStyles(src, filename, opts) {
   const tagName = opts.tagName || 'css';
@@ -45,7 +46,7 @@ function collectStyles(src, filename, opts) {
     });
     return metadata.astroturf;
   } catch (err) {
-    throw new AstroTurfLoaderError(err);
+    throw new AstroturfLoaderError(err);
   }
 }
 

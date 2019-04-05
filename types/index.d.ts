@@ -44,25 +44,13 @@ declare module 'astroturf' {
     O extends object
   > = StyledComponentProps<C, O> & { as?: C };
 
-  // export type InterpolationFunction<P> = (props: P) => Interpolation<P>;
-
   // abuse Pick to strip the call signature from ForwardRefExoticComponent
   type ForwardRefExoticBase<P> = Pick<
     React.ForwardRefExoticComponent<P>,
     keyof React.ForwardRefExoticComponent<any>
   >;
 
-  // extracts React defaultProps
-  type ReactDefaultProps<C> = C extends { defaultProps: infer D } ? D : never;
-
-  export type StyledComponent<
-    C extends keyof JSX.IntrinsicElements | React.ComponentType<any>,
-    O extends object = {}
-  > = // the "string" allows this to be used as an object key
-    // I really want to avoid this if possible but it's the only way to use nesting with object styles...
-    string & StyledComponentBase<C, O>;
-
-  export interface StyledComponentBase<
+  export interface StyledComponent<
     C extends keyof JSX.IntrinsicElements | React.ComponentType<any>,
     O extends object = {}
   > extends ForwardRefExoticBase<StyledComponentProps<C, O>> {
