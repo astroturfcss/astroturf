@@ -1,5 +1,8 @@
+// TypeScript Version: 3.0
+
 // changed from: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/styled-components
 
+// tslint:disable-next-line:no-single-declare-module
 declare module 'astroturf' {
   import * as React from 'react';
 
@@ -78,6 +81,7 @@ declare module 'astroturf' {
     O extends object = {}
   > {
     (...rest: any[]): StyledComponent<C, O>;
+    // tslint:disable-next-line:no-unnecessary-generics
     <U extends object>(...rest: any[]): StyledComponent<C, O & U>;
   }
 
@@ -105,6 +109,7 @@ declare module 'astroturf' {
     >(
       component: C,
       options?: StyledOptions,
+    // tslint:disable-next-line:no-unnecessary-generics
     ): StyledFunction<C, OtherProps>;
   }
 
