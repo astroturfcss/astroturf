@@ -1,24 +1,20 @@
 {
   "compilerOptions": {
-    "baseUrl": "../",
-    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
-    "lib": ["dom", "es2016", "esnext.asynciterable"],
+    "lib": ["es2015", "dom"],
     "module": "commonjs",
-    "noEmit": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strict": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
-    "target": "es5",
     "types": [],
+    "noEmit": true,
+    "baseUrl": ".",
     "paths": {
-      "astroturf": ["./types/index.d.ts"],
-      "astroturf/helpers": ["./types/helpers.d.ts"]
+      "astroturf": ["."],
+      "astroturf/helpers": ["helpers.d.ts"]
     }
-  },
-  "include": ["./**/*.ts", "./**/*.tsx"],
-  "exclude": ["../node_modules/*"]
+  }
 }

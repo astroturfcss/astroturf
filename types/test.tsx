@@ -1,6 +1,6 @@
-// TypeScript Version: 3.2
+// TypeScript Version: 3.0
 
-import React from 'react';
+import * as React from 'react';
 import styled, { css } from 'astroturf';
 
 import { mapProps, withProps } from 'astroturf/helpers';
