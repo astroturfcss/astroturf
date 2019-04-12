@@ -52,14 +52,14 @@
     yargs "^13.2.1"
 
 "@4c/cli@^0.7.1":
-  version "0.7.9"
-  resolved "https://registry.yarnpkg.com/@4c/cli/-/cli-0.7.9.tgz#c8f0c68ddff93bf06705905f8ac5ba618914e955"
-  integrity sha512-6zVsUuB3IvZJGsu8PU86QVSsQXjvqbT2U1feabA5OCAzi9do//lngbF0gwMl5aaqrY8mTrKOUSyaG7h4vJgNnw==
+  version "0.7.10"
+  resolved "https://registry.yarnpkg.com/@4c/cli/-/cli-0.7.10.tgz#3836511d9e0d64a8d0715428827c3ffe6c32829f"
+  integrity sha512-porQ/LDipQ6oyLgHUW2ihQNAwnZkxdskJOGsjNcYohF8tN7pydBUerFKCGuhSs1jpCE2Yr8c0EL7JIPk6KHw2g==
   dependencies:
     "@4c/build" "^1.1.3"
     "@4c/cli-core" "^1.4.1"
     "@4c/file-butler" "^2.3.0"
-    "@4c/init" "^1.6.2"
+    "@4c/init" "^1.6.3"
     "@4c/intl" "^1.2.2"
     "@4c/rollout" "^1.3.3"
     chalk "^2.4.2"
@@ -93,10 +93,10 @@
     find-line-column "^0.5.2"
     typescript "^3.3.3333"
 
-"@4c/init@^1.6.2":
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/@4c/init/-/init-1.6.2.tgz#77668431ab3e80a911254aa81ae27f158c6bd353"
-  integrity sha512-lyLDlnxKWWV1uzDt8ZYVLFhB9qpeYCKXt2Em/NVqamvuMx4tRHAv+Iwk/3weUYm74c6vhXaS2ACzW28egPuqug==
+"@4c/init@^1.6.3":
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/@4c/init/-/init-1.6.3.tgz#5abb3839922af04205839401f6d4aba0de8cef3a"
+  integrity sha512-G97kwAs535sfY+bVjBZMk88B7j7wes9Tj2GsgS3MuVKtYzTRwWX0bwWntMhpReBi5dS3IknmC5H0b2j4DKIKGw==
   dependencies:
     "@4c/cli-core" "^1.4.1"
     execa "^1.0.0"
