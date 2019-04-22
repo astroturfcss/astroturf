@@ -86,7 +86,7 @@
     "cpy-cli": "^2.0.0",
     "css-loader": "^2.1.0",
     "doctoc": "^1.4.0",
-    "dtslint": "^0.6.0",
+    "dtslint": "^0.7.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.10.0",
     "eslint": "^5.14.1",
