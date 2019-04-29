@@ -179,11 +179,11 @@
     source-map "^0.5.0"
 
 "@babel/generator@^7.0.0", "@babel/generator@^7.3.4", "@babel/generator@^7.4.0":
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.4.0.tgz#c230e79589ae7a729fd4631b9ded4dc220418196"
-  integrity sha512-/v5I+a1jhGSKLgZDcmAUZ4K/VePi43eRkUs3yePW1HB1iANOD5tqJXwGSG4BZhSksP8J9ejSlwGeTiiOFZOrXQ==
+  version "7.4.4"
+  resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.4.4.tgz#174a215eb843fc392c7edcaabeaa873de6e8f041"
+  integrity sha512-53UOLK6TVNqKxf7RUh8NE851EHRxOOeVXKbK2bivdb+iziMyk03Sr4eaE9OELCbyZAAafAKPDwF2TPUES5QbxQ==
   dependencies:
-    "@babel/types" "^7.4.0"
+    "@babel/types" "^7.4.4"
     jsesc "^2.5.1"
     lodash "^4.17.11"
     source-map "^0.5.0"
