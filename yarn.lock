@@ -53,16 +53,16 @@
     yargs "^13.2.1"
 
 "@4c/cli@^0.7.1":
-  version "0.7.11"
-  resolved "https://registry.yarnpkg.com/@4c/cli/-/cli-0.7.11.tgz#296ebce12318f2f3f74a781fd1f658ab2be30075"
-  integrity sha512-9nMXO/W6H3oX+9jHgBBEDeci4hlT+VBrAM428i9+HEJ1WAoHfb1MmSakAo01BlYl/qct3kos1/kwm0FvktAy8g==
+  version "0.7.12"
+  resolved "https://registry.yarnpkg.com/@4c/cli/-/cli-0.7.12.tgz#78ce5db4e433313adbc834b536262d637d39f12c"
+  integrity sha512-QAqbP5VQ7wkifevqkrN6CjC+EBEgB+iY1u+zYcOldVOahvt9UJYJQkb7KtijLz0v5PSwqvLxHYjKUVeNK+NmIw==
   dependencies:
     "@4c/build" "^1.1.4"
     "@4c/cli-core" "^1.4.1"
     "@4c/file-butler" "^2.3.0"
     "@4c/init" "^1.6.4"
     "@4c/intl" "^1.2.2"
-    "@4c/rollout" "^1.3.3"
+    "@4c/rollout" "^1.3.4"
     chalk "^2.4.2"
     execa "^1.0.0"
     fs-extra "^7.0.1"
@@ -118,10 +118,10 @@
     chalk "^2.4.2"
     glob "^7.1.3"
 
-"@4c/rollout@^1.3.3":
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/@4c/rollout/-/rollout-1.3.3.tgz#073fad725354377127791a6c336cd8321e94c6ca"
-  integrity sha512-4vmsm8Kx9xy/u3gNvMq53ol919n46Q41nebLn8UO4cnVIm7uS6Aw77rDQOPcES8c2VRui+CFDNO2my6dQO312A==
+"@4c/rollout@^1.3.4":
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/@4c/rollout/-/rollout-1.3.4.tgz#ef4d19bbdd394ecba8ebf1438481162981a585f2"
+  integrity sha512-zdP5AjBT0akNw+bRvESJNF5bkqaI3BlwLyy6W9wdouW79wa4/LxdIGqT+GZ0b4RQpzPN/sPHdc8Okv7nzxA7VQ==
   dependencies:
     "@4c/cli-core" "^1.4.1"
     "@4c/file-butler" "^2.3.0"
