@@ -6,6 +6,8 @@
 declare module 'astroturf' {
   import * as React from 'react';
 
+  type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+
   // Any prop that has a default prop becomes optional, but its type is unchanged
   // Undeclared default props are augmented into the resulting allowable attributes
   // If declared props have indexed properties, ignore default props entirely as keyof gets widened
@@ -26,10 +28,11 @@ declare module 'astroturf' {
     // The Component from whose props are derived
     C extends keyof JSX.IntrinsicElements | React.ComponentType<any>,
     // The other props added by the template
-    O extends object
-  > = ReactDefaultizedProps<C, React.ComponentPropsWithRef<C>> &
-    O &
-    Partial<React.ComponentPropsWithRef<C> & O> &
+    O extends object,
+    // The props that are made optional by .attrs
+    A extends keyof any
+  > = Omit<ReactDefaultizedProps<C, React.ComponentPropsWithRef<C>> & O, A> &
+    Partial<Pick<React.ComponentPropsWithRef<C> & O, A>> &
     WithChildrenIfReactComponentClass<C>;
 
   // Because of React typing quirks, when getting props from a React.ComponentClass,
@@ -44,8 +47,9 @@ declare module 'astroturf' {
 
   type StyledComponentPropsWithAs<
     C extends keyof JSX.IntrinsicElements | React.ComponentType<any>,
-    O extends object
-  > = StyledComponentProps<C, O> & { as?: C };
+    O extends object,
+    A extends keyof any
+  > = StyledComponentProps<C, O, A> & { as?: C };
 
   // abuse Pick to strip the call signature from ForwardRefExoticComponent
   type ForwardRefExoticBase<P> = Pick<
@@ -55,19 +59,20 @@ declare module 'astroturf' {
 
   export interface StyledComponent<
     C extends keyof JSX.IntrinsicElements | React.ComponentType<any>,
-    O extends object = {}
-  > extends ForwardRefExoticBase<StyledComponentProps<C, O>> {
+    O extends object = {},
+    A extends keyof any = never
+  > extends ForwardRefExoticBase<StyledComponentProps<C, O, A>> {
     // add our own fake call signature to implement the polymorphic 'as' prop
     // NOTE: TS <3.2 will refuse to infer the generic and this component becomes impossible to use in JSX
     // just the presence of the overload is enough to break JSX
     //
     // TODO (TypeScript 3.2): actually makes the 'as' prop polymorphic
-    (props: StyledComponentProps<C, O> & { as?: never }): React.ReactElement<
-      StyledComponentProps<C, O>
-    >;
+    (
+      props: StyledComponentProps<C, O, A> & { as?: never },
+    ): React.ReactElement<StyledComponentProps<C, O, A>>;
     <AsC extends keyof JSX.IntrinsicElements | React.ComponentType<any> = C>(
-      props: StyledComponentPropsWithAs<AsC, O>,
-    ): React.ReactElement<StyledComponentPropsWithAs<AsC, O>>;
+      props: StyledComponentPropsWithAs<AsC, O, A>,
+    ): React.ReactElement<StyledComponentPropsWithAs<AsC, O, A>>;
 
     withComponent<
       WithC extends keyof JSX.IntrinsicElements | React.ComponentType<any>
@@ -76,26 +81,43 @@ declare module 'astroturf' {
     ): StyledComponent<WithC, O>;
   }
 
+  export type StyledComponentPropsWithRef<
+    C extends keyof JSX.IntrinsicElements | React.ComponentType<any>
+  > = React.ComponentPropsWithRef<C>;
+
+  type Attrs<P, A extends Partial<P>> = ((props: P) => A) | A;
+
   export interface StyledFunction<
     C extends keyof JSX.IntrinsicElements | React.ComponentType<any>,
-    O extends object = {}
+    O extends object = {},
+    A extends keyof any = never
   > {
-    (...rest: any[]): StyledComponent<C, O>;
+    (...rest: any[]): StyledComponent<C, O, A>;
     // tslint:disable-next-line:no-unnecessary-generics
-    <U extends object>(...rest: any[]): StyledComponent<C, O & U>;
+    <U extends object>(...rest: any[]): StyledComponent<C, O & U, A>;
+
+    attrs<
+      U extends object,
+      NewA extends Partial<StyledComponentPropsWithRef<C> & U> = Partial<
+        StyledComponentPropsWithRef<C> & U
+      >
+    >(
+      provideProps: Attrs<
+        ReactDefaultizedProps<C, React.ComponentPropsWithRef<C>> & U,
+        NewA
+      >,
+    ): StyledFunction<C, O & NewA, A | keyof NewA>;
   }
 
   export type StyledTags = {
     readonly [TTag in keyof JSX.IntrinsicElements]: StyledFunction<TTag>
   };
 
-  export type StyledComponentPropsWithRef<
-    C extends keyof JSX.IntrinsicElements | React.ComponentType<any>
-  > = React.ComponentPropsWithRef<C>;
-
   export interface StyledOptions {
     allowAs?: boolean;
   }
+
+  export type mapper<TInner, TOuter> = (input: TInner) => TOuter;
 
   export interface CreateStyled extends StyledTags {
     <C extends keyof JSX.IntrinsicElements | React.ComponentType<any>>(
@@ -109,8 +131,7 @@ declare module 'astroturf' {
     >(
       component: C,
       options?: StyledOptions,
-    // tslint:disable-next-line:no-unnecessary-generics
-    ): StyledFunction<C, OtherProps>;
+    ): StyledFunction<C, OtherProps>; // tslint:disable-line:no-unnecessary-generics
   }
 
   export function css(

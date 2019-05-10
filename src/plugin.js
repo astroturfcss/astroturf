@@ -2,6 +2,7 @@ import { basename, dirname, extname, join, relative } from 'path';
 import { stripIndent } from 'common-tags';
 import { outputFileSync } from 'fs-extra';
 import camelCase from 'lodash/camelCase';
+import defaults from 'lodash/defaults';
 import get from 'lodash/get';
 import kebabCase from 'lodash/kebabCase';
 import generate from '@babel/generator';
@@ -14,7 +15,13 @@ import wrapInClass from './utils/wrapInClass';
 
 const buildImport = template('require(FILENAME);');
 const buildComponent = template(
-  `styled(TAGNAME, OPTIONS, DISPLAYNAME, IMPORT, KEBABNAME, CAMELNAME)`,
+  `styled(ELEMENTTYPE, OPTIONS, {
+    displayName: DISPLAYNAME,
+    styles: IMPORT,
+    attrs: ATTRS,
+    kebabName: KEBABNAME,
+    camelName: CAMELNAME
+  })`,
 );
 
 const STYLES = Symbol('Astroturf');
@@ -51,28 +58,44 @@ function createFileName(hostFile, { extension = '.css' }, id) {
   return join(dirname(hostFile), base + extension);
 }
 
-function isCssTag(path, tagName, allowGlobal = false) {
+function isCssTag(tagPath, { tagName, allowGlobal }) {
   return (
-    path.get('tag').node.name === tagName &&
-    (path.get('tag').referencesImport('astroturf') ||
-      (allowGlobal && path.scope.hasGlobal(tagName)))
+    tagPath.node.name === tagName &&
+    (tagPath.referencesImport('astroturf') ||
+      (allowGlobal && tagPath.scope.hasGlobal(tagName)))
   );
 }
 
-const isStyledTag = (path, styledTag, allowGlobal) => {
-  const { node } = path.get('tag');
+const hasAttrs = calleePath =>
+  calleePath.isMemberExpression() &&
+  calleePath.get('property').node.name === 'attrs';
+
+const isAttrsExpression = (calleePath, pluginOptions) =>
+  hasAttrs(calleePath) &&
+  // eslint-disable-next-line no-use-before-define
+  isStyledTag(calleePath.get('object'), pluginOptions);
+
+const isStyledExpression = (calleePath, { styledTag, allowGlobal }) =>
+  calleePath.node.name === styledTag &&
+  (allowGlobal || calleePath.referencesImport('astroturf'));
+
+const isStyledTag = (tagPath, pluginOptions) => {
+  const callee = tagPath.get('callee');
   return (
-    t.isCallExpression(node) &&
-    node.callee.name === styledTag &&
-    (allowGlobal || path.get('tag.callee').referencesImport('astroturf'))
+    tagPath.isCallExpression() &&
+    (isAttrsExpression(callee, pluginOptions) ||
+      isStyledExpression(callee, pluginOptions))
   );
 };
 
-const isStyledTagShorthand = (path, styledTag, allowGlobal) =>
-  t.isMemberExpression(path.get('tag').node) &&
-  t.isIdentifier(path.get('tag.property').node) &&
-  path.get('tag.object').node.name === styledTag &&
-  (allowGlobal || path.get('tag.object').referencesImport('astroturf'));
+const isStyledTagShorthand = (tagPath, { styledTag, allowGlobal }) => {
+  return (
+    tagPath.isMemberExpression() &&
+    tagPath.get('property').isIdentifier() &&
+    tagPath.get('object').node.name === styledTag &&
+    (allowGlobal || tagPath.get('object').referencesImport('astroturf'))
+  );
+};
 
 export default function plugin() {
   function evaluate(path) {
@@ -86,13 +109,13 @@ export default function plugin() {
     return value;
   }
 
-  function createStyleNode(path, { opts, file }, identifier) {
+  function createStyleNode(path, identifier, { pluginOptions, file }) {
     const { start, end } = path.node;
     const style = { start, end };
-    const getFileName = opts.getFileName || createFileName;
+    const getFileName = pluginOptions.getFileName || createFileName;
 
     const hostFile = file.opts.filename;
-    style.absoluteFilePath = getFileName(hostFile, opts, identifier);
+    style.absoluteFilePath = getFileName(hostFile, pluginOptions, identifier);
 
     let filename = relative(dirname(hostFile), style.absoluteFilePath);
     if (!filename.startsWith('.')) {
@@ -104,10 +127,11 @@ export default function plugin() {
     return style;
   }
 
-  function buildStyleRequire(path, state, tagName) {
-    const { styles } = state.file.get(STYLES);
+  function buildStyleRequire(path, opts) {
+    const { tagName } = opts.pluginOptions;
+    const { styles } = opts.file.get(STYLES);
     const quasiPath = path.get('quasi');
-    const style = createStyleNode(path, state, getDisplayName(path, state));
+    const style = createStyleNode(path, getDisplayName(path, opts), opts);
     style.value = evaluate(quasiPath);
 
     style.code = `require('${style.relativeFilePath}')`;
@@ -123,9 +147,10 @@ export default function plugin() {
     return buildImport({ FILENAME: t.StringLiteral(style.relativeFilePath) }); // eslint-disable-line new-cap
   }
 
-  function buildStyledComponent(path, tagName, options, state) {
-    const cssState = state.file.get(STYLES);
-    const displayName = getDisplayName(path, state, null);
+  function buildStyledComponent(path, elementType, opts) {
+    const { file, pluginOptions, styledAttrs, styledOptions } = opts;
+    const cssState = file.get(STYLES);
+    const displayName = getDisplayName(path, opts, null);
 
     if (!displayName)
       throw path.buildCodeFrameError(
@@ -135,14 +160,15 @@ export default function plugin() {
           : 'Could not determine a displayName for this styled component. Each component must be uniquely identifiable, either as the default export of the module or by assigning it to a unique identifier',
       );
 
-    const style = createStyleNode(path, state, displayName);
+    const style = createStyleNode(path, displayName, opts);
 
     const kebabName = kebabCase(displayName);
     style.value = wrapInClass(`.${kebabName}`, evaluate(path.get('quasi')));
 
     const runtimeNode = buildComponent({
-      TAGNAME: tagName,
-      OPTIONS: options || t.NullLiteral(),
+      ELEMENTTYPE: elementType,
+      ATTRS: styledAttrs || t.NullLiteral(),
+      OPTIONS: styledOptions || t.NullLiteral(),
       DISPLAYNAME: t.StringLiteral(displayName),
       IMPORT: buildImport({
         FILENAME: t.StringLiteral(style.relativeFilePath),
@@ -151,7 +177,7 @@ export default function plugin() {
       CAMELNAME: t.StringLiteral(camelCase(kebabName)),
     });
 
-    if (state.opts.generateInterpolations)
+    if (pluginOptions.generateInterpolations)
       style.code = generate(runtimeNode).code;
 
     cssState.styles.set(style.absoluteFilePath, style);
@@ -209,35 +235,60 @@ export default function plugin() {
 
     visitor: {
       TaggedTemplateExpression(path, state) {
-        const {
-          tagName = 'css',
-          allowGlobal = true,
-          styledTag = 'styled',
-        } = state.opts;
+        const pluginOptions = defaults(state.opts, {
+          tagName: 'css',
+          allowGlobal: true,
+          styledTag: 'styled',
+        });
 
-        if (isStyledTag(path, styledTag, allowGlobal)) {
-          const componentType = get(path.get('tag'), 'node.arguments[0]');
-          const options = get(path.get('tag'), 'node.arguments[1]');
+        const tagPath = path.get('tag');
+
+        if (isStyledTag(tagPath, pluginOptions)) {
+          let styledOptions, componentType, styledAttrs;
+
+          if (hasAttrs(tagPath.get('callee'))) {
+            styledAttrs = get(tagPath, 'node.arguments[0]');
+
+            const styled = tagPath.get('callee.object');
+            componentType = get(styled, 'node.arguments[0]');
+            styledOptions = get(styled, 'node.arguments[1]');
+          } else {
+            componentType = get(tagPath, 'node.arguments[0]');
+            styledOptions = get(tagPath, 'node.arguments[1]');
+          }
 
           path.replaceWith(
-            buildStyledComponent(path, componentType, options, state),
+            buildStyledComponent(path, componentType, {
+              pluginOptions,
+              styledAttrs,
+              styledOptions,
+              file: state.file,
+            }),
           );
           path.addComment('leading', '#__PURE__');
 
           // styled.button` ... `
-        } else if (isStyledTagShorthand(path, styledTag, allowGlobal)) {
+        } else if (isStyledTagShorthand(tagPath, pluginOptions)) {
           const componentType = t.StringLiteral(
-            path.get('tag.property').node.name,
+            tagPath.get('property').node.name,
           );
 
           path.replaceWith(
-            buildStyledComponent(path, componentType, null, state),
+            buildStyledComponent(path, componentType, {
+              pluginOptions,
+              file: state.file,
+            }),
           );
           path.addComment('leading', '#__PURE__');
 
           // lone css`` tag
-        } else if (isCssTag(path, tagName, allowGlobal)) {
-          path.replaceWith(buildStyleRequire(path, state, tagName));
+        } else if (isCssTag(tagPath, pluginOptions)) {
+          path.replaceWith(
+            buildStyleRequire(path, {
+              pluginOptions,
+              file: state.file,
+            }),
+          );
           path.addComment('leading', '#__PURE__');
         }
       },
