@@ -12,7 +12,7 @@ module.exports.pitch = function pitch() {
       options: {
         ...this.query,
         modules: true,
-        importLoader: remaining.length ? 2 : 1,
+        importLoaders: remaining.length ? 2 : 1,
       },
     },
     {
