@@ -5,13 +5,13 @@ import styled, { css } from 'astroturf';
 
 import { mapProps, withProps } from 'astroturf/helpers';
 
-// $ExpectType StyledFunction<"a", {}>
+// $ExpectType StyledFunction<"a", {}, never>
 styled.a;
-// $ExpectType StyledFunction<"body", {}>
+// $ExpectType StyledFunction<"body", {}, never>
 styled.body;
-// $ExpectType StyledFunction<"div", {}>
+// $ExpectType StyledFunction<"div", {}, never>
 styled.div;
-// $ExpectType StyledFunction<"svg", {}>
+// $ExpectType StyledFunction<"svg", {}, never>
 styled.svg;
 
 // tslint:disable-next-line:interface-over-type-literal
