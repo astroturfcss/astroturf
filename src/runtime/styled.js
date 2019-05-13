@@ -9,19 +9,27 @@ const camelCase = str =>
     '',
   );
 
-function styled(type, options, displayName, styles, kebabName, camelName) {
+function styled(type, options, settings) {
+  const { displayName, attrs, styles, kebabName, camelName } = settings;
+
   options = options || { allowAs: typeof type === 'string' };
   const componentClassName = styles[kebabName] || styles[camelName];
 
   // always passthrough if the type is a styled component
   const allowAs = type.isAstroturf ? false : options.allowAs;
+  let propMapper = attrs;
+
+  if (attrs && typeof attrs !== 'function')
+    propMapper = p => ({ ...p, ...attrs });
 
   const hasModifiers = Object.keys(styles).some(
     className => className !== camelName && className !== kebabName,
   );
 
-  function Styled(props, ref) {
+  function Styled(rawProps, ref) {
+    const props = propMapper ? propMapper(rawProps) : rawProps;
     const childProps = { ...props, ref };
+
     if (allowAs) delete childProps.as;
 
     let className = childProps.className
@@ -82,8 +90,7 @@ function styled(type, options, displayName, styles, kebabName, camelName) {
 
   decorated.displayName = displayName;
 
-  decorated.withComponent = nextType =>
-    styled(nextType, options, displayName, styles, kebabName, camelName);
+  decorated.withComponent = nextType => styled(nextType, options, settings);
 
   decorated.isAstroturf = true;
 

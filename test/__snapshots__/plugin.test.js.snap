@@ -35,10 +35,22 @@ const Foo = () => {};
 const bar = 'Bar';
 Foo[bar]['baz'] =
 /*#__PURE__*/
-styled('div', null, \\"FooBarBaz\\", require(\\"./display-name-FooBarBaz.css\\"), \\"foo-bar-baz\\", \\"fooBarBaz\\");
+styled('div', null, {
+  displayName: \\"FooBarBaz\\",
+  styles: require(\\"./display-name-FooBarBaz.css\\"),
+  attrs: null,
+  kebabName: \\"foo-bar-baz\\",
+  camelName: \\"fooBarBaz\\"
+});
 export default
 /*#__PURE__*/
-styled(FancyBox, null, \\"DisplayName\\", require(\\"./DisplayName.css\\"), \\"display-name\\", \\"displayName\\");"
+styled(FancyBox, null, {
+  displayName: \\"DisplayName\\",
+  styles: require(\\"./DisplayName.css\\"),
+  attrs: null,
+  kebabName: \\"display-name\\",
+  camelName: \\"displayName\\"
+});"
 `;
 
 exports[`Plugin element-shorthand FancyBox: element-shorthand-FancyBox.css 1`] = `
@@ -65,7 +77,13 @@ exports[`Plugin element-shorthand js : Compiled JS 1`] = `
 const SIZE = 75;
 const FancyBox =
 /*#__PURE__*/
-styled(\\"div\\", null, \\"FancyBox\\", require(\\"./element-shorthand-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");"
+styled(\\"div\\", null, {
+  displayName: \\"FancyBox\\",
+  styles: require(\\"./element-shorthand-FancyBox.css\\"),
+  attrs: null,
+  kebabName: \\"fancy-box\\",
+  camelName: \\"fancyBox\\"
+});"
 `;
 
 exports[`Plugin example js : Compiled JS 1`] = `
@@ -110,7 +128,13 @@ exports[`Plugin hoist-import js : Compiled JS 1`] = `
 "import { styled } from 'astroturf';
 const ButtonBase =
 /*#__PURE__*/
-styled('button', null, \\"ButtonBase\\", require(\\"./hoist-import-ButtonBase.css\\"), \\"button-base\\", \\"buttonBase\\");"
+styled('button', null, {
+  displayName: \\"ButtonBase\\",
+  styles: require(\\"./hoist-import-ButtonBase.css\\"),
+  attrs: null,
+  kebabName: \\"button-base\\",
+  camelName: \\"buttonBase\\"
+});"
 `;
 
 exports[`Plugin imports-css js : Compiled JS 1`] = `
@@ -169,10 +193,22 @@ exports[`Plugin index js : Compiled JS 1`] = `
 "import styled from 'astroturf';
 const ButtonBase =
 /*#__PURE__*/
-styled('button', null, \\"ButtonBase\\", require(\\"./index-ButtonBase.css\\"), \\"button-base\\", \\"buttonBase\\");
+styled('button', null, {
+  displayName: \\"ButtonBase\\",
+  styles: require(\\"./index-ButtonBase.css\\"),
+  attrs: null,
+  kebabName: \\"button-base\\",
+  camelName: \\"buttonBase\\"
+});
 export default
 /*#__PURE__*/
-styled(FancyBox, null, \\"Fixtures\\", require(\\"./Fixtures.css\\"), \\"fixtures\\", \\"fixtures\\");"
+styled(FancyBox, null, {
+  displayName: \\"Fixtures\\",
+  styles: require(\\"./Fixtures.css\\"),
+  attrs: null,
+  kebabName: \\"fixtures\\",
+  camelName: \\"fixtures\\"
+});"
 `;
 
 exports[`Plugin multiple-components FancyBox: multiple-components-FancyBox.css 1`] = `
@@ -214,10 +250,22 @@ const SIZE = 75; // prettier-ignore
 
 const FancyBox =
 /*#__PURE__*/
-styled('div', null, \\"FancyBox\\", require(\\"./multiple-components-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
+styled('div', null, {
+  displayName: \\"FancyBox\\",
+  styles: require(\\"./multiple-components-FancyBox.css\\"),
+  attrs: null,
+  kebabName: \\"fancy-box\\",
+  camelName: \\"fancyBox\\"
+});
 const FancyHeader =
 /*#__PURE__*/
-styled('h2', null, \\"FancyHeader\\", require(\\"./multiple-components-FancyHeader.css\\"), \\"fancy-header\\", \\"fancyHeader\\");"
+styled('h2', null, {
+  displayName: \\"FancyHeader\\",
+  styles: require(\\"./multiple-components-FancyHeader.css\\"),
+  attrs: null,
+  kebabName: \\"fancy-header\\",
+  camelName: \\"fancyHeader\\"
+});"
 `;
 
 exports[`Plugin no-global js : Compilation Error 1`] = `
@@ -272,11 +320,23 @@ const FancyBox =
 /*#__PURE__*/
 styled('div', {
   someOption: true
-}, \\"FancyBox\\", require(\\"./pass-options-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
+}, {
+  displayName: \\"FancyBox\\",
+  styles: require(\\"./pass-options-FancyBox.css\\"),
+  attrs: null,
+  kebabName: \\"fancy-box\\",
+  camelName: \\"fancyBox\\"
+});
 const options = {};
 const FancierBox =
 /*#__PURE__*/
-styled(FancyBox, options, \\"FancierBox\\", require(\\"./pass-options-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");"
+styled(FancyBox, options, {
+  displayName: \\"FancierBox\\",
+  styles: require(\\"./pass-options-FancierBox.css\\"),
+  attrs: null,
+  kebabName: \\"fancier-box\\",
+  camelName: \\"fancierBox\\"
+});"
 `;
 
 exports[`Plugin styled FancierBox: styled-FancierBox.css 1`] = `
@@ -312,10 +372,22 @@ const SIZE = 75; // prettier-ignore
 
 const FancyBox =
 /*#__PURE__*/
-styled('div', null, \\"FancyBox\\", require(\\"./styled-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
+styled('div', null, {
+  displayName: \\"FancyBox\\",
+  styles: require(\\"./styled-FancyBox.css\\"),
+  attrs: null,
+  kebabName: \\"fancy-box\\",
+  camelName: \\"fancyBox\\"
+});
 const FancierBox =
 /*#__PURE__*/
-styled(FancyBox, null, \\"FancierBox\\", require(\\"./styled-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");"
+styled(FancyBox, null, {
+  displayName: \\"FancierBox\\",
+  styles: require(\\"./styled-FancierBox.css\\"),
+  attrs: null,
+  kebabName: \\"fancier-box\\",
+  camelName: \\"fancierBox\\"
+});"
 `;
 
 exports[`Plugin styled-global FancierBox: styled-global-FancierBox.css 1`] = `
@@ -343,10 +415,22 @@ exports[`Plugin styled-global js : Compiled JS 1`] = `
 "// prettier-ignore
 const FancyBox =
 /*#__PURE__*/
-styled('div', null, \\"FancyBox\\", require(\\"./styled-global-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
+styled('div', null, {
+  displayName: \\"FancyBox\\",
+  styles: require(\\"./styled-global-FancyBox.css\\"),
+  attrs: null,
+  kebabName: \\"fancy-box\\",
+  camelName: \\"fancyBox\\"
+});
 const FancierBox =
 /*#__PURE__*/
-styled(FancyBox, null, \\"FancierBox\\", require(\\"./styled-global-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");"
+styled(FancyBox, null, {
+  displayName: \\"FancierBox\\",
+  styles: require(\\"./styled-global-FancierBox.css\\"),
+  attrs: null,
+  kebabName: \\"fancier-box\\",
+  camelName: \\"fancierBox\\"
+});"
 `;
 
 exports[`Plugin styled-no-assignment js : Compilation Error 1`] = `
@@ -384,10 +468,22 @@ exports[`Plugin styled-tag js : Compiled JS 1`] = `
 
 const FancyBox =
 /*#__PURE__*/
-styled('div', null, \\"FancyBox\\", require(\\"./styled-tag-FancyBox.css\\"), \\"fancy-box\\", \\"fancyBox\\");
+styled('div', null, {
+  displayName: \\"FancyBox\\",
+  styles: require(\\"./styled-tag-FancyBox.css\\"),
+  attrs: null,
+  kebabName: \\"fancy-box\\",
+  camelName: \\"fancyBox\\"
+});
 const FancierBox =
 /*#__PURE__*/
-styled(FancyBox, null, \\"FancierBox\\", require(\\"./styled-tag-FancierBox.css\\"), \\"fancier-box\\", \\"fancierBox\\");"
+styled(FancyBox, null, {
+  displayName: \\"FancierBox\\",
+  styles: require(\\"./styled-tag-FancierBox.css\\"),
+  attrs: null,
+  kebabName: \\"fancier-box\\",
+  camelName: \\"fancierBox\\"
+});"
 `;
 
 exports[`Plugin with-props RedPasswordInput: with-props-RedPasswordInput.css 1`] = `
@@ -398,12 +494,36 @@ exports[`Plugin with-props RedPasswordInput: with-props-RedPasswordInput.css 1`]
 }"
 `;
 
+exports[`Plugin with-props RedPasswordInput2: with-props-RedPasswordInput2.css 1`] = `
+".red-password-input-2 {
+
+  background-color: red;
+
+}"
+`;
+
 exports[`Plugin with-props js : Compiled JS 1`] = `
 "import { styled } from 'astroturf';
-import withProps from 'recompose/withProps';
-const RedPasswordInput = withProps({
-  type: 'password'
-})(
+const RedPasswordInput =
 /*#__PURE__*/
-styled('input', null, \\"RedPasswordInput\\", require(\\"./with-props-RedPasswordInput.css\\"), \\"red-password-input\\", \\"redPasswordInput\\"));"
+styled('input', null, {
+  displayName: \\"RedPasswordInput\\",
+  styles: require(\\"./with-props-RedPasswordInput.css\\"),
+  attrs: {
+    type: 'password'
+  },
+  kebabName: \\"red-password-input\\",
+  camelName: \\"redPasswordInput\\"
+});
+const RedPasswordInput2 =
+/*#__PURE__*/
+styled('input', null, {
+  displayName: \\"RedPasswordInput2\\",
+  styles: require(\\"./with-props-RedPasswordInput2.css\\"),
+  attrs: p => ({
+    type: 'password'
+  }),
+  kebabName: \\"red-password-input-2\\",
+  camelName: \\"redPasswordInput2\\"
+});"
 `;

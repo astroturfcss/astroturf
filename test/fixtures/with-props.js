@@ -1,8 +1,11 @@
 import { styled } from 'astroturf';
-import withProps from 'recompose/withProps';
 
-const RedPasswordInput = withProps({
-  type: 'password',
-})(styled('input')`
+const RedPasswordInput = styled('input').attrs({ type: 'password' })`
   background-color: red;
-`);
+`;
+
+const RedPasswordInput2 = styled('input').attrs(p => ({
+  type: 'password',
+}))`
+  background-color: red;
+`;
