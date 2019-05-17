@@ -50,17 +50,12 @@ declare const ReactSFC2: React.SFC<ReactSFCProps2>;
 const Button0 = styled('button')`
   color: blue;
 `;
-const Button1 = styled('button')({
-  color: 'blue',
-});
-<div>
-  <Button0 />
-  <Button0 type="button" />
-</div>;
-<div>
-  <Button1 />
-  <Button1 type="button" />
-</div>;
+
+<Button0 />;
+<Button0 type="button" />;
+
+// href not allowed
+<Button0 type="button" href />; // $ExpectError
 
 const Input0 = styled('input', {
   allowAs: true,

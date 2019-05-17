@@ -98,9 +98,9 @@ declare module 'astroturf' {
 
     attrs<
       U extends object,
-      NewA extends Partial<StyledComponentPropsWithRef<C> & U> = Partial<
-        StyledComponentPropsWithRef<C> & U
-      >
+      NewA extends Partial<StyledComponentPropsWithRef<C> & U> & {
+        [others: string]: any;
+      } = Partial<StyledComponentPropsWithRef<C> & U>
     >(
       provideProps: Attrs<
         ReactDefaultizedProps<C, React.ComponentPropsWithRef<C>> & U,
