@@ -126,7 +126,7 @@ describe('styled', () => {
     it('should provide from object', () => {
       const Component = styled('div', null, {
         displayName: 'FancyBox',
-        attrs: { green: true },
+        attrs: p => ({ ...p, green: true }),
         styles: { green: 'green' },
         kebabName: 'fancy-box',
         camelName: 'fancyBox',
