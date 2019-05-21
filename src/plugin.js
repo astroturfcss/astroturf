@@ -10,6 +10,7 @@ import template from '@babel/template';
 import * as t from '@babel/types';
 
 import getNameFromPath from './utils/getNameFromPath';
+import normalizeAttrs from './utils/normalizeAttrs';
 import pascalCase from './utils/pascalCase';
 import wrapInClass from './utils/wrapInClass';
 
@@ -167,7 +168,7 @@ export default function plugin() {
 
     const runtimeNode = buildComponent({
       ELEMENTTYPE: elementType,
-      ATTRS: styledAttrs || t.NullLiteral(),
+      ATTRS: normalizeAttrs(styledAttrs),
       OPTIONS: styledOptions || t.NullLiteral(),
       DISPLAYNAME: t.StringLiteral(displayName),
       IMPORT: buildImport({

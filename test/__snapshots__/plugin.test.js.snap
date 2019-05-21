@@ -509,9 +509,9 @@ const RedPasswordInput =
 styled('input', null, {
   displayName: \\"RedPasswordInput\\",
   styles: require(\\"./with-props-RedPasswordInput.css\\"),
-  attrs: {
+  attrs: props => ({ ...props,
     type: 'password'
-  },
+  }),
   kebabName: \\"red-password-input\\",
   camelName: \\"redPasswordInput\\"
 });

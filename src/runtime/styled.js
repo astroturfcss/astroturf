@@ -17,17 +17,13 @@ function styled(type, options, settings) {
 
   // always passthrough if the type is a styled component
   const allowAs = type.isAstroturf ? false : options.allowAs;
-  let propMapper = attrs;
-
-  if (attrs && typeof attrs !== 'function')
-    propMapper = p => ({ ...p, ...attrs });
 
   const hasModifiers = Object.keys(styles).some(
     className => className !== camelName && className !== kebabName,
   );
 
   function Styled(rawProps, ref) {
-    const props = propMapper ? propMapper(rawProps) : rawProps;
+    const props = attrs ? attrs(rawProps) : rawProps;
     const childProps = { ...props, ref };
 
     if (allowAs) delete childProps.as;
