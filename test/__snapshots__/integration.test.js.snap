@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`webpack integration should work 1`] = `
+"._1DG83UEH4yEB9M2l8jVGvm {
+
+  color: red;
+  width: 75px;
+
+}
+
+  ._1DG83UEH4yEB9M2l8jVGvm._3zeTZlD4-ICVnavrPGgQ9s {
+    background: white;
+    color: palevioletred;
+  }
+._3WzghJGJRleZeomQ1Q9Ubi {
+
+  color: ultra-red;
+
+}
+
+._3WzghJGJRleZeomQ1Q9Ubi > ._1DG83UEH4yEB9M2l8jVGvm {
+    padding: 4em;
+  }
+"
+`;

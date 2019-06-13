@@ -433,6 +433,54 @@ styled(FancyBox, null, {
 });"
 `;
 
+exports[`Plugin styled-interpolations FancierBox: styled-interpolations-FancierBox.css 1`] = `
+".fancier-box {
+
+  color: ultra-red;
+
+  > undefined {
+    padding: 4em;
+  }
+
+}"
+`;
+
+exports[`Plugin styled-interpolations FancyBox: styled-interpolations-FancyBox.css 1`] = `
+".fancy-box {
+
+  color: red;
+  width: 75px;
+  &.primary {
+    background: white;
+    color: palevioletred;
+  }
+
+}"
+`;
+
+exports[`Plugin styled-interpolations js : Compiled JS 1`] = `
+"import styled from 'astroturf'; // prettier-ignore
+
+const FancyBox =
+/*#__PURE__*/
+styled('div', null, {
+  displayName: \\"FancyBox\\",
+  styles: require(\\"./styled-interpolations-FancyBox.css\\"),
+  attrs: null,
+  kebabName: \\"fancy-box\\",
+  camelName: \\"fancyBox\\"
+});
+const FancierBox =
+/*#__PURE__*/
+styled('div', null, {
+  displayName: \\"FancierBox\\",
+  styles: require(\\"./styled-interpolations-FancierBox.css\\"),
+  attrs: null,
+  kebabName: \\"fancier-box\\",
+  camelName: \\"fancierBox\\"
+});"
+`;
+
 exports[`Plugin styled-no-assignment js : Compilation Error 1`] = `
 "The output of this styled component is never used. Either assign it to a variable or export it.
 [0m[31m[1m>[22m[39m[90m 1 | [39mstyled([32m'p'[39m)[32m\`[39m[0m

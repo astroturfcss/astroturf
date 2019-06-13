@@ -21,7 +21,9 @@
   - [`as` prop](#as-prop)
 - [Setup](#setup)
   - [Options](#options)
-  - [Use with Next.js](#use-with-next.js)
+  - [Use with Parcel](#use-with-parcel)
+  - [Use with Preact](#use-with-preact)
+  - [Use with Next.js](#use-with-nextjs)
   - [Use without webpack](#use-without-webpack)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -360,7 +362,7 @@ const Button = styled('button')`
 ```js
 const StyledFooter = styled(Footer, { allowAs: true })`
   color: red;
-`
+`;
 ```
 
 ## Setup
@@ -384,7 +386,7 @@ If you want the simplest, most bare-bones setup you can use the included `css-lo
         test: /\.tsx?$/,
         use: ['ts-loader', 'astroturf/loader'],
       },
-    ]
+    ];
   }
 }
 ```
@@ -396,7 +398,7 @@ You can add on here as you would normally for additional preprocesser setup. Her
   module: {
     rules: [
       {
-        test: /\module\.scss$/,
+        test: /\.module\.scss$/,
         use: ['style-loader', 'astroturf/css-loader', 'sass-loader'],
       },
       {

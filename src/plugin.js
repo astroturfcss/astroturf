@@ -9,6 +9,7 @@ import generate from '@babel/generator';
 import template from '@babel/template';
 import * as t from '@babel/types';
 
+import buildTaggedTemplate from './utils/buildTaggedTemplate';
 import getNameFromPath from './utils/getNameFromPath';
 import normalizeAttrs from './utils/normalizeAttrs';
 import pascalCase from './utils/pascalCase';
@@ -26,6 +27,7 @@ const buildComponent = template(
 );
 
 const STYLES = Symbol('Astroturf');
+const COMPONENTS = Symbol('Astroturf components');
 const IMPORTS = Symbol('Astroturf imports');
 
 function getNameFromFile(fileName) {
@@ -151,6 +153,7 @@ export default function plugin() {
   function buildStyledComponent(path, elementType, opts) {
     const { file, pluginOptions, styledAttrs, styledOptions } = opts;
     const cssState = file.get(STYLES);
+    const nodeMap = file.get(COMPONENTS);
     const displayName = getDisplayName(path, opts, null);
 
     if (!displayName)
@@ -163,8 +166,16 @@ export default function plugin() {
 
     const style = createStyleNode(path, displayName, opts);
 
+    const { text, imports } = buildTaggedTemplate(
+      path,
+      nodeMap,
+      style,
+      opts.pluginOptions,
+    );
+
     const kebabName = kebabCase(displayName);
-    style.value = wrapInClass(`.${kebabName}`, evaluate(path.get('quasi')));
+    style.name = kebabName;
+    style.value = imports + wrapInClass(`.${style.name}`, text);
 
     const runtimeNode = buildComponent({
       ELEMENTTYPE: elementType,
@@ -182,17 +193,23 @@ export default function plugin() {
       style.code = generate(runtimeNode).code;
 
     cssState.styles.set(style.absoluteFilePath, style);
+    nodeMap.set(runtimeNode.expression, style);
     return runtimeNode;
   }
 
   return {
     pre(file) {
       file.set(IMPORTS, []);
+
       if (!file.has(STYLES)) {
         file.set(STYLES, {
           id: 0,
           styles: new Map(),
         });
+      }
+
+      if (!file.has(COMPONENTS)) {
+        file.set(COMPONENTS, new Map());
       }
     },
 

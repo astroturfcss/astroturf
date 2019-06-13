@@ -31,7 +31,7 @@ function collectStyles(src, filename, opts) {
   // quick regex as an optimization to avoid parsing each file
   if (
     !src.match(
-     new RegExp(
+      new RegExp(
         `(${tagName}|${styledTag}(.|\\n|\\r)+?)\\s*\`([\\s\\S]*?)\``,
         'gmi',
       ),

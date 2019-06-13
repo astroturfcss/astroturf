@@ -33,7 +33,7 @@ export const fixtures = fs
   .map(file => `${__dirname}/fixtures/${file}`)
   .filter(f => !f.endsWith('.json'));
 
-export function babelRunFixture(fixture) {
+export function babelRunFixture(fixture, only) {
   const options = getOptions(fixture);
 
   if (options.loaderOnly) return;
@@ -53,10 +53,12 @@ export function babelRunFixture(fixture) {
     } catch (err) {
       error = err;
     }
+    // eslint-disable-next-line no-underscore-dangle
+    const _it = only ? it.only : it;
 
     const styles = output ? output.metadata.astroturf.styles : [];
 
-    it('js ', () => {
+    _it('js ', () => {
       if (options.TEST_SHOULD_FAIL) {
         expect(styles.length).toEqual(0);
         // There may be an error, or may just be styles weren't extracted
@@ -73,14 +75,14 @@ export function babelRunFixture(fixture) {
     });
 
     styles.forEach(s => {
-      it(`${s.identifier}`, () => {
+      _it(`${s.identifier}`, () => {
         expect(s.value).toMatchSnapshot(`${basename(s.absoluteFilePath)}`);
       });
     });
   });
 }
 
-export function webpackRunFixture(fixture) {
+export function webpackRunFixture(fixture, only) {
   const options = getOptions(fixture);
 
   if (options.pluginOnly) return;
@@ -107,8 +109,10 @@ export function webpackRunFixture(fixture) {
     } catch (err) {
       error = err;
     }
+    // eslint-disable-next-line no-underscore-dangle
+    const _it = only ? it.only : it;
 
-    it('js ', () => {
+    _it('js ', () => {
       if (options.TEST_SHOULD_FAIL) {
         expect(styles.length).toEqual(0);
         // There may be an error, or may just be styles weren't extracted
@@ -125,7 +129,7 @@ export function webpackRunFixture(fixture) {
     });
 
     styles.forEach((s, idx) => {
-      it(`${idx}`, () => {
+      _it(`${idx}`, () => {
         expect(s.value).toMatchSnapshot(`${basename(s.absoluteFilePath)}`);
       });
     });
