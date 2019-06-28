@@ -1,7 +1,13 @@
 // eslint-disable-next-line import/no-unresolved
-import styled from 'astroturf';
+import styled, { css } from 'astroturf';
 
 const width = 75;
+
+const styles = css`
+  .parent {
+    color: red;
+  }
+`;
 
 const FancyBox = styled('div')`
   color: red;
@@ -18,6 +24,10 @@ const FancierBox = styled('div')`
 
   > ${FancyBox} {
     padding: 4em;
+  }
+
+  ${styles.parent} > & {
+    margin: 2em;
   }
 `;
 

@@ -133,10 +133,13 @@ export default function plugin() {
   function buildStyleRequire(path, opts) {
     const { tagName } = opts.pluginOptions;
     const { styles } = opts.file.get(STYLES);
+    const nodeMap = opts.file.get(COMPONENTS);
+
     const quasiPath = path.get('quasi');
     const style = createStyleNode(path, getDisplayName(path, opts), opts);
     style.value = evaluate(quasiPath);
 
+    style.isClassNames = true;
     style.code = `require('${style.relativeFilePath}')`;
 
     if (styles.has(style.absoluteFilePath))
@@ -147,7 +150,12 @@ export default function plugin() {
       );
 
     styles.set(style.absoluteFilePath, style);
-    return buildImport({ FILENAME: t.StringLiteral(style.relativeFilePath) }); // eslint-disable-line new-cap
+    const runtimeNode = buildImport({
+      FILENAME: t.StringLiteral(style.relativeFilePath),
+    }); // eslint-disable-line new-cap
+
+    nodeMap.set(runtimeNode.expression, style);
+    return runtimeNode;
   }
 
   function buildStyledComponent(path, elementType, opts) {

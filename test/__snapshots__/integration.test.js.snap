@@ -1,25 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`webpack integration should work 1`] = `
-"._1DG83UEH4yEB9M2l8jVGvm {
+"
+  .index-styles__parent--1oDPf {
+    color: red;
+  }
+
+.index-FancyBox__fancy-box--1DG83 {
 
   color: red;
   width: 75px;
 
 }
 
-  ._1DG83UEH4yEB9M2l8jVGvm._3zeTZlD4-ICVnavrPGgQ9s {
+  .index-FancyBox__fancy-box--1DG83.index-FancyBox__primary--3zeTZ {
     background: white;
     color: palevioletred;
   }
-._3WzghJGJRleZeomQ1Q9Ubi {
+.index-FancierBox__fancier-box--3Wzgh {
 
   color: ultra-red;
 
 }
 
-._3WzghJGJRleZeomQ1Q9Ubi > ._1DG83UEH4yEB9M2l8jVGvm {
+.index-FancierBox__fancier-box--3Wzgh > .index-FancyBox__fancy-box--1DG83 {
     padding: 4em;
+  }
+
+.index-styles__parent--1oDPf > .index-FancierBox__fancier-box--3Wzgh {
+    margin: 2em;
   }
 "
 `;

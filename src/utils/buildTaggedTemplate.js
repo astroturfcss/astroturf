@@ -1,6 +1,25 @@
 import { dirname, relative } from 'path';
 import { stripIndent } from 'common-tags';
 
+function resolveInterpolation(path, nodeMap, localStyle) {
+  let nextPath = path.resolve();
+  while (nextPath && nextPath.isMemberExpression()) {
+    nextPath = nextPath.get('object').resolve();
+  }
+  const style = nextPath && nodeMap.get(nextPath.node);
+  if (!style) return null;
+
+  return {
+    externalName: style.isClassNames
+      ? path.get('property').node.name
+      : style.name,
+    importName: relative(
+      dirname(localStyle.absoluteFilePath),
+      style.absoluteFilePath,
+    ),
+  };
+}
+
 export default (path, nodeMap, localStyle, { tagName, styledTag }) => {
   const { quasi, tag } = path.node;
 
@@ -25,13 +44,14 @@ export default (path, nodeMap, localStyle, { tagName, styledTag }) => {
       }
 
       const isCssTag = tag.name === tagName;
+
       if (!isCssTag) {
-        const resolved = expr.resolve();
-        const styles = resolved && nodeMap.get(resolved.node);
-        if (styles) {
+        const interpolation = resolveInterpolation(expr, nodeMap, localStyle);
+
+        if (interpolation) {
           const localName = `a${id++}`;
-          // console.log(resolved.node, styles);
-          interpolations.set(localName, styles);
+
+          interpolations.set(localName, interpolation);
           text += `.${localName}`;
           return;
         }
@@ -50,19 +70,17 @@ export default (path, nodeMap, localStyle, { tagName, styledTag }) => {
 
   let imports = '';
   if (interpolations.size) {
-    interpolations.forEach((style, localName) => {
+    interpolations.forEach(({ importName, externalName }, localName) => {
       imports += stripIndent`
-        :import("${relative(
-          dirname(localStyle.absoluteFilePath),
-          style.absoluteFilePath,
-        )}") {
-          ${localName}: ${style.name};
-        }
+        :import("${importName}") {
+          ${localName}: ${externalName};
+        }\n
       `;
     });
 
     imports += '\n\n';
   }
+
   return {
     text,
     imports,

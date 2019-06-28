@@ -24,7 +24,14 @@ describe('webpack integration', () => {
             test: /\.css$/,
             use: [
               ExtractCSS.loader,
-              require.resolve('../src/css-loader'),
+              {
+                loader: require.resolve('../src/css-loader'),
+                options: {
+                  modules: {
+                    localIdentName: '[name]__[local]--[hash:base64:5]',
+                  },
+                },
+              },
               // {
               //   loader: 'css-loader',
               //   options: { modules: true, importLoaders: 1 },
@@ -55,7 +62,7 @@ describe('webpack integration', () => {
 
   it('should work', done => {
     compiler.run((err, stats) => {
-      // console.log(stats.toJson().errors);
+      console.log(stats.toJson().errors);
       expect(err).toBe(null);
       expect(stats.hasErrors()).toBe(false);
       expect(stats.hasWarnings()).toBe(false);

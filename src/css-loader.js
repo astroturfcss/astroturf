@@ -25,7 +25,7 @@ module.exports = function loader(css, map, meta) {
     const ctx = { ...this };
     ctx.query = {
       ...this.query,
-      modules: true,
+      modules: this.query.modules || true,
       importLoaders: 0,
     };
 
