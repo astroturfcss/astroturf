@@ -1,50 +1,34 @@
-module.exports = c => c;
+const cssLoader = require('css-loader');
+const postcssLoader = require('postcss-loader');
+const postcssNested = require('postcss-nested');
 
-// createLoaderObject: https://github.com/webpack/loader-runner/blob/master/lib/LoaderRunner.js
-function createLoader(loader) {
-  // const query = loader.ident ? `??${loader.ident}` : '';
+function postcss(loader, css, map, meta, cb) {
+  const ctx = { ...loader };
+  ctx.async = () => cb;
+  ctx.loaderIndex++;
+  ctx.query = {
+    plugins: [postcssNested()],
+  };
 
-  // return {
-  //   path: null,
-  //   query: null,
-  //   options: null,
-  //   ident: null,
-  //   normal: null,
-  //   pitch: null,
-  //   raw: null,
-  //   data: null,
-  //   pitchExecuted: false,
-  //   normalExecuted: false,
-  //   ...loader,
-  //   request: `${loader.path}${query}`,
-  // };\
-  return loader;
+  postcssLoader.call(ctx, css, map, meta);
 }
 
-/**
- * A loader that replaces itself with css-loader and postcss-loader
- */
-module.exports.pitch = function pitch() {
-  const remaining = this.loaders.slice(this.loaderIndex + 1);
-  this.loaders = [
-    createLoader({
-      path: require.resolve('css-loader'),
-      // query: '',
-      options: {
-        ...this.query,
-        modules: true,
-        importLoaders: remaining.length ? 2 : 1,
-      },
-    }),
-    createLoader({
-      path: require.resolve('postcss-loader'),
-      query: '',
-      ident: 'postcss-astroturf',
-      options: {
-        ident: 'postcss-astroturf',
-        plugins: [require('postcss-nested')()], // eslint-disable-line global-require
-      },
-    }),
-    ...remaining,
-  ];
+module.exports = function loader(css, map, meta) {
+  const done = this.async();
+
+  postcss(this, css, map, meta, (err, ...args) => {
+    if (err) {
+      done(err);
+      return;
+    }
+
+    const ctx = { ...this };
+    ctx.query = {
+      ...this.query,
+      modules: true,
+      importLoaders: 0,
+    };
+
+    cssLoader.call(ctx, ...args);
+  });
 };

@@ -437,6 +437,7 @@ exports[`Loader styled-interpolations 0: styled-interpolations-FancyBox.css 1`] 
 
   color: red;
   width: 75px;
+
   &.primary {
     background: white;
     color: palevioletred;
@@ -446,12 +447,12 @@ exports[`Loader styled-interpolations 0: styled-interpolations-FancyBox.css 1`] 
 `;
 
 exports[`Loader styled-interpolations 1: styled-interpolations-FancierBox.css 1`] = `
-".fancier-box {
+":import(\\"styled-interpolations-FancyBox.css\\") {
+  a1: fancy-box;
+}
 
-        :import(/Users/jquense/src/astroturf/test/fixtures/styled-interpolations-FancyBox.css) {
-          a1: fancy-box;
-        }
-      
+.fancier-box {
+
   color: ultra-red;
 
   > .a1 {
@@ -464,7 +465,6 @@ exports[`Loader styled-interpolations 1: styled-interpolations-FancierBox.css 1`
 exports[`Loader styled-interpolations js : Compiled JS 1`] = `
 "import styled from 'astroturf';
 
-// prettier-ignore
 const FancyBox = styled('div', null, {
   displayName: \\"FancyBox\\",
   styles: require(\\"./styled-interpolations-FancyBox.css\\"),

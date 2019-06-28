@@ -24,18 +24,18 @@ describe('webpack integration', () => {
             test: /\.css$/,
             use: [
               ExtractCSS.loader,
-              // require.resolve('../src/css-loader'),
-              {
-                loader: 'css-loader',
-                options: { modules: true, importLoaders: 1 },
-              },
-              {
-                loader: 'postcss-loader',
-                options: {
-                  ident: 'postcss-astroturf',
-                  plugins: [require('postcss-nested')()], // eslint-disable-line global-require
-                },
-              },
+              require.resolve('../src/css-loader'),
+              // {
+              //   loader: 'css-loader',
+              //   options: { modules: true, importLoaders: 1 },
+              // },
+              // {
+              //   loader: 'postcss-loader',
+              //   options: {
+              //     ident: 'postcss-astroturf',
+              //     plugins: [require('postcss-nested')()], // eslint-disable-line global-require
+              //   },
+              // },
             ],
           },
           {
@@ -55,7 +55,7 @@ describe('webpack integration', () => {
 
   it('should work', done => {
     compiler.run((err, stats) => {
-      console.log(stats.toJson().errors);
+      // console.log(stats.toJson().errors);
       expect(err).toBe(null);
       expect(stats.hasErrors()).toBe(false);
       expect(stats.hasWarnings()).toBe(false);

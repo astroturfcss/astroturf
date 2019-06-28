@@ -13,11 +13,12 @@
 - [Usage](#usage)
 - [Extensions](#extensions)
 - [Component API](#component-api)
-  - [WHY?!](#why)
+  - [Component API Goals and Non-Goals](#component-api-goals-and-non-goals)
   - [Composition, variables, etc?](#composition-variables-etc)
+  - [Referring to other Components](#referring-to-other-components)
   - [Sharing values between styles and JavaScript](#sharing-values-between-styles-and-javascript)
   - [Keyframes and global](#keyframes-and-global)
-  - [Helpers](#helpers)
+  - [Attaching Additional Props](#attaching-additional-props)
   - [`as` prop](#as-prop)
 - [Setup](#setup)
   - [Options](#options)
@@ -77,7 +78,7 @@ const styles = css`
 
 ## Component API
 
-For those that want something a bit more like styled-components or emotion, there is a component API!
+For those that want something a bit more like styled-components or emotion and, there is a component API!
 
 ```js
 import styled, { css } from 'astroturf';
@@ -152,15 +153,15 @@ There are a whole bucket of caveats of course, to keep the above statically extr
 - Prop value handling requires the nesting transform
 - All "top level" styles have any @import statements hoisted up (via a regex)
 
-### WHY?!
+### Component API Goals and Non-Goals
 
 The goal of this API is not to mimic or reimplement the features of other css-in-js libraries, but to provide
 a more ergonomic way to write normal css/less/sass next to your javascript.
 
-What does that mean? css-in-js libraries are often a _replacement_ for css preprocessors, in that they provide ways of doing variables, composition, mixins, imports etc. Usually they accomplish this by leaning
+What does that mean? css-in-js libraries are a _replacement_ for css preprocessors, in that they provide ways of doing variables, composition, mixins, imports etc. Usually they accomplish this by leaning
 on JS language features where appropriate, and adding their own domain-specific language bits when needed.
 
-astroturf **doesn't try to do any of that** because it's not trying to replace preprocessors but rather, make component-centric javascript work better with **existing** styling tooling. This means at a minimum it needs to scope styles to the component (handled by css-modules) and map those styles to your component's API (props), which is what the above API strives for.
+astroturf **doesn't try to do any of that** because it's not trying to replace preprocessors, but rather, make component-centric javascript work better with **existing** styling tooling. This means at a minimum it needs to scope styles to the component (handled by css-modules) and map those styles to your component's API (props), which is what the above API strives for.
 
 This approach **gains** us:
 
@@ -213,6 +214,35 @@ const Title = styled('h3')`
 
   @include heavy();
   font-size: 12%;
+`;
+```
+
+### Referring to other Components
+
+One limitation to fully encapsulated styles is that it's hard to contextually style components
+without them referencing each other. In astroturf you can do use a component in a
+selector as if it was referencing the className.
+
+> Note: at the moment this only works for local identifiers, not imported components
+
+```js
+const Link = styled.a`
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  background: papayawhip;
+  color: palevioletred;
+`;
+
+const Icon = styled.svg`
+  flex: none;
+  transition: fill 0.25s;
+  width: 48px;
+  height: 48px;
+
+  ${Link}:hover & {
+    fill: rebeccapurple;
+  }
 `;
 ```
 
@@ -317,31 +347,49 @@ const Loader = styled('div')`
 `;
 ```
 
-### Helpers
+### Attaching Additional Props
 
-A common task with styled components is to configure or map their props. We include a few helpers you can
-optionally include to do this if you want, they are extra and if you don't use them they won't be included in your bundle. There are a few advantages to using the included helpers over a more general solution
-like `recompose`. They automatically forward `refs`, and don't muck with the `as` prop passthrough.
+A common task with styled components is to map their props or set default values.
+astroturf cribs from Styled Components, by including an `attrs()` api.
 
 ```jsx
 import styled from 'astroturf';
-import { withProps, defaultProps, mapProps } from 'astroturf/helpers';
+
+// Provide a default `type` props
+const PasswordInput = styled('input').attrs({
+  type: 'password',
+})`
+  background-color: #ccc;
+`;
 
 // Map the incoming props to a new set of props
-const TextInput = mapProps(props => ({ ...props, type: 'password' }))(
-  styled('input')`
-    background-color: #ccc;
-  `,
-);
-
-// Provides `type` automatically and passes through everything else
-const PasswordInput = withProps({ type: 'password' })(styled('input')`
+const TextOrPasswordInput = styled('input').attrs(
+  ({ isPassword, ...props }) => ({
+    ...props,
+    type: isPassword ? 'password' : 'text',
+  }),
+)`
   background-color: #ccc;
+`;
+```
+
+Because `attrs()` is resolved during render you can use hooks in them! We even
+do some magic in the non-function signature so that it works.
+
+```js
+const Link = styled('a').attrs(props => ({
+  href: useRouter().createHref(props.to)
+}))`
+  color: blue;
 `);
 
-// Sets the default `type` to `text` but allow overrides to it
-const TextInput = withProps({ type: 'text' })(styled('input')`
-  background-color: #ccc;
+// astroturf will automatically compile to a function
+// when using a plain object so that the hooks
+// are only evaluated during render
+const Link = styled(MyLink).attrs({
+  router: useRouter()
+})`
+  color: blue;
 `);
 ```
 

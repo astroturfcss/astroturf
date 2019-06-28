@@ -434,11 +434,15 @@ styled(FancyBox, null, {
 `;
 
 exports[`Plugin styled-interpolations FancierBox: styled-interpolations-FancierBox.css 1`] = `
-".fancier-box {
+":import(\\"styled-interpolations-FancyBox.css\\") {
+  a1: fancy-box;
+}
+
+.fancier-box {
 
   color: ultra-red;
 
-  > undefined {
+  > .a1 {
     padding: 4em;
   }
 
@@ -450,6 +454,7 @@ exports[`Plugin styled-interpolations FancyBox: styled-interpolations-FancyBox.c
 
   color: red;
   width: 75px;
+
   &.primary {
     background: white;
     color: palevioletred;
@@ -459,8 +464,7 @@ exports[`Plugin styled-interpolations FancyBox: styled-interpolations-FancyBox.c
 `;
 
 exports[`Plugin styled-interpolations js : Compiled JS 1`] = `
-"import styled from 'astroturf'; // prettier-ignore
-
+"import styled from 'astroturf';
 const FancyBox =
 /*#__PURE__*/
 styled('div', null, {
