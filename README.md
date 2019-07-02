@@ -178,7 +178,7 @@ It also means we **sacrifice**:
 
 ### Composition, variables, etc?
 
-How you accomplish that is mostly up to your preprocessor. Leverage Sass variables, or Less mixins, or postcss nesting polyfills, or whatever. The css you're writing is treated exactly like a normal style file so all the tooling you're used to works as expected. For composition, specifically around classes, you can also use css-modules `composes` to compose styles, since astroturf extracts styles to consistent names;
+How you accomplish that is mostly up to your preprocessor. Leverage Sass variables, or Less mixins, or postcss nesting polyfills, or whatever. The css you're writing is treated exactly like a normal style file so all the tooling you're used to works as expected. For composition, specifically around classes, you can also use css-modules `composes` to compose styles and interpolation;
 
 ```js
 // Button.js
@@ -190,7 +190,7 @@ const helpers = css`
 `;
 
 const Title = styled('h3')`
-  composes: heavy from './Button-helpers.css';
+  composes: ${helpers.heavy};
 
   font-size: 12%;
 `;

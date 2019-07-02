@@ -435,14 +435,14 @@ styled(FancyBox, null, {
 
 exports[`Plugin styled-interpolations FancierBox: styled-interpolations-FancierBox.css 1`] = `
 ":import(\\"styled-interpolations-FancyBox.css\\") {
-  a1: fancy-box;
+  a8: fancy-box;
 }
 
 .fancier-box {
 
   color: ultra-red;
 
-  > .a1 {
+  > .a8 {
     padding: 4em;
   }
 
@@ -450,10 +450,21 @@ exports[`Plugin styled-interpolations FancierBox: styled-interpolations-FancierB
 `;
 
 exports[`Plugin styled-interpolations FancyBox: styled-interpolations-FancyBox.css 1`] = `
-".fancy-box {
+":import(\\"styled-interpolations-base.css\\") {
+  a6: item;
+}
+
+.fancy-box {
+
+  composes: other from \\"styled-interpolations-other.css\\";
+composes: item from \\"styled-interpolations-base.css\\";
 
   color: red;
   width: 75px;
+
+  &.a6 {
+    padding: 5rem;
+  }
 
   &.primary {
     background: white;
@@ -463,8 +474,25 @@ exports[`Plugin styled-interpolations FancyBox: styled-interpolations-FancyBox.c
 }"
 `;
 
+exports[`Plugin styled-interpolations base: styled-interpolations-base.css 1`] = `
+"
+  .item {
+    padding: 4rem;
+  }
+"
+`;
+
 exports[`Plugin styled-interpolations js : Compiled JS 1`] = `
 "import styled from 'astroturf';
+
+const base =
+/*#__PURE__*/
+require(\\"./styled-interpolations-base.css\\");
+
+const other =
+/*#__PURE__*/
+require(\\"./styled-interpolations-other.css\\");
+
 const FancyBox =
 /*#__PURE__*/
 styled('div', null, {
@@ -483,6 +511,18 @@ styled('div', null, {
   kebabName: \\"fancier-box\\",
   camelName: \\"fancierBox\\"
 });"
+`;
+
+exports[`Plugin styled-interpolations other: styled-interpolations-other.css 1`] = `
+":import(\\"styled-interpolations-base.css\\") {
+  a1: item;
+}
+
+
+  .other .a1 {
+    margin: 4rem;
+  }
+"
 `;
 
 exports[`Plugin styled-no-assignment js : Compilation Error 1`] = `

@@ -101,17 +101,6 @@ const isStyledTagShorthand = (tagPath, { styledTag, allowGlobal }) => {
 };
 
 export default function plugin() {
-  function evaluate(path) {
-    const { confident, value } = path.evaluate();
-
-    if (!confident) {
-      throw path.buildCodeFrameError(
-        'Could not evaluate css. Inline styles must be statically analyzable',
-      );
-    }
-    return value;
-  }
-
   function createStyleNode(path, identifier, { pluginOptions, file }) {
     const { start, end } = path.node;
     const style = { start, end };
@@ -135,12 +124,18 @@ export default function plugin() {
     const { styles } = opts.file.get(STYLES);
     const nodeMap = opts.file.get(COMPONENTS);
 
-    const quasiPath = path.get('quasi');
     const style = createStyleNode(path, getDisplayName(path, opts), opts);
-    style.value = evaluate(quasiPath);
 
-    style.isClassNames = true;
     style.code = `require('${style.relativeFilePath}')`;
+
+    const { text, imports } = buildTaggedTemplate(
+      path,
+      nodeMap,
+      style,
+      opts.pluginOptions,
+    );
+
+    style.value = `${imports}${text}`;
 
     if (styles.has(style.absoluteFilePath))
       throw path.buildCodeFrameError(
@@ -173,6 +168,8 @@ export default function plugin() {
       );
 
     const style = createStyleNode(path, displayName, opts);
+
+    style.isStyledComponent = true;
 
     const { text, imports } = buildTaggedTemplate(
       path,

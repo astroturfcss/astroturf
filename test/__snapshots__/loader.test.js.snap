@@ -432,11 +432,42 @@ const FancierBox = styled(FancyBox, null, {
 "
 `;
 
-exports[`Loader styled-interpolations 0: styled-interpolations-FancyBox.css 1`] = `
-".fancy-box {
+exports[`Loader styled-interpolations 0: styled-interpolations-base.css 1`] = `
+"
+  .item {
+    padding: 4rem;
+  }
+"
+`;
+
+exports[`Loader styled-interpolations 1: styled-interpolations-other.css 1`] = `
+":import(\\"styled-interpolations-base.css\\") {
+  a1: item;
+}
+
+
+  .other .a1 {
+    margin: 4rem;
+  }
+"
+`;
+
+exports[`Loader styled-interpolations 2: styled-interpolations-FancyBox.css 1`] = `
+":import(\\"styled-interpolations-base.css\\") {
+  a6: item;
+}
+
+.fancy-box {
+
+  composes: other from \\"styled-interpolations-other.css\\";
+composes: item from \\"styled-interpolations-base.css\\";
 
   color: red;
   width: 75px;
+
+  &.a6 {
+    padding: 5rem;
+  }
 
   &.primary {
     background: white;
@@ -446,16 +477,16 @@ exports[`Loader styled-interpolations 0: styled-interpolations-FancyBox.css 1`] 
 }"
 `;
 
-exports[`Loader styled-interpolations 1: styled-interpolations-FancierBox.css 1`] = `
+exports[`Loader styled-interpolations 3: styled-interpolations-FancierBox.css 1`] = `
 ":import(\\"styled-interpolations-FancyBox.css\\") {
-  a1: fancy-box;
+  a8: fancy-box;
 }
 
 .fancier-box {
 
   color: ultra-red;
 
-  > .a1 {
+  > .a8 {
     padding: 4em;
   }
 
@@ -463,7 +494,11 @@ exports[`Loader styled-interpolations 1: styled-interpolations-FancierBox.css 1`
 `;
 
 exports[`Loader styled-interpolations js : Compiled JS 1`] = `
-"import styled from 'astroturf';
+"import styled from 'astroturf'
+
+const base = require('./styled-interpolations-base.css');
+
+const other = require('./styled-interpolations-other.css');
 
 const FancyBox = styled('div', null, {
   displayName: \\"FancyBox\\",
