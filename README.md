@@ -78,7 +78,7 @@ const styles = css`
 
 ## Component API
 
-For those that want something a bit more like styled-components or emotion and, there is a component API!
+For those that want something a bit more like styled-components or Emotion, there is a component API!
 
 ```js
 import styled, { css } from 'astroturf';
@@ -220,8 +220,8 @@ const Title = styled('h3')`
 ### Referring to other Components
 
 One limitation to fully encapsulated styles is that it's hard to contextually style components
-without them referencing each other. In astroturf you can do use a component in a
-selector as if it was referencing the className.
+without them referencing each other. In astroturf you can use a component in a
+selector as if it were referencing a class selector.
 
 > Note: at the moment this only works for local identifiers, not imported components
 
