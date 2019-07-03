@@ -81,7 +81,7 @@ export default (path, nodeMap, localStyle, { tagName }) => {
       // don't want to deal with this case right now
       throw classList[0].expr.buildCodeFrameError(
         'A styled interpolation found inside a `composes` rule with a "from". ' +
-          'Interpolated values should b in ther own `composes` without specifying the file.',
+          'Interpolated values should be in their own `composes` without specifying the file.',
       );
     }
     if (composed.length < classList.length) {
