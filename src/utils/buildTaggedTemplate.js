@@ -86,7 +86,7 @@ export default (path, nodeMap, localStyle, { tagName }) => {
     }
     if (composed.length < classList.length) {
       throw classList[0].expr.buildCodeFrameError(
-        'Mixing interpolated and none interpolated classes in a `composes` rule is not allowed. ',
+        'Mixing interpolated and non-interpolated classes in a `composes` rule is not allowed.',
       );
     }
 
