@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`webpack integration should work 1`] = `
+"
+  .index-styles__parent--1oDPf {
+    color: red;
+  }
+
+.index-FancyBox__fancy-box--1DG83 {
+
+  color: red;
+  width: 75px;
+
+}
+
+  .index-FancyBox__fancy-box--1DG83.index-FancyBox__primary--3zeTZ {
+    background: white;
+    color: palevioletred;
+  }
+.index-FancierBox__fancier-box--3Wzgh {
+
+  color: ultra-red;
+
+}
+
+.index-FancierBox__fancier-box--3Wzgh > .index-FancyBox__fancy-box--1DG83 {
+    padding: 4em;
+  }
+
+.index-styles__parent--1oDPf > .index-FancierBox__fancier-box--3Wzgh {
+    margin: 2em;
+  }
+"
+`;

@@ -9,6 +9,7 @@ import generate from '@babel/generator';
 import template from '@babel/template';
 import * as t from '@babel/types';
 
+import buildTaggedTemplate from './utils/buildTaggedTemplate';
 import getNameFromPath from './utils/getNameFromPath';
 import normalizeAttrs from './utils/normalizeAttrs';
 import pascalCase from './utils/pascalCase';
@@ -26,6 +27,7 @@ const buildComponent = template(
 );
 
 const STYLES = Symbol('Astroturf');
+const COMPONENTS = Symbol('Astroturf components');
 const IMPORTS = Symbol('Astroturf imports');
 
 function getNameFromFile(fileName) {
@@ -99,17 +101,6 @@ const isStyledTagShorthand = (tagPath, { styledTag, allowGlobal }) => {
 };
 
 export default function plugin() {
-  function evaluate(path) {
-    const { confident, value } = path.evaluate();
-
-    if (!confident) {
-      throw path.buildCodeFrameError(
-        'Could not evaluate css. Inline styles must be statically analyzable',
-      );
-    }
-    return value;
-  }
-
   function createStyleNode(path, identifier, { pluginOptions, file }) {
     const { start, end } = path.node;
     const style = { start, end };
@@ -131,11 +122,20 @@ export default function plugin() {
   function buildStyleRequire(path, opts) {
     const { tagName } = opts.pluginOptions;
     const { styles } = opts.file.get(STYLES);
-    const quasiPath = path.get('quasi');
+    const nodeMap = opts.file.get(COMPONENTS);
+
     const style = createStyleNode(path, getDisplayName(path, opts), opts);
-    style.value = evaluate(quasiPath);
 
     style.code = `require('${style.relativeFilePath}')`;
+
+    const { text, imports } = buildTaggedTemplate(
+      path,
+      nodeMap,
+      style,
+      opts.pluginOptions,
+    );
+
+    style.value = `${imports}${text}`;
 
     if (styles.has(style.absoluteFilePath))
       throw path.buildCodeFrameError(
@@ -145,12 +145,18 @@ export default function plugin() {
       );
 
     styles.set(style.absoluteFilePath, style);
-    return buildImport({ FILENAME: t.StringLiteral(style.relativeFilePath) }); // eslint-disable-line new-cap
+    const runtimeNode = buildImport({
+      FILENAME: t.StringLiteral(style.relativeFilePath),
+    }); // eslint-disable-line new-cap
+
+    nodeMap.set(runtimeNode.expression, style);
+    return runtimeNode;
   }
 
   function buildStyledComponent(path, elementType, opts) {
     const { file, pluginOptions, styledAttrs, styledOptions } = opts;
     const cssState = file.get(STYLES);
+    const nodeMap = file.get(COMPONENTS);
     const displayName = getDisplayName(path, opts, null);
 
     if (!displayName)
@@ -163,8 +169,18 @@ export default function plugin() {
 
     const style = createStyleNode(path, displayName, opts);
 
+    style.isStyledComponent = true;
+
+    const { text, imports } = buildTaggedTemplate(
+      path,
+      nodeMap,
+      style,
+      opts.pluginOptions,
+    );
+
     const kebabName = kebabCase(displayName);
-    style.value = wrapInClass(`.${kebabName}`, evaluate(path.get('quasi')));
+    style.name = kebabName;
+    style.value = imports + wrapInClass(`.${style.name}`, text);
 
     const runtimeNode = buildComponent({
       ELEMENTTYPE: elementType,
@@ -182,17 +198,23 @@ export default function plugin() {
       style.code = generate(runtimeNode).code;
 
     cssState.styles.set(style.absoluteFilePath, style);
+    nodeMap.set(runtimeNode.expression, style);
     return runtimeNode;
   }
 
   return {
     pre(file) {
       file.set(IMPORTS, []);
+
       if (!file.has(STYLES)) {
         file.set(STYLES, {
           id: 0,
           styles: new Map(),
         });
+      }
+
+      if (!file.has(COMPONENTS)) {
+        file.set(COMPONENTS, new Map());
       }
     },
 
