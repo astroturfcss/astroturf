@@ -12,18 +12,14 @@ exports[`Loader css-no-assignment js : Compilation Error 1`] = `
 `;
 
 exports[`Loader display-name 0: display-name-FooBarBaz.css 1`] = `
-".foo-bar-baz {
-
-  color: red;
-
+".cls1 {
+color: red;
 }"
 `;
 
 exports[`Loader display-name 1: DisplayName.css 1`] = `
-".display-name {
-
-  color: ultra-red;
-
+".cls1 {
+color: ultra-red;
 }"
 `;
 
@@ -51,21 +47,19 @@ export default styled(FancyBox, null, {
 `;
 
 exports[`Loader element-shorthand 0: element-shorthand-FancyBox.css 1`] = `
-".fancy-box {
+".cls1 {
+color: red;
+width: 75px;
 
-  color: red;
-  width: 75px;
+@media (min-width: 420px) {
+width: 96px;
+height: 96px;
+}
 
-  @media (min-width: 420px) {
-    width: 96px;
-    height: 96px;
-  }
-
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
+&.primary {
+background: white;
+color: palevioletred;
+}
 }"
 `;
 
@@ -111,15 +105,11 @@ const styles = require('./example-styles.less');
 
 exports[`Loader hoist-import 0: hoist-import-ButtonBase.css 1`] = `
 "@import '~./styles/mixins.scss';
-.button-base {
-
-  
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid transparent;
-
+.cls1 {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+border: 1px solid transparent;
 }"
 `;
 
@@ -168,23 +158,17 @@ const styles = require('./imports-mixed-styles.css');
 
 exports[`Loader index 0: index-ButtonBase.css 1`] = `
 "@import '~./styles/mixins.scss';
-.button-base {
-
-  
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid transparent;
-
+.cls1 {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+border: 1px solid transparent;
 }"
 `;
 
 exports[`Loader index 1: Fixtures.css 1`] = `
-".fixtures {
-
-  color: ultra-red;
-
+".cls1 {
+color: ultra-red;
 }"
 `;
 
@@ -210,35 +194,31 @@ export default styled(FancyBox, null, {
 `;
 
 exports[`Loader multiple-components 0: multiple-components-FancyBox.css 1`] = `
-".fancy-box {
+".cls1 {
+color: red;
+width: 75px;
 
-  color: red;
-  width: 75px;
+@media (min-width: 420px) {
+width: 96px;
+height: 96px;
+}
 
-  @media (min-width: 420px) {
-		width: 96px;
-		height: 96px;
-	}
-
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
+&.primary {
+background: white;
+color: palevioletred;
+}
 }"
 `;
 
 exports[`Loader multiple-components 1: multiple-components-FancyHeader.css 1`] = `
-".fancy-header {
+".cls1 {
+color: red;
+width: 75px;
 
-  color: red;
-  width: 75px;
-
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
+&.primary {
+background: white;
+color: palevioletred;
+}
 }"
 `;
 
@@ -286,29 +266,25 @@ const styles = less\`
 `;
 
 exports[`Loader pass-options 0: pass-options-FancyBox.css 1`] = `
-".fancy-box {
+".cls1 {
+color: red;
+width: 75px;
 
-  color: red;
-  width: 75px;
+@media (min-width: 420px) {
+width: 96px;
+height: 96px;
+}
 
-  @media (min-width: 420px) {
-    width: 96px;
-    height: 96px;
-  }
-
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
+&.primary {
+background: white;
+color: palevioletred;
+}
 }"
 `;
 
 exports[`Loader pass-options 1: pass-options-FancierBox.css 1`] = `
-".fancier-box {
-
-  color: ultra-red;
-
+".cls1 {
+color: ultra-red;
 }"
 `;
 
@@ -341,29 +317,29 @@ const FancierBox = styled(FancyBox, options, {
 `;
 
 exports[`Loader styled 0: styled-FancyBox.css 1`] = `
-".fancy-box {
+".cls1 {
+color: red;
+width: 75px;
 
-  color: red;
-  width: 75px;
+@media (min-width: 420px) {
+width: 96px;
+height: 96px;
+}
 
-  @media (min-width: 420px) {
-    width: 96px;
-    height: 96px;
-  }
-
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
+&.primary {
+background: white;
+color: palevioletred;
+}
 }"
 `;
 
 exports[`Loader styled 1: styled-FancierBox.css 1`] = `
-".fancier-box {
-
-  color: ultra-red;
-
+".cls1 {
+color: ultra-red;
+}
+.cls2 {
+composes: cls1;
+composes: bar foo from global;
 }"
 `;
 
@@ -392,23 +368,19 @@ const FancierBox = styled(FancyBox, null, {
 `;
 
 exports[`Loader styled-global 0: styled-global-FancyBox.css 1`] = `
-".fancy-box {
-
-  color: red;
-  width: 75px;
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
+".cls1 {
+color: red;
+width: 75px;
+&.primary {
+background: white;
+color: palevioletred;
+}
 }"
 `;
 
 exports[`Loader styled-global 1: styled-global-FancierBox.css 1`] = `
-".fancier-box {
-
-  color: ultra-red;
-
+".cls1 {
+color: ultra-red;
 }"
 `;
 
@@ -441,9 +413,8 @@ exports[`Loader styled-interpolations 0: styled-interpolations-base.css 1`] = `
 `;
 
 exports[`Loader styled-interpolations 1: styled-interpolations-other.css 1`] = `
-":import(\\"styled-interpolations-base.css\\") {
-  a1: item;
-}
+"@value item as a1 from \\"styled-interpolations-base.css\\";
+
 
 
   .other .a1 {
@@ -453,43 +424,40 @@ exports[`Loader styled-interpolations 1: styled-interpolations-other.css 1`] = `
 `;
 
 exports[`Loader styled-interpolations 2: styled-interpolations-FancyBox.css 1`] = `
-":import(\\"styled-interpolations-base.css\\") {
-  a6: item;
+"@value item as a6 from \\"styled-interpolations-base.css\\";
+
+
+.cls1 {
+color: red;
+width: 75px;
+
+&.a6 {
+padding: 5rem;
 }
 
-.fancy-box {
-
-  composes: other from \\"styled-interpolations-other.css\\";
+&.primary {
+background: white;
+color: palevioletred;
+}
+}
+.cls2 {
+composes: cls1;
+composes: global from global;
+composes: other from \\"styled-interpolations-other.css\\";
 composes: item from \\"styled-interpolations-base.css\\";
-
-  color: red;
-  width: 75px;
-
-  &.a6 {
-    padding: 5rem;
-  }
-
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
 }"
 `;
 
 exports[`Loader styled-interpolations 3: styled-interpolations-FancierBox.css 1`] = `
-":import(\\"styled-interpolations-FancyBox.css\\") {
-  a8: fancy-box;
+"@value cls1 as a8 from \\"styled-interpolations-FancyBox.css\\";
+
+
+.cls1 {
+color: ultra-red;
+
+> .a8 {
+padding: 4em;
 }
-
-.fancier-box {
-
-  color: ultra-red;
-
-  > .a8 {
-    padding: 4em;
-  }
-
 }"
 `;
 
@@ -528,23 +496,19 @@ exports[`Loader styled-no-assignment js : Compilation Error 1`] = `
 `;
 
 exports[`Loader styled-tag 0: styled-tag-FancyBox.css 1`] = `
-".fancy-box {
-
-  color: red;
-  width: 75px;
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
+".cls1 {
+color: red;
+width: 75px;
+&.primary {
+background: white;
+color: palevioletred;
+}
 }"
 `;
 
 exports[`Loader styled-tag 1: styled-tag-FancierBox.css 1`] = `
-".fancier-box {
-
-  color: ultra-red;
-
+".cls1 {
+color: ultra-red;
 }"
 `;
 
@@ -615,18 +579,14 @@ class Component extends React.Component<PropsType, {}> {
 `;
 
 exports[`Loader with-props 0: with-props-RedPasswordInput.css 1`] = `
-".red-password-input {
-
-  background-color: red;
-
+".cls1 {
+background-color: red;
 }"
 `;
 
 exports[`Loader with-props 1: with-props-RedPasswordInput2.css 1`] = `
-".red-password-input-2 {
-
-  background-color: red;
-
+".cls1 {
+background-color: red;
 }"
 `;
 

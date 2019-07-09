@@ -13,6 +13,7 @@ const other = css`
 `;
 
 const FancyBox = styled('div')`
+  composes: global from global;
   composes: ${other.other} ${other.other} ${base.item};
 
   color: red;

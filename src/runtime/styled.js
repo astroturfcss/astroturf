@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const React = require('react'); // eslint-disable-line import/no-extraneous-dependencies
 
 // eslint-disable-next-line no-control-regex
@@ -10,16 +11,16 @@ const camelCase = str =>
   );
 
 function styled(type, options, settings) {
-  const { displayName, attrs, styles, kebabName, camelName } = settings;
+  const { displayName, attrs, styles } = settings;
 
   options = options || { allowAs: typeof type === 'string' };
-  const componentClassName = styles[kebabName] || styles[camelName];
+  const componentClassName = styles.cls2 || styles.cls1;
 
   // always passthrough if the type is a styled component
   const allowAs = type.isAstroturf ? false : options.allowAs;
 
   const hasModifiers = Object.keys(styles).some(
-    className => className !== camelName && className !== kebabName,
+    className => className !== componentClassName,
   );
 
   function Styled(rawProps, ref) {

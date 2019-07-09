@@ -10,6 +10,8 @@ const styles = css`
 `;
 
 const FancyBox = styled('div')`
+  composes: foo from global;
+
   color: red;
   width: ${width}px;
 

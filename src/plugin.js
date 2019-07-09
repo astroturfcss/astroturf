@@ -1,10 +1,8 @@
 import { basename, dirname, extname, join, relative } from 'path';
 import { stripIndent } from 'common-tags';
 import { outputFileSync } from 'fs-extra';
-import camelCase from 'lodash/camelCase';
 import defaults from 'lodash/defaults';
 import get from 'lodash/get';
-import kebabCase from 'lodash/kebabCase';
 import generate from '@babel/generator';
 import template from '@babel/template';
 import * as t from '@babel/types';
@@ -178,9 +176,7 @@ export default function plugin() {
       opts.pluginOptions,
     );
 
-    const kebabName = kebabCase(displayName);
-    style.name = kebabName;
-    style.value = imports + wrapInClass(`.${style.name}`, text);
+    style.value = imports + wrapInClass(text);
 
     const runtimeNode = buildComponent({
       ELEMENTTYPE: elementType,
@@ -190,8 +186,6 @@ export default function plugin() {
       IMPORT: buildImport({
         FILENAME: t.StringLiteral(style.relativeFilePath),
       }).expression,
-      KEBABNAME: t.StringLiteral(kebabName),
-      CAMELNAME: t.StringLiteral(camelCase(kebabName)),
     });
 
     if (pluginOptions.generateInterpolations)

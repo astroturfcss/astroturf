@@ -12,18 +12,14 @@ exports[`Plugin css-no-assignment js : Compilation Error 1`] = `
 `;
 
 exports[`Plugin display-name DisplayName: DisplayName.css 1`] = `
-".display-name {
-
-  color: ultra-red;
-
+".cls1 {
+color: ultra-red;
 }"
 `;
 
 exports[`Plugin display-name FooBarBaz: display-name-FooBarBaz.css 1`] = `
-".foo-bar-baz {
-
-  color: red;
-
+".cls1 {
+color: red;
 }"
 `;
 
@@ -54,21 +50,19 @@ styled(FancyBox, null, {
 `;
 
 exports[`Plugin element-shorthand FancyBox: element-shorthand-FancyBox.css 1`] = `
-".fancy-box {
+".cls1 {
+color: red;
+width: 75px;
 
-  color: red;
-  width: 75px;
+@media (min-width: 420px) {
+width: 96px;
+height: 96px;
+}
 
-  @media (min-width: 420px) {
-    width: 96px;
-    height: 96px;
-  }
-
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
+&.primary {
+background: white;
+color: palevioletred;
+}
 }"
 `;
 
@@ -112,15 +106,11 @@ exports[`Plugin example styles: example-styles.less 1`] = `
 
 exports[`Plugin hoist-import ButtonBase: hoist-import-ButtonBase.css 1`] = `
 "@import '~./styles/mixins.scss';
-.button-base {
-
-  
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid transparent;
-
+.cls1 {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+border: 1px solid transparent;
 }"
 `;
 
@@ -169,23 +159,17 @@ exports[`Plugin imports-mixed styles: imports-mixed-styles.css 1`] = `
 
 exports[`Plugin index ButtonBase: index-ButtonBase.css 1`] = `
 "@import '~./styles/mixins.scss';
-.button-base {
-
-  
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid transparent;
-
+.cls1 {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+border: 1px solid transparent;
 }"
 `;
 
 exports[`Plugin index Fixtures: Fixtures.css 1`] = `
-".fixtures {
-
-  color: ultra-red;
-
+".cls1 {
+color: ultra-red;
 }"
 `;
 
@@ -212,35 +196,31 @@ styled(FancyBox, null, {
 `;
 
 exports[`Plugin multiple-components FancyBox: multiple-components-FancyBox.css 1`] = `
-".fancy-box {
+".cls1 {
+color: red;
+width: 75px;
 
-  color: red;
-  width: 75px;
+@media (min-width: 420px) {
+width: 96px;
+height: 96px;
+}
 
-  @media (min-width: 420px) {
-		width: 96px;
-		height: 96px;
-	}
-
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
+&.primary {
+background: white;
+color: palevioletred;
+}
 }"
 `;
 
 exports[`Plugin multiple-components FancyHeader: multiple-components-FancyHeader.css 1`] = `
-".fancy-header {
+".cls1 {
+color: red;
+width: 75px;
 
-  color: red;
-  width: 75px;
-
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
+&.primary {
+background: white;
+color: palevioletred;
+}
 }"
 `;
 
@@ -286,29 +266,25 @@ const styles = less\`
 `;
 
 exports[`Plugin pass-options FancierBox: pass-options-FancierBox.css 1`] = `
-".fancier-box {
-
-  color: ultra-red;
-
+".cls1 {
+color: ultra-red;
 }"
 `;
 
 exports[`Plugin pass-options FancyBox: pass-options-FancyBox.css 1`] = `
-".fancy-box {
+".cls1 {
+color: red;
+width: 75px;
 
-  color: red;
-  width: 75px;
+@media (min-width: 420px) {
+width: 96px;
+height: 96px;
+}
 
-  @media (min-width: 420px) {
-    width: 96px;
-    height: 96px;
-  }
-
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
+&.primary {
+background: white;
+color: palevioletred;
+}
 }"
 `;
 
@@ -340,29 +316,29 @@ styled(FancyBox, options, {
 `;
 
 exports[`Plugin styled FancierBox: styled-FancierBox.css 1`] = `
-".fancier-box {
-
-  color: ultra-red;
-
+".cls1 {
+color: ultra-red;
+}
+.cls2 {
+composes: cls1;
+composes: bar foo from global;
 }"
 `;
 
 exports[`Plugin styled FancyBox: styled-FancyBox.css 1`] = `
-".fancy-box {
+".cls1 {
+color: red;
+width: 75px;
 
-  color: red;
-  width: 75px;
+@media (min-width: 420px) {
+width: 96px;
+height: 96px;
+}
 
-  @media (min-width: 420px) {
-    width: 96px;
-    height: 96px;
-  }
-
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
+&.primary {
+background: white;
+color: palevioletred;
+}
 }"
 `;
 
@@ -391,23 +367,19 @@ styled(FancyBox, null, {
 `;
 
 exports[`Plugin styled-global FancierBox: styled-global-FancierBox.css 1`] = `
-".fancier-box {
-
-  color: ultra-red;
-
+".cls1 {
+color: ultra-red;
 }"
 `;
 
 exports[`Plugin styled-global FancyBox: styled-global-FancyBox.css 1`] = `
-".fancy-box {
-
-  color: red;
-  width: 75px;
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
+".cls1 {
+color: red;
+width: 75px;
+&.primary {
+background: white;
+color: palevioletred;
+}
 }"
 `;
 
@@ -434,43 +406,40 @@ styled(FancyBox, null, {
 `;
 
 exports[`Plugin styled-interpolations FancierBox: styled-interpolations-FancierBox.css 1`] = `
-":import(\\"styled-interpolations-FancyBox.css\\") {
-  a8: fancy-box;
+"@value cls1 as a8 from \\"styled-interpolations-FancyBox.css\\";
+
+
+.cls1 {
+color: ultra-red;
+
+> .a8 {
+padding: 4em;
 }
-
-.fancier-box {
-
-  color: ultra-red;
-
-  > .a8 {
-    padding: 4em;
-  }
-
 }"
 `;
 
 exports[`Plugin styled-interpolations FancyBox: styled-interpolations-FancyBox.css 1`] = `
-":import(\\"styled-interpolations-base.css\\") {
-  a6: item;
+"@value item as a6 from \\"styled-interpolations-base.css\\";
+
+
+.cls1 {
+color: red;
+width: 75px;
+
+&.a6 {
+padding: 5rem;
 }
 
-.fancy-box {
-
-  composes: other from \\"styled-interpolations-other.css\\";
+&.primary {
+background: white;
+color: palevioletred;
+}
+}
+.cls2 {
+composes: cls1;
+composes: global from global;
+composes: other from \\"styled-interpolations-other.css\\";
 composes: item from \\"styled-interpolations-base.css\\";
-
-  color: red;
-  width: 75px;
-
-  &.a6 {
-    padding: 5rem;
-  }
-
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
 }"
 `;
 
@@ -514,9 +483,8 @@ styled('div', null, {
 `;
 
 exports[`Plugin styled-interpolations other: styled-interpolations-other.css 1`] = `
-":import(\\"styled-interpolations-base.css\\") {
-  a1: item;
-}
+"@value item as a1 from \\"styled-interpolations-base.css\\";
+
 
 
   .other .a1 {
@@ -535,23 +503,19 @@ exports[`Plugin styled-no-assignment js : Compilation Error 1`] = `
 `;
 
 exports[`Plugin styled-tag FancierBox: styled-tag-FancierBox.css 1`] = `
-".fancier-box {
-
-  color: ultra-red;
-
+".cls1 {
+color: ultra-red;
 }"
 `;
 
 exports[`Plugin styled-tag FancyBox: styled-tag-FancyBox.css 1`] = `
-".fancy-box {
-
-  color: red;
-  width: 75px;
-  &.primary {
-    background: white;
-    color: palevioletred;
-  }
-
+".cls1 {
+color: red;
+width: 75px;
+&.primary {
+background: white;
+color: palevioletred;
+}
 }"
 `;
 
@@ -579,18 +543,14 @@ styled(FancyBox, null, {
 `;
 
 exports[`Plugin with-props RedPasswordInput: with-props-RedPasswordInput.css 1`] = `
-".red-password-input {
-
-  background-color: red;
-
+".cls1 {
+background-color: red;
 }"
 `;
 
 exports[`Plugin with-props RedPasswordInput2: with-props-RedPasswordInput2.css 1`] = `
-".red-password-input-2 {
-
-  background-color: red;
-
+".cls1 {
+background-color: red;
 }"
 `;
 

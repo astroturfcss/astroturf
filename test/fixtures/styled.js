@@ -19,5 +19,7 @@ const FancyBox = styled('div')`
 `;
 
 const FancierBox = styled(FancyBox)`
+  composes: bar foo from global;
+
   color: ultra-red;
 `;
