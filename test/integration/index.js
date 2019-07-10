@@ -10,6 +10,8 @@ const styles = css`
 `;
 
 const FancyBox = styled('div')`
+  composes: foo from global;
+
   color: red;
   width: ${width}px;
 
@@ -29,6 +31,10 @@ const FancierBox = styled('div')`
   ${styles.parent} > & {
     margin: 2em;
   }
+`;
+
+export const Button = styled('button')`
+  composes: button-with-caret from global;
 `;
 
 export default FancierBox;

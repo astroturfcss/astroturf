@@ -13,6 +13,7 @@ const other = css`
 `;
 
 const FancyBox = styled('div')`
+  composes: global from global;
   composes: ${other.other} ${other.other} ${base.item};
 
   color: red;
@@ -34,4 +35,8 @@ const FancierBox = styled('div')`
   > ${FancyBox} {
     padding: 4em;
   }
+`;
+
+const Button = styled(Button)`
+  composes: button-with-caret from global;
 `;

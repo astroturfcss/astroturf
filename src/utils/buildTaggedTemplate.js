@@ -1,5 +1,4 @@
 import { dirname, relative } from 'path';
-import { stripIndent } from 'common-tags';
 import groupBy from 'lodash/groupBy';
 import uniq from 'lodash/uniq';
 
@@ -18,7 +17,7 @@ function resolveInterpolation(path, nodeMap, localStyle) {
     isStyledComponent: style.isStyledComponent,
     externalName: !style.isStyledComponent
       ? path.get('property').node.name
-      : style.name,
+      : 'cls1',
     importName: relative(
       dirname(localStyle.absoluteFilePath),
       style.absoluteFilePath,
@@ -106,11 +105,7 @@ export default (path, nodeMap, localStyle, { tagName }) => {
     const { externalName, importName } = interpolations.get(match);
     const localName = `a${id++}`;
 
-    imports += stripIndent`
-        :import("${importName}") {
-          ${localName}: ${externalName};
-        }\n
-      `;
+    imports += `@value ${externalName} as ${localName} from "${importName}";\n`;
     return `.${localName}`;
   });
 
