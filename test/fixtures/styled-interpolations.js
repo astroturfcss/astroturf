@@ -36,3 +36,7 @@ const FancierBox = styled('div')`
     padding: 4em;
   }
 `;
+
+const Button = styled(Button)`
+  composes: button-with-caret from global;
+`;

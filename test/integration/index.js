@@ -33,4 +33,8 @@ const FancierBox = styled('div')`
   }
 `;
 
+export const Button = styled('button')`
+  composes: button-with-caret from global;
+`;
+
 export default FancierBox;

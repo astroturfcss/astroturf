@@ -30,5 +30,10 @@ padding: 4em;
 .index-styles__parent > .index-FancierBox__cls1 {
 margin: 2em;
 }
+.index-Button__cls1 {
+/*!*/
+}
+.index-Button__cls2 {
+}
 "
 `;

@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 const React = require('react'); // eslint-disable-line import/no-extraneous-dependencies
 
 // eslint-disable-next-line no-control-regex

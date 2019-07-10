@@ -31,17 +31,13 @@ const bar = 'Bar';
 Foo[bar]['baz'] = styled('div', null, {
   displayName: \\"FooBarBaz\\",
   styles: require(\\"./display-name-FooBarBaz.css\\"),
-  attrs: null,
-  kebabName: \\"foo-bar-baz\\",
-  camelName: \\"fooBarBaz\\"
+  attrs: null
 });
 
 export default styled(FancyBox, null, {
   displayName: \\"DisplayName\\",
   styles: require(\\"./DisplayName.css\\"),
-  attrs: null,
-  kebabName: \\"display-name\\",
-  camelName: \\"displayName\\"
+  attrs: null
 });
 "
 `;
@@ -71,9 +67,7 @@ const SIZE = 75;
 const FancyBox = styled(\\"div\\", null, {
   displayName: \\"FancyBox\\",
   styles: require(\\"./element-shorthand-FancyBox.css\\"),
-  attrs: null,
-  kebabName: \\"fancy-box\\",
-  camelName: \\"fancyBox\\"
+  attrs: null
 });
 "
 `;
@@ -119,9 +113,7 @@ exports[`Loader hoist-import js : Compiled JS 1`] = `
 const ButtonBase = styled('button', null, {
   displayName: \\"ButtonBase\\",
   styles: require(\\"./hoist-import-ButtonBase.css\\"),
-  attrs: null,
-  kebabName: \\"button-base\\",
-  camelName: \\"buttonBase\\"
+  attrs: null
 });
 "
 `;
@@ -178,17 +170,13 @@ exports[`Loader index js : Compiled JS 1`] = `
 const ButtonBase = styled('button', null, {
   displayName: \\"ButtonBase\\",
   styles: require(\\"./index-ButtonBase.css\\"),
-  attrs: null,
-  kebabName: \\"button-base\\",
-  camelName: \\"buttonBase\\"
+  attrs: null
 });
 
 export default styled(FancyBox, null, {
   displayName: \\"Fixtures\\",
   styles: require(\\"./Fixtures.css\\"),
-  attrs: null,
-  kebabName: \\"fixtures\\",
-  camelName: \\"fixtures\\"
+  attrs: null
 });
 "
 `;
@@ -231,17 +219,13 @@ const SIZE = 75;
 const FancyBox = styled('div', null, {
   displayName: \\"FancyBox\\",
   styles: require(\\"./multiple-components-FancyBox.css\\"),
-  attrs: null,
-  kebabName: \\"fancy-box\\",
-  camelName: \\"fancyBox\\"
+  attrs: null
 });
 
 const FancyHeader = styled('h2', null, {
   displayName: \\"FancyHeader\\",
   styles: require(\\"./multiple-components-FancyHeader.css\\"),
-  attrs: null,
-  kebabName: \\"fancy-header\\",
-  camelName: \\"fancyHeader\\"
+  attrs: null
 });
 "
 `;
@@ -299,9 +283,7 @@ const FancyBox = styled('div', {
 }, {
   displayName: \\"FancyBox\\",
   styles: require(\\"./pass-options-FancyBox.css\\"),
-  attrs: null,
-  kebabName: \\"fancy-box\\",
-  camelName: \\"fancyBox\\"
+  attrs: null
 });
 
 const options = {};
@@ -309,9 +291,7 @@ const options = {};
 const FancierBox = styled(FancyBox, options, {
   displayName: \\"FancierBox\\",
   styles: require(\\"./pass-options-FancierBox.css\\"),
-  attrs: null,
-  kebabName: \\"fancier-box\\",
-  camelName: \\"fancierBox\\"
+  attrs: null
 });
 "
 `;
@@ -352,17 +332,13 @@ const SIZE = 75;
 const FancyBox = styled('div', null, {
   displayName: \\"FancyBox\\",
   styles: require(\\"./styled-FancyBox.css\\"),
-  attrs: null,
-  kebabName: \\"fancy-box\\",
-  camelName: \\"fancyBox\\"
+  attrs: null
 });
 
 const FancierBox = styled(FancyBox, null, {
   displayName: \\"FancierBox\\",
   styles: require(\\"./styled-FancierBox.css\\"),
-  attrs: null,
-  kebabName: \\"fancier-box\\",
-  camelName: \\"fancierBox\\"
+  attrs: null
 });
 "
 `;
@@ -389,17 +365,13 @@ exports[`Loader styled-global js : Compiled JS 1`] = `
 const FancyBox = styled('div', null, {
   displayName: \\"FancyBox\\",
   styles: require(\\"./styled-global-FancyBox.css\\"),
-  attrs: null,
-  kebabName: \\"fancy-box\\",
-  camelName: \\"fancyBox\\"
+  attrs: null
 });
 
 const FancierBox = styled(FancyBox, null, {
   displayName: \\"FancierBox\\",
   styles: require(\\"./styled-global-FancierBox.css\\"),
-  attrs: null,
-  kebabName: \\"fancier-box\\",
-  camelName: \\"fancierBox\\"
+  attrs: null
 });
 "
 `;
@@ -461,6 +433,16 @@ padding: 4em;
 }"
 `;
 
+exports[`Loader styled-interpolations 4: styled-interpolations-Button.css 1`] = `
+".cls1 {
+/*!*/
+}
+.cls2 {
+composes: cls1;
+composes: button-with-caret from global;
+}"
+`;
+
 exports[`Loader styled-interpolations js : Compiled JS 1`] = `
 "import styled from 'astroturf'
 
@@ -471,17 +453,19 @@ const other = require('./styled-interpolations-other.css');
 const FancyBox = styled('div', null, {
   displayName: \\"FancyBox\\",
   styles: require(\\"./styled-interpolations-FancyBox.css\\"),
-  attrs: null,
-  kebabName: \\"fancy-box\\",
-  camelName: \\"fancyBox\\"
+  attrs: null
 });
 
 const FancierBox = styled('div', null, {
   displayName: \\"FancierBox\\",
   styles: require(\\"./styled-interpolations-FancierBox.css\\"),
-  attrs: null,
-  kebabName: \\"fancier-box\\",
-  camelName: \\"fancierBox\\"
+  attrs: null
+});
+
+const Button = styled(Button, null, {
+  displayName: \\"Button\\",
+  styles: require(\\"./styled-interpolations-Button.css\\"),
+  attrs: null
 });
 "
 `;
@@ -519,17 +503,13 @@ exports[`Loader styled-tag js : Compiled JS 1`] = `
 const FancyBox = styled('div', null, {
   displayName: \\"FancyBox\\",
   styles: require(\\"./styled-tag-FancyBox.css\\"),
-  attrs: null,
-  kebabName: \\"fancy-box\\",
-  camelName: \\"fancyBox\\"
+  attrs: null
 });
 
 const FancierBox = styled(FancyBox, null, {
   displayName: \\"FancierBox\\",
   styles: require(\\"./styled-tag-FancierBox.css\\"),
-  attrs: null,
-  kebabName: \\"fancier-box\\",
-  camelName: \\"fancierBox\\"
+  attrs: null
 });
 "
 `;
@@ -598,9 +578,7 @@ const RedPasswordInput = styled('input', null, {
   styles: require(\\"./with-props-RedPasswordInput.css\\"),
   attrs: props => ({ ...props,
     type: 'password'
-  }),
-  kebabName: \\"red-password-input\\",
-  camelName: \\"redPasswordInput\\"
+  })
 });
 
 const RedPasswordInput2 = styled('input', null, {
@@ -608,9 +586,7 @@ const RedPasswordInput2 = styled('input', null, {
   styles: require(\\"./with-props-RedPasswordInput2.css\\"),
   attrs: p => ({
     type: 'password'
-  }),
-  kebabName: \\"red-password-input-2\\",
-  camelName: \\"redPasswordInput2\\"
+  })
 });
 "
 `;

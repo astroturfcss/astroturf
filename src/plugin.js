@@ -18,9 +18,7 @@ const buildComponent = template(
   `styled(ELEMENTTYPE, OPTIONS, {
     displayName: DISPLAYNAME,
     styles: IMPORT,
-    attrs: ATTRS,
-    kebabName: KEBABNAME,
-    camelName: CAMELNAME
+    attrs: ATTRS
   })`,
 );
 
