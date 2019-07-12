@@ -1,3 +1,14 @@
+## [0.9.8](https://github.com/4Catalyzer/astroturf/compare/v0.9.7...v0.9.8) (2019-07-12)
+
+
+### Bug Fixes
+
+* better interpolation ([#300](https://github.com/4Catalyzer/astroturf/issues/300)) ([a7c3b93](https://github.com/4Catalyzer/astroturf/commit/a7c3b93))
+
+
+
+
+
 ## [0.9.7](https://github.com/4Catalyzer/astroturf/compare/v0.9.6...v0.9.7) (2019-07-05)
 
 
