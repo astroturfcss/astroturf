@@ -1,4 +1,10 @@
+/** @jsx _AstroTurfJsx **/
+/** @jsxFrag React.Fragment **/
 
+const { jsx: _AstroTurfJsx } = require('astroturf');
+const _default = require('./typescript-CssProp1_Button.css');
+const _default2 = require('./typescript-CssProp2_Button.css');
+import styled from 'astroturf'
 import React from 'react';
 
 const SIZE = 75;
@@ -10,15 +16,35 @@ interface PropsType {
   name: string;
 }
 
-function fooGood<T extends { x: number }>(obj: T): T {
+function someMath<T extends { x: number }>(obj: T): T {
   console.log(Math.abs(obj.x));
-  return obj;
+  return obj as T;
 }
 
-class Component extends React.Component<PropsType, {}> {
+const Button = styled('button', null, {
+  displayName: "Button",
+  styles: require("./typescript-Button.css"),
+  attrs: null
+});
+
+class Component extends React.Component<PropsType> {
   render() {
-    return <h2>{this.props.children}</h2>;
+    return (
+      <>
+        <h2>{this.props.children}</h2>
+        <Button
+          variant="primary"
+          css={_default}
+        >
+          click
+        </Button>
+        <Button
+          variant="secondary"
+          css={_default2}
+        >
+          cancel
+        </Button>
+      </>
+    );
   }
 }
-
-// OK

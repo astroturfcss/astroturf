@@ -1,0 +1,11 @@
+.cls1 {
+color: red;
+
+&.variant-primary {
+background: white;
+}
+
+&.variant-secondary {
+background: black;
+}
+}

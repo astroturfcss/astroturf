@@ -11,10 +11,10 @@ function Button() {
 }
 
 function Button2() {
-  return <button css="color: blue;" />;
+  return <button css="color: violet;" />;
 }
 
-const color = 'blue';
+const color = 'orange';
 function Button3() {
   return (
     <>
