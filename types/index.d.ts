@@ -110,7 +110,7 @@ declare module 'astroturf' {
   }
 
   export type StyledTags = {
-    readonly [TTag in keyof JSX.IntrinsicElements]: StyledFunction<TTag>
+    readonly [TTag in keyof JSX.IntrinsicElements]: StyledFunction<TTag>;
   };
 
   export interface StyledOptions {
@@ -137,9 +137,22 @@ declare module 'astroturf' {
   export function css(
     template: TemplateStringsArray,
     ...args: any[]
-  ): { [className: string]: string };
+  ): Record<string, string>;
 
   const styled: CreateStyled;
+
+  global {
+    namespace JSX {
+      /**
+       * Do we need to modify `LibraryManagedAttributes` too,
+       * to make `className` props optional when `css` props is specified?
+       */
+
+      interface IntrinsicAttributes {
+        css?: string | Record<string, string>;
+      }
+    }
+  }
 
   export default styled;
 }

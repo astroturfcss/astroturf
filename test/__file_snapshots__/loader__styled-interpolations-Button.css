@@ -1,0 +1,7 @@
+.cls1 {
+/*!*/
+}
+.cls2 {
+composes: cls1;
+composes: button-with-caret from global;
+}

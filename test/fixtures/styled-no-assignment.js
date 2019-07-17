@@ -1,3 +1,0 @@
-styled('p')`
-  color: blue;
-`;

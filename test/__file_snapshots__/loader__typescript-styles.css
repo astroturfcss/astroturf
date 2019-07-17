@@ -1,0 +1,12 @@
+
+  .foo {
+    color: red;
+    width: 75px;
+  }
+
+  .bar {
+    composes: foo;
+
+    font-weight: bold;
+    font-style: italic;
+  }

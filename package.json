@@ -45,6 +45,10 @@
     ],
     "setupFilesAfterEnv": [
       "./test/setup.js"
+    ],
+    "watchPathIgnorePatterns": [
+      "build",
+      "__file_snapshots__"
     ]
   },
   "release": {
@@ -59,8 +63,10 @@
   "dependencies": {
     "@babel/core": "^7.3.4",
     "@babel/generator": "^7.3.4",
+    "@babel/helper-module-imports": "^7.0.0",
     "@babel/template": "^7.2.2",
     "@babel/types": "^7.3.4",
+    "chalk": "^2.4.2",
     "common-tags": "^1.8.0",
     "css-loader": "^3.0.0",
     "errno": "^0.1.7",
@@ -79,7 +85,10 @@
     "@4c/cli": "^0.8.1",
     "@babel/cli": "^7.2.3",
     "@babel/node": "^7.2.2",
-    "@types/react": "^16.8.5",
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
+    "@babel/preset-react": "^7.0.0",
+    "@types/react": "^16.8.23",
+    "@types/react-dom": "^16.8.4",
     "babel-core": "^7.0.0-0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.1.0",
@@ -100,14 +109,13 @@
     "eslint-plugin-react": "^7.12.4",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^3.0.0",
-    "identity-obj-proxy": "^3.0.0",
     "jest": "^24.1.0",
+    "jest-file-snapshot": "^0.3.6",
     "lint-staged": "^9.0.0",
     "mini-css-extract-plugin": "^0.8.0",
     "prettier": "^1.16.4",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
-    "recompose": "^0.30.0",
     "rimraf": "^2.6.3",
     "style-loader": "^0.23.1",
     "webpack": "^4.36.1",

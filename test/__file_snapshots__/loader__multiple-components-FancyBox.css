@@ -1,0 +1,14 @@
+.cls1 {
+color: red;
+width: 75px;
+
+@media (min-width: 420px) {
+width: 96px;
+height: 96px;
+}
+
+&.primary {
+background: white;
+color: palevioletred;
+}
+}

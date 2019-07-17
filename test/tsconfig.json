@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "jsx": "react",
+    "lib": ["es2015", "dom"],
+    "module": "commonjs",
+    "strict": true,
+    "types": [],
+    "noEmit": true,
+    "baseUrl": "../",
+    "paths": {
+      "astroturf": ["types"],
+      "astroturf/helpers": ["types/helpers.d.ts"]
+    }
+  }
+}

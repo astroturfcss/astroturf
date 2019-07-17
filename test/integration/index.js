@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import styled, { css } from 'astroturf';
+import React from 'react';
 
 const width = 75;
 
@@ -36,5 +37,31 @@ const FancierBox = styled('div')`
 export const Button = styled('button')`
   composes: button-with-caret from global;
 `;
+
+export function MyComponent() {
+  return (
+    <>
+      <div
+        foo
+        css={`
+          color: red;
+
+          &.foo {
+            color: blue;
+          }
+        `}
+      >
+        <div>hey </div>
+        <span
+          css={`
+            color: blue;
+          `}
+        >
+          yo
+        </span>
+      </div>
+    </>
+  );
+}
 
 export default FancierBox;

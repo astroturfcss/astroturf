@@ -28,11 +28,11 @@ function resolveInterpolation(path, nodeMap, localStyle) {
 let id = 0;
 const getPlaceholder = () => `###ASTROTURF_PLACEHOLDER_${id++}###`;
 
-export default (path, nodeMap, localStyle, { tagName }) => {
-  const { quasi } = path.node;
+export default (quasiPath, nodeMap, localStyle, { tagName }) => {
+  const quasi = quasiPath.node;
 
   const interpolations = new Map();
-  const expressions = path.get('quasi.expressions');
+  const expressions = quasiPath.get('expressions');
 
   let text = '';
   quasi.quasis.forEach((tmplNode, idx) => {

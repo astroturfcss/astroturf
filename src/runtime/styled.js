@@ -9,17 +9,64 @@ const camelCase = str =>
     '',
   );
 
+function propsToStyles(props, styles, hasModifiers) {
+  const componentClassName = styles.cls2 || styles.cls1;
+  let className = props.className
+    ? `${props.className} ${componentClassName}`
+    : componentClassName;
+
+  if (hasModifiers) {
+    Object.keys(props).forEach(propName => {
+      const propValue = props[propName];
+      const typeOf = typeof propValue;
+
+      if (typeOf === 'boolean' || propValue == null) {
+        if (styles[propName]) {
+          if (propValue) {
+            className += ` ${styles[propName]}`;
+          }
+
+          delete props[propName];
+        } else {
+          const camelPropName = camelCase(propName);
+
+          if (styles[camelPropName]) {
+            if (propValue) {
+              className += ` ${styles[camelPropName]}`;
+            }
+            delete props[propName];
+          }
+        }
+      } else if (typeOf === 'string' || typeOf === 'number') {
+        const propKey = `${propName}-${propValue}`;
+
+        if (styles[propKey]) {
+          className += ` ${styles[propKey]}`;
+          delete props[propName];
+        } else {
+          const camelPropKey = camelCase(propKey);
+
+          if (styles[camelPropKey]) {
+            className += ` ${styles[camelPropKey]}`;
+            delete props[propName];
+          }
+        }
+      }
+    });
+  }
+  return className;
+}
+
 function styled(type, options, settings) {
   const { displayName, attrs, styles } = settings;
 
   options = options || { allowAs: typeof type === 'string' };
-  const componentClassName = styles.cls2 || styles.cls1;
 
   // always passthrough if the type is a styled component
   const allowAs = type.isAstroturf ? false : options.allowAs;
 
   const hasModifiers = Object.keys(styles).some(
-    className => className !== componentClassName,
+    className => className !== (styles.cls2 || styles.cls1),
   );
 
   function Styled(rawProps, ref) {
@@ -28,51 +75,7 @@ function styled(type, options, settings) {
 
     if (allowAs) delete childProps.as;
 
-    let className = childProps.className
-      ? `${childProps.className} ${componentClassName}`
-      : componentClassName;
-
-    if (hasModifiers) {
-      Object.keys(props).forEach(propName => {
-        const propValue = props[propName];
-        const typeOf = typeof propValue;
-
-        if (typeOf === 'boolean' || propValue == null) {
-          if (styles[propName]) {
-            if (propValue) {
-              className += ` ${styles[propName]}`;
-            }
-
-            delete childProps[propName];
-          } else {
-            const camelPropName = camelCase(propName);
-
-            if (styles[camelPropName]) {
-              if (propValue) {
-                className += ` ${styles[camelPropName]}`;
-              }
-              delete childProps[propName];
-            }
-          }
-        } else if (typeOf === 'string' || typeOf === 'number') {
-          const propKey = `${propName}-${propValue}`;
-
-          if (styles[propKey]) {
-            className += ` ${styles[propKey]}`;
-            delete childProps[propName];
-          } else {
-            const camelPropKey = camelCase(propKey);
-
-            if (styles[camelPropKey]) {
-              className += ` ${styles[camelPropKey]}`;
-              delete childProps[propName];
-            }
-          }
-        }
-      });
-    }
-
-    childProps.className = className;
+    childProps.className = propsToStyles(childProps, styles, hasModifiers);
 
     return React.createElement(
       allowAs && props.as ? props.as : type,
@@ -93,8 +96,18 @@ function styled(type, options, settings) {
   return decorated;
 }
 
+function jsx(type, props, ...children) {
+  if (props.css) {
+    const { css, ...childProps } = props;
+    childProps.className = propsToStyles(childProps, css, true);
+    props = childProps;
+  }
+  return React.createElement(type, props, ...children);
+}
+
 module.exports = styled;
 module.exports.styled = styled;
+module.exports.jsx = jsx;
 
 if (__DEV__) {
   module.exports.css = () => {

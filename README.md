@@ -13,6 +13,7 @@
 - [Usage](#usage)
 - [Extensions](#extensions)
 - [Component API](#component-api)
+- [`css` prop](#css-prop)
   - [Component API Goals and Non-Goals](#component-api-goals-and-non-goals)
   - [Composition, variables, etc?](#composition-variables-etc)
   - [Referring to other Components](#referring-to-other-components)
@@ -144,6 +145,10 @@ function Button({ primary, color, className, ...props }) {
   );
 }
 ```
+
+## `css` prop
+
+TODO
 
 Styles are still extracted to a separate file, any props matching other defined classes are passed to the `classNames()` library. At runtime `styled()` returns a React component with the static CSS classes applied. You can check out the ["runtime"](https://github.com/4Catalyzer/astroturf/blob/master/src/runtime/styled.js#L16) it just creates a component.
 

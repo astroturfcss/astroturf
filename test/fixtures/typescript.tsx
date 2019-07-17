@@ -1,4 +1,4 @@
-import { css } from 'astroturf';
+import styled, { css } from 'astroturf';
 import React from 'react';
 
 const SIZE = 75;
@@ -22,15 +22,45 @@ interface PropsType {
   name: string;
 }
 
-function fooGood<T extends { x: number }>(obj: T): T {
+function someMath<T extends { x: number }>(obj: T): T {
   console.log(Math.abs(obj.x));
-  return obj;
+  return obj as T;
 }
 
-class Component extends React.Component<PropsType, {}> {
+const Button = styled('button')<{ variant: 'primary' | 'secondary' }>`
+  color: red;
+
+  &.variant-primary {
+    background: white;
+  }
+
+  &.variant-secondary {
+    background: black;
+  }
+`;
+
+class Component extends React.Component<PropsType> {
   render() {
-    return <h2>{this.props.children}</h2>;
+    return (
+      <>
+        <h2>{this.props.children}</h2>
+        <Button
+          variant="primary"
+          css={css`
+            color: red !important;
+          `}
+        >
+          click
+        </Button>
+        <Button
+          variant="secondary"
+          css={`
+            color: red !important;
+          `}
+        >
+          cancel
+        </Button>
+      </>
+    );
   }
 }
-
-// OK

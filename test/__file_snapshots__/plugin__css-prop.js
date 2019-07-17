@@ -1,0 +1,23 @@
+/** @jsxFrag React.Fragment **/
+
+/** @jsx _AstroTurfJsx **/
+import { jsx as _AstroTurfJsx } from "astroturf";
+import _default3 from "./css-prop-CssProp3_button.css";
+import _default2 from "./css-prop-CssProp2_button.css";
+import _default from "./css-prop-CssProp1_button.css";
+
+function Button() {
+  return <button css={_default} />;
+}
+
+function Button2() {
+  return <button css={_default2} />;
+}
+
+const color = 'blue';
+
+function Button3() {
+  return <>
+      <button css={_default3} />
+    </>;
+}
