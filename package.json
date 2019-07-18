@@ -62,12 +62,12 @@
     "@babel/template": "^7.2.2",
     "@babel/types": "^7.3.4",
     "common-tags": "^1.8.0",
+    "css-loader": "^3.0.0",
     "errno": "^0.1.7",
     "fs-extra": "^8.0.0",
     "loader-utils": "^1.2.3",
     "lodash": "^4.17.11",
     "memory-fs": "^0.4.1",
-    "css-loader": "^3.0.0",
     "postcss-loader": "^3.0.0",
     "postcss-nested": "^4.1.1"
   },
@@ -110,7 +110,7 @@
     "recompose": "^0.30.0",
     "rimraf": "^2.6.3",
     "style-loader": "^0.23.1",
-    "webpack": "^4.29.5",
+    "webpack": "^4.36.1",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.2.1"
   }

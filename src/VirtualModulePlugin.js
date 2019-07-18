@@ -19,9 +19,15 @@ class VirtualModulePlugin {
     if (!compiler.resolverFactory) return plugin;
 
     // this is suuuch a hack
+    // we need to ensure that resolvers are rebuilt with the new filesystem, and
+    // I don't know the right way to do that.
+
+    // pre 4.36.1 this cache also existed
     if (compiler.resolverFactory.cache1)
       compiler.resolverFactory.cache1 = new WeakMap();
-    if (compiler.resolverFactory.cache1)
+
+    // >=4.36.1 this one is needed
+    if (compiler.resolverFactory.cache2)
       compiler.resolverFactory.cache2.clear();
 
     return plugin;
