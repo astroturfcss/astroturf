@@ -148,7 +148,33 @@ function Button({ primary, color, className, ...props }) {
 
 ## `css` prop
 
-TODO
+In addition to the `styled` helper, styles can be defined directly on components via the `css` prop.
+
+```jsx
+function Button({ variant, children }) {
+  return (
+    <button
+      variant={variant}
+      css={css`
+        color: black;
+        border: 1px solid black;
+        background-color: white;
+
+        &.variant-primary {
+          color: blue;
+          border: 1px solid blue;
+        }
+
+        &.variant-secondary {
+          color: green;
+        }
+      `}
+    >
+      children
+    </button>
+  );
+}
+```
 
 Styles are still extracted to a separate file, any props matching other defined classes are passed to the `classNames()` library. At runtime `styled()` returns a React component with the static CSS classes applied. You can check out the ["runtime"](https://github.com/4Catalyzer/astroturf/blob/master/src/runtime/styled.js#L16) it just creates a component.
 

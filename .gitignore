@@ -1,5 +1,4 @@
 node_modules
 lib
-test/build
 *_extracted_style.css
 *.log
