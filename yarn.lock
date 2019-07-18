@@ -53,9 +53,9 @@
     yargs "^13.2.1"
 
 "@4c/cli@^0.8.1":
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/@4c/cli/-/cli-0.8.1.tgz#e4d0844aa5916651e0a353f87981959034515d98"
-  integrity sha512-fxRxPORHRQ8rsN97Uhrb9eRi2oJ3ZiVNF+P5yNgXQ/zV0hEvj+vVwTVTtksm1PRrDlaTLrgCF/9bp7QiWq7G6w==
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/@4c/cli/-/cli-0.8.2.tgz#11c9f979c4050dc5c5026e75f6f98428966af9c5"
+  integrity sha512-HLn5Ew49NXM8koDvTx4T3gJmsm10q7GK3I1ypQ3bURymF6NZlBOomN+0VSokmiUJ4i/xPY2En/p0vO//aADErg==
   dependencies:
     "@4c/build" "^1.1.5"
     "@4c/cli-core" "^1.4.2"
@@ -68,10 +68,10 @@
     fs-extra "^7.0.1"
     inquirer "^6.2.2"
     ora "^3.1.0"
-    pedantic "^2.2.1"
+    pedantic "^2.2.2"
     semver "^5.6.0"
     slash "^2.0.0"
-    svg2c "^1.1.1"
+    svg2c "^1.1.2"
     yargs "^13.2.1"
 
 "@4c/file-butler@^2.3.0":
@@ -7812,10 +7812,10 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-pedantic@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/pedantic/-/pedantic-2.2.1.tgz#2fdd183c2b0b080b365456d6543f24c0982b701e"
-  integrity sha512-gRgcJlhUEIItaPo14va9c1DqcBHGZtZaPd/xmlVbW15331AgZvB1LMg3W7zBsjcdhGfHCA3JkSh5W0Y3v3R5LA==
+pedantic@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/pedantic/-/pedantic-2.2.2.tgz#15f79937137c4b2e34f01fc27bf40995fede3f63"
+  integrity sha512-znoVP3nF7E4ecULilqtAFs6EoDsUQlT/42JRla8hOu0AZx9a+gcoGnUYzYRpaA6K69NLZtJnax6Ek+aw5K6xVw==
   dependencies:
     "@4c/cli-core" "^1.4.2"
     "@4c/import-sort" "^4.3.1"
@@ -9489,10 +9489,10 @@ supports-color@^5.3.0:
   dependencies:
     has-flag "^3.0.0"
 
-svg2c@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/svg2c/-/svg2c-1.1.1.tgz#a09e559f8f1365369f8448916856bb3d05ba96ac"
-  integrity sha512-nL0UdiEq0ipp3iW62AOTFtuMhtai5lt1BGWAvHZFJB0B+95l0GL2YvZ7dB8N6VWRunLPdDUs11garyCsxo7CgA==
+svg2c@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/svg2c/-/svg2c-1.1.2.tgz#023508e5e43066d7af73fdea3781a3f006f3743d"
+  integrity sha512-ywsKpoSLIMeHB+FjyjcJN993MXu0aIKQSaERjnxZrT7eNM4N5DZjvZ18+3jhEZpFtedGcOpJdO313Olc7JHpAQ==
   dependencies:
     "@4c/cli-core" "^1.4.2"
     "@babel/core" "^7.4.5"
