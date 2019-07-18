@@ -1,3 +1,14 @@
+## [0.9.9](https://github.com/4Catalyzer/astroturf/compare/v0.9.8...v0.9.9) (2019-07-18)
+
+
+### Bug Fixes
+
+* webpack 4.36.1 incompatibility ([4166ac1](https://github.com/4Catalyzer/astroturf/commit/4166ac1))
+
+
+
+
+
 ## [0.9.8](https://github.com/4Catalyzer/astroturf/compare/v0.9.7...v0.9.8) (2019-07-12)
 
 
