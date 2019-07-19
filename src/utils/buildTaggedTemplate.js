@@ -25,8 +25,7 @@ function resolveInterpolation(path, nodeMap, localStyle) {
   };
 }
 
-let id = 0;
-const getPlaceholder = () => `###ASTROTURF_PLACEHOLDER_${id++}###`;
+const getPlaceholder = idx => `###ASTROTURF_PLACEHOLDER_${idx}###`;
 
 export default (quasiPath, nodeMap, localStyle, { tagName }) => {
   const quasi = quasiPath.node;
@@ -100,6 +99,7 @@ export default (quasiPath, nodeMap, localStyle, { tagName }) => {
     );
   });
 
+  let id = 0;
   let imports = '';
   text = text.replace(rPlaceholder, match => {
     const { externalName, importName } = interpolations.get(match);

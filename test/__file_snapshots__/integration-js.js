@@ -169,7 +169,7 @@ module.exports = {"cls1":"index-CssProp2_span__cls1"};
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"a2":"index-FancyBox__cls1","a3":"index-styles__parent","cls1":"index-FancierBox__cls1"};
+module.exports = {"a0":"index-FancyBox__cls1","a1":"index-styles__parent","cls1":"index-FancierBox__cls1"};
 
 /***/ }),
 
