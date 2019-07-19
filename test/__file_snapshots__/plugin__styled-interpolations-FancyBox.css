@@ -1,11 +1,11 @@
-@value item as a15 from "styled-interpolations-base.css";
+@value item as a0 from "styled-interpolations-base.css";
 
 
 .cls1 {
 color: red;
 width: 75px;
 
-&.a15 {
+&.a0 {
 padding: 5rem;
 }
 

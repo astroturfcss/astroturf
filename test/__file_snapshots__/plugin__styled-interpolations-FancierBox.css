@@ -1,10 +1,10 @@
-@value cls1 as a17 from "styled-interpolations-FancyBox.css";
+@value cls1 as a0 from "styled-interpolations-FancyBox.css";
 
 
 .cls1 {
 color: ultra-red;
 
-> .a17 {
+> .a0 {
 padding: 4em;
 }
 }

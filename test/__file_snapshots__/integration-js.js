@@ -64,6 +64,11 @@ function propsToStyles(props, styles, hasModifiers) {
 }
 
 function styled(type, options, settings) {
+  if (__DEV__) {
+    if (Array.isArray(type)) throw new Error('This styled() template tag was mistakenly evaluated at runtime. ' + 'Make sure astroturf is properly configured to compile this file');
+    if (typeof settings === 'string') throw new Error('It looks like you have incompatible astroturf versions in your app. ' + 'This runtime expects styles compiled with a newer version of astroturf, ' + 'ensure that your versions are properly deduped and upgraded. ');
+  }
+
   const {
     displayName,
     attrs,
@@ -114,7 +119,7 @@ module.exports.jsx = jsx;
 
 if (__DEV__) {
   module.exports.css = () => {
-    throw new Error('`css` template literal evaluated at runtime!');
+    throw new Error('css template literal evaluated at runtime. ' + 'Make sure astroturf is properly configured to compile this file');
   };
 }
 
@@ -164,7 +169,7 @@ module.exports = {"cls1":"index-CssProp2_span__cls1"};
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"a2":"index-FancyBox__cls1","a3":"index-styles__parent","cls1":"index-FancierBox__cls1"};
+module.exports = {"a0":"index-FancyBox__cls1","a1":"index-styles__parent","cls1":"index-FancierBox__cls1"};
 
 /***/ }),
 
