@@ -64,6 +64,11 @@ function propsToStyles(props, styles, hasModifiers) {
 }
 
 function styled(type, options, settings) {
+  if (__DEV__) {
+    if (Array.isArray(type)) throw new Error('This styled() template tag was mistakenly evaluated at runtime. ' + 'Make sure astroturf is properly configured to compile this file');
+    if (typeof settings === 'string') throw new Error('It looks like you have incompatible astroturf versions in your app. ' + 'This runtime expects styles compiled with a newer version of astroturf, ' + 'ensure that your versions are properly deduped and upgraded. ');
+  }
+
   const {
     displayName,
     attrs,
@@ -114,7 +119,7 @@ module.exports.jsx = jsx;
 
 if (__DEV__) {
   module.exports.css = () => {
-    throw new Error('`css` template literal evaluated at runtime!');
+    throw new Error('css template literal evaluated at runtime. ' + 'Make sure astroturf is properly configured to compile this file');
   };
 }
 

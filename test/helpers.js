@@ -2,7 +2,6 @@ const fs = require('fs-extra');
 const webpack = require('webpack');
 const MemoryFS = require('memory-fs');
 const { transformAsync } = require('@babel/core');
-const { join, basename, extname } = require('path');
 const loader = require('../src/loader');
 
 const PARSER_OPTS = {
@@ -18,16 +17,6 @@ const PARSER_OPTS = {
     'dynamicImport',
     'throwExpressions',
   ],
-};
-
-const getOptions = f => {
-  try {
-    return fs.readJsonSync(
-      `${__dirname}/fixtures/${basename(f, extname(f))}.json`,
-    );
-  } catch (err) {
-    return {};
-  }
 };
 
 export async function run(src, options, filename) {
@@ -66,115 +55,6 @@ export const fixtures = fs
   .map(file => `${__dirname}/fixtures/${file}`)
   .filter(f => !f.endsWith('.json'));
 
-export function babelRunFixture(fixture, only) {
-  const options = getOptions(fixture);
-  let styles = [];
-  if (options.loaderOnly) return;
-
-  let error = null;
-  let output;
-
-  beforeAll(async () => {
-    try {
-      output = await run(
-        fs.readFileSync(fixture, 'utf8'),
-        { enableCssProp: true, ...options },
-        fixture,
-      );
-    } catch (err) {
-      error = err;
-    }
-
-    styles = output ? output[1] : [];
-  });
-  // eslint-disable-next-line no-underscore-dangle
-  const _it = only ? it.only : it;
-
-  _it('js ', () => {
-    if (options.TEST_SHOULD_FAIL) {
-      expect(styles.length).toEqual(0);
-      // There may be an error, or may just be styles weren't extracted
-      expect(
-        error
-          ? error.message.slice(error.message.indexOf(':') + 1).trim() // remove file path
-          : output[0],
-      ).toMatchSnapshot('Compilation Error');
-    } else {
-      if (error) throw error;
-      expect(output[0]).toMatchFile(
-        join(__dirname, '__file_snapshots__', `plugin__${basename(fixture)}`),
-      );
-      expect(styles.length).toBeGreaterThan(0);
-    }
-  });
-
-  _it(`styles`, () => {
-    styles.forEach(s => {
-      expect(s.value).toMatchFile(
-        join(
-          __dirname,
-          '__file_snapshots__',
-          `plugin__${basename(s.absoluteFilePath)}`,
-        ),
-      );
-    });
-  });
-}
-
-export function webpackRunFixture(fixture, only) {
-  const options = getOptions(fixture);
-
-  if (options.pluginOnly) return;
-
-  let error = null;
-  let code, styles;
-
-  beforeAll(async () => {
-    try {
-      [code, styles] = await runLoader(
-        fs.readFileSync(fixture, 'utf-8'),
-        { enableCssProp: true, ...options },
-        fixture,
-      );
-    } catch (err) {
-      styles = [];
-      error = err;
-    }
-  });
-  // eslint-disable-next-line no-underscore-dangle
-  const _it = only ? it.only : it;
-
-  _it('loader js', () => {
-    if (options.TEST_SHOULD_FAIL) {
-      expect(styles.length).toEqual(0);
-      // There may be an error, or may just be styles weren't extracted
-      expect(
-        error
-          ? error.message.slice(error.message.indexOf(':') + 1).trim() // remove file path
-          : code,
-      ).toMatchSnapshot('Compilation Error');
-    } else {
-      if (error) throw error;
-      expect(code).toMatchFile(
-        join(__dirname, '__file_snapshots__', `loader__${basename(fixture)}`),
-      );
-      expect(styles.length).toBeGreaterThan(0);
-    }
-  });
-
-  _it(`loader styles`, () => {
-    styles.forEach(s => {
-      expect(s.value).toMatchFile(
-        join(
-          __dirname,
-          '__file_snapshots__',
-          `loader__${basename(s.absoluteFilePath)}`,
-        ),
-      );
-    });
-  });
-}
-
 export function runWebpack(config) {
   const compiler = webpack({
     ...config,
@@ -188,10 +68,6 @@ export function runWebpack(config) {
         chunks: 'initial',
       },
     },
-    // externals: {
-    //   react: 'React',
-    //   'react-dom': 'ReactDOM',
-    // },
   });
   compiler.outputFileSystem = new MemoryFS();
   return new Promise((resolve, reject) => {
