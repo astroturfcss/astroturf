@@ -149,6 +149,7 @@ function Button({ primary, color, className, ...props }) {
 ## `css` prop
 
 In addition to the `styled` helper, styles can be defined directly on components via the `css` prop.
+You first need to enable this feature via the `enableCssProp` option in your loader config
 
 ```jsx
 function Button({ variant, children }) {
@@ -514,6 +515,7 @@ astroturf accepts a few query options.
 - **tagName**: (default: `'css'`) The tag identifier used to locate inline css literals and extract them.
 - **styledTag**: (default: `'styled'`) The tag identifier used to locate components.
 - **extension**: (default: `'.css'`) the extension used for extracted "virtual" files. Change to whatever file type you want webpack to process extracted literals as.
+- **enableCssProp**: (default: false) compiles `css` props to styled components.
 
 **Note:** astroturf expects uncompiled JavaScript code, If you are using babel or Typescript to transform tagged template literals, ensure the loader runs _before_ babel or typescript loaders.
 
