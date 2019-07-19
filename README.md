@@ -13,6 +13,7 @@
 - [Usage](#usage)
 - [Extensions](#extensions)
 - [Component API](#component-api)
+- [`css` prop](#css-prop)
   - [Component API Goals and Non-Goals](#component-api-goals-and-non-goals)
   - [Composition, variables, etc?](#composition-variables-etc)
   - [Referring to other Components](#referring-to-other-components)
@@ -141,6 +142,36 @@ function Button({ primary, color, className, ...props }) {
         color === 'green' && styles.colorGreen,
       )}
     />
+  );
+}
+```
+
+## `css` prop
+
+In addition to the `styled` helper, styles can be defined directly on components via the `css` prop.
+
+```jsx
+function Button({ variant, children }) {
+  return (
+    <button
+      variant={variant}
+      css={css`
+        color: black;
+        border: 1px solid black;
+        background-color: white;
+
+        &.variant-primary {
+          color: blue;
+          border: 1px solid blue;
+        }
+
+        &.variant-secondary {
+          color: green;
+        }
+      `}
+    >
+      children
+    </button>
   );
 }
 ```

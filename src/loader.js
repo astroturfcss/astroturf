@@ -28,6 +28,7 @@ AstroturfLoaderError.prototype.constructor = AstroturfLoaderError;
 function collectStyles(src, filename, opts) {
   const tagName = opts.tagName || 'css';
   const styledTag = opts.styledTag || 'styled';
+
   // quick regex as an optimization to avoid parsing each file
   if (
     !src.match(
@@ -35,7 +36,9 @@ function collectStyles(src, filename, opts) {
         `(${tagName}|${styledTag}(.|\\n|\\r)+?)\\s*\`([\\s\\S]*?)\``,
         'gmi',
       ),
-    )
+    ) &&
+    opts.cssPropEnabled &&
+    !src.match(/css=("|')/g)
   ) {
     return { styles: [] };
   }
@@ -56,7 +59,7 @@ function collectStyles(src, filename, opts) {
 function replaceStyleTemplates(src, locations) {
   let offset = 0;
 
-  function splice(str, start, end, replace) {
+  function splice(str, start = 0, end = 0, replace) {
     const result =
       str.slice(0, start + offset) + replace + str.slice(end + offset);
 
@@ -74,16 +77,19 @@ function replaceStyleTemplates(src, locations) {
 
 const LOADER_PLUGIN = Symbol('loader added VM plugin');
 
-module.exports = function loader(content) {
+module.exports = function loader(content, _, meta) {
   if (this.cacheable) this.cacheable();
 
   const options = loaderUtils.getOptions(this) || {};
-  const { styles = [], imports } = collectStyles(
+  const { styles = [], changeset } = collectStyles(
     content,
     this.resourcePath,
     options,
   );
 
+  if (meta) {
+    meta.styles = styles;
+  }
   if (!styles.length) return content;
 
   let { emitVirtualFile } = this;
@@ -104,5 +110,5 @@ module.exports = function loader(content) {
     emitVirtualFile(style.absoluteFilePath, style.value);
   });
 
-  return replaceStyleTemplates(content, [...imports, ...styles]);
+  return replaceStyleTemplates(content, changeset);
 };

@@ -2,21 +2,20 @@
  * @jest-environment node
  */
 
-import fs from 'fs';
+import path from 'path';
 import ExtractCSS from 'mini-css-extract-plugin';
-import webpack from 'webpack';
+import { runWebpack } from './helpers';
 
-const outputPath = `${__dirname}/build`;
 describe('webpack integration', () => {
-  let compiler;
+  let config;
 
   beforeEach(() => {
-    compiler = webpack({
+    config = {
       devtool: false,
       mode: 'development',
-      entry: require.resolve('./integration'),
-      output: {
-        path: outputPath,
+      entry: {
+        main: require.resolve('./integration'),
+        vendor: ['react', 'react-dom'],
       },
       module: {
         rules: [
@@ -32,22 +31,24 @@ describe('webpack integration', () => {
                   },
                 },
               },
-              // {
-              //   loader: 'css-loader',
-              //   options: { modules: true, importLoaders: 1 },
-              // },
-              // {
-              //   loader: 'postcss-loader',
-              //   options: {
-              //     ident: 'postcss-astroturf',
-              //     plugins: [require('postcss-nested')()], // eslint-disable-line global-require
-              //   },
-              // },
             ],
           },
           {
             test: /\.jsx?$/,
-            use: ['babel-loader', require.resolve('../src/loader')],
+            exclude: /node_modules/,
+            use: [
+              {
+                loader: 'babel-loader',
+                options: {
+                  babelrc: false,
+                  plugins: ['@babel/plugin-transform-react-jsx'],
+                },
+              },
+              {
+                loader: require.resolve('../src/loader'),
+                options: { enableCssProp: true },
+              },
+            ],
           },
         ],
       },
@@ -57,21 +58,17 @@ describe('webpack integration', () => {
         },
       },
       plugins: [new ExtractCSS()],
-    });
+    };
   });
 
-  it('should work', done => {
-    compiler.run((err, stats) => {
-      console.log(stats.toJson().errors);
-      expect(err).toBe(null);
-      expect(stats.hasErrors()).toBe(false);
-      expect(stats.hasWarnings()).toBe(false);
+  it('should work', async () => {
+    const assets = await runWebpack(config);
 
-      expect(
-        fs.readFileSync(`${outputPath}/main.css`, 'utf8'),
-      ).toMatchSnapshot();
-
-      done();
-    });
+    expect(assets['main.css'].source()).toMatchFile(
+      path.join(__dirname, '__file_snapshots__/integration-styles.css'),
+    );
+    expect(assets['main.js'].source()).toMatchFile(
+      path.join(__dirname, '__file_snapshots__/integration-js.js'),
+    );
   });
 });

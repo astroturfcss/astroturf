@@ -1,0 +1,44 @@
+.index-CssProp1_div__cls1 {
+color: red;
+}
+
+.index-CssProp1_div__cls1.index-CssProp1_div__foo {
+color: blue;
+}
+.index-CssProp2_span__cls1 {
+color: blue;
+}
+
+  .index-styles__parent {
+    color: red;
+  }
+
+.index-FancyBox__cls1 {
+color: red;
+width: 75px;
+}
+
+.index-FancyBox__cls1.index-FancyBox__primary {
+background: white;
+color: palevioletred;
+}
+.index-FancyBox__cls2 {
+}
+.index-FancierBox__cls1 {
+color: ultra-red;
+}
+
+
+.index-FancierBox__cls1 > .index-FancyBox__cls1 {
+padding: 4em;
+}
+
+
+.index-styles__parent > .index-FancierBox__cls1 {
+margin: 2em;
+}
+.index-Button__cls1 {
+/*!*/
+}
+.index-Button__cls2 {
+}

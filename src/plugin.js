@@ -3,10 +3,12 @@ import { stripIndent } from 'common-tags';
 import { outputFileSync } from 'fs-extra';
 import defaults from 'lodash/defaults';
 import get from 'lodash/get';
+import { addNamed, addDefault } from '@babel/helper-module-imports';
 import generate from '@babel/generator';
 import template from '@babel/template';
 import * as t from '@babel/types';
 
+import chalk from 'chalk';
 import buildTaggedTemplate from './utils/buildTaggedTemplate';
 import getNameFromPath from './utils/getNameFromPath';
 import normalizeAttrs from './utils/normalizeAttrs';
@@ -25,6 +27,11 @@ const buildComponent = template(
 const STYLES = Symbol('Astroturf');
 const COMPONENTS = Symbol('Astroturf components');
 const IMPORTS = Symbol('Astroturf imports');
+const HAS_CSS_PROP = Symbol('Astroturf has css prop');
+
+const JSX_IDENTIFIER = '_AstroTurfJsx';
+const PRAGMA_BODY = `* @jsx ${JSX_IDENTIFIER} *`;
+const FRAG_PRAGMA_BODY = '* @jsxFrag React.Fragment *';
 
 function getNameFromFile(fileName) {
   const name = basename(fileName, extname(fileName));
@@ -125,7 +132,7 @@ export default function plugin() {
     style.code = `require('${style.relativeFilePath}')`;
 
     const { text, imports } = buildTaggedTemplate(
-      path,
+      path.get('quasi'),
       nodeMap,
       style,
       opts.pluginOptions,
@@ -168,7 +175,7 @@ export default function plugin() {
     style.isStyledComponent = true;
 
     const { text, imports } = buildTaggedTemplate(
-      path,
+      path.get('quasi'),
       nodeMap,
       style,
       opts.pluginOptions,
@@ -201,6 +208,7 @@ export default function plugin() {
       if (!file.has(STYLES)) {
         file.set(STYLES, {
           id: 0,
+          changeset: [],
           styles: new Map(),
         });
       }
@@ -212,8 +220,8 @@ export default function plugin() {
 
     post(file) {
       const { opts } = this;
+      let { styles, changeset } = file.get(STYLES);
       const importNodes = file.get(IMPORTS);
-      const imports = [];
 
       importNodes.forEach(path => {
         const decl = !path.isImportDeclaration()
@@ -227,7 +235,7 @@ export default function plugin() {
         path.remove();
 
         if (opts.generateInterpolations)
-          imports.push({
+          changeset.push({
             start,
             end,
             // if the path is just a removed specifier we need to regenerate
@@ -236,10 +244,11 @@ export default function plugin() {
           });
       });
 
-      let { styles } = file.get(STYLES);
       styles = Array.from(styles.values());
 
-      file.metadata.astroturf = { styles, imports };
+      changeset = changeset.concat(styles);
+
+      file.metadata.astroturf = { styles, changeset };
 
       if (opts.writeFiles !== false) {
         styles.forEach(({ absoluteFilePath, value }) => {
@@ -249,12 +258,107 @@ export default function plugin() {
     },
 
     visitor: {
-      TaggedTemplateExpression(path, state) {
-        const pluginOptions = defaults(state.opts, {
-          tagName: 'css',
-          allowGlobal: true,
-          styledTag: 'styled',
+      Program: {
+        enter(_, state) {
+          state.defaultedOptions = defaults(state.opts, {
+            tagName: 'css',
+            allowGlobal: true,
+            styledTag: 'styled',
+          });
+        },
+        exit(path, state) {
+          if (!state.file.get(HAS_CSS_PROP)) return;
+
+          addNamed(path, 'jsx', 'astroturf', { nameHint: JSX_IDENTIFIER });
+          path.addComment('leading', PRAGMA_BODY);
+          path.addComment('leading', FRAG_PRAGMA_BODY);
+
+          state.file.get(STYLES).changeset.unshift(
+            { code: `/*${PRAGMA_BODY}*/\n` },
+            { code: `/*${FRAG_PRAGMA_BODY}*/\n\n` },
+            {
+              code: `const { jsx: ${JSX_IDENTIFIER} } = require('astroturf');\n`,
+            },
+          );
+        },
+      },
+
+      JSXAttribute(path, state) {
+        const { file } = state;
+        const pluginOptions = state.defaultedOptions;
+        const cssState = file.get(STYLES);
+        const nodeMap = file.get(COMPONENTS);
+
+        if (path.node.name.name !== 'css') return;
+
+        if (!pluginOptions.enableCssProp) {
+          if (!pluginOptions.noWarnings)
+            // eslint-disable-next-line no-console
+            console.warn(
+              chalk.yellow(
+                'It looks like you are trying to use the css prop with',
+                chalk.bold('astroturf'),
+                'but have not enabled it. add',
+                chalk.bold('enableCssProp: true'),
+                'to the loader or plugin options to compile the css prop.',
+              ),
+            );
+          return;
+        }
+
+        const valuePath = path.get('value');
+        const displayName = `CssProp${++cssState.id}_${getNameFromPath(
+          path.findParent(p => p.isJSXOpeningElement).get('name'),
+        )}`;
+
+        const style = createStyleNode(valuePath, displayName, {
+          pluginOptions,
+          file: state.file,
         });
+
+        if (valuePath.isStringLiteral()) {
+          style.value = wrapInClass(path.node.value.value);
+        } else if (valuePath.isJSXExpressionContainer()) {
+          const exprPath = valuePath.get('expression');
+
+          if (
+            exprPath.isTemplateLiteral() ||
+            (exprPath.isTaggedTemplateExpression() &&
+              isCssTag(exprPath.get('tag'), pluginOptions))
+          ) {
+            const { text, imports } = buildTaggedTemplate(
+              exprPath.isTemplateLiteral() ? exprPath : exprPath.get('quasi'),
+              nodeMap,
+              style,
+              pluginOptions,
+            );
+            style.value = imports + wrapInClass(text);
+          }
+        }
+
+        if (style.value == null) return;
+
+        const runtimeNode = t.jsxExpressionContainer(
+          addDefault(valuePath, style.relativeFilePath),
+        );
+
+        cssState.styles.set(style.absoluteFilePath, style);
+
+        if (pluginOptions.generateInterpolations)
+          style.code = `{${runtimeNode.expression.name}}`;
+
+        cssState.changeset.push({
+          code: `const ${runtimeNode.expression.name} = require('${style.relativeFilePath}');\n`,
+        });
+
+        nodeMap.set(runtimeNode.expression, style);
+
+        valuePath.replaceWith(runtimeNode);
+        file.set(HAS_CSS_PROP, true);
+      },
+
+      TaggedTemplateExpression(path, state) {
+        const pluginOptions = state.defaultedOptions;
 
         const tagPath = path.get('tag');
 
@@ -310,7 +414,7 @@ export default function plugin() {
 
       ImportDeclaration: {
         exit(path, state) {
-          const { tagName = 'css' } = state.opts;
+          const { tagName } = state.defaultedOptions;
           const specifiers = path.get('specifiers');
           const tagImport = path
             .get('specifiers')

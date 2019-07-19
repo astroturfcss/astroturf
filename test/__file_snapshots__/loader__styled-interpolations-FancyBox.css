@@ -1,0 +1,22 @@
+@value item as a6 from "styled-interpolations-base.css";
+
+
+.cls1 {
+color: red;
+width: 75px;
+
+&.a6 {
+padding: 5rem;
+}
+
+&.primary {
+background: white;
+color: palevioletred;
+}
+}
+.cls2 {
+composes: cls1;
+composes: global from global;
+composes: other from "styled-interpolations-other.css";
+composes: item from "styled-interpolations-base.css";
+}

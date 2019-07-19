@@ -2,7 +2,7 @@ export default function getMembers(path) {
   const members = [];
   let nextPath = path;
   while (true) {
-    if (nextPath.isMemberExpression()) {
+    if (nextPath.isMemberExpression() || nextPath.isJSXMemberExpression()) {
       members.push({
         path: nextPath.get('property'),
         computed: nextPath.node.computed,

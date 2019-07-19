@@ -1,0 +1,3 @@
+node_modules/
+test/fixtures/
+__file_snapshots__/

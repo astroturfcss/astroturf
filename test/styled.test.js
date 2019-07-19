@@ -1,14 +1,114 @@
 import { mount } from 'enzyme';
+import { stripIndent } from 'common-tags';
 import React from 'react';
 
 import { withProps } from '../src/helpers';
 import styled from '../src/index';
 
+import { run } from './helpers';
+
 describe('styled', () => {
+  it('should compile', async () => {
+    const [code] = await run(
+      `
+      import { styled } from 'astroturf';
+
+      const ButtonBase = styled('button')\`
+        @import '~./styles/mixins.scss';
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid transparent;
+      \`;
+    `,
+    );
+
+    expect(code).toEqual(
+      stripIndent`
+        import { styled } from 'astroturf';
+        const ButtonBase =
+        /*#__PURE__*/
+        styled('button', null, {
+          displayName: \"ButtonBase\",
+          styles: require(\"./MyStyleFile-ButtonBase.css\"),
+          attrs: null
+        });
+      `,
+    );
+  });
+
+  it('should hoist imports outside of wrapping class', async () => {
+    const [, styles] = await run(
+      `
+      import { styled } from 'astroturf';
+
+      const ButtonBase = styled('button')\`
+        @import '~./styles/mixins.scss';
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid transparent;
+      \`;
+    `,
+    );
+
+    expect(styles[0].value).toEqual(stripIndent`
+      @import '~./styles/mixins.scss';
+      .cls1 {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid transparent;
+      }
+    `);
+  });
+
+  it('should infer display names', async () => {
+    const [, styles] = await run(
+      `
+      import styled from 'astroturf';
+
+      const Foo = () => {};
+      const bar = 'qux';
+      Foo[bar]['baz'] = styled('div')\`
+        color: red;
+      \`;
+
+      export default styled(FancyBox)\`
+        color: ultra-red;
+      \`;
+    `,
+    );
+
+    expect(styles).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ identifier: 'FooBarBaz' }),
+        expect.objectContaining({ identifier: 'MyStyleFile' }),
+      ]),
+    );
+  });
+
+  it('should throw for unassigned components', async () => {
+    await expect(
+      run(
+        `
+        styled('p')\`
+          color: blue;
+        \`;
+    `,
+      ),
+    ).rejects.toThrow(
+      /The output of this styled component is never used\. Either assign it to a variable or export it/,
+    );
+  });
+
   it('should render the component with styles', () => {
     const Component = styled('div', null, {
       displayName: 'FancyBox',
       styles: {
+        cls1: 'cls1',
         green: 'green',
         big: 'big',
         dangerous: 'dangerous',
@@ -37,7 +137,7 @@ describe('styled', () => {
   it('should allow withComponent', () => {
     const Div = styled('div', null, {
       displayName: 'FancyBox',
-      styles: { green: 'green' },
+      styles: { cls1: 'cls1', green: 'green' },
       kebabName: 'fancy-box',
       camelName: 'fancyBox',
     });
@@ -51,7 +151,7 @@ describe('styled', () => {
   it('should allow `as` automatically on host components', () => {
     const Component = styled('div', null, {
       displayName: 'FancyBox',
-      styles: { green: 'green' },
+      styles: { cls1: 'cls1', green: 'green' },
       kebabName: 'fancy-box',
       camelName: 'fancyBox',
     });
@@ -62,7 +162,7 @@ describe('styled', () => {
   it('should not allow `as` automatically for custom components', () => {
     const Component = styled(() => <div />, null, {
       displayName: 'FancyBox',
-      styles: { green: 'green' },
+      styles: { cls1: 'cls1', green: 'green' },
       kebabName: 'fancy-box',
       camelName: 'fancyBox',
     });
@@ -76,7 +176,7 @@ describe('styled', () => {
       { allowAs: true },
       {
         displayName: 'FancyBox',
-        styles: { green: 'green' },
+        styles: { cls1: 'cls1', green: 'green' },
         kebabName: 'fancy-box',
         camelName: 'fancyBox',
       },
@@ -91,7 +191,7 @@ describe('styled', () => {
       { allowAs: false },
       {
         displayName: 'FancyBox',
-        styles: { green: 'green' },
+        styles: { cls1: 'cls1', green: 'green' },
         kebabName: 'fancy-box',
         camelName: 'fancyBox',
       },
@@ -105,7 +205,7 @@ describe('styled', () => {
   it('should passthrough as', () => {
     const Inner = styled('div', null, {
       displayName: 'FancyBox',
-      styles: { red: 'red' },
+      styles: { cls1: 'cls1', red: 'red' },
       kebabName: 'fancy-box',
       camelName: 'fancyBox',
     });
@@ -127,7 +227,7 @@ describe('styled', () => {
       const Component = styled('div', null, {
         displayName: 'FancyBox',
         attrs: p => ({ ...p, green: true }),
-        styles: { green: 'green' },
+        styles: { cls1: 'cls1', green: 'green' },
         kebabName: 'fancy-box',
         camelName: 'fancyBox',
       });
@@ -144,7 +244,7 @@ describe('styled', () => {
       const Component = styled('div', null, {
         displayName: 'FancyBox',
         attrs: p => ({ green: p.foo }),
-        styles: { green: 'green' },
+        styles: { cls1: 'cls1', green: 'green' },
         kebabName: 'fancy-box',
         camelName: 'fancyBox',
       });
