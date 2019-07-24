@@ -1,4 +1,5 @@
 lib/
 node_modules/
 test/fixtures/
+test/integration/
 __file_snapshots__/

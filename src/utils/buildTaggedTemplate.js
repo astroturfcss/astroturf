@@ -1,33 +1,110 @@
 import { dirname, relative } from 'path';
 import groupBy from 'lodash/groupBy';
 import uniq from 'lodash/uniq';
+import resolve from 'resolve';
+
+import getNameFromPath from './getNameFromPath';
 
 const rComposes = /\b(?:composes\s*?:\s*([^;>]*?)(?:from\s(.+?))?(?=[;}/\n\r]))/gim;
 const rPlaceholder = /###ASTROTURF_PLACEHOLDER_\d*?###/g;
 
-function resolveInterpolation(path, nodeMap, localStyle) {
+function defaultResolveDependency({ request }, localStyle) {
+  const source = resolve.sync(request, {
+    baseDir: dirname(localStyle.absoluteFilePath),
+  });
+
+  return { source };
+}
+
+function resolveMemberExpression(path) {
   let nextPath = path.resolve();
   while (nextPath && nextPath.isMemberExpression()) {
     nextPath = nextPath.get('object').resolve();
   }
-  const style = nextPath && nodeMap.get(nextPath.node);
-  if (!style) return null;
+  return nextPath;
+}
 
-  return {
-    isStyledComponent: style.isStyledComponent,
-    externalName: !style.isStyledComponent
-      ? path.get('property').node.name
-      : 'cls1',
-    importName: relative(
-      dirname(localStyle.absoluteFilePath),
-      style.absoluteFilePath,
-    ),
-  };
+function resolveImport(path) {
+  const resolvedPath = resolveMemberExpression(path);
+  const binding = resolvedPath.scope.getBinding(resolvedPath.node.name);
+  if (!binding || binding.kind !== 'module') return false;
+
+  const importPath = binding.path;
+  const parent = importPath.parentPath;
+  if (!parent.isImportDeclaration()) return null;
+
+  const request = parent.node.source.value;
+  let identifier;
+
+  if (importPath.isImportNamespaceSpecifier()) {
+    if (!path.isMemberExpression()) throw new Error('this is weird');
+    identifier = getNameFromPath(path.get('property'));
+  } else if (importPath.isImportDefaultSpecifier()) {
+    identifier = getNameFromPath(resolvedPath);
+  } else if (importPath.isImportSpecifier()) {
+    // TODO: this isn't correct doesn't do member expressions
+    identifier = getNameFromPath(importPath.get('imported'));
+  }
+
+  return { identifier, request, type: importPath.node.type };
+}
+
+function resolveInterpolation(
+  path,
+  nodeMap,
+  localStyle,
+  resolveDependency = defaultResolveDependency,
+) {
+  const resolvedPath = resolveMemberExpression(path);
+
+  const style = resolvedPath && nodeMap.get(resolvedPath.node);
+
+  if (style) {
+    return {
+      imported: !style.isStyledComponent
+        ? path.get('property').node.name
+        : 'cls1',
+      source: relative(
+        dirname(localStyle.absoluteFilePath),
+        style.absoluteFilePath,
+      ),
+    };
+  }
+
+  if (resolveDependency) {
+    const resolvedImport = resolveImport(path);
+
+    if (resolvedImport) {
+      const { identifier } = resolvedImport;
+      const interpolation =
+        resolveDependency(resolvedImport, localStyle, path.node) || null;
+
+      const isStyledComponent =
+        interpolation.isStyledComponent == null
+          ? identifier.toLowerCase()[0] !== identifier[0]
+          : interpolation.isStyledComponent;
+
+      return (
+        interpolation && {
+          imported: !isStyledComponent
+            ? path.get('property').node.name
+            : 'cls1',
+          ...interpolation,
+        }
+      );
+    }
+  }
+  return null;
 }
 
 const getPlaceholder = idx => `###ASTROTURF_PLACEHOLDER_${idx}###`;
 
-export default (quasiPath, nodeMap, localStyle, { tagName }) => {
+export default (
+  quasiPath,
+  nodeMap,
+  localStyle,
+  { tagName, resolveDependency },
+) => {
   const quasi = quasiPath.node;
 
   const interpolations = new Map();
@@ -49,7 +126,12 @@ export default (quasiPath, nodeMap, localStyle, { tagName }) => {
       }
 
       // TODO: dedupe the same expressions in a tag
-      const interpolation = resolveInterpolation(expr, nodeMap, localStyle);
+      const interpolation = resolveInterpolation(
+        expr,
+        nodeMap,
+        localStyle,
+        resolveDependency,
+      );
 
       if (!interpolation) {
         throw expr.buildCodeFrameError(
@@ -88,12 +170,12 @@ export default (quasiPath, nodeMap, localStyle, { tagName }) => {
       );
     }
 
-    return Object.entries(groupBy(composed, i => i.importName)).reduce(
-      (acc, [importName, values]) => {
-        const classes = uniq(values.map(v => v.externalName)).join(' ');
+    return Object.entries(groupBy(composed, i => i.source)).reduce(
+      (acc, [source, values]) => {
+        const classes = uniq(values.map(v => v.imported)).join(' ');
         return `${
           acc ? `${acc};\n` : ''
-        }composes: ${classes} from "${importName}"`;
+        }composes: ${classes} from "${source}"`;
       },
       '',
     );
@@ -102,10 +184,10 @@ export default (quasiPath, nodeMap, localStyle, { tagName }) => {
   let id = 0;
   let imports = '';
   text = text.replace(rPlaceholder, match => {
-    const { externalName, importName } = interpolations.get(match);
+    const { imported, source } = interpolations.get(match);
     const localName = `a${id++}`;
 
-    imports += `@value ${externalName} as ${localName} from "${importName}";\n`;
+    imports += `@value ${imported} as ${localName} from "${source}";\n`;
     return `.${localName}`;
   });
 
