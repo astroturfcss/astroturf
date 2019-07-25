@@ -502,7 +502,7 @@ You can also skip the included `css-loader` entirely if your preprocessor handle
 ```js
 [
   {
-    test: /\.scss$/,
+    test: /\.module\.scss$/,
     use: ['style-loader', 'css-loader?modules=true', 'sass-loader'],
   },
   ...

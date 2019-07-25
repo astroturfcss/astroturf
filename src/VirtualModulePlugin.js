@@ -18,16 +18,6 @@ class VirtualModulePlugin {
     // v3
     if (!compiler.resolverFactory) return plugin;
 
-    compilation.hooks.failedModule.tap(PLUGIN, args => {
-      console.log('EHRERARASFASF ASFAS F', args);
-    });
-
-    // compiler.resolverFactory.plugin('resolver normal', resolver => {
-    //   resolver.hooks.noResolve.tap('MyPlugin', params => {
-    //     console.log('EHRERARASFASF', params);
-    //   });
-    // });
-
     // this is suuuch a hack
     // we need to ensure that resolvers are rebuilt with the new filesystem, and
     // I don't know the right way to do that.
