@@ -4,18 +4,18 @@
 
 import path from 'path';
 import ExtractCSS from 'mini-css-extract-plugin';
+import stripAnsi from 'strip-ansi';
+
 import { runWebpack } from './helpers';
 
 describe('webpack integration', () => {
-  let config;
-
-  beforeEach(() => {
-    config = {
+  function getConfig(entry) {
+    return {
       devtool: false,
       mode: 'development',
       entry: {
-        main: require.resolve('./integration'),
-        vendor: ['react', 'react-dom'],
+        main: require.resolve(entry),
+        vendor: ['react', 'react-dom', 'astroturf'],
       },
       module: {
         rules: [
@@ -35,7 +35,7 @@ describe('webpack integration', () => {
           },
           {
             test: /\.jsx?$/,
-            exclude: /node_modules/,
+            exclude: /node_modules|astroturf\/src/,
             use: [
               {
                 loader: 'babel-loader',
@@ -53,16 +53,17 @@ describe('webpack integration', () => {
         ],
       },
       resolve: {
+        modules: ['node_modules', 'shared'],
         alias: {
           astroturf: require.resolve('../src/runtime/styled'),
         },
       },
       plugins: [new ExtractCSS()],
     };
-  });
+  }
 
   it('should work', async () => {
-    const assets = await runWebpack(config);
+    const assets = await runWebpack(getConfig('./integration/main.js'));
 
     expect(assets['main.css'].source()).toMatchFile(
       path.join(__dirname, '__file_snapshots__/integration-styles.css'),
@@ -70,5 +71,38 @@ describe('webpack integration', () => {
     expect(assets['main.js'].source()).toMatchFile(
       path.join(__dirname, '__file_snapshots__/integration-js.js'),
     );
+  });
+
+  it('should provide a helpful error when failing to resolve a default', async () => {
+    const error = await runWebpack(
+      getConfig('./integration/error-default-import.js'),
+    ).catch(err => err);
+
+    const message = stripAnsi(error.message);
+
+    expect(message).toEqual(
+      expect.stringContaining("import Button from './Button';"),
+    );
+    expect(message).toEqual(expect.stringContaining('Also available: styles'));
+  });
+
+  it('should provide a helpful error when failing to resolve a named import', async () => {
+    const error = await runWebpack(
+      getConfig('./integration/error-named-import.js'),
+    ).catch(err => err);
+
+    const message = stripAnsi(error.message);
+
+    expect(message).toEqual(
+      expect.stringContaining('Available: styles, Button'),
+    );
+    expect(message).toEqual(expect.stringContaining('Imported as MyButton'));
+  });
+
+  // This doesn't work it de
+  it('should throw on cycles', async () => {
+    await expect(
+      runWebpack(getConfig('./integration/cycle.js')),
+    ).rejects.toThrow(/cyclical style interpolation was detected/);
   });
 });

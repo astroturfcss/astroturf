@@ -1,12 +1,18 @@
-// eslint-disable-next-line import/no-unresolved
-import styled, { css } from 'astroturf';
 import React from 'react';
+import styled, { css } from 'astroturf';
+import Widget from 'widget';
+import Button, { styles as btnStyles } from './Button';
+import * as Buttons from './Button';
 
 const width = 75;
 
 const styles = css`
   .parent {
     color: red;
+  }
+
+  .test > ${btnStyles.cool}, .test > ${Widget} {
+    holla: yo;
   }
 `;
 
@@ -32,10 +38,14 @@ const FancierBox = styled('div')`
   ${styles.parent} > & {
     margin: 2em;
   }
-`;
 
-export const Button = styled('button')`
-  composes: button-with-caret from global;
+  /* these are the same selector */
+  & > ${Button} {
+    margin-left: 4px;
+  }
+  & > ${Buttons.Button} {
+    margin-left: 8px;
+  }
 `;
 
 export function MyComponent() {

@@ -255,7 +255,8 @@ One limitation to fully encapsulated styles is that it's hard to contextually st
 without them referencing each other. In astroturf you can use a component in a
 selector as if it were referencing a class selector.
 
-> Note: at the moment this only works for local identifiers, not imported components
+> Note: Referencing stylesheets or styled components from other files has a few caveats:
+> [cross-file-dependencies](/docs/cross-file-dependencies.md)
 
 ```js
 const Link = styled.a`
@@ -501,7 +502,7 @@ You can also skip the included `css-loader` entirely if your preprocessor handle
 ```js
 [
   {
-    test: /\.scss$/,
+    test: /\.module\.scss$/,
     use: ['style-loader', 'css-loader?modules=true', 'sass-loader'],
   },
   ...

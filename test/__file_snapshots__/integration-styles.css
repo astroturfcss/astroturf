@@ -1,44 +1,70 @@
-.index-CssProp1_div__cls1 {
+.main-CssProp1_div__cls1 {
 color: red;
 }
 
-.index-CssProp1_div__cls1.index-CssProp1_div__foo {
+.main-CssProp1_div__cls1.main-CssProp1_div__foo {
 color: blue;
 }
-.index-CssProp2_span__cls1 {
+.main-CssProp2_span__cls1 {
 color: blue;
+}
+.Widget__cls1 {
+height: 20px;
+width: 30px;
+background-color: #dfd;
 }
 
-  .index-styles__parent {
+  .Button-styles__cool {
+    content: '';
+  }
+
+.Button__cls1 {
+/*!*/
+}
+.Button__cls2 {
+}
+.main-styles__parent {
     color: red;
   }
 
-.index-FancyBox__cls1 {
+  .main-styles__test > .Button-styles__cool, .main-styles__test > .Widget__cls1 {
+    holla: yo;
+  }
+
+.main-FancyBox__cls1 {
 color: red;
 width: 75px;
 }
 
-.index-FancyBox__cls1.index-FancyBox__primary {
+.main-FancyBox__cls1.main-FancyBox__primary {
 background: white;
 color: palevioletred;
 }
-.index-FancyBox__cls2 {
+.main-FancyBox__cls2 {
 }
-.index-FancierBox__cls1 {
+.main-FancierBox__cls1 {
 color: ultra-red;
 }
 
 
-.index-FancierBox__cls1 > .index-FancyBox__cls1 {
+.main-FancierBox__cls1 > .main-FancyBox__cls1 {
 padding: 4em;
 }
 
 
-.index-styles__parent > .index-FancierBox__cls1 {
+.main-styles__parent > .main-FancierBox__cls1 {
 margin: 2em;
 }
-.index-Button__cls1 {
-/*!*/
+
+
+/* these are the same selector */
+
+
+.main-FancierBox__cls1 > .Button__cls1 {
+margin-left: 4px;
 }
-.index-Button__cls2 {
+
+
+.main-FancierBox__cls1 > .Button__cls1 {
+margin-left: 8px;
 }

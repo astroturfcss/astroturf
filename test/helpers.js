@@ -2,6 +2,7 @@ const fs = require('fs-extra');
 const webpack = require('webpack');
 const MemoryFS = require('memory-fs');
 const { transformAsync } = require('@babel/core');
+const { relative, dirname } = require('path');
 const loader = require('../src/loader');
 
 const PARSER_OPTS = {
@@ -32,22 +33,32 @@ export async function run(src, options, filename) {
   return [code, metadata.astroturf.styles];
 }
 
-export async function runLoader(src, options, filename = 'MyStyleFile.js') {
-  const loaderContext = {
-    query: options,
-    loaders: [{ request: '/path/css-literal-loader' }],
-    loaderIndex: 0,
-    context: '',
-    resource: filename,
-    resourcePath: filename,
-    request: `babel-loader!css-literal-loader!${filename}`,
-    emitVirtualFile: (_absoluteFilePath, _value) => {},
-  };
+export function runLoader(src, options, filename = 'MyStyleFile.js') {
+  return new Promise((resolve, reject) => {
+    const meta = {};
+    const loaderContext = {
+      query: options,
+      loaders: [{ request: '/path/css-literal-loader' }],
+      loaderIndex: 0,
+      context: '',
+      resource: filename,
+      resourcePath: filename,
+      request: `babel-loader!css-literal-loader!${filename}`,
+      _compiler: {},
+      _compilation: {},
+      _module: {},
+      resolve(request, cb) {
+        cb(null, relative(dirname(filename), request));
+      },
+      emitVirtualFile: (_absoluteFilePath, _value) => {},
+      async: () => (err, result) => {
+        if (err) reject(err);
+        else resolve([result, meta.styles]);
+      },
+    };
 
-  const meta = {};
-  const code = await loader.call(loaderContext, src, null, meta);
-
-  return [code, meta.styles];
+    loader.call(loaderContext, src, null, meta);
+  });
 }
 
 export const fixtures = fs
@@ -79,7 +90,12 @@ export function runWebpack(config) {
       if (stats.hasErrors() || stats.hasWarnings()) {
         const { errors, warnings } = stats.toJson();
         reject(
-          Object.assign(new Error(errors.join('\n')), { errors, warnings }),
+          Object.assign(
+            new Error(
+              `Webpack threw the following errors:\n\n ${errors.join('\n')}`,
+            ),
+            { errors, warnings, framesToPop: 1 },
+          ),
         );
         return;
       }

@@ -1,18 +1,18 @@
-import { basename, dirname, extname, join, relative } from 'path';
+import { dirname, relative } from 'path';
+import chalk from 'chalk';
 import { stripIndent } from 'common-tags';
 import { outputFileSync } from 'fs-extra';
 import defaults from 'lodash/defaults';
 import get from 'lodash/get';
-import { addNamed, addDefault } from '@babel/helper-module-imports';
 import generate from '@babel/generator';
+import { addDefault, addNamed } from '@babel/helper-module-imports';
 import template from '@babel/template';
 import * as t from '@babel/types';
 
-import chalk from 'chalk';
 import buildTaggedTemplate from './utils/buildTaggedTemplate';
+import createFileName, { getNameFromFile } from './utils/createFilename';
 import getNameFromPath from './utils/getNameFromPath';
 import normalizeAttrs from './utils/normalizeAttrs';
-import pascalCase from './utils/pascalCase';
 import wrapInClass from './utils/wrapInClass';
 
 const buildImport = template('require(FILENAME);');
@@ -33,12 +33,6 @@ const JSX_IDENTIFIER = '_AstroTurfJsx';
 const PRAGMA_BODY = `* @jsx ${JSX_IDENTIFIER} *`;
 const FRAG_PRAGMA_BODY = '* @jsxFrag React.Fragment *';
 
-function getNameFromFile(fileName) {
-  const name = basename(fileName, extname(fileName));
-  if (name !== 'index') return pascalCase(name);
-  return pascalCase(basename(dirname(fileName)));
-}
-
 function getDisplayName(
   path,
   { file },
@@ -53,15 +47,6 @@ function getDisplayName(
       return getNameFromFile(file.opts.filename);
   }
   return defaultName || null;
-}
-
-function createFileName(hostFile, { extension = '.css' }, id) {
-  let base;
-
-  if (getNameFromFile(hostFile) === id) base = id;
-  else base = `${basename(hostFile, extname(hostFile))}-${id}`;
-
-  return join(dirname(hostFile), base + extension);
 }
 
 function isCssTag(tagPath, { tagName, allowGlobal }) {
