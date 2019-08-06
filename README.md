@@ -177,7 +177,7 @@ function Button({ variant, children }) {
 }
 ```
 
-Styles are still extracted to a separate file, any props matching other defined classes are passed to the `classNames()` library. At runtime `styled()` returns a React component with the static CSS classes applied. You can check out the ["runtime"](https://github.com/4Catalyzer/astroturf/blob/master/src/runtime/styled.js#L16) it just creates a component.
+Styles are still extracted to a separate file, any props matching other defined classes are passed to the `classNames()` library. At runtime `styled()` returns a React component with the static CSS classes applied. You can check out the ["runtime"](https://github.com/4Catalyzer/astroturf/blob/master/src/runtime/styled.js) it just creates a component.
 
 There are a whole bucket of caveats of course, to keep the above statically extractable, and limit runtime code.
 
