@@ -1,3 +1,15 @@
+## [0.9.10](https://github.com/4Catalyzer/astroturf/compare/v0.9.9...v0.9.10) (2019-08-06)
+
+
+### Features
+
+* add cross-file dependency resolution ([#327](https://github.com/4Catalyzer/astroturf/issues/327)) ([ffd5186](https://github.com/4Catalyzer/astroturf/commit/ffd5186))
+* add css prop and clean up testing ([#308](https://github.com/4Catalyzer/astroturf/issues/308)) ([fa6e209](https://github.com/4Catalyzer/astroturf/commit/fa6e209))
+
+
+
+
+
 ## [0.9.9](https://github.com/4Catalyzer/astroturf/compare/v0.9.8...v0.9.9) (2019-07-18)
 
 
