@@ -1,3 +1,14 @@
+## [0.9.12](https://github.com/4Catalyzer/astroturf/compare/v0.9.11...v0.9.12) (2019-08-08)
+
+
+### Bug Fixes
+
+* fragments in typescript ([#341](https://github.com/4Catalyzer/astroturf/issues/341)) ([999dbfd](https://github.com/4Catalyzer/astroturf/commit/999dbfd))
+
+
+
+
+
 ## [0.9.11](https://github.com/4Catalyzer/astroturf/compare/v0.9.10...v0.9.11) (2019-08-08)
 
 
