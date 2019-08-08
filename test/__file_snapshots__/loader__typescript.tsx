@@ -1,7 +1,7 @@
-/** @jsx _AstroTurfJsx **/
-/** @jsxFrag React.Fragment **/
+/** @jsx _j **/
+/** @jsxFrag _f **/
 
-const { jsx: _AstroTurfJsx } = require('astroturf');
+const { jsx: _j, F: _f } = require('astroturf');
 const _default = require('./typescript-CssProp1_Button.css');
 const _default2 = require('./typescript-CssProp2_Button.css');
 import styled from 'astroturf'

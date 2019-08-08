@@ -1,6 +1,7 @@
-import React from 'react';
 import styled, { css } from 'astroturf';
+import React from 'react';
 import Widget from 'widget';
+
 import Button, { styles as btnStyles } from './Button';
 import * as Buttons from './Button';
 
@@ -53,7 +54,7 @@ export function MyComponent() {
     <>
       <div
         foo
-        css={`
+        css={css`
           color: red;
 
           &.foo {

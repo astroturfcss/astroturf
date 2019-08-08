@@ -110,7 +110,7 @@ function styled(type, options, settings) {
 }
 
 function jsx(type, props, ...children) {
-  if (props.css) {
+  if (props && props.css) {
     const { css, ...childProps } = props;
     childProps.className = propsToStyles(childProps, css, true);
     props = childProps;
@@ -121,6 +121,7 @@ function jsx(type, props, ...children) {
 module.exports = styled;
 module.exports.styled = styled;
 module.exports.jsx = jsx;
+module.exports.F = React.Fragment;
 
 if (__DEV__) {
   module.exports.css = () => {
