@@ -119,7 +119,7 @@ function styled(type, options, settings) {
 }
 
 function jsx(type, props, ...children) {
-  if (props.css) {
+  if (props && props.css) {
     const { css, ...childProps } = props;
     childProps.className = propsToStyles(childProps, css, true);
     props = childProps;
@@ -130,6 +130,7 @@ function jsx(type, props, ...children) {
 module.exports = styled;
 module.exports.styled = styled;
 module.exports.jsx = jsx;
+module.exports.F = React.Fragment;
 
 if (__DEV__) {
   module.exports.css = () => {
@@ -260,17 +261,18 @@ module.exports = {"a0":"Button-styles__cool","a1":"Widget__cls1","parent":"main-
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MyComponent", function() { return MyComponent; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var astroturf__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! astroturf */ "./src/runtime/styled.js");
-/* harmony import */ var astroturf__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(astroturf__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var astroturf__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf */ "./src/runtime/styled.js");
+/* harmony import */ var astroturf__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(astroturf__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var widget__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! widget */ "./test/integration/shared/widget/index.js");
 /* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Button */ "./test/integration/Button.js");
-/** @jsx _AstroTurfJsx **/
+/** @jsx _j **/
 
-/** @jsxFrag React.Fragment **/
+/** @jsxFrag _f **/
 const {
-  jsx: _AstroTurfJsx
+  jsx: _j,
+  F: _f
 } = __webpack_require__(/*! astroturf */ "./src/runtime/styled.js");
 
 const _default = __webpack_require__(/*! ./main-CssProp1_div.css */ "./test/integration/main-CssProp1_div.css");
@@ -286,21 +288,21 @@ const width = 75;
 
 const styles = __webpack_require__(/*! ./main-styles.css */ "./test/integration/main-styles.css");
 
-const FancyBox = astroturf__WEBPACK_IMPORTED_MODULE_1___default()('div', null, {
+const FancyBox = astroturf__WEBPACK_IMPORTED_MODULE_0___default()('div', null, {
   displayName: "FancyBox",
   styles: __webpack_require__(/*! ./main-FancyBox.css */ "./test/integration/main-FancyBox.css"),
   attrs: null
 });
-const FancierBox = astroturf__WEBPACK_IMPORTED_MODULE_1___default()('div', null, {
+const FancierBox = astroturf__WEBPACK_IMPORTED_MODULE_0___default()('div', null, {
   displayName: "FancierBox",
   styles: __webpack_require__(/*! ./main-FancierBox.css */ "./test/integration/main-FancierBox.css"),
   attrs: null
 });
 function MyComponent() {
-  return _AstroTurfJsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, _AstroTurfJsx("div", {
+  return _j(_f, null, _j("div", {
     foo: true,
     css: _default
-  }, _AstroTurfJsx("div", null, "hey "), _AstroTurfJsx("span", {
+  }, _j("div", null, "hey "), _j("span", {
     css: _default2
   }, "yo")));
 }

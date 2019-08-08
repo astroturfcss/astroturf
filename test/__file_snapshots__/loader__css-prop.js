@@ -1,7 +1,7 @@
-/** @jsx _AstroTurfJsx **/
-/** @jsxFrag React.Fragment **/
+/** @jsx _j **/
+/** @jsxFrag _f **/
 
-const { jsx: _AstroTurfJsx } = require('astroturf');
+const { jsx: _j, F: _f } = require('astroturf');
 const _default = require('./css-prop-CssProp1_button.css');
 const _default2 = require('./css-prop-CssProp2_button.css');
 const _default3 = require('./css-prop-CssProp3_button.css');

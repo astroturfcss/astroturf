@@ -29,10 +29,6 @@ const COMPONENTS = Symbol('Astroturf components');
 const IMPORTS = Symbol('Astroturf imports');
 const HAS_CSS_PROP = Symbol('Astroturf has css prop');
 
-const JSX_IDENTIFIER = '_AstroTurfJsx';
-const PRAGMA_BODY = `* @jsx ${JSX_IDENTIFIER} *`;
-const FRAG_PRAGMA_BODY = '* @jsxFrag React.Fragment *';
-
 function getDisplayName(
   path,
   { file },
@@ -254,15 +250,25 @@ export default function plugin() {
         exit(path, state) {
           if (!state.file.get(HAS_CSS_PROP)) return;
 
-          addNamed(path, 'jsx', 'astroturf', { nameHint: JSX_IDENTIFIER });
-          path.addComment('leading', PRAGMA_BODY);
-          path.addComment('leading', FRAG_PRAGMA_BODY);
+          // We need to re-export Fragment because of
+          // https://github.com/babel/babel/pull/7996#issuecomment-519653431
+          const jsx = path.scope.generateUidIdentifier('j');
+          const jsxFrag = path.scope.generateUidIdentifier('f');
+
+          const jsxPrgama = `* @jsx ${jsx.name} *`;
+          const jsxFragPrgama = `* @jsxFrag ${jsxFrag.name} *`;
+
+          path.addComment('leading', jsxPrgama);
+          path.addComment('leading', jsxFragPrgama);
+
+          addNamed(path, 'jsx', 'astroturf', { nameHint: jsx.name });
+          addNamed(path, 'F', 'astroturf', { nameHint: jsxFrag.name });
 
           state.file.get(STYLES).changeset.unshift(
-            { code: `/*${PRAGMA_BODY}*/\n` },
-            { code: `/*${FRAG_PRAGMA_BODY}*/\n\n` },
+            { code: `/*${jsxPrgama}*/\n` },
+            { code: `/*${jsxFragPrgama}*/\n\n` },
             {
-              code: `const { jsx: ${JSX_IDENTIFIER} } = require('astroturf');\n`,
+              code: `const { jsx: ${jsx.name}, F: ${jsxFrag.name} } = require('astroturf');\n`,
             },
           );
         },
