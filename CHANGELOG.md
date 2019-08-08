@@ -1,3 +1,14 @@
+## [0.9.11](https://github.com/4Catalyzer/astroturf/compare/v0.9.10...v0.9.11) (2019-08-08)
+
+
+### Bug Fixes
+
+* **types:** fix up css prop types ([85d12d9](https://github.com/4Catalyzer/astroturf/commit/85d12d9))
+
+
+
+
+
 ## [0.9.10](https://github.com/4Catalyzer/astroturf/compare/v0.9.9...v0.9.10) (2019-08-06)
 
 
