@@ -121,7 +121,6 @@
     "react-dom": "^16.8.3",
     "rimraf": "^2.6.3",
     "strip-ansi": "^5.2.0",
-    "style-loader": "^0.23.1",
     "webpack": "^4.36.1",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.2.1"
