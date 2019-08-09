@@ -3,10 +3,16 @@ import groupBy from 'lodash/groupBy';
 import uniq from 'lodash/uniq';
 import resolve from 'resolve';
 
+import cssUnits from './cssUnits';
 import getNameFromPath from './getNameFromPath';
+import hash from './murmurHash';
 
 const rComposes = /\b(?:composes\s*?:\s*([^;>]*?)(?:from\s(.+?))?(?=[;}/\n\r]))/gim;
 const rPlaceholder = /###ASTROTURF_PLACEHOLDER_\d*?###/g;
+// Match any valid CSS units followed by a separator such as ;, newline etc.
+const rUnit = new RegExp(`^(${cssUnits.join('|')})(;|,|\n| |\\))`);
+
+// const toValidCSSIdentifier = s => s.replace(/[^_0-9a-z]/gi, '_');
 
 function defaultResolveDependency({ request }, localStyle) {
   const source = resolve.sync(request, {
@@ -49,7 +55,7 @@ function resolveImport(path) {
   return { identifier, request, type: importPath.node.type };
 }
 
-function resolveInterpolation(
+function resolveStyleInterpolation(
   path,
   nodeMap,
   localStyle,
@@ -99,52 +105,86 @@ function resolveInterpolation(
 
 const getPlaceholder = idx => `###ASTROTURF_PLACEHOLDER_${idx}###`;
 
-export default (
+export default ({
   quasiPath,
   nodeMap,
-  localStyle,
-  { tagName, resolveDependency },
-) => {
+  tagName,
+  resolveDependency,
+  useCssProperties,
+  style: localStyle,
+}) => {
   const quasi = quasiPath.node;
 
-  const interpolations = new Map();
+  const styleInterpolations = new Map();
+  const dynamicInterpolations = new Set();
   const expressions = quasiPath.get('expressions');
 
   let text = '';
+  let lastDynamic = null;
+
   quasi.quasis.forEach((tmplNode, idx) => {
     const { cooked } = tmplNode.value;
     const expr = expressions[idx];
 
-    text += cooked;
+    let matches;
 
-    if (expr) {
-      const result = expr.evaluate();
+    // If the last quasi is a replaced dynamic import then see if there
+    // was a trailing css unit and extract it as part of the interpolation
+    // eslint-disable-next-line no-cond-assign
+    if (
+      lastDynamic &&
+      text.endsWith(`var(--${lastDynamic.id})`) &&
+      (matches = cooked.match(rUnit))
+    ) {
+      const [, unit] = matches;
 
-      if (result.confident) {
-        text += result.value;
-        return;
-      }
+      lastDynamic.unit = unit;
+      text += cooked.replace(rUnit, '$2');
+    } else {
+      text += cooked;
+    }
 
-      // TODO: dedupe the same expressions in a tag
-      const interpolation = resolveInterpolation(
-        expr,
-        nodeMap,
-        localStyle,
-        resolveDependency,
-      );
+    if (!expr) {
+      return;
+    }
 
-      if (!interpolation) {
-        throw expr.buildCodeFrameError(
-          `Could not resolve interpolation to a value, ${tagName} returned class name, or styled component. ` +
-            'All interpolated styled components must be in the same file and values must be statically determinable at compile time.',
-        );
-      }
+    const result = expr.evaluate();
+    if (result.confident) {
+      text += result.value;
+      return;
+    }
 
+    // TODO: dedupe the same expressions in a tag
+    const interpolation = resolveStyleInterpolation(
+      expr,
+      nodeMap,
+      localStyle,
+      resolveDependency,
+    );
+
+    if (interpolation) {
       interpolation.expr = expr;
       const ph = getPlaceholder(idx);
-      interpolations.set(ph, interpolation);
+      styleInterpolations.set(ph, interpolation);
       text += ph;
+
+      return;
     }
+
+    if (!useCssProperties) {
+      throw expr.buildCodeFrameError(
+        `Could not resolve interpolation to a value, ${tagName} returned class name, or styled component. ` +
+          'All interpolated styled components must be in the same file and values must be statically determinable at compile time.',
+      );
+    }
+
+    // custom properties need to start with a letter
+    const id = `a${hash(`${localStyle.identifier}-${idx}`)}`;
+
+    lastDynamic = { id, expr, unit: '' };
+    dynamicInterpolations.add(lastDynamic);
+
+    text += `var(--${id})`;
   });
 
   // Replace references in `composes` rules
@@ -152,7 +192,7 @@ export default (
     const classList = classNames.replace(/(\n|\r|\n\r)/, '').split(/\s+/);
 
     const composed = classList
-      .map(className => interpolations.get(className))
+      .map(className => styleInterpolations.get(className))
       .filter(Boolean);
 
     if (!composed.length) return composes;
@@ -184,7 +224,7 @@ export default (
   let id = 0;
   let imports = '';
   text = text.replace(rPlaceholder, match => {
-    const { imported, source } = interpolations.get(match);
+    const { imported, source } = styleInterpolations.get(match);
     const localName = `a${id++}`;
 
     imports += `@value ${imported} as ${localName} from "${source}";\n`;
@@ -196,5 +236,6 @@ export default (
   return {
     text,
     imports,
+    dynamicInterpolations,
   };
 };

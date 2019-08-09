@@ -24,7 +24,8 @@ function someMath<T extends { x: number }>(obj: T): T {
 const Button = styled('button', null, {
   displayName: "Button",
   styles: require("./typescript-Button.css"),
-  attrs: null
+  attrs: null,
+  vars: []
 });
 
 class Component extends React.Component<PropsType> {

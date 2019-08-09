@@ -8,7 +8,8 @@ styled('div', {
 }, {
   displayName: "FancyBox",
   styles: require("./pass-options-FancyBox.css"),
-  attrs: null
+  attrs: null,
+  vars: []
 });
 const options = {};
 const FancierBox =
@@ -16,5 +17,6 @@ const FancierBox =
 styled(FancyBox, options, {
   displayName: "FancierBox",
   styles: require("./pass-options-FancierBox.css"),
-  attrs: null
+  attrs: null,
+  vars: []
 });

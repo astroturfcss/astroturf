@@ -5,5 +5,6 @@ const FancyBox =
 styled("div", null, {
   displayName: "FancyBox",
   styles: require("./element-shorthand-FancyBox.css"),
-  attrs: null
+  attrs: null,
+  vars: []
 });

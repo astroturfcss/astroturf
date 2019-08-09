@@ -1,9 +1,8 @@
 // TypeScript Version: 3.0
 
-import * as React from 'react';
 import styled, { css } from 'astroturf';
-
 import { mapProps, withProps } from 'astroturf/helpers';
+import * as React from 'react';
 
 // $ExpectType StyledFunction<"a", {}, never>
 styled.a;
