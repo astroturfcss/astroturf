@@ -1,3 +1,14 @@
+## [0.9.13](https://github.com/4Catalyzer/astroturf/compare/v0.9.12...v0.9.13) (2019-08-13)
+
+
+### Features
+
+* add support for custom css properties ([#348](https://github.com/4Catalyzer/astroturf/issues/348)) ([6801760](https://github.com/4Catalyzer/astroturf/commit/6801760))
+
+
+
+
+
 ## [0.9.12](https://github.com/4Catalyzer/astroturf/compare/v0.9.11...v0.9.12) (2019-08-08)
 
 
