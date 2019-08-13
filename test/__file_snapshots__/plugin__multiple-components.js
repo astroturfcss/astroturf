@@ -6,12 +6,14 @@ const FancyBox =
 styled('div', null, {
   displayName: "FancyBox",
   styles: require("./multiple-components-FancyBox.css"),
-  attrs: null
+  attrs: null,
+  vars: []
 });
 const FancyHeader =
 /*#__PURE__*/
 styled('h2', null, {
   displayName: "FancyHeader",
   styles: require("./multiple-components-FancyHeader.css"),
-  attrs: null
+  attrs: null,
+  vars: []
 });

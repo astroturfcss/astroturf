@@ -1,10 +1,9 @@
-import { mount } from 'enzyme';
 import { stripIndent } from 'common-tags';
+import { mount } from 'enzyme';
 import React from 'react';
 
 import { withProps } from '../src/helpers';
 import styled from '../src/index';
-
 import { run } from './helpers';
 
 describe('styled', () => {
@@ -32,7 +31,8 @@ describe('styled', () => {
         styled('button', null, {
           displayName: \"ButtonBase\",
           styles: require(\"./MyStyleFile-ButtonBase.css\"),
-          attrs: null
+          attrs: null,
+          vars: []
         });
       `,
     );

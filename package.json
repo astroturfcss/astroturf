@@ -34,6 +34,11 @@
       "git add"
     ]
   },
+  "importSort": {
+    ".js, .ts, .tsx": {
+      "style": "@4c/import-sort"
+    }
+  },
   "prettier": {
     "printWidth": 79,
     "singleQuote": true,

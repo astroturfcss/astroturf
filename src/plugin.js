@@ -20,7 +20,8 @@ const buildComponent = template(
   `styled(ELEMENTTYPE, OPTIONS, {
     displayName: DISPLAYNAME,
     styles: IMPORT,
-    attrs: ATTRS
+    attrs: ATTRS,
+    vars: VARS
   })`,
 );
 
@@ -84,6 +85,22 @@ const isStyledTagShorthand = (tagPath, { styledTag, allowGlobal }) => {
   );
 };
 
+const trimExprs = interpolations =>
+  Array.from(interpolations, ({ expr: _, ...i }) => i);
+
+const toVarsArray = interpolations =>
+  t.ArrayExpression(
+    Array.from(interpolations, i =>
+      t.ArrayExpression(
+        [
+          t.StringLiteral(i.id),
+          i.expr.node,
+          i.unit && t.StringLiteral(i.unit),
+        ].filter(Boolean),
+      ),
+    ),
+  );
+
 export default function plugin() {
   function createStyleNode(path, identifier, { pluginOptions, file }) {
     const { start, end } = path.node;
@@ -112,12 +129,13 @@ export default function plugin() {
 
     style.code = `require('${style.relativeFilePath}')`;
 
-    const { text, imports } = buildTaggedTemplate(
-      path.get('quasi'),
+    const { text, imports } = buildTaggedTemplate({
+      quasiPath: path.get('quasi'),
       nodeMap,
       style,
-      opts.pluginOptions,
-    );
+      useCssProperties: false,
+      ...opts.pluginOptions,
+    });
 
     style.value = `${imports}${text}`;
 
@@ -155,13 +173,16 @@ export default function plugin() {
 
     style.isStyledComponent = true;
 
-    const { text, imports } = buildTaggedTemplate(
-      path.get('quasi'),
-      nodeMap,
+    const { text, dynamicInterpolations, imports } = buildTaggedTemplate({
       style,
-      opts.pluginOptions,
-    );
+      nodeMap,
+      ...opts.pluginOptions,
+      quasiPath: path.get('quasi'),
+      useCssProperties: pluginOptions.customCssProperties === true,
+    });
 
+    style.imports = imports;
+    style.interpolations = trimExprs(dynamicInterpolations);
     style.value = imports + wrapInClass(text);
 
     const runtimeNode = buildComponent({
@@ -169,6 +190,7 @@ export default function plugin() {
       ATTRS: normalizeAttrs(styledAttrs),
       OPTIONS: styledOptions || t.NullLiteral(),
       DISPLAYNAME: t.StringLiteral(displayName),
+      VARS: toVarsArray(dynamicInterpolations),
       IMPORT: buildImport({
         FILENAME: t.StringLiteral(style.relativeFilePath),
       }).expression,
@@ -245,6 +267,7 @@ export default function plugin() {
             tagName: 'css',
             allowGlobal: true,
             styledTag: 'styled',
+            customCssProperties: 'cssProp', // or: true, false
           });
         },
         exit(path, state) {
@@ -302,6 +325,7 @@ export default function plugin() {
           path.findParent(p => p.isJSXOpeningElement).get('name'),
         )}`;
 
+        let vars;
         const style = createStyleNode(valuePath, displayName, {
           pluginOptions,
           file: state.file,
@@ -317,29 +341,42 @@ export default function plugin() {
             (exprPath.isTaggedTemplateExpression() &&
               isCssTag(exprPath.get('tag'), pluginOptions))
           ) {
-            const { text, imports } = buildTaggedTemplate(
-              exprPath.isTemplateLiteral() ? exprPath : exprPath.get('quasi'),
-              nodeMap,
+            const {
+              text,
+              imports,
+              dynamicInterpolations,
+            } = buildTaggedTemplate({
               style,
-              pluginOptions,
-            );
+              nodeMap,
+              ...pluginOptions,
+              quasiPath: exprPath.isTemplateLiteral()
+                ? exprPath
+                : exprPath.get('quasi'),
+              useCssProperties: !!pluginOptions.customCssProperties,
+            });
+
+            vars = toVarsArray(dynamicInterpolations);
+
+            style.imports = imports;
+            style.interpolations = trimExprs(dynamicInterpolations);
             style.value = imports + wrapInClass(text);
           }
         }
 
         if (style.value == null) return;
 
+        const importId = addDefault(valuePath, style.relativeFilePath);
         const runtimeNode = t.jsxExpressionContainer(
-          addDefault(valuePath, style.relativeFilePath),
+          t.arrayExpression([importId, vars].filter(Boolean)),
         );
 
         cssState.styles.set(style.absoluteFilePath, style);
 
         if (pluginOptions.generateInterpolations)
-          style.code = `{${runtimeNode.expression.name}}`;
+          style.code = `{${importId.name}}`;
 
         cssState.changeset.push({
-          code: `const ${runtimeNode.expression.name} = require('${style.relativeFilePath}');\n`,
+          code: `const ${importId.name} = require('${style.relativeFilePath}');\n`,
         });
 
         nodeMap.set(runtimeNode.expression, style);

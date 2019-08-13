@@ -6,12 +6,14 @@ const FancyBox =
 styled('div', null, {
   displayName: "FancyBox",
   styles: require("./styled-FancyBox.css"),
-  attrs: null
+  attrs: null,
+  vars: []
 });
 const FancierBox =
 /*#__PURE__*/
 styled(FancyBox, null, {
   displayName: "FancierBox",
   styles: require("./styled-FancierBox.css"),
-  attrs: null
+  attrs: null,
+  vars: []
 });

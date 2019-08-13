@@ -1,4 +1,5 @@
 import { mount } from 'enzyme';
+
 import { jsx } from '../src/index';
 import { run, runLoader } from './helpers';
 

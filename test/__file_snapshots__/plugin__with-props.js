@@ -6,7 +6,8 @@ styled('input', null, {
   styles: require("./with-props-RedPasswordInput.css"),
   attrs: props => ({ ...props,
     type: 'password'
-  })
+  }),
+  vars: []
 });
 const RedPasswordInput2 =
 /*#__PURE__*/
@@ -15,5 +16,6 @@ styled('input', null, {
   styles: require("./with-props-RedPasswordInput2.css"),
   attrs: p => ({
     type: 'password'
-  })
+  }),
+  vars: []
 });

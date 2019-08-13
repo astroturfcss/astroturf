@@ -18,6 +18,16 @@ const camelCase = str =>
     '',
   );
 
+function varsToStyles(props, vars) {
+  if (!vars || !vars.length) return props.style;
+  const style = { ...props.style };
+  vars.forEach(([id, value, unit = '']) => {
+    const result = typeof value === 'function' ? value(props) : value;
+    style[`--${id}`] = `${result}${unit}`;
+  });
+  return style;
+}
+
 function propsToStyles(props, styles, hasModifiers) {
   const componentClassName = styles.cls2 || styles.cls1;
   let className = props.className
@@ -80,7 +90,7 @@ function styled(type, options, settings) {
           'ensure that your versions are properly deduped and upgraded. ',
       );
   }
-  const { displayName, attrs, styles } = settings;
+  const { displayName, attrs, vars, styles } = settings;
 
   options = options || { allowAs: typeof type === 'string' };
 
@@ -96,7 +106,7 @@ function styled(type, options, settings) {
     const childProps = { ...props, ref };
 
     if (allowAs) delete childProps.as;
-
+    childProps.style = varsToStyles(childProps, vars);
     childProps.className = propsToStyles(childProps, styles, hasModifiers);
 
     return React.createElement(
@@ -121,7 +131,8 @@ function styled(type, options, settings) {
 function jsx(type, props, ...children) {
   if (props && props.css) {
     const { css, ...childProps } = props;
-    childProps.className = propsToStyles(childProps, css, true);
+    childProps.style = varsToStyles(childProps, css[1]);
+    childProps.className = propsToStyles(childProps, css[0] || css, true);
     props = childProps;
   }
   return React.createElement(type, props, ...children);
@@ -185,7 +196,8 @@ const styles = __webpack_require__(/*! ./Button-styles.css */ "./test/integratio
 const Button = astroturf__WEBPACK_IMPORTED_MODULE_0___default()('button', null, {
   displayName: "Button",
   styles: __webpack_require__(/*! ./Button.css */ "./test/integration/Button.css"),
-  attrs: null
+  attrs: null,
+  vars: []
 });
 /* harmony default export */ __webpack_exports__["default"] = (Button);
 
@@ -291,12 +303,14 @@ const styles = __webpack_require__(/*! ./main-styles.css */ "./test/integration/
 const FancyBox = astroturf__WEBPACK_IMPORTED_MODULE_0___default()('div', null, {
   displayName: "FancyBox",
   styles: __webpack_require__(/*! ./main-FancyBox.css */ "./test/integration/main-FancyBox.css"),
-  attrs: null
+  attrs: null,
+  vars: []
 });
 const FancierBox = astroturf__WEBPACK_IMPORTED_MODULE_0___default()('div', null, {
   displayName: "FancierBox",
   styles: __webpack_require__(/*! ./main-FancierBox.css */ "./test/integration/main-FancierBox.css"),
-  attrs: null
+  attrs: null,
+  vars: []
 });
 function MyComponent() {
   return _j(_f, null, _j("div", {
@@ -337,7 +351,8 @@ __webpack_require__.r(__webpack_exports__);
 const Widget = astroturf__WEBPACK_IMPORTED_MODULE_0___default()('div', null, {
   displayName: "Widget",
   styles: __webpack_require__(/*! ./Widget.css */ "./test/integration/shared/widget/Widget.css"),
-  attrs: null
+  attrs: null,
+  vars: []
 });
 /* harmony default export */ __webpack_exports__["default"] = (Widget);
 

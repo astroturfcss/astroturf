@@ -5,12 +5,14 @@ const FancyBox =
 styled('div', null, {
   displayName: "FancyBox",
   styles: require("./styled-tag-FancyBox.css"),
-  attrs: null
+  attrs: null,
+  vars: []
 });
 const FancierBox =
 /*#__PURE__*/
 styled(FancyBox, null, {
   displayName: "FancierBox",
   styles: require("./styled-tag-FancierBox.css"),
-  attrs: null
+  attrs: null,
+  vars: []
 });
