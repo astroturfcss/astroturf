@@ -124,7 +124,7 @@
     "prettier": "^1.16.4",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
-    "rimraf": "^2.6.3",
+    "rimraf": "^3.0.0",
     "strip-ansi": "^5.2.0",
     "webpack": "^4.36.1",
     "webpack-cli": "^3.2.3",
