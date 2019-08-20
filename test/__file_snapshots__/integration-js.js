@@ -315,9 +315,9 @@ const FancierBox = astroturf__WEBPACK_IMPORTED_MODULE_0___default()('div', null,
 function MyComponent() {
   return _j(_f, null, _j("div", {
     foo: true,
-    css: _default
+    css: [_default, []]
   }, _j("div", null, "hey "), _j("span", {
-    css: _default2
+    css: [_default2, []]
   }, "yo")));
 }
 /* harmony default export */ __webpack_exports__["default"] = (FancierBox);

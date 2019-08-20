@@ -35,13 +35,13 @@ class Component extends React.Component<PropsType> {
         <h2>{this.props.children}</h2>
         <Button
           variant="primary"
-          css={_default}
+          css={[_default, []]}
         >
           click
         </Button>
         <Button
           variant="secondary"
-          css={_default2}
+          css={[_default2, []]}
         >
           cancel
         </Button>

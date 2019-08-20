@@ -10,13 +10,13 @@ const _default3 = require('./css-prop-CssProp3_button.css');
 function Button() {
   return (
     <button
-      css={_default}
+      css={[_default, []]}
     />
   );
 }
 
 function Button2() {
-  return <button css={_default2} />;
+  return <button css={[_default2]} />;
 }
 
 const color = 'orange';
@@ -24,7 +24,7 @@ function Button3() {
   return (
     <>
       <button
-        css={_default3}
+        css={[_default3, []]}
       />
     </>
   );

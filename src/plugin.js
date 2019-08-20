@@ -373,7 +373,7 @@ export default function plugin() {
         cssState.styles.set(style.absoluteFilePath, style);
 
         if (pluginOptions.generateInterpolations)
-          style.code = `{${importId.name}}`;
+          style.code = generate(runtimeNode).code;
 
         cssState.changeset.push({
           code: `const ${importId.name} = require('${style.relativeFilePath}');\n`,

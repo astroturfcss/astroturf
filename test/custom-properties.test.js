@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 
 import { jsx } from '../src/index';
-import { run } from './helpers';
+import { run, runLoader } from './helpers';
 
 describe('custom properties', () => {
   it('should allow Styled dynamic interpolations', async () => {
@@ -100,6 +100,31 @@ describe('custom properties', () => {
     expect(wrapper.find('div.green')).toHaveLength(1);
     expect(wrapper.prop('style')).toEqual({
       '--aszd': 'blue',
+    });
+  });
+
+  describe('loader', () => {
+    it('should work', async () => {
+      const [code, [style]] = await runLoader(
+        `
+        import { css } from 'astroturf';
+
+        function Button({ color }) {
+          return (
+            <button
+              css={\`
+                color: \${color};
+              \`}
+            />
+          );
+        }
+        `,
+        { enableCssProp: true, customCssProperties: 'cssProp' },
+      );
+
+      const i = style.interpolations[0];
+
+      expect(code).toContain(`css={[_default, [["${i.id}", color]]]}`);
     });
   });
 });
