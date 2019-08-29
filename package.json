@@ -90,7 +90,7 @@
   },
   "devDependencies": {
     "@4c/babel-preset-4catalyzer": "^4.1.1",
-    "@4c/cli": "^0.8.1",
+    "@4c/cli": "^0.10.0",
     "@babel/cli": "^7.2.3",
     "@babel/node": "^7.2.2",
     "@babel/plugin-transform-react-jsx": "^7.3.0",
