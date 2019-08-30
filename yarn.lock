@@ -55,9 +55,9 @@
     yargs "^13.2.1"
 
 "@4c/cli@^0.10.0":
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/@4c/cli/-/cli-0.10.0.tgz#355c6c10283b8a232acd5ff19ffd69a6a9d462ff"
-  integrity sha512-YMYO75HeL32mHG2f9QIh2U0TSc1wVm/hT6LMwxF45q4eDAMMDH7SEeD1kXusFEtnFcxCC/WbAdn/MFbgTloA3A==
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/@4c/cli/-/cli-0.10.3.tgz#47c24875acd6cc6d5b1ce9c4854c99f30c53f187"
+  integrity sha512-1HDWfeGlgw+63itXun4xykY2ux6zxZKMiFVu/LW5TukQrIyUp4o6eeJBUWfMdrF3ZCwtyujynysfmKVRQkA7oA==
   dependencies:
     "@4c/build" "^1.2.3"
     "@4c/cli-core" "^1.5.1"
@@ -65,7 +65,7 @@
     "@4c/init" "^1.6.7"
     "@4c/intl" "^1.2.5"
     "@4c/rollout" "^1.3.9"
-    "@4c/start" "^1.1.0"
+    "@4c/start" "^1.2.2"
     chalk "^2.4.2"
     execa "^1.0.0"
     fs-extra "^7.0.1"
@@ -74,7 +74,7 @@
     pedantic "^2.2.4"
     semver "^5.6.0"
     slash "^2.0.0"
-    svg2c "^1.4.5"
+    svg2c "^1.4.6"
     yargs "^13.2.1"
 
 "@4c/file-butler@^3.0.1":
@@ -139,13 +139,14 @@
     fs-extra "^7.0.1"
     semver "^5.6.0"
 
-"@4c/start@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@4c/start/-/start-1.1.0.tgz#99048a3ecf4844b5f2db4f3353bea6f0177a72dc"
-  integrity sha512-O1jZ+qPDC99x9dXg7IQlZqrGNfBfWuoZo4OSLvGWSbEqo65Nx8KJrGLxccRTWHurz4K6TiZMkOhox3Umbxoivg==
+"@4c/start@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@4c/start/-/start-1.2.2.tgz#39650d52a9402bbaf0caaf37be0a372e388e9836"
+  integrity sha512-fzCSpyl+7RWApgieCH35rm2d1aMegnWkbOU2EdrMK97Zytnkp+V0WmtEDh8jJrBp55mElnv88gqcDaKCMvZyFA==
   dependencies:
     "@4c/cli-core" "^1.5.0"
     "@babel/code-frame" "^7.5.5"
+    dotenv "^8.1.0"
     fork-ts-checker-webpack-plugin "^1.5.0"
     friendly-errors-webpack-plugin "^2.0.0-beta.2"
     react-dev-utils "^9.0.3"
@@ -3612,6 +3613,11 @@ dot-prop@^3.0.0:
   integrity sha1-G3CK8JSknJoOfbyteQq6U52sEXc=
   dependencies:
     is-obj "^1.0.0"
+
+dotenv@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.1.0.tgz#d811e178652bfb8a1e593c6dd704ec7e90d85ea2"
+  integrity sha512-GUE3gqcDCaMltj2++g6bRQ5rBJWtkWTmqmD0fo1RnnMuUqHNCt2oTPeDnS9n6fKYvlhn7AeBkb38lymBtWBQdA==
 
 download-file-sync@^1.0.4:
   version "1.0.4"
@@ -9837,10 +9843,10 @@ supports-color@^5.3.0:
   dependencies:
     has-flag "^3.0.0"
 
-svg2c@^1.4.5:
-  version "1.4.5"
-  resolved "https://registry.yarnpkg.com/svg2c/-/svg2c-1.4.5.tgz#bbe5d862f4c6434c72fd8659a1c8de7dc09a1a84"
-  integrity sha512-TRD493KNrk+4fK946FTYf1dPUjV6OTdIpxT4hMv+eKiO4InpxuyDKQWf8J3mR2Yh/UXKWKcZCxy5rg/fOBh7cg==
+svg2c@^1.4.6:
+  version "1.4.6"
+  resolved "https://registry.yarnpkg.com/svg2c/-/svg2c-1.4.6.tgz#7f231f5ae5d6a96c02e630c6c30eb9d4b18fb8e8"
+  integrity sha512-kYSYDGq65z/Yi1z21ZuRFklbJjP0V8GA3bJ0k413t0hltjE7UgmqGHTIpNERMI+9yU4EgUyjJxGP/SnUB88uPw==
   dependencies:
     "@4c/cli-core" "^1.5.1"
     "@babel/core" "^7.4.5"
