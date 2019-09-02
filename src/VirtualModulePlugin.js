@@ -60,6 +60,25 @@ class VirtualModulePlugin {
       compiler.resolvers.normal.fileSystem = fs;
       compiler.resolvers.context.fileSystem = fs;
       compiler.resolvers.loader.fileSystem = fs;
+    } else {
+      /**
+       * When webpack is in watch mode, the map of file timestamps is computed
+       * from the watcher instance, which uses the real filesystem and as a
+       * result the virtual css files are not found in this map.
+       * To correct this, we manually add these files to the map here.
+       * @see https://github.com/4Catalyzer/astroturf/pull/381
+       */
+      compiler.hooks.watchRun.tapAsync(
+        'astroturf',
+        ({ fileTimestamps }, callback) => {
+          this.fs.getPaths().forEach((value, key) => {
+            const mtime = +value.mtime;
+            fileTimestamps.set(key, mtime);
+          });
+
+          callback();
+        },
+      );
     }
 
     this.augmented = true;

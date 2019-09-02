@@ -45,7 +45,9 @@ export function runLoader(src, options, filename = 'MyStyleFile.js') {
       resourcePath: filename,
       request: `babel-loader!css-literal-loader!${filename}`,
       _compiler: {},
-      _compilation: {},
+      _compilation: {
+        fileTimestamps: new Map(),
+      },
       _module: {},
       resolve(request, cb) {
         cb(null, relative(dirname(filename), request));
