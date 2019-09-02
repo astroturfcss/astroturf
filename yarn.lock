@@ -20,10 +20,10 @@
     browserslist "^4.2.1"
     lodash "^4.17.10"
 
-"@4c/build@^1.2.3":
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/@4c/build/-/build-1.2.3.tgz#c997b4dedd5e0fd47a5d175f48795303d12a8720"
-  integrity sha512-xvx9SJyv/sOspEHH6f/G1a1KFovlnzUgyPKJMv1bbd1REBtROfowoaXxoSgyBwNoRxyPuJ9zO/taxB1vnJYGvA==
+"@4c/build@^1.2.4":
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/@4c/build/-/build-1.2.4.tgz#b3ba7aa5304425b8c133c5ea765ca0f7ef7142d1"
+  integrity sha512-YyDlEh/3SbbMNWB83rAZZ5iSQxbj05pKFKQK/MHcCneKX15LKpy19k4xMreEItNYG30jSaU3/WIYlRbQqgqehw==
   dependencies:
     "@4c/cli-core" "^1.5.1"
     "@babel/cli" "^7.2.3"
@@ -55,17 +55,17 @@
     yargs "^13.2.1"
 
 "@4c/cli@^0.10.0":
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/@4c/cli/-/cli-0.10.3.tgz#47c24875acd6cc6d5b1ce9c4854c99f30c53f187"
-  integrity sha512-1HDWfeGlgw+63itXun4xykY2ux6zxZKMiFVu/LW5TukQrIyUp4o6eeJBUWfMdrF3ZCwtyujynysfmKVRQkA7oA==
+  version "0.10.6"
+  resolved "https://registry.yarnpkg.com/@4c/cli/-/cli-0.10.6.tgz#8584963ebaba8d6c037304d5e71be1cea9caa57c"
+  integrity sha512-QZ7J6jLGiz0AgSEYa9dhLoJKG9neS3CeoQ/DAUjPCjxBesy8RZdm9JfRxf9n1o+cyjyhzMi1QpI9BMk0EB3NUw==
   dependencies:
-    "@4c/build" "^1.2.3"
+    "@4c/build" "^1.2.4"
     "@4c/cli-core" "^1.5.1"
     "@4c/file-butler" "^3.0.1"
     "@4c/init" "^1.6.7"
     "@4c/intl" "^1.2.5"
-    "@4c/rollout" "^1.3.9"
-    "@4c/start" "^1.2.2"
+    "@4c/rollout" "^1.3.10"
+    "@4c/start" "^1.3.0"
     chalk "^2.4.2"
     execa "^1.0.0"
     fs-extra "^7.0.1"
@@ -123,10 +123,10 @@
     chalk "^2.4.2"
     glob "^7.1.3"
 
-"@4c/rollout@^1.3.9":
-  version "1.3.9"
-  resolved "https://registry.yarnpkg.com/@4c/rollout/-/rollout-1.3.9.tgz#9f75b468a05e677bb22b7233817fc5d0f4519cbb"
-  integrity sha512-FG+y6YP5LMTHt897bxptJyOJUxCiK36j264wEjHwCKfMUmK+p5D+AkCFVhSTeuOhRd3ppP8yhixCCJurHxCSJg==
+"@4c/rollout@^1.3.10":
+  version "1.3.10"
+  resolved "https://registry.yarnpkg.com/@4c/rollout/-/rollout-1.3.10.tgz#d1c7bf79e8d7cd62bb0a20202291b5e6b05483f1"
+  integrity sha512-ptG48E8dDVRhTOxL+IOnnqMwBHLDXdJT49cRZ+qXlHVBTc7vycSnddR93fsycdWelwIGnf976mg2EUSBbUJVZQ==
   dependencies:
     "@4c/cli-core" "^1.5.1"
     "@4c/file-butler" "^3.0.1"
@@ -139,10 +139,10 @@
     fs-extra "^7.0.1"
     semver "^5.6.0"
 
-"@4c/start@^1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@4c/start/-/start-1.2.2.tgz#39650d52a9402bbaf0caaf37be0a372e388e9836"
-  integrity sha512-fzCSpyl+7RWApgieCH35rm2d1aMegnWkbOU2EdrMK97Zytnkp+V0WmtEDh8jJrBp55mElnv88gqcDaKCMvZyFA==
+"@4c/start@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@4c/start/-/start-1.3.0.tgz#767b3a5b673d84715a3393e49a9bf4137e789988"
+  integrity sha512-5qPkIxbTwVQl4fYD41XOkP9oMM8x9U1hE752vvs9Lz2pzR8qaWse3z0bIernJxIC966ZA5d8y9N4mZ7C0x8FbQ==
   dependencies:
     "@4c/cli-core" "^1.5.0"
     "@babel/code-frame" "^7.5.5"
