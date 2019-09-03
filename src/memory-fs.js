@@ -79,6 +79,8 @@ class MemoryFs {
     });
   };
 
+  getPaths = () => this.paths;
+
   exists = (p, cb) => cb(this.existsSync(p));
 
   existsSync = p => this.paths.has(path.normalize(p));
