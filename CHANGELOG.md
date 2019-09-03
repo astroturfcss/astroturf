@@ -1,3 +1,14 @@
+## [0.9.16](https://github.com/4Catalyzer/astroturf/compare/v0.9.15...v0.9.16) (2019-09-03)
+
+
+### Bug Fixes
+
+* 🐛 update webpack timestamps on loader file emit ([#382](https://github.com/4Catalyzer/astroturf/issues/382)) ([33b865f](https://github.com/4Catalyzer/astroturf/commit/33b865f)), closes [#381](https://github.com/4Catalyzer/astroturf/issues/381)
+
+
+
+
+
 ## [0.9.15](https://github.com/4Catalyzer/astroturf/compare/v0.9.14...v0.9.15) (2019-09-03)
 
 
