@@ -77,7 +77,7 @@ function buildDependencyError(
         content,
         { start: loc.start },
         {
-          color: true,
+          highlightCode: true,
           message: !isDefaultImport
             ? `(Imported as ${chalk.bold(identifier)})`
             : '',
