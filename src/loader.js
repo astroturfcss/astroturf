@@ -244,7 +244,8 @@ module.exports = function loader(content, map, meta) {
     await Promise.all(dependencies);
 
     styles.forEach(style => {
-      emitVirtualFile(style.absoluteFilePath, style.value);
+      const mtime = emitVirtualFile(style.absoluteFilePath, style.value);
+      compilation.fileTimestamps.set(style.absoluteFilePath, +mtime);
     });
 
     return replaceStyleTemplates(content, changeset);

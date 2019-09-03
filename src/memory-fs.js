@@ -65,6 +65,8 @@ class MemoryFs {
         )} [${hash}]`,
       );
 
+    const mtime = keepTime ? existing.mtime : new Date();
+
     this.paths.set(p, {
       hash,
       contents: Buffer.isBuffer(data) ? data : Buffer.from(data),
@@ -72,11 +74,10 @@ class MemoryFs {
       birthtime: existing ? existing.birthtime : new Date(),
       ctime: existing ? existing.ctime : new Date(),
       atime: existing ? existing.atime : new Date(),
-      mtime:
-        !updateMtime && existing && existing.hash === hash
-          ? existing.mtime
-          : new Date(),
+      mtime,
     });
+
+    return mtime;
   };
 
   getPaths = () => this.paths;
