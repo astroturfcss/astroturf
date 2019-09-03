@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "NODE_DEBUG=astroturf* webpack-dev-server"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",

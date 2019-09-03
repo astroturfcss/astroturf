@@ -1,10 +1,11 @@
+import { css } from 'astroturf'; // eslint-disable-line import/no-extraneous-dependencies
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { css } from 'astroturf'; // eslint-disable-line import/no-extraneous-dependencies
-
-// import 'bootstrap/scss/bootstrap-reboot.scss';
 
 import Button from './Button';
+import ComposedButton from './ComposedButton';
+
+// import 'bootstrap/scss/bootstrap-reboot.scss';
 
 const _ = css`
   html,
@@ -21,6 +22,7 @@ function App() {
       <Button theme="secondary" bold size={2}>
         Big bold button
       </Button>
+      <ComposedButton theme="primary">Composed Button</ComposedButton>
     </div>
   );
 }
