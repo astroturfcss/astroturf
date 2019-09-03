@@ -1,6 +1,6 @@
 {
   "name": "astroturf",
-  "version": "0.9.14",
+  "version": "0.9.15",
   "description": "Extract and process inline CSS literals in JavaScript files",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -59,7 +59,9 @@
   "release": {
     "publishDir": "lib"
   },
-  "author": "4Catalyzer",
+  "author": {
+    "name": "4Catalyzer"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/4Catalyzer/astroturf/issues"
@@ -129,5 +131,7 @@
     "webpack": "^4.36.1",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.2.1"
-  }
+  },
+  "readme": "ERROR: No README data found!",
+  "_id": "astroturf@0.9.14"
 }
