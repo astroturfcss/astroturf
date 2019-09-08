@@ -11,7 +11,6 @@
 
 
 - [Usage](#usage)
-- [Extensions](#extensions)
 - [Component API](#component-api)
 - [`css` prop](#css-prop)
   - [Component API Goals and Non-Goals](#component-api-goals-and-non-goals)
@@ -23,6 +22,7 @@
   - [`as` prop](#as-prop)
 - [Setup](#setup)
   - [Options](#options)
+  - [Use with Gatsby](#use-with-gatsby)
   - [Use with Parcel](#use-with-parcel)
   - [Use with Preact](#use-with-preact)
   - [Use with Next.js](#use-with-nextjs)
@@ -72,10 +72,6 @@ const styles = css`
   }
 `;
 ```
-
-## Extensions
-
-- [gatsby-plugin-astroturf](https://github.com/silvenon/gatsby-plugin-astroturf)
 
 ## Component API
 
@@ -537,6 +533,11 @@ Add these lines to `package.json` to work with [Parcel](https://parceljs.org/) b
     ]
   },
 ```
+
+### Use with Gatsby
+
+See [gatsby-plugin-astroturf](https://github.com/silvenon/gatsby-plugin-astroturf)
+
 
 ### Use with Preact
 
