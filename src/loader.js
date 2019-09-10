@@ -39,6 +39,15 @@ function AstroturfLoaderError(
 AstroturfLoaderError.prototype = Object.create(Error.prototype);
 AstroturfLoaderError.prototype.constructor = AstroturfLoaderError;
 
+function timeout(ms, promise, err) {
+  return Promise.race([
+    promise,
+    new Promise((resolve, reject) => {
+      setTimeout(() => reject(err), ms);
+    }),
+  ]);
+}
+
 function buildDependencyError(
   content,
   { type, identifier, request },
@@ -149,105 +158,114 @@ module.exports = function loader(content, map, meta) {
   const { resourcePath, _compilation: compilation } = this;
   const cb = this.async();
 
-  if (!compilation[SEEN]) compilation[SEEN] = new Set();
+  if (!compilation[SEEN]) compilation[SEEN] = new Map();
 
-  const resolve = util.promisify((request, done) => {
-    this.resolve(dirname(resourcePath), request, (err, resource) => {
-      if (err) {
-        done(err);
-        return;
-      }
+  const loadModule = util.promisify((request, done) =>
+    this.loadModule(request, (err, _, __, module) => done(err, module)),
+  );
 
-      if (compilation[SEEN].has(resource)) {
-        done(
+  const resolve = util.promisify(this.resolve);
+
+  const buildDependency = async request => {
+    const resource = await resolve(dirname(resourcePath), request);
+
+    const maybeCycle = compilation[SEEN].has(resource);
+
+    // It's hard to know if a seen module is due to a cycle or just already done
+    // I'm sure there is a cleaner way to handle this but IDK what it is, so we bail
+    // after a second of perceived deadlock
+    return maybeCycle
+      ? timeout(
+          1000,
+          loadModule(resource),
           new AstroturfLoaderError(
-            'A cyclical style interpolation was detected in an interpolated stylesheet or component which is not supported.\n' +
+            'A possible cyclical style interpolation was detected in an interpolated stylesheet or component which is not supported.\n' +
               `while importing "${request}" in ${resourcePath}`,
           ),
-        );
-        return;
-      }
+        )
+      : loadModule(resource);
+  };
 
-      this.loadModule(resource, (err2, _, __, module) => {
-        // console.log('HERE', args);
-        done(err2, module);
-      });
-    });
-  });
+  const options = loaderUtils.getOptions(this) || {};
+  const dependencies = [];
 
-  return (async () => {
-    const options = loaderUtils.getOptions(this) || {};
-    const dependencies = [];
+  function resolveDependency(interpolation, localStyle, node) {
+    const { identifier, request } = interpolation;
+    if (!interpolation.identifier) return null;
+    const { loc } = node;
 
-    function resolveDependency(interpolation, localStyle, node) {
-      const { identifier, request } = interpolation;
-      if (!interpolation.identifier) return null;
-      const { loc } = node;
+    const memberProperty = node.property && node.property.name;
 
-      const memberProperty = node.property && node.property.name;
+    const imported = `###ASTROTURF_IMPORTED_${dependencies.length}###`;
+    const source = `###ASTROTURF_SOURCE_${dependencies.length}###`;
 
-      const imported = `###ASTROTURF_IMPORTED_${dependencies.length}###`;
-      const source = `###ASTROTURF_SOURCE_${dependencies.length}###`;
+    debug(`resolving dependency: ${request}`);
+    dependencies.push(
+      buildDependency(request).then(module => {
+        const style = module.styles.find(s => s.identifier === identifier);
 
-      debug(`resolving dependency: ${request}`);
-      dependencies.push(
-        resolve(request).then(module => {
-          const style = module.styles.find(s => s.identifier === identifier);
+        if (!style) {
+          throw buildDependencyError(content, interpolation, module, loc);
+        }
 
-          if (!style) {
-            throw buildDependencyError(content, interpolation, module, loc);
-          }
-
-          debug(`resolved request to: ${style.absoluteFilePath}`);
-          localStyle.value = localStyle.value
-            .replace(source, `~${style.absoluteFilePath}`)
-            .replace(
-              imported,
-              style.isStyledComponent ? 'cls1' : memberProperty,
-            );
-        }),
-      );
-
-      return { source, imported };
-    }
-    const { styles = [], changeset } = collectStyles(
-      content,
-      resourcePath,
-      resolveDependency,
-      options,
+        debug(`resolved request to: ${style.absoluteFilePath}`);
+        localStyle.value = localStyle.value
+          .replace(source, `~${style.absoluteFilePath}`)
+          .replace(
+            imported,
+            style.isStyledComponent ? 'cls1' : memberProperty,
+          );
+      }),
     );
 
-    if (meta) {
-      meta.styles = styles;
+    return { source, imported };
+  }
+
+  const { styles = [], changeset } = collectStyles(
+    content,
+    resourcePath,
+    resolveDependency,
+    options,
+  );
+
+  if (meta) {
+    meta.styles = styles;
+  }
+
+  if (!styles.length) {
+    return cb(null, content);
+  }
+
+  compilation[SEEN].set(resourcePath, styles);
+  this._module.styles = styles;
+
+  let { emitVirtualFile } = this;
+
+  // The plugin isn't loaded
+  if (!emitVirtualFile) {
+    const { compiler } = compilation;
+    let plugin = compiler[LOADER_PLUGIN];
+    if (!plugin) {
+      debug('adding plugin to compiiler');
+      plugin = VirtualModulePlugin.bootstrap(compilation);
+      compiler[LOADER_PLUGIN] = plugin;
     }
+    emitVirtualFile = plugin.addFile;
+  }
 
-    if (!styles.length) return content;
+  // console.log('WAIT', resourcePath);
+  return Promise.all(dependencies)
+    .then(() => {
+      styles.forEach(style => {
+        const mtime = emitVirtualFile(style.absoluteFilePath, style.value);
+        compilation.fileTimestamps.set(style.absoluteFilePath, +mtime);
+      });
 
-    compilation[SEEN].add(resourcePath);
+      const result = replaceStyleTemplates(content, changeset);
 
-    this._module.styles = styles;
+      cb(null, result);
+    })
+    .catch(cb);
 
-    let { emitVirtualFile } = this;
-
-    // The plugin isn't loaded
-    if (!emitVirtualFile) {
-      const { compiler } = compilation;
-      let plugin = compiler[LOADER_PLUGIN];
-      if (!plugin) {
-        debug('adding plugin to compiiler');
-        plugin = VirtualModulePlugin.bootstrap(compilation);
-        compiler[LOADER_PLUGIN] = plugin;
-      }
-      emitVirtualFile = plugin.addFile;
-    }
-
-    await Promise.all(dependencies);
-
-    styles.forEach(style => {
-      const mtime = emitVirtualFile(style.absoluteFilePath, style.value);
-      compilation.fileTimestamps.set(style.absoluteFilePath, +mtime);
-    });
-
-    return replaceStyleTemplates(content, changeset);
-  })().then(result => cb(null, result), cb);
+  // console.log('DONE', resourcePath);
 };
