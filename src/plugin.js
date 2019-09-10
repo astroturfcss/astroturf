@@ -15,6 +15,8 @@ import getNameFromPath from './utils/getNameFromPath';
 import normalizeAttrs from './utils/normalizeAttrs';
 import wrapInClass from './utils/wrapInClass';
 
+const PURE_COMMENT = '/*#__PURE__*/';
+
 const buildImport = template('require(FILENAME);');
 const buildComponent = template(
   `styled(ELEMENTTYPE, OPTIONS, {
@@ -196,8 +198,9 @@ export default function plugin() {
       }).expression,
     });
 
-    if (pluginOptions.generateInterpolations)
-      style.code = generate(runtimeNode).code;
+    if (pluginOptions.generateInterpolations) {
+      style.code = `${PURE_COMMENT}${generate(runtimeNode).code}`;
+    }
 
     cssState.styles.set(style.absoluteFilePath, style);
     nodeMap.set(runtimeNode.expression, style);
@@ -376,7 +379,7 @@ export default function plugin() {
           style.code = generate(runtimeNode).code;
 
         cssState.changeset.push({
-          code: `const ${importId.name} = require('${style.relativeFilePath}');\n`,
+          code: `const ${importId.name} = require("${style.relativeFilePath}");\n`,
         });
 
         nodeMap.set(runtimeNode.expression, style);
@@ -436,7 +439,6 @@ export default function plugin() {
               file: state.file,
             }),
           );
-          path.addComment('leading', '#__PURE__');
         }
       },
 
