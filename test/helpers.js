@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const webpack = require('webpack');
 const MemoryFS = require('memory-fs');
+const prettier = require('prettier');
 const { transformAsync } = require('@babel/core');
 const { relative, dirname } = require('path');
 const loader = require('../src/loader');
@@ -20,17 +21,29 @@ const PARSER_OPTS = {
   ],
 };
 
-export async function run(src, options, filename) {
+export function format(strings, ...values) {
+  const str = strings.reduce(
+    (acc, next, idx) => `${acc}${next}${values[idx] || ''}`,
+    '',
+  );
+
+  return prettier.format(str, { parser: 'babel' });
+}
+
+export async function run(src, options, filename = 'MyStyleFile.js') {
   const { code, metadata } = await transformAsync(src, {
+    filename,
     babelrc: false,
     plugins: [
       [require('../src/plugin.js'), { ...options, writeFiles: false }],
     ].filter(Boolean),
-    filename: filename || 'MyStyleFile.js',
     parserOpts: PARSER_OPTS,
   });
 
-  return [code, metadata.astroturf.styles];
+  return [
+    prettier.format(code, { filepath: filename }),
+    metadata.astroturf.styles,
+  ];
 }
 
 export function runLoader(src, options, filename = 'MyStyleFile.js') {
@@ -55,7 +68,11 @@ export function runLoader(src, options, filename = 'MyStyleFile.js') {
       emitVirtualFile: (_absoluteFilePath, _value) => {},
       async: () => (err, result) => {
         if (err) reject(err);
-        else resolve([result, meta.styles]);
+        else
+          resolve([
+            prettier.format(result, { filepath: filename }),
+            meta.styles,
+          ]);
       },
     };
 
@@ -105,3 +122,16 @@ export function runWebpack(config) {
     });
   });
 }
+
+function testAllRunnersImpl(t, msg, testFn) {
+  t.each([['babel', run], ['webpack', runLoader]])(
+    `${msg}  (%s)`,
+    (name, ...args) => testFn(...args),
+  );
+}
+
+export function testAllRunners(msg, testFn) {
+  testAllRunnersImpl(test, msg, testFn);
+}
+
+testAllRunners.only = testAllRunnersImpl.bind(null, test.only);

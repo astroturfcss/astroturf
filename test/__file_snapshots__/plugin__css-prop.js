@@ -15,10 +15,12 @@ function Button2() {
   return <button css={[_default2]} />;
 }
 
-const color = 'orange';
+const color = "orange";
 
 function Button3() {
-  return <>
+  return (
+    <>
       <button css={[_default3, []]} />
-    </>;
+    </>
+  );
 }

@@ -28,12 +28,12 @@ describe('webpack loader', () => {
 
     expect(
       code.includes(
-        "const _default = require('./MyStyleFile-CssProp1_button.css');",
+        'const _default = require("./MyStyleFile-CssProp1_button.css");',
       ),
     ).toBe(true);
 
     expect(
-      code.includes("const styles = require('./MyStyleFile-styles.css')"),
+      code.includes('const styles = require("./MyStyleFile-styles.css")'),
     ).toBe(true);
   });
 

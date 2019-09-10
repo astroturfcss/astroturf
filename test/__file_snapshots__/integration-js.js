@@ -193,7 +193,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var astroturf__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(astroturf__WEBPACK_IMPORTED_MODULE_0__);
 
 const styles = __webpack_require__(/*! ./Button-styles.css */ "./test/integration/Button-styles.css");
-const Button = astroturf__WEBPACK_IMPORTED_MODULE_0___default()('button', null, {
+const Button =
+/*#__PURE__*/
+astroturf__WEBPACK_IMPORTED_MODULE_0___default()('button', null, {
   displayName: "Button",
   styles: __webpack_require__(/*! ./Button.css */ "./test/integration/Button.css"),
   attrs: null,
@@ -300,13 +302,17 @@ const width = 75;
 
 const styles = __webpack_require__(/*! ./main-styles.css */ "./test/integration/main-styles.css");
 
-const FancyBox = astroturf__WEBPACK_IMPORTED_MODULE_0___default()('div', null, {
+const FancyBox =
+/*#__PURE__*/
+astroturf__WEBPACK_IMPORTED_MODULE_0___default()('div', null, {
   displayName: "FancyBox",
   styles: __webpack_require__(/*! ./main-FancyBox.css */ "./test/integration/main-FancyBox.css"),
   attrs: null,
   vars: []
 });
-const FancierBox = astroturf__WEBPACK_IMPORTED_MODULE_0___default()('div', null, {
+const FancierBox =
+/*#__PURE__*/
+astroturf__WEBPACK_IMPORTED_MODULE_0___default()('div', null, {
   displayName: "FancierBox",
   styles: __webpack_require__(/*! ./main-FancierBox.css */ "./test/integration/main-FancierBox.css"),
   attrs: null,
@@ -348,7 +354,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var astroturf__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf */ "./src/runtime/styled.js");
 /* harmony import */ var astroturf__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(astroturf__WEBPACK_IMPORTED_MODULE_0__);
 
-const Widget = astroturf__WEBPACK_IMPORTED_MODULE_0___default()('div', null, {
+const Widget =
+/*#__PURE__*/
+astroturf__WEBPACK_IMPORTED_MODULE_0___default()('div', null, {
   displayName: "Widget",
   styles: __webpack_require__(/*! ./Widget.css */ "./test/integration/shared/widget/Widget.css"),
   attrs: null,

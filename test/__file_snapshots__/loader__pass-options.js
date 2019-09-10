@@ -1,9 +1,9 @@
-import styled from 'astroturf';
+import styled from "astroturf";
 
 const SIZE = 75;
 
 // prettier-ignore
-const FancyBox = styled('div', {
+const FancyBox = /*#__PURE__*/styled('div', {
   someOption: true
 }, {
   displayName: "FancyBox",
@@ -14,7 +14,7 @@ const FancyBox = styled('div', {
 
 const options = {};
 
-const FancierBox = styled(FancyBox, options, {
+const FancierBox = /*#__PURE__*/ styled(FancyBox, options, {
   displayName: "FancierBox",
   styles: require("./pass-options-FancierBox.css"),
   attrs: null,

@@ -1,5 +1,4 @@
-import { stripIndents } from 'common-tags';
-import { run } from './helpers';
+import { format, run, testAllRunners } from './helpers';
 
 describe('css tag', () => {
   it('should remove css imports', async () => {
@@ -14,16 +13,14 @@ describe('css tag', () => {
     `);
 
     expect(code).toEqual(
-      stripIndents`
-        const styles =
-          /*#__PURE__*/
-          require("./MyStyleFile-styles.css");
+      format`
+        const styles = require("./MyStyleFile-styles.css");
       `,
     );
   });
 
-  it('should remove just the css import', async () => {
-    const [code] = await run(`
+  testAllRunners('should remove just the css import', async runner => {
+    const [code] = await runner(`
       import styled, { css } from 'astroturf';
 
       const styles = css\`
@@ -34,18 +31,16 @@ describe('css tag', () => {
     `);
 
     expect(code).toEqual(
-      stripIndents`
+      format`
         import styled from 'astroturf';
 
-        const styles =
-          /*#__PURE__*/
-          require("./MyStyleFile-styles.css");
+        const styles = require("./MyStyleFile-styles.css");
       `,
     );
   });
 
-  it('allows different tag names', async () => {
-    const [, styles] = await run(
+  testAllRunners('allows different tag names', async runner => {
+    const [, styles] = await runner(
       `
       import { css as less } from 'astroturf';
 
@@ -75,10 +70,12 @@ describe('css tag', () => {
     expect(styles[0].absoluteFilePath.endsWith('.less')).toBe(true);
   });
 
-  it('should throw when there are ambigious identifiers', async () => {
-    await expect(
-      run(
-        `
+  testAllRunners(
+    'should throw when there are ambigious identifiers',
+    async runner => {
+      await expect(
+        runner(
+          `
         import { css as less } from 'astroturf';
 
         less\`
@@ -93,15 +90,16 @@ describe('css tag', () => {
           }
         \`;
       `,
-        { tagName: 'less' },
-      ),
-    ).rejects.toThrow(
-      /There are multiple anonymous less tags that would conflict/,
-    );
-  });
+          { tagName: 'less' },
+        ),
+      ).rejects.toThrow(
+        /There are multiple anonymous less tags that would conflict/,
+      );
+    },
+  );
 
-  it('respects the allowGlobal setting', async () => {
-    const [, styles] = await run(
+  testAllRunners('respects the allowGlobal setting', async runner => {
+    const [, styles] = await runner(
       `
       const styles = less\`
         .bar {
@@ -119,5 +117,23 @@ describe('css tag', () => {
     );
 
     expect(styles).toHaveLength(0);
+  });
+
+  testAllRunners('handles non-simple interpolations', async () => {
+    const [, styles] = await run(
+      `
+      const duration = 1000
+      const durationMs = \`$\{duration + 500}ms\`;
+
+      const styles = css\`
+        .bar {
+          transition: all $\{durationMs};
+        }
+      \`;
+    `,
+    );
+
+    expect(styles).toHaveLength(1);
+    expect(styles[0].value).toMatch('1500ms');
   });
 });

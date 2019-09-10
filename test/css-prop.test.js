@@ -1,11 +1,11 @@
 import { mount } from 'enzyme';
 
 import { jsx } from '../src/index';
-import { run, runLoader } from './helpers';
+import { testAllRunners } from './helpers';
 
 describe('css prop', () => {
-  it('should compile string', async () => {
-    const [, styles] = await run(
+  testAllRunners('should compile string', async runner => {
+    const [, styles] = await runner(
       `
       import { css } from 'astroturf';
 
@@ -23,8 +23,8 @@ describe('css prop', () => {
     expect(styles[0].identifier).toEqual('CssProp1_button');
   });
 
-  it('should compile template literal', async () => {
-    const [, [style]] = await run(
+  testAllRunners('should compile template literal', async runner => {
+    const [, [style]] = await runner(
       `
       import { css } from 'astroturf';
 
@@ -44,8 +44,8 @@ describe('css prop', () => {
     expect(style.identifier).toEqual('CssProp1_button');
   });
 
-  it('should compile css tag', async () => {
-    const [, [style]] = await run(
+  testAllRunners('should compile css tag', async runner => {
+    const [, [style]] = await runner(
       `
       import { css } from 'astroturf';
 
@@ -65,10 +65,33 @@ describe('css prop', () => {
     expect(style.identifier).toEqual('CssProp1_button');
   });
 
-  it('should warn when not enabled', async () => {
+  testAllRunners.only('should interpolate static cars', async runner => {
+    const [, [style]] = await runner(
+      `
+      import { css } from 'astroturf';
+
+      const duration = 1000
+
+      function Button() {
+        return (
+          <button
+            css={css\`
+              transition: all $\{duration + 500}ms;
+            \`}
+          />
+        );
+      }
+    `,
+      { enableCssProp: true },
+    );
+
+    expect(style.value).toMatch('1500ms');
+  });
+
+  testAllRunners('should warn when not enabled', async runner => {
     const spy = jest.spyOn(console, 'warn').mockImplementation(() => {});
 
-    const [, styles] = await run(
+    const [, styles] = await runner(
       `
       import { css } from 'astroturf';
 
@@ -94,9 +117,11 @@ describe('css prop', () => {
     spy.mockRestore();
   });
 
-  it('should only compile with appropriate css import', async () => {
-    const [, styles] = await run(
-      `
+  testAllRunners(
+    'should only compile with appropriate css import',
+    async runner => {
+      const [, styles] = await runner(
+        `
         function Button() {
           return (
             <button
@@ -107,93 +132,12 @@ describe('css prop', () => {
           );
         }
       `,
-      { allowGlobal: false, enableCssProp: true },
-    );
-
-    expect(styles).toHaveLength(0);
-  });
-
-  describe('loader', () => {
-    it('should compile string', async () => {
-      const [, [style]] = await runLoader(
-        `
-        import { css } from 'astroturf';
-
-        function Button() {
-          return (
-            <button
-              css="color:blue"
-            />
-          );
-        }
-      `,
-        { enableCssProp: true },
-      );
-
-      expect(style.identifier).toEqual('CssProp1_button');
-    });
-
-    it('should compile template literal', async () => {
-      const [, [style]] = await runLoader(
-        `
-        import { css } from 'astroturf';
-
-        function Button() {
-          return (
-            <button
-              css={\`
-                color: blue;
-              \`}
-            />
-          );
-        }
-      `,
-        { enableCssProp: true },
-      );
-
-      expect(style.identifier).toEqual('CssProp1_button');
-    });
-
-    it('should compile css tag', async () => {
-      const [, [style]] = await runLoader(
-        `
-        import { css } from 'astroturf';
-
-        function Button() {
-          return (
-            <button
-              css={css\`
-                color: blue;
-              \`}
-            />
-          );
-        }
-      `,
-        { enableCssProp: true },
-      );
-
-      expect(style.identifier).toEqual('CssProp1_button');
-    });
-
-    it('should only compile with appropriate css import', async () => {
-      const [, styles] = await runLoader(
-        `
-          function Button() {
-            return (
-              <button
-                css={css\`
-                  color: blue;
-                \`}
-              />
-            );
-          }
-        `,
         { allowGlobal: false, enableCssProp: true },
       );
 
       expect(styles).toHaveLength(0);
-    });
-  });
+    },
+  );
 
   it('should render the component correctly', () => {
     expect(

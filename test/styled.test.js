@@ -1,14 +1,44 @@
-import { stripIndent } from 'common-tags';
+import { stripIndents } from 'common-tags';
 import { mount } from 'enzyme';
 import React from 'react';
 
 import { withProps } from '../src/helpers';
 import styled from '../src/index';
-import { run } from './helpers';
+import { format, run, runLoader } from './helpers';
 
 describe('styled', () => {
   it('should compile', async () => {
     const [code] = await run(
+      `
+      import { styled } from 'astroturf';
+      const ButtonBase = styled('button')\`
+        @import '~./styles/mixins.scss';
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid transparent;
+      \`;
+    `,
+    );
+
+    expect(code).toEqual(
+      format`
+        import { styled } from 'astroturf';
+        const ButtonBase =
+        /*#__PURE__*/
+        styled('button', null, {
+          displayName: \"ButtonBase\",
+          styles: require(\"./MyStyleFile-ButtonBase.css\"),
+          attrs: null,
+          vars: []
+        });
+      `,
+    );
+  });
+
+  it('should compile', async () => {
+    const [code] = await runLoader(
       `
       import { styled } from 'astroturf';
 
@@ -24,11 +54,10 @@ describe('styled', () => {
     );
 
     expect(code).toEqual(
-      stripIndent`
+      format`
         import { styled } from 'astroturf';
-        const ButtonBase =
-        /*#__PURE__*/
-        styled('button', null, {
+
+        const ButtonBase = /*#__PURE__*/ styled('button', null, {
           displayName: \"ButtonBase\",
           styles: require(\"./MyStyleFile-ButtonBase.css\"),
           attrs: null,
@@ -54,7 +83,7 @@ describe('styled', () => {
     `,
     );
 
-    expect(styles[0].value).toEqual(stripIndent`
+    expect(styles[0].value).toEqual(stripIndents`
       @import '~./styles/mixins.scss';
       .cls1 {
       display: inline-flex;

@@ -8,10 +8,10 @@ styled('div', null, {
   vars: []
 });
 const FancierBox =
-/*#__PURE__*/
-styled(FancyBox, null, {
-  displayName: "FancierBox",
-  styles: require("./styled-global-FancierBox.css"),
-  attrs: null,
-  vars: []
-});
+  /*#__PURE__*/
+  styled(FancyBox, null, {
+    displayName: "FancierBox",
+    styles: require("./styled-global-FancierBox.css"),
+    attrs: null,
+    vars: []
+  });

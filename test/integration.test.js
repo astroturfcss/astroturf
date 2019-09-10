@@ -99,7 +99,6 @@ describe('webpack integration', () => {
     expect(message).toEqual(expect.stringContaining('Imported as MyButton'));
   });
 
-  // This doesn't work it de
   it('should throw on cycles', async () => {
     await expect(
       runWebpack(getConfig('./integration/cycle.js')),

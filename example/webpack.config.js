@@ -16,6 +16,9 @@ inlineRule.use = [
 module.exports = {
   entry: './src/client.js',
   devtool: 'cheap-module-source-map',
+  devServer: {
+    stats: 'minimal',
+  },
   output: {
     path: path.join(__dirname, 'build'),
     filename: '[name].js',

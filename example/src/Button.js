@@ -15,6 +15,7 @@ const Button = styled('button')`
   font-size: 16px;
   touch-action: manipulation;
   cursor: pointer;
+
   white-space: nowrap;
   user-select: none;
 
