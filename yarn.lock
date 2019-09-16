@@ -55,9 +55,9 @@
     yargs "^13.2.1"
 
 "@4c/cli@^0.10.0":
-  version "0.10.7"
-  resolved "https://registry.yarnpkg.com/@4c/cli/-/cli-0.10.7.tgz#8f508bbba42d745b2aef1dc9fba23c3b0dc1bf1f"
-  integrity sha512-Ef989jTjdWRC66EIlEYUCYVT40HQbmjbCVy3jLPPGO1243Qb/zCpG2vUBcEnt+8GZHSYmQ6qNzHquJRnS7/+PQ==
+  version "0.10.10"
+  resolved "https://registry.yarnpkg.com/@4c/cli/-/cli-0.10.10.tgz#fd1278d68ee50c5f13219b62a106768f13743625"
+  integrity sha512-OjiSRvVi10RvRD7FFadkhA1LNs8U7vh3rXDFXC9Wb4pjK/+/LNSB5Zu6nMaciIQ2hAoOsvAqddiTh2wqzYhbxA==
   dependencies:
     "@4c/build" "^1.2.4"
     "@4c/cli-core" "^1.5.1"
@@ -65,7 +65,7 @@
     "@4c/init" "^1.6.7"
     "@4c/intl" "^1.2.5"
     "@4c/rollout" "^1.4.0"
-    "@4c/start" "^1.4.0"
+    "@4c/start" "^1.4.3"
     chalk "^2.4.2"
     execa "^1.0.0"
     fs-extra "^7.0.1"
@@ -144,10 +144,10 @@
     rxjs "^6.5.2"
     semver "^5.6.0"
 
-"@4c/start@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@4c/start/-/start-1.4.0.tgz#11fb9918f0e0e7b97e3b4974d9f4eec568d874eb"
-  integrity sha512-Vjn9MTSRonqkKosBhsEOEg/GJc5f232lZR3cswJuAOvWtIG7haHcI4WMBgAxl/AfGIAx9x/kETg3l3Kg5xKw8A==
+"@4c/start@^1.4.3":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@4c/start/-/start-1.4.3.tgz#ea59b7692133f89fb58ce0f0574c31b4dbfa7996"
+  integrity sha512-VIfvNK2y0Vtql3+KqdjjZd+smGgw9pDGW6ASUh2eL3P1H4rdh3DAolu48OFHbNkRMkS1dltHpRUH21DN9fUYmw==
   dependencies:
     "@4c/cli-core" "^1.5.0"
     "@babel/code-frame" "^7.5.5"
