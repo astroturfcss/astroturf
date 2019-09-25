@@ -1,3 +1,14 @@
+## [0.9.18](https://github.com/4Catalyzer/astroturf/compare/v0.9.17...v0.9.18) (2019-09-25)
+
+
+### Bug Fixes
+
+* increase cycle timeout ([ce2df5f](https://github.com/4Catalyzer/astroturf/commit/ce2df5f))
+
+
+
+
+
 ## [0.9.16](https://github.com/4Catalyzer/astroturf/compare/v0.9.15...v0.9.16) (2019-09-03)
 
 
