@@ -100,8 +100,16 @@ describe('webpack integration', () => {
   });
 
   it('should throw on cycles', async () => {
-    await expect(
-      runWebpack(getConfig('./integration/cycle.js')),
-    ).rejects.toThrow(/cyclical style interpolation was detected/);
+    const timeout = global.setTimeout;
+
+    jest.spyOn(global, 'setTimeout').mockImplementation(fn => timeout(fn, 0));
+
+    const result = runWebpack(getConfig('./integration/cycle.js'));
+
+    await expect(result).rejects.toThrow(
+      /cyclical style interpolation was detected/,
+    );
+
+    jest.restoreAllMocks();
   });
 });

@@ -176,7 +176,7 @@ module.exports = function loader(content, map, meta) {
     // after a second of perceived deadlock
     return maybeCycle
       ? timeout(
-          1000,
+          10000,
           loadModule(resource),
           new AstroturfLoaderError(
             'A possible cyclical style interpolation was detected in an interpolated stylesheet or component which is not supported.\n' +
