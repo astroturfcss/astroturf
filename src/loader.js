@@ -3,6 +3,7 @@ import util from 'util';
 import chalk from 'chalk';
 import levenshtein from 'fast-levenshtein';
 import loaderUtils from 'loader-utils';
+import sortBy from 'lodash/sortBy';
 import { codeFrameColumns } from '@babel/code-frame';
 
 import traverse from './traverse';
@@ -133,6 +134,8 @@ function collectStyles(src, filename, resolveDependency, opts) {
 }
 
 function replaceStyleTemplates(src, locations) {
+  locations = sortBy(locations, i => i.start || 0);
+
   let offset = 0;
 
   function splice(str, start = 0, end = 0, replace) {

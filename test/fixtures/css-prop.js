@@ -1,4 +1,5 @@
 import { css } from 'astroturf';
+import React from 'react';
 
 function Button() {
   return (
@@ -26,3 +27,15 @@ function Button3() {
     </>
   );
 }
+
+
+function Button4({ theme }) {
+  return React.createElement('button', {
+    css: `
+      color: ${theme};
+    `
+  }, 'Hi there', React.createElement('span', {
+    css: 'width: 3rem;'
+  }))
+}
+
