@@ -1,6 +1,6 @@
 {
   "name": "astroturf",
-  "version": "0.9.18",
+  "version": "0.9.19",
   "description": "Extract and process inline CSS literals in JavaScript files",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -134,5 +134,5 @@
     "webpack-dev-server": "^3.2.1"
   },
   "readme": "ERROR: No README data found!",
-  "_id": "astroturf@0.9.17"
+  "_id": "astroturf@0.9.18"
 }
