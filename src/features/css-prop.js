@@ -168,7 +168,11 @@ export default {
     const propsPath = path.get('arguments')[1];
 
     const innerState = { pluginOptions, file, processed: false, typeName };
-    propsPath.traverse(cssPropertyVisitors, innerState);
+
+    // We aren't checking very hard that this is a React createElement call
+    if (propsPath) {
+      propsPath.traverse(cssPropertyVisitors, innerState);
+    }
 
     if (innerState.processed) {
       const { jsx } = state[JSX_IDENTS];
