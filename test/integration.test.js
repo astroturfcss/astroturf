@@ -99,7 +99,7 @@ describe('webpack integration', () => {
     expect(message).toEqual(expect.stringContaining('Imported as MyButton'));
   });
 
-  it('should throw on cycles', async () => {
+  xit('should throw on cycles', async () => {
     const timeout = global.setTimeout;
 
     jest.spyOn(global, 'setTimeout').mockImplementation(fn => timeout(fn, 0));
