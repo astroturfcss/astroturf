@@ -111,7 +111,10 @@ export function runWebpack(config) {
         reject(
           Object.assign(
             new Error(
-              `Webpack threw the following errors:\n\n ${errors.join('\n')}`,
+              `Webpack threw the following errors:\n\n ${[
+                ...errors,
+                ...warnings,
+              ].join('\n')}`,
             ),
             { errors, warnings, framesToPop: 1 },
           ),

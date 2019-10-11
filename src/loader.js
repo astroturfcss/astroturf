@@ -40,15 +40,6 @@ function AstroturfLoaderError(
 AstroturfLoaderError.prototype = Object.create(Error.prototype);
 AstroturfLoaderError.prototype.constructor = AstroturfLoaderError;
 
-function timeout(ms, promise, err) {
-  return Promise.race([
-    promise,
-    new Promise((resolve, reject) => {
-      setTimeout(() => reject(err), ms);
-    }),
-  ]);
-}
-
 function buildDependencyError(
   content,
   { type, identifier, request },
@@ -160,6 +151,18 @@ const SEEN = Symbol('astroturf seen modules');
 module.exports = function loader(content, map, meta) {
   const { resourcePath, _compilation: compilation } = this;
   const cb = this.async();
+
+  const timeout = async (ms, promise, err) => {
+    const handle = setTimeout(() => {
+      this.emitWarning(err);
+    }, ms);
+
+    try {
+      return await promise;
+    } finally {
+      clearTimeout(handle);
+    }
+  };
 
   if (!compilation[SEEN]) compilation[SEEN] = new Map();
 
