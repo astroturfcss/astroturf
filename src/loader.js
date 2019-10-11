@@ -154,7 +154,6 @@ module.exports = function loader(content, map, meta) {
 
   const timeout = async (ms, promise, err) => {
     const handle = setTimeout(() => {
-      console.log('HERERE');
       this.emitWarning(err);
     }, ms);
 
