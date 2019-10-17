@@ -14,7 +14,7 @@ const rUnit = new RegExp(`^(${cssUnits.join('|')})(;|,|\n| |\\))`);
 
 function defaultResolveDependency({ request }, localStyle) {
   const source = resolve.sync(request, {
-    baseDir: dirname(localStyle.absoluteFilePath),
+    basedir: dirname(localStyle.absoluteFilePath),
   });
 
   return { source };
