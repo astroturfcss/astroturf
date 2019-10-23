@@ -167,7 +167,7 @@ function Button({ variant, children }) {
         }
       `}
     >
-     {children}
+      {children}
     </button>
   );
 }
