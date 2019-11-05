@@ -13,13 +13,13 @@
 - [Usage](#usage)
 - [Component API](#component-api)
 - [`css` prop](#css-prop)
-  - [Component API Goals and Non-Goals](#component-api-goals-and-non-goals)
-  - [Composition, variables, etc?](#composition-variables-etc)
-  - [Referring to other Components](#referring-to-other-components)
-  - [Sharing values between styles and JavaScript](#sharing-values-between-styles-and-javascript)
-  - [Keyframes and global](#keyframes-and-global)
-  - [Attaching Additional Props](#attaching-additional-props)
-  - [`as` prop](#as-prop)
+- [Component API Goals and Non-Goals](#component-api-goals-and-non-goals)
+- [Composition, variables, etc?](#composition-variables-etc)
+- [Referring to other Components](#referring-to-other-components)
+- [Sharing values between styles and JavaScript](#sharing-values-between-styles-and-javascript)
+- [Keyframes and global](#keyframes-and-global)
+- [Attaching Additional Props](#attaching-additional-props)
+- [`as` prop](#as-prop)
 - [Setup](#setup)
   - [Options](#options)
   - [Use with Gatsby](#use-with-gatsby)
@@ -181,7 +181,7 @@ There are a whole bucket of caveats of course, to keep the above statically extr
 - Prop value handling requires the nesting transform
 - All "top level" styles have any @import statements hoisted up (via a regex)
 
-### Component API Goals and Non-Goals
+## Component API Goals and Non-Goals
 
 The goal of this API is not to mimic or reimplement the features of other css-in-js libraries, but to provide
 a more ergonomic way to write normal css/less/sass next to your javascript.
@@ -204,7 +204,7 @@ It also means we **sacrifice**:
 - Dynamism in sharing values between js and css
 - A unified JS-only headspace, you still need to think in terms of JS and CSS
 
-### Composition, variables, etc?
+## Composition, variables, etc?
 
 How you accomplish that is mostly up to your preprocessor. Leverage Sass variables, or Less mixins, or postcss nesting polyfills, or whatever. The css you're writing is treated exactly like a normal style file so all the tooling you're used to works as expected. For composition, specifically around classes, you can also use css-modules `composes` to compose styles and interpolation;
 
@@ -245,7 +245,7 @@ const Title = styled('h3')`
 `;
 ```
 
-### Referring to other Components
+## Referring to other Components
 
 One limitation to fully encapsulated styles is that it's hard to contextually style components
 without them referencing each other. In astroturf you can use a component in a
@@ -275,7 +275,7 @@ const Icon = styled.svg`
 `;
 ```
 
-### Sharing values between styles and JavaScript
+## Sharing values between styles and JavaScript
 
 We've found that in practice, you rarely have to share values between the two, but there are times when it's
 very convenient. Astroturf ofters two ways to do this, the first is string interpolations.
@@ -343,7 +343,7 @@ class Responsive extends React.Component {
 }
 ```
 
-### Keyframes and global
+## Keyframes and global
 
 Everything in `css` will be used as normal CSS Modules styles.
 So, if you need to insert some CSS without isolation (like reset with [postcss-normalize](https://github.com/csstools/postcss-normalize)):
@@ -376,7 +376,7 @@ const Loader = styled('div')`
 `;
 ```
 
-### Attaching Additional Props
+## Attaching Additional Props
 
 A common task with styled components is to map their props or set default values.
 astroturf cribs from Styled Components, by including an `attrs()` api.
@@ -422,7 +422,7 @@ const Link = styled(MyLink).attrs({
 `);
 ```
 
-### `as` prop
+## `as` prop
 
 `astroturf` supports the `as` prop to control the underlying element type at runtime.
 
