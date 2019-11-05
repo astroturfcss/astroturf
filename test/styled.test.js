@@ -85,7 +85,10 @@ describe('styled', () => {
 
     expect(styles[0].value).toEqual(stripIndents`
       @import '~./styles/mixins.scss';
-      .cls1 {
+      .cls1 { /*!*/ }
+      .cls2 {
+      composes: cls1;
+
       display: inline-flex;
       align-items: center;
       justify-content: center;

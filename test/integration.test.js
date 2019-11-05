@@ -112,4 +112,15 @@ describe('webpack integration', () => {
 
     jest.restoreAllMocks();
   });
+
+  it.only('issue 365', async () => {
+    const assets = await runWebpack(getConfig('./integration/issue-365.js'));
+
+    expect(assets['main.css'].source()).toMatchFile(
+      path.join(__dirname, '__file_snapshots__/issue-365-styles.css'),
+    );
+    expect(assets['main.js'].source()).toMatchFile(
+      path.join(__dirname, '__file_snapshots__/issue-365-js.js'),
+    );
+  });
 });

@@ -1,13 +1,14 @@
 const cssLoader = require('css-loader');
 const postcssLoader = require('postcss-loader');
 const postcssNested = require('postcss-nested');
+const postcssAtroot = require('postcss-atroot');
 
 function postcss(loader, css, map, meta, cb) {
   const ctx = { ...loader };
   ctx.async = () => cb;
   ctx.loaderIndex++;
   ctx.query = {
-    plugins: [postcssNested()],
+    plugins: [postcssNested(), postcssAtroot()],
   };
 
   postcssLoader.call(ctx, css, map, meta);
