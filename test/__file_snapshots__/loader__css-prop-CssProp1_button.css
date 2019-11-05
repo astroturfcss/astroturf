@@ -1,3 +1,6 @@
-.cls1 {
+.cls1 { /*!*/ }
+.cls2 {
+composes: cls1;
+
 color: blue;
 }
