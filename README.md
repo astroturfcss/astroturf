@@ -20,6 +20,7 @@
   - [Keyframes and global](#keyframes-and-global)
   - [Attaching Additional Props](#attaching-additional-props)
   - [`as` prop](#as-prop)
+- [Installation](#installation)
 - [Setup](#setup)
   - [Options](#options)
   - [Use with Gatsby](#use-with-gatsby)
@@ -440,6 +441,12 @@ const Button = styled('button')`
 const StyledFooter = styled(Footer, { allowAs: true })`
   color: red;
 `;
+```
+
+## Installation
+
+```shell
+npm install --save-dev astroturf
 ```
 
 ## Setup
