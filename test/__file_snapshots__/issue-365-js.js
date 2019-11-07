@@ -163,7 +163,7 @@ if (__DEV__) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"cls1":"issue-365-BlockStyled__cls1","active":"issue-365-BlockStyled__active issue-365-mixins__show","cls2":"issue-365-BlockStyled__cls2 issue-365-BlockStyled__cls1"};
+module.exports = {"cls1":"issue-365-BlockStyled__cls1","cls2":"issue-365-BlockStyled__cls2 issue-365-BlockStyled__cls1","active":"issue-365-BlockStyled__active issue-365-mixins__show"};
 
 /***/ }),
 
