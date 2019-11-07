@@ -1,9 +1,9 @@
 {
-  "presets": [["@4c/4catalyzer", { "target": "node" }]],
+  "presets": [["@4c", { "target": "node" }]],
   "overrides": [
     {
       "test": "src/runtime/**",
-      "presets": [["@4c/4catalyzer", { "target": "web" }]]
+      "presets": [["@4c", { "target": "web" }]]
     }
   ]
 }
