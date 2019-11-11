@@ -75,7 +75,7 @@
     "@babel/template": "^7.2.2",
     "@babel/traverse": "^7.6.2",
     "@babel/types": "^7.3.4",
-    "chalk": "^2.4.2",
+    "chalk": "^3.0.0",
     "common-tags": "^1.8.0",
     "css-loader": "^3.0.0",
     "errno": "^0.1.7",
