@@ -3,9 +3,9 @@
 
 
 "@4c/babel-preset@^7.2.0":
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/@4c/babel-preset/-/babel-preset-7.2.0.tgz#0442c42cabbf03db725e31f0e60eaa685c0c8396"
-  integrity sha512-5zyKWR7+VjhhXK/+3z/UIBWqlgJtDsc/MYgLQdX0aZ0f2sjYLSlXC2pRM5lHDSar/DVZTuGhenAZ9ZNN/3EpcA==
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/@4c/babel-preset/-/babel-preset-7.2.1.tgz#fc708d8add20f8ab653d26d97ebb7d4ae52e6352"
+  integrity sha512-Ue1WsKilTeE+gj+QYdYkpeq6frmWHe3shQWdjDFy8QshmBTV3yvrjEx4WyeIgxapCH4/xwjAc0zz5xNmr/5fcw==
   dependencies:
     "@babel/plugin-proposal-class-properties" "^7.5.5"
     "@babel/plugin-proposal-export-default-from" "^7.5.2"
@@ -17,7 +17,7 @@
     "@babel/preset-env" "^7.5.5"
     "@babel/preset-react" "^7.0.0"
     babel-plugin-dev-expression "^0.2.2"
-    babel-plugin-react-intl "^4.1.12"
+    babel-plugin-react-intl "^5.1.0"
     browserslist "^4.6.6"
     lodash "^4.17.15"
     read-pkg-up "^7.0.0"
@@ -193,7 +193,7 @@
   dependencies:
     "@babel/highlight" "^7.0.0"
 
-"@babel/core@^7.1.0", "@babel/core@^7.2.2", "@babel/core@^7.3.4", "@babel/core@^7.5.5", "@babel/core@^7.6.2", "@babel/core@^7.7.0":
+"@babel/core@^7.1.0", "@babel/core@^7.2.2", "@babel/core@^7.3.4", "@babel/core@^7.5.5", "@babel/core@^7.7.0", "@babel/core@^7.7.2":
   version "7.7.2"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.7.2.tgz#ea5b99693bcfc058116f42fa1dd54da412b29d91"
   integrity sha512-eeD7VEZKfhK1KUXGiyPFettgF3m513f8FoBSWiQ1xTvl1RAopLs42Wp9+Ze911I6H0N9lNqJMDgoZT7gHsipeQ==
@@ -2112,12 +2112,12 @@ babel-plugin-jest-hoist@^24.9.0:
   dependencies:
     "@types/babel__traverse" "^7.0.6"
 
-babel-plugin-react-intl@^4.1.12:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-react-intl/-/babel-plugin-react-intl-4.3.0.tgz#bcff1936dbad4a1bb2e7d955032f92aba6fdc063"
-  integrity sha512-X4R9ZrQ6LR6EaNqk7DCA39GamD8Deo1XOeQGEbsswV741AgQ8HfuXtQ7FKCiDnfWp2nhVVio+BAIrhwS5JxHdQ==
+babel-plugin-react-intl@^5.1.0:
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/babel-plugin-react-intl/-/babel-plugin-react-intl-5.1.2.tgz#64319e17b7e75fc687ec2aa7a99c0d13ff8cc021"
+  integrity sha512-PlgNqOJQNAbFKUQZ3Lwl4WfRnp9HmpVjlpi+XW7GirpFs+0KFGMBpk8bTe6GpwH9WNjpxB65YyxXrh1NTNp+Ug==
   dependencies:
-    "@babel/core" "^7.6.2"
+    "@babel/core" "^7.7.2"
     "@babel/helper-plugin-utils" "^7.0.0"
     "@types/babel__core" "^7.1.2"
     "@types/schema-utils" "^1.0.0"
