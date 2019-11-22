@@ -4,7 +4,7 @@ import * as React from 'react';
 
 export type Omit<T, U> = Pick<T, Exclude<keyof T, U>>;
 
-export type mapper<TInner, TOuter> = (input: TInner) => TOuter;
+export type Mapper<TInner, TOuter> = (input: TInner) => TOuter;
 
 export interface InferableComponentEnhancerWithProps<
   TInjectedProps,
@@ -16,9 +16,9 @@ export interface InferableComponentEnhancerWithProps<
 }
 
 export function mapProps<TInner, TOuter>(
-  propsMapper: mapper<TOuter, TInner>,
+  mapper: Mapper<TOuter, TInner>,
 ): InferableComponentEnhancerWithProps<TInner, TOuter>;
 
 export function withProps<TInner, TOuter>(
-  createProps: TInner | mapper<TOuter, TInner>,
+  objOrMapper: Partial<TInner> | Mapper<TOuter, Partial<TInner>>,
 ): InferableComponentEnhancerWithProps<TInner & TOuter, TOuter>;
