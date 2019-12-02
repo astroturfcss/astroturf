@@ -98,14 +98,15 @@ function collectStyles(src, filename, resolveDependency, opts) {
 
   // quick regex as an optimization to avoid parsing each file
   if (
-    !src.match(
-      new RegExp(
-        `(${tagName}|${styledTag}(.|\\n|\\r)+?)\\s*\`([\\s\\S]*?)\``,
-        'gmi',
-      ),
-    ) &&
-    opts.cssPropEnabled &&
-    !src.match(/css=("|')/g)
+    !(
+      src.match(
+        new RegExp(
+          `(${tagName}|${styledTag}(.|\\n|\\r)+?)\\s*\`([\\s\\S]*?)\``,
+          'gmi',
+        ),
+      ) ||
+      (opts.enableCssProp && src.match(/css=("|'|{)/g))
+    )
   ) {
     return { styles: [] };
   }
