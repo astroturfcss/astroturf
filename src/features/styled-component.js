@@ -20,7 +20,7 @@ const PURE_COMMENT = '/*#__PURE__*/';
 const buildImport = template('require(FILENAME);');
 
 const buildComponent = template(
-  `styled(ELEMENTTYPE, OPTIONS, {
+  `TAG(ELEMENTTYPE, OPTIONS, {
     displayName: DISPLAYNAME,
     styles: IMPORT,
     attrs: ATTRS,
@@ -59,6 +59,7 @@ function buildStyledComponent(path, elementType, opts) {
   style.value = imports + wrapInClass(text);
 
   const runtimeNode = buildComponent({
+    TAG: pluginOptions.styledTag,
     ELEMENTTYPE: elementType,
     ATTRS: normalizeAttrs(styledAttrs),
     OPTIONS: styledOptions || t.NullLiteral(),
