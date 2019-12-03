@@ -2,8 +2,6 @@
 /** @jsxFrag _f **/
 
 const { jsx: _j, F: _f } = require("astroturf");
-const _default = require("./typescript-CssProp1_Button.css");
-const _default2 = require("./typescript-CssProp2_Button.css");
 import styled from "astroturf";
 import React from "react";
 
@@ -33,10 +31,16 @@ class Component extends React.Component<PropsType> {
     return (
       <>
         <h2>{this.props.children}</h2>
-        <Button variant="primary" css={[_default, []]}>
+        <Button
+          variant="primary"
+          css={[require("./typescript-CssProp1_Button.css"), []]}
+        >
           click
         </Button>
-        <Button variant="secondary" css={[_default2, []]}>
+        <Button
+          variant="secondary"
+          css={[require("./typescript-CssProp2_Button.css"), []]}
+        >
           cancel
         </Button>
       </>
