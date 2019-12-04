@@ -2,7 +2,7 @@ import s from 'astroturf'; // prettier-ignore
 
 const FancyBox =
   /*#__PURE__*/
-  styled("div", null, {
+  s("div", null, {
     displayName: "FancyBox",
     styles: require("./styled-tag-FancyBox.css"),
     attrs: null,
@@ -10,7 +10,7 @@ const FancyBox =
   });
 const FancierBox =
   /*#__PURE__*/
-  styled(FancyBox, null, {
+  s(FancyBox, null, {
     displayName: "FancierBox",
     styles: require("./styled-tag-FancierBox.css"),
     attrs: null,

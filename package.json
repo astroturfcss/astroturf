@@ -1,6 +1,6 @@
 {
   "name": "astroturf",
-  "version": "0.9.21",
+  "version": "0.10.1",
   "description": "Extract and process inline CSS literals in JavaScript files",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -119,6 +119,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-react-hooks": "^2.3.0",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^3.0.0",
     "jest": "^24.1.0",
@@ -135,5 +136,5 @@
     "webpack-dev-server": "^3.2.1"
   },
   "readme": "ERROR: No README data found!",
-  "_id": "astroturf@0.9.20"
+  "_id": "astroturf@0.10.0"
 }

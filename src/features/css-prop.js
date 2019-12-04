@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import generate from '@babel/generator';
-import { addDefault, addNamed } from '@babel/helper-module-imports';
+import { addNamed } from '@babel/helper-module-imports';
+import template from '@babel/template';
 import * as t from '@babel/types';
 
 import buildTaggedTemplate from '../utils/buildTaggedTemplate';
@@ -13,6 +14,8 @@ import trimExpressions from '../utils/trimExpressions';
 import wrapInClass from '../utils/wrapInClass';
 
 const JSX_IDENTS = Symbol('Astroturf jsx identifiers');
+
+const buildImport = template('require(FILENAME);');
 
 const isCreateElementCall = p =>
   p.isCallExpression() &&
@@ -81,8 +84,14 @@ function buildCssProp(valuePath, name, options) {
     return null;
   }
 
-  const importId = addDefault(valuePath, style.relativeFilePath);
-  let runtimeNode = t.arrayExpression([importId, vars].filter(Boolean));
+  let runtimeNode = t.arrayExpression(
+    [
+      buildImport({
+        FILENAME: t.StringLiteral(style.relativeFilePath),
+      }).expression,
+      vars,
+    ].filter(Boolean),
+  );
 
   nodeMap.set(runtimeNode.expression, style);
 
@@ -94,10 +103,6 @@ function buildCssProp(valuePath, name, options) {
 
   if (pluginOptions.generateInterpolations)
     style.code = generate(runtimeNode).code;
-
-  cssState.changeset.push({
-    code: `const ${importId.name} = require("${style.relativeFilePath}");\n`,
-  });
 
   return runtimeNode;
 }

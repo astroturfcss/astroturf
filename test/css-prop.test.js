@@ -88,11 +88,9 @@ describe('css prop', () => {
     expect(style.value).toMatch('1500ms');
   });
 
-  testAllRunners.only(
-    'should find when used with createElement',
-    async runner => {
-      const [code, styles] = await runner(
-        `
+  testAllRunners('should find when used with createElement', async runner => {
+    const [code, styles] = await runner(
+      `
       function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
       import { css } from 'astroturf';
@@ -109,14 +107,13 @@ describe('css prop', () => {
         }), React.createElement('span', { css: 'width: 3rem' }));
       });
     `,
-        { enableCssProp: true },
-      );
+      { enableCssProp: true },
+    );
 
-      expect(code).not.toMatch('React.createElement');
-      expect(styles).toHaveLength(2);
-      expect(styles[0].identifier).toEqual('CssProp1_div');
-    },
-  );
+    expect(code).not.toMatch('React.createElement');
+    expect(styles).toHaveLength(2);
+    expect(styles[0].identifier).toEqual('CssProp1_div');
+  });
 
   testAllRunners('should warn when not enabled', async runner => {
     const spy = jest.spyOn(console, 'warn').mockImplementation(() => {});

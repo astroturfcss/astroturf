@@ -46,7 +46,9 @@ describe('custom properties', () => {
 
       const i = style.interpolations[0];
 
-      expect(code).toContain(`css={[_default, [["${i.id}", color]]]}`);
+      expect(code).toContain(
+        `css={[require("./MyStyleFile-CssProp1_button.css"), [["${i.id}", color]]]}`,
+      );
     },
   );
 
@@ -70,7 +72,12 @@ describe('custom properties', () => {
 
     const i = style.interpolations[0];
 
-    expect(code).toContain(`css={[_default, [["${i.id}", duration, "ms"]]]}`);
+    expect(code).toContain(
+      `css={[
+        require("./MyStyleFile-CssProp1_button.css"),
+        [["${i.id}", duration, "ms"]]
+      ]}`,
+    );
   });
 
   it('should disallow when configured off', async () => {

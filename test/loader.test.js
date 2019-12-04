@@ -27,9 +27,7 @@ describe('webpack loader', () => {
     expect(code.includes('/** @jsxFrag _f **/')).toBe(true);
 
     expect(
-      code.includes(
-        'const _default = require("./MyStyleFile-CssProp1_button.css");',
-      ),
+      code.includes('[require("./MyStyleFile-CssProp1_button.css")'),
     ).toBe(true);
 
     expect(
