@@ -93,24 +93,6 @@ function buildDependencyError(
 }
 
 function collectStyles(src, filename, resolveDependency, opts) {
-  const tagName = opts.tagName || 'css';
-  const styledTag = opts.styledTag || 'styled';
-
-  // quick regex as an optimization to avoid parsing each file
-  if (
-    !(
-      src.match(
-        new RegExp(
-          `(${tagName}|${styledTag}(.|\\n|\\r)+?)\\s*\`([\\s\\S]*?)\``,
-          'gmi',
-        ),
-      ) ||
-      (opts.enableCssProp && src.match(/css=("|'|{)/g))
-    )
-  ) {
-    return { styles: [] };
-  }
-
   // maybe eventually return the ast directly if babel-loader supports it
   try {
     const { metadata } = traverse(src, filename, {
