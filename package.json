@@ -105,7 +105,7 @@
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
-    "cpy-cli": "^2.0.0",
+    "cpy-cli": "^3.0.0",
     "doctoc": "^1.4.0",
     "dtslint": "^2.0.2",
     "enzyme": "^3.10.0",
