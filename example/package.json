@@ -7,14 +7,14 @@
     "start": "NODE_DEBUG=astroturf* webpack-dev-server"
   },
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
-    "@babel/core": "^7.7.5",
+    "@babel/cli": "^7.7.7",
+    "@babel/core": "^7.7.7",
     "babel-core": "^7.0.0-bridge.0",
-    "mini-css-extract-plugin": "^0.8.0",
-    "webpack": "^4.41.2",
+    "mini-css-extract-plugin": "^0.9.0",
+    "webpack": "^4.41.4",
     "webpack-atoms": "^12.0.2",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.9.0"
+    "webpack-dev-server": "^3.10.1"
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
