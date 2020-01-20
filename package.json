@@ -26,13 +26,9 @@
   "lint-staged": {
     "!(__file_snapshots__/)*.js": [
       "eslint --fix",
-      "yarn 4c format",
-      "git add"
+      "yarn 4c format"
     ],
-    "README.md": [
-      "doctoc",
-      "git add"
-    ]
+    "README.md": "doctoc"
   },
   "importSort": {
     ".js, .ts, .tsx": {
