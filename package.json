@@ -26,13 +26,9 @@
   "lint-staged": {
     "!(__file_snapshots__/)*.js": [
       "eslint --fix",
-      "yarn 4c format",
-      "git add"
+      "yarn 4c format"
     ],
-    "README.md": [
-      "doctoc",
-      "git add"
-    ]
+    "README.md": "doctoc"
   },
   "importSort": {
     ".js, .ts, .tsx": {
@@ -124,7 +120,7 @@
     "husky": "^4.0.7",
     "jest": "^24.9.0",
     "jest-file-snapshot": "^0.3.8",
-    "lint-staged": "^9.5.0",
+    "lint-staged": "^10.0.0",
     "mini-css-extract-plugin": "^0.9.0",
     "prettier": "^1.19.1",
     "react": "^16.12.0",
