@@ -1,6 +1,6 @@
 import { stripIndents } from 'common-tags';
 
-export default function wrapInClass(text) {
+export default function wrapInClass(text: string) {
   const imports = [];
 
   let match;

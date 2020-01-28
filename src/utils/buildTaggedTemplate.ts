@@ -2,7 +2,10 @@ import { dirname, relative } from 'path';
 import groupBy from 'lodash/groupBy';
 import uniq from 'lodash/uniq';
 import resolve from 'resolve';
+import { NodePath } from '@babel/core';
+import * as t from '@babel/types';
 
+import { NodeStyleMap, Style } from '../types';
 import cssUnits from './cssUnits';
 import getNameFromPath from './getNameFromPath';
 import hash from './murmurHash';
@@ -12,7 +15,29 @@ const rPlaceholder = /###ASTROTURF_PLACEHOLDER_\d*?###/g;
 // Match any valid CSS units followed by a separator such as ;, newline etc.
 const rUnit = new RegExp(`^(${cssUnits.join('|')})(;|,|\n| |\\))`);
 
-function defaultResolveDependency({ request }, localStyle) {
+export interface ResolvedImport {
+  identifier: string | undefined | null;
+  request: string;
+  type: string;
+}
+
+interface UserInterpolation {
+  source: string;
+  imported?: string;
+  isStyledComponent?: boolean;
+}
+
+export interface Interpolation {
+  imported: string;
+  source: string;
+  isStyledComponent?: boolean;
+}
+
+function defaultResolveDependency(
+  { request }: ResolvedImport,
+  localStyle: Style,
+  _node: t.Node,
+): UserInterpolation {
   const source = resolve.sync(request, {
     basedir: dirname(localStyle.absoluteFilePath),
   });
@@ -20,18 +45,22 @@ function defaultResolveDependency({ request }, localStyle) {
   return { source };
 }
 
-function resolveMemberExpression(path) {
-  let nextPath = path.resolve();
+function resolveMemberExpression(path: NodePath) {
+  let nextPath: NodePath = (path as any).resolve();
   while (nextPath && nextPath.isMemberExpression()) {
-    nextPath = nextPath.get('object').resolve();
+    nextPath = (nextPath.get('object') as any).resolve();
   }
   return nextPath;
 }
 
-function resolveImport(path) {
+function resolveImport(path: NodePath): ResolvedImport | null {
   const resolvedPath = resolveMemberExpression(path);
-  const binding = resolvedPath.scope.getBinding(resolvedPath.node.name);
-  if (!binding || binding.kind !== 'module') return false;
+  const binding =
+    'name' in resolvedPath.node &&
+    typeof resolvedPath.node.name === 'string' &&
+    resolvedPath.scope.getBinding(resolvedPath.node.name);
+
+  if (!binding || binding.kind !== 'module') return null;
 
   const importPath = binding.path;
   const parent = importPath.parentPath;
@@ -42,7 +71,7 @@ function resolveImport(path) {
 
   if (importPath.isImportNamespaceSpecifier()) {
     if (!path.isMemberExpression()) throw new Error('this is weird');
-    identifier = getNameFromPath(path.get('property'));
+    identifier = getNameFromPath(path.get('property') as NodePath);
   } else if (importPath.isImportDefaultSpecifier()) {
     identifier = getNameFromPath(resolvedPath);
   } else if (importPath.isImportSpecifier()) {
@@ -54,11 +83,11 @@ function resolveImport(path) {
 }
 
 function resolveStyleInterpolation(
-  path,
-  nodeMap,
-  localStyle,
+  path: NodePath<t.Expression>,
+  nodeMap: NodeStyleMap,
+  localStyle: any,
   resolveDependency = defaultResolveDependency,
-) {
+): Interpolation | null {
   const resolvedPath = resolveMemberExpression(path);
 
   const style = resolvedPath && nodeMap.get(resolvedPath.node);
@@ -66,7 +95,7 @@ function resolveStyleInterpolation(
   if (style) {
     return {
       imported: !style.isStyledComponent
-        ? path.get('property').node.name
+        ? (path.get('property') as any).node.name
         : 'cls1',
       source: relative(
         dirname(localStyle.absoluteFilePath),
@@ -80,28 +109,43 @@ function resolveStyleInterpolation(
 
     if (resolvedImport) {
       const { identifier } = resolvedImport;
-      const interpolation =
-        resolveDependency(resolvedImport, localStyle, path.node) || null;
+      const interpolation: UserInterpolation | null =
+        resolveDependency(resolvedImport, localStyle, path.node) ?? null;
+
+      if (!interpolation) return null;
 
       const isStyledComponent =
         interpolation.isStyledComponent == null
-          ? identifier.toLowerCase()[0] !== identifier[0]
+          ? identifier?.toLowerCase()[0] !== identifier?.[0]
           : interpolation.isStyledComponent;
 
-      return (
-        interpolation && {
-          imported: !isStyledComponent
-            ? path.get('property').node.name
-            : 'cls1',
-          ...interpolation,
-        }
-      );
+      return {
+        imported: !isStyledComponent
+          ? (path.get('property') as any).node.name
+          : 'cls1',
+        ...interpolation,
+      };
     }
   }
   return null;
 }
 
-const getPlaceholder = idx => `###ASTROTURF_PLACEHOLDER_${idx}###`;
+const getPlaceholder = (idx: number) => `###ASTROTURF_PLACEHOLDER_${idx}###`;
+
+export interface DynamicInterpolation {
+  id: string;
+  unit: string;
+  expr: NodePath<t.Expression>;
+}
+
+interface Options {
+  quasiPath: NodePath<t.TemplateLiteral>;
+  nodeMap: NodeStyleMap;
+  tagName: string;
+  resolveDependency?: (imp: ResolvedImport, style: Style, node: t.Node) => any;
+  useCssProperties: boolean;
+  style: Style;
+}
 
 export default ({
   quasiPath,
@@ -110,15 +154,15 @@ export default ({
   resolveDependency,
   useCssProperties,
   style: localStyle,
-}) => {
+}: Options) => {
   const quasi = quasiPath.node;
 
   const styleInterpolations = new Map();
-  const dynamicInterpolations = new Set();
+  const dynamicInterpolations = new Set<DynamicInterpolation>();
   const expressions = quasiPath.get('expressions');
 
   let text = '';
-  let lastDynamic = null;
+  let lastDynamic: DynamicInterpolation | null = null;
 
   quasi.quasis.forEach((tmplNode, idx) => {
     const { cooked } = tmplNode.value;
@@ -132,12 +176,12 @@ export default ({
     if (
       lastDynamic &&
       text.endsWith(`var(--${lastDynamic.id})`) &&
-      (matches = cooked.match(rUnit))
+      (matches = cooked!.match(rUnit))
     ) {
       const [, unit] = matches;
 
       lastDynamic.unit = unit;
-      text += cooked.replace(rUnit, '$2');
+      text += cooked!.replace(rUnit, '$2');
     } else {
       text += cooked;
     }
@@ -161,9 +205,9 @@ export default ({
     );
 
     if (interpolation) {
-      interpolation.expr = expr;
+      // interpolation.expr = expr;
       const ph = getPlaceholder(idx);
-      styleInterpolations.set(ph, interpolation);
+      styleInterpolations.set(ph, { ...interpolation, expr });
       text += ph;
 
       return;
@@ -186,7 +230,7 @@ export default ({
   });
 
   // Replace references in `composes` rules
-  text = text.replace(rComposes, (composes, classNames, fromPart) => {
+  text = text.replace(rComposes, (composes, classNames: string, fromPart) => {
     const classList = classNames.replace(/(\n|\r|\n\r)/, '').split(/\s+/);
 
     const composed = classList
@@ -197,13 +241,13 @@ export default ({
 
     if (fromPart) {
       // don't want to deal with this case right now
-      throw classList[0].expr.buildCodeFrameError(
+      throw composed[0].expr.buildCodeFrameError(
         'A styled interpolation found inside a `composes` rule with a "from". ' +
           'Interpolated values should be in their own `composes` without specifying the file.',
       );
     }
     if (composed.length < classList.length) {
-      throw classList[0].expr.buildCodeFrameError(
+      throw composed[0].expr.buildCodeFrameError(
         'Mixing interpolated and non-interpolated classes in a `composes` rule is not allowed.',
       );
     }

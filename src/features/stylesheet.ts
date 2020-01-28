@@ -1,6 +1,14 @@
+import { NodePath } from '@babel/core';
 import template from '@babel/template';
 import * as t from '@babel/types';
 
+import {
+  NodeStyleMap,
+  PluginState,
+  ResolvedOptions,
+  StaticStyle,
+  StyleState,
+} from '../types';
 import buildTaggedTemplate from '../utils/buildTaggedTemplate';
 import createStyleNode from '../utils/createStyleNode';
 import getDisplayName from '../utils/getDisplayName';
@@ -9,14 +17,30 @@ import { COMPONENTS, STYLES } from '../utils/Symbols';
 
 const buildImport = template('require(FILENAME);');
 
-function buildStyleRequire(path, opts) {
+interface Options {
+  pluginOptions: ResolvedOptions;
+  file: any;
+}
+
+function buildStyleRequire(
+  path: NodePath<t.TaggedTemplateExpression>,
+  opts: Options,
+) {
   const { tagName } = opts.pluginOptions;
-  const { styles } = opts.file.get(STYLES);
-  const nodeMap = opts.file.get(COMPONENTS);
+  const { styles } = opts.file.get(STYLES) as StyleState;
+  const nodeMap: NodeStyleMap = opts.file.get(COMPONENTS);
 
-  const style = createStyleNode(path, getDisplayName(path, opts), opts);
-
-  style.code = `require('${style.relativeFilePath}')`;
+  const baseStyle = createStyleNode(
+    path,
+    getDisplayName(path, opts) || undefined,
+    opts,
+  );
+  const style: StaticStyle = {
+    ...baseStyle,
+    isStyledComponent: false,
+    code: `require('${baseStyle.relativeFilePath}')`,
+    value: '',
+  };
 
   const { text, imports } = buildTaggedTemplate({
     quasiPath: path.get('quasi'),
@@ -37,15 +61,18 @@ function buildStyleRequire(path, opts) {
 
   styles.set(style.absoluteFilePath, style);
   const runtimeNode = buildImport({
-    FILENAME: t.StringLiteral(style.relativeFilePath),
-  });
+    FILENAME: t.stringLiteral(style.relativeFilePath),
+  }) as t.ExpressionStatement;
 
   nodeMap.set(runtimeNode.expression, style);
   return runtimeNode;
 }
 
 export default {
-  TaggedTemplateExpression(path, state) {
+  TaggedTemplateExpression(
+    path: NodePath<t.TaggedTemplateExpression>,
+    state: PluginState,
+  ) {
     const pluginOptions = state.defaultedOptions;
 
     const tagPath = path.get('tag');

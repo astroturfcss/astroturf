@@ -144,7 +144,7 @@ describe('css prop', () => {
     spy.mockRestore();
   });
 
-  testAllRunners(
+  testAllRunners.only(
     'should only compile with appropriate css import',
     async runner => {
       const [, styles] = await runner(

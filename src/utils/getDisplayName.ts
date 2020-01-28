@@ -1,10 +1,12 @@
+import { NodePath } from '@babel/core';
+
 import { getNameFromFile } from './createFilename';
 import getNameFromPath from './getNameFromPath';
 
 export default function getDisplayName(
-  path,
-  { file },
-  defaultName = getNameFromFile(file.opts.filename),
+  path: NodePath,
+  { file }: { file: any },
+  defaultName: string | null = getNameFromFile(file.opts.filename),
 ) {
   // eslint-disable-next-line no-cond-assign
   while ((path = path.parentPath)) {
