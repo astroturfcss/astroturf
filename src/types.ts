@@ -24,8 +24,11 @@ export type DependencyResolver = (
 export interface ResolvedOptions {
   writeFiles: boolean;
   allowGlobal: boolean;
-  tagName: string;
-  styledTag: string;
+
+  cssTagName: string;
+  styledTagName: string;
+  stylesheetTagName: string;
+
   enableCssProp: boolean;
   noWarnings?: boolean;
   resolveDependency?: DependencyResolver;

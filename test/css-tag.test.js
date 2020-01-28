@@ -90,7 +90,7 @@ describe('css tag', () => {
       \`;
     `,
       {
-        tagName: 'less',
+        cssTagName: 'less',
         extension: '.less',
       },
     );
@@ -119,7 +119,7 @@ describe('css tag', () => {
           }
         \`;
       `,
-          { tagName: 'less' },
+          { cssTagName: 'less' },
         ),
       ).rejects.toThrow(
         /There are multiple anonymous less tags that would conflict/,
@@ -140,7 +140,7 @@ describe('css tag', () => {
       \`;
     `,
       {
-        tagName: 'less',
+        cssTagName: 'less',
         allowGlobal: false,
       },
     );
@@ -151,6 +151,8 @@ describe('css tag', () => {
   testAllRunners('handles non-simple interpolations', async () => {
     const [, styles] = await run(
       `
+      import { css } from 'astroturf';
+
       const duration = 1000
       const durationMs = \`$\{duration + 500}ms\`;
 

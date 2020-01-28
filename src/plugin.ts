@@ -10,7 +10,7 @@ import * as t from '@babel/types';
 import cssProp from './features/css-prop';
 import styledComponent from './features/styled-component';
 import stylesheet from './features/stylesheet';
-import { PluginState, StyleState } from './types';
+import { PluginState, StyleState, ResolvedOptions } from './types';
 import ImportInjector from './utils/ImportInjector';
 import { COMPONENTS, IMPORTS, STYLES } from './utils/Symbols';
 
@@ -81,17 +81,18 @@ export default function plugin(): PluginObj<PluginState> {
           enter(path: NodePath<t.Program>, state: any) {
             state.styleImports = new ImportInjector(path);
             state.defaultedOptions = defaults(state.opts, {
-              tagName: 'css',
-              allowGlobal: true,
-              styledTag: 'styled',
-              customCssProperties: 'cssProp', // or: true, false
-            });
+              cssTagName: 'css',
+              styledTagName: 'styled',
+              stylesheetTagName: 'stylesheet',
+              allowGlobal: false,
+              customCssProperties: 'cssProp',
+            }) as ResolvedOptions;
           },
         },
 
         ImportDeclaration: {
           exit(path: NodePath<t.ImportDeclaration>, state: PluginState) {
-            const { tagName } = state.defaultedOptions;
+            const { cssTagName } = state.defaultedOptions;
             const specifiers = path.get('specifiers');
             const tagImport = path
               .get('specifiers')
@@ -99,7 +100,7 @@ export default function plugin(): PluginObj<PluginState> {
                 p =>
                   p.isImportSpecifier() &&
                   p.node.imported.name === 'css' &&
-                  p.node.local.name === tagName,
+                  p.node.local.name === cssTagName,
               );
 
             if (tagImport) {

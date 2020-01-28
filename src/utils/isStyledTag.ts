@@ -6,14 +6,14 @@ import hasAttrs from './hasAttrs';
 
 const isAttrsExpression = (calleePath: any, pluginOptions: ResolvedOptions) =>
   hasAttrs(calleePath) &&
-  // eslint-disable-next-line no-use-before-define
+  // eslint-disable-next-line @typescript-eslint/no-use-before-define
   isStyledTag(calleePath.get('object'), pluginOptions);
 
 const isStyledExpression = (
   calleePath: any,
-  { styledTag, allowGlobal }: ResolvedOptions,
+  { styledTagName, allowGlobal }: ResolvedOptions,
 ) =>
-  calleePath.node.name === styledTag &&
+  calleePath.node.name === styledTagName &&
   (allowGlobal || calleePath.referencesImport('astroturf'));
 
 export default function isStyledTag(

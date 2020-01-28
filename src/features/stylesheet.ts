@@ -12,7 +12,7 @@ function buildStyleRequire(
   path: NodePath<t.TaggedTemplateExpression>,
   opts: PluginState,
 ) {
-  const { tagName } = opts.defaultedOptions;
+  const { cssTagName } = opts.defaultedOptions;
   const { styles } = opts.file.get(STYLES) as StyleState;
   const nodeMap: NodeStyleMap = opts.file.get(COMPONENTS);
 
@@ -44,8 +44,8 @@ function buildStyleRequire(
   if (styles.has(style.absoluteFilePath))
     throw path.buildCodeFrameError(
       path.findParent(p => p.isExpressionStatement())
-        ? `There are multiple anonymous ${tagName} tags that would conflict. Differentiate each tag by assigning the output to a unique identifier`
-        : `There are multiple ${tagName} tags with the same inferred identifier. Differentiate each tag by assigning the output to a unique identifier`,
+        ? `There are multiple anonymous ${cssTagName} tags that would conflict. Differentiate each tag by assigning the output to a unique identifier`
+        : `There are multiple ${cssTagName} tags with the same inferred identifier. Differentiate each tag by assigning the output to a unique identifier`,
     );
 
   styles.set(style.absoluteFilePath, style);

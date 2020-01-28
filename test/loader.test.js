@@ -48,7 +48,7 @@ describe('webpack loader', () => {
       \`;
     `,
       {
-        tagName: 'less',
+        cssTagName: 'less',
         extension: '.less',
       },
     );
@@ -66,7 +66,8 @@ describe('webpack loader', () => {
       \`;
     `,
       {
-        styledTag: 's',
+        styledTagName: 's',
+        allowGlobal: true,
       },
     );
 
