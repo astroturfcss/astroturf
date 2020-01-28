@@ -1,9 +1,13 @@
+import { NodePath } from '@babel/core';
+
 import getMembers from './getMembers';
 import pascalCase from './pascalCase';
 
-export default function getNameFromPath(path) {
+const getLiteralValue = (node: any): string => node.raw || node.value;
+
+export default function getNameFromPath(path: NodePath): string | null {
   if (path.isIdentifier() || path.isJSXIdentifier()) return path.node.name;
-  if (path.isLiteral()) return path.node.raw || path.node.value;
+  if (path.isLiteral()) return getLiteralValue(path.node);
   if (path.isMemberExpression() || path.isJSXMemberExpression()) {
     return pascalCase(
       getMembers(path)

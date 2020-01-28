@@ -1,8 +1,14 @@
 import path from 'path';
 import { transformSync } from '@babel/core';
-import plugin from './plugin';
 
-export default function traverse(source, filename, opts) {
+import plugin from './plugin';
+import { ResolvedOptions } from './types';
+
+export default function traverse(
+  source: string,
+  filename: string,
+  opts: ResolvedOptions,
+) {
   const extname = path.extname(filename);
 
   return transformSync(source, {
@@ -16,7 +22,7 @@ export default function traverse(source, filename, opts) {
       allowReturnOutsideFunction: true,
       allowSuperOutsideMethod: true,
       sourceType: 'unambiguous',
-      sourceFilename: true,
+      sourceFilename: filename,
 
       plugins: [
         'jsx',

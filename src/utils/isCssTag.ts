@@ -1,4 +1,9 @@
-export default function isCssTag(tagPath, { tagName, allowGlobal }) {
+import { ResolvedOptions } from '../types';
+
+export default function isCssTag(
+  tagPath: any,
+  { tagName, allowGlobal }: ResolvedOptions,
+): boolean {
   return (
     tagPath.node.name === tagName &&
     (tagPath.referencesImport('astroturf') ||

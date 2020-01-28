@@ -1,9 +1,11 @@
 import chalk from 'chalk';
+import { NodePath } from '@babel/core';
 import generate from '@babel/generator';
 import { addNamed } from '@babel/helper-module-imports';
 import template from '@babel/template';
 import * as t from '@babel/types';
 
+import { DynamicStyle, PluginState, ResolvedOptions } from '../types';
 import buildTaggedTemplate from '../utils/buildTaggedTemplate';
 import createStyleNode from '../utils/createStyleNode';
 import getNameFromPath from '../utils/getNameFromPath';
@@ -15,14 +17,24 @@ import wrapInClass from '../utils/wrapInClass';
 
 const JSX_IDENTS = Symbol('Astroturf jsx identifiers');
 
+type CssPropPluginState = PluginState & {
+  [JSX_IDENTS]: {
+    jsx: t.Identifier;
+    jsxFrag: t.Identifier;
+  };
+};
 const buildImport = template('require(FILENAME);');
 
-const isCreateElementCall = p =>
+const isCreateElementCall = (p: NodePath) =>
   p.isCallExpression() &&
-  p.get('callee.property').node &&
-  p.get('callee.property').node.name === 'createElement';
+  (p.get('callee.property') as any).node &&
+  (p.get('callee.property') as any).node.name === 'createElement';
 
-function buildCssProp(valuePath, name, options) {
+function buildCssProp(
+  valuePath: NodePath<any>,
+  name: string | null,
+  options: { file: any; pluginOptions: ResolvedOptions; isJsx?: boolean },
+) {
   const { file, pluginOptions, isJsx } = options;
   const cssState = file.get(STYLES);
   const nodeMap = file.get(COMPONENTS);
@@ -45,10 +57,18 @@ function buildCssProp(valuePath, name, options) {
   const displayName = `CssProp${++cssState.id}_${name}`;
 
   let vars;
-  const style = createStyleNode(valuePath, displayName, {
+  const baseStyle = createStyleNode(valuePath, displayName, {
     file,
     pluginOptions,
   });
+
+  const style: DynamicStyle = {
+    ...baseStyle,
+    isStyledComponent: false,
+    interpolations: [],
+    imports: '',
+    value: '',
+  };
 
   if (valuePath.isStringLiteral()) {
     style.value = wrapInClass(valuePath.node.value);
@@ -80,19 +100,20 @@ function buildCssProp(valuePath, name, options) {
     }
   }
 
-  if (style.value == null) {
+  if (!style.value) {
     return null;
   }
 
-  let runtimeNode = t.arrayExpression(
+  let runtimeNode: t.Node = t.arrayExpression(
     [
-      buildImport({
-        FILENAME: t.StringLiteral(style.relativeFilePath),
-      }).expression,
+      (buildImport({
+        FILENAME: t.stringLiteral(style.relativeFilePath),
+      }) as any).expression,
       vars,
     ].filter(Boolean),
   );
-
+  // FIXME?
+  // @ts-ignore
   nodeMap.set(runtimeNode.expression, style);
 
   if (isJsx) {
@@ -107,11 +128,24 @@ function buildCssProp(valuePath, name, options) {
   return runtimeNode;
 }
 
+const getObjectKey = (keyPath: NodePath) => {
+  if (keyPath.isStringLiteral()) return keyPath.node.value;
+  if (keyPath.isIdentifier()) keyPath.node.name;
+  return (keyPath.node as any).name;
+};
+
+interface InnerVisitorState {
+  typeName: string | null;
+  pluginOptions: ResolvedOptions;
+  file: any;
+  processed?: boolean;
+}
+
 const cssPropertyVisitors = {
-  ObjectProperty(path, state) {
+  ObjectProperty(path: NodePath<t.ObjectProperty>, state: InnerVisitorState) {
     const { file, pluginOptions, typeName } = state;
 
-    if (path.get('key').node.name !== 'css') return;
+    if (getObjectKey(path.get('key') as NodePath) !== 'css') return;
 
     const valuePath = path.get('value');
 
@@ -129,7 +163,7 @@ const cssPropertyVisitors = {
 
 export default {
   Program: {
-    enter(path, state) {
+    enter(path: NodePath<t.Program>, state: any) {
       // We need to re-export Fragment because of
       // https://github.com/babel/babel/pull/7996#issuecomment-519653431
       state[JSX_IDENTS] = {
@@ -138,7 +172,7 @@ export default {
       };
     },
 
-    exit(path, state) {
+    exit(path: NodePath<t.Program>, state: CssPropPluginState) {
       if (!state.file.get(HAS_CSS_PROP)) return;
 
       const { jsx, jsxFrag } = state[JSX_IDENTS];
@@ -162,7 +196,7 @@ export default {
     },
   },
 
-  CallExpression(path, state) {
+  CallExpression(path: NodePath<t.CallExpression>, state: CssPropPluginState) {
     const { file } = state;
     const pluginOptions = state.defaultedOptions;
 
@@ -195,7 +229,7 @@ export default {
     }
   },
 
-  JSXAttribute(path, state) {
+  JSXAttribute(path: NodePath<t.JSXAttribute>, state: CssPropPluginState) {
     const { file } = state;
     const pluginOptions = state.defaultedOptions;
 
@@ -206,7 +240,7 @@ export default {
 
     const compiledNode = buildCssProp(
       valuePath,
-      parentPath && getNameFromPath(parentPath.get('name')),
+      parentPath && getNameFromPath(parentPath.get('name') as NodePath),
       {
         file,
         pluginOptions,

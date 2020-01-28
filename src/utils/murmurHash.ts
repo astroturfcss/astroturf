@@ -4,7 +4,7 @@
  * murmurhash2 via https://gist.github.com/raycmorgan/588423
  */
 
-function UInt32(str, pos) {
+function UInt32(str: string, pos: number) {
   return (
     str.charCodeAt(pos++) +
     (str.charCodeAt(pos++) << 8) +
@@ -13,11 +13,11 @@ function UInt32(str, pos) {
   );
 }
 
-function UInt16(str, pos) {
+function UInt16(str: string, pos: number) {
   return str.charCodeAt(pos++) + (str.charCodeAt(pos++) << 8);
 }
 
-function Umul32(n, m) {
+function Umul32(n: number, m: number) {
   n |= 0;
   m |= 0;
   const nlo = n & 0xffff;
@@ -26,7 +26,7 @@ function Umul32(n, m) {
   return res;
 }
 
-function doHash(str, seed = 0) {
+function doHash(str: string, seed = 0) {
   const m = 0x5bd1e995;
   const r = 24;
   let h = seed ^ str.length;
@@ -72,4 +72,4 @@ function doHash(str, seed = 0) {
   return h >>> 0;
 }
 
-export default code => doHash(code).toString(36);
+export default (code: string) => doHash(code).toString(36);
