@@ -7,3 +7,4 @@ cache: yarn
 branches:
   only:
     - master
+    - v1

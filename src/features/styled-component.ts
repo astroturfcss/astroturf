@@ -1,8 +1,16 @@
 import get from 'lodash/get';
+import { NodePath } from '@babel/core';
 import generate from '@babel/generator';
 import template from '@babel/template';
 import * as t from '@babel/types';
 
+import {
+  DynamicStyle,
+  NodeStyleMap,
+  PluginState,
+  ResolvedOptions,
+  StyleState,
+} from '../types';
 import buildTaggedTemplate from '../utils/buildTaggedTemplate';
 import createStyleNode from '../utils/createStyleNode';
 import getDisplayName from '../utils/getDisplayName';
@@ -28,10 +36,21 @@ const buildComponent = template(
   })`,
 );
 
-function buildStyledComponent(path, elementType, opts) {
+interface Options {
+  pluginOptions: ResolvedOptions;
+  styledAttrs?: t.Node;
+  styledOptions?: t.Node;
+  file: any;
+}
+
+function buildStyledComponent(
+  path: NodePath<t.TaggedTemplateExpression>,
+  elementType: t.Node,
+  opts: Options,
+) {
   const { file, pluginOptions, styledAttrs, styledOptions } = opts;
-  const cssState = file.get(STYLES);
-  const nodeMap = file.get(COMPONENTS);
+  const cssState = file.get(STYLES) as StyleState;
+  const nodeMap = file.get(COMPONENTS) as NodeStyleMap;
   const displayName = getDisplayName(path, opts, null);
 
   if (!displayName)
@@ -42,9 +61,14 @@ function buildStyledComponent(path, elementType, opts) {
         : 'Could not determine a displayName for this styled component. Each component must be uniquely identifiable, either as the default export of the module or by assigning it to a unique identifier',
     );
 
-  const style = createStyleNode(path, displayName, opts);
-
-  style.isStyledComponent = true;
+  const baseStyle = createStyleNode(path, displayName, opts);
+  const style: DynamicStyle = {
+    ...baseStyle,
+    isStyledComponent: true,
+    interpolations: [],
+    imports: '',
+    value: '',
+  };
 
   const { text, dynamicInterpolations, imports } = buildTaggedTemplate({
     style,
@@ -62,13 +86,13 @@ function buildStyledComponent(path, elementType, opts) {
     TAG: pluginOptions.styledTag,
     ELEMENTTYPE: elementType,
     ATTRS: normalizeAttrs(styledAttrs),
-    OPTIONS: styledOptions || t.NullLiteral(),
-    DISPLAYNAME: t.StringLiteral(displayName),
+    OPTIONS: styledOptions || t.nullLiteral(),
+    DISPLAYNAME: t.stringLiteral(displayName),
     VARS: toVarsArray(dynamicInterpolations),
-    IMPORT: buildImport({
-      FILENAME: t.StringLiteral(style.relativeFilePath),
-    }).expression,
-  });
+    IMPORT: (buildImport({
+      FILENAME: t.stringLiteral(style.relativeFilePath),
+    }) as any).expression,
+  }) as t.ExpressionStatement;
 
   if (pluginOptions.generateInterpolations) {
     style.code = `${PURE_COMMENT}${generate(runtimeNode).code}`;
@@ -80,7 +104,10 @@ function buildStyledComponent(path, elementType, opts) {
 }
 
 export default {
-  TaggedTemplateExpression(path, state) {
+  TaggedTemplateExpression(
+    path: NodePath<t.TaggedTemplateExpression>,
+    state: PluginState,
+  ) {
     const pluginOptions = state.defaultedOptions;
 
     const tagPath = path.get('tag');
@@ -111,7 +138,8 @@ export default {
 
       // styled.button` ... `
     } else if (isStyledTagShorthand(tagPath, pluginOptions)) {
-      const componentType = t.StringLiteral(tagPath.get('property').node.name);
+      const prop = tagPath.get('property') as NodePath<t.Identifier>;
+      const componentType = t.stringLiteral(prop.node.name);
 
       path.replaceWith(
         buildStyledComponent(path, componentType, {

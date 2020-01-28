@@ -35,7 +35,7 @@ export async function run(src, options, filename = 'MyStyleFile.js') {
     filename,
     babelrc: false,
     plugins: [
-      [require('../src/plugin.js'), { ...options, writeFiles: false }],
+      [require('../src/plugin.ts'), { ...options, writeFiles: false }],
     ].filter(Boolean),
     parserOpts: PARSER_OPTS,
   });
@@ -127,10 +127,10 @@ export function runWebpack(config) {
 }
 
 function testAllRunnersImpl(t, msg, testFn) {
-  t.each([['babel', run], ['webpack', runLoader]])(
-    `${msg}  (%s)`,
-    (name, ...args) => testFn(...args),
-  );
+  t.each([
+    ['babel', run],
+    ['webpack', runLoader],
+  ])(`${msg}  (%s)`, (name, ...args) => testFn(...args));
 }
 
 export function testAllRunners(msg, testFn) {

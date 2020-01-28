@@ -1,15 +1,19 @@
 import { stripIndent } from 'common-tags';
 import { outputFileSync } from 'fs-extra';
 import defaults from 'lodash/defaults';
+import { PluginObj } from '@babel/core';
 import generate from '@babel/generator';
-import { visitors } from '@babel/traverse';
+// @ts-ignore
+import { NodePath, visitors } from '@babel/traverse';
+import * as t from '@babel/types';
 
 import cssProp from './features/css-prop';
 import styledComponent from './features/styled-component';
 import stylesheet from './features/stylesheet';
+import { PluginState, ResolvedOptions, StyleState } from './types';
 import { COMPONENTS, IMPORTS, STYLES } from './utils/Symbols';
 
-export default function plugin() {
+export default function plugin(): PluginObj<any> {
   return {
     pre(file) {
       file.set(IMPORTS, []);
@@ -28,9 +32,9 @@ export default function plugin() {
     },
 
     post(file) {
-      const { opts } = this;
-      let { styles, changeset } = file.get(STYLES);
-      const importNodes = file.get(IMPORTS);
+      const opts = this.opts as ResolvedOptions;
+      let { styles, changeset } = file.get(STYLES) as StyleState;
+      const importNodes: NodePath[] = file.get(IMPORTS);
 
       importNodes.forEach(path => {
         const decl = !path.isImportDeclaration()
@@ -45,22 +49,23 @@ export default function plugin() {
 
         if (opts.generateInterpolations)
           changeset.push({
-            start,
-            end,
+            start: start!,
+            end: end!,
             // if the path is just a removed specifier we need to regenerate
             // the import statement otherwise we remove the entire declaration
             code: !path.isImportDeclaration() ? generate(decl.node).code : '',
           });
       });
 
-      styles = Array.from(styles.values());
+      const styleList = Array.from(styles.values());
 
-      changeset = changeset.concat(styles);
+      changeset = changeset.concat(styleList);
 
-      file.metadata.astroturf = { styles, changeset };
+      file.metadata.astroturf = { styles: styleList, changeset };
 
       if (opts.writeFiles !== false) {
         styles.forEach(({ absoluteFilePath, value }) => {
+          // @ts-ignore
           outputFileSync(absoluteFilePath, stripIndent([value]));
         });
       }
@@ -69,7 +74,7 @@ export default function plugin() {
     visitor: visitors.merge([
       {
         Program: {
-          enter(_, state) {
+          enter(_: NodePath, state: any) {
             state.defaultedOptions = defaults(state.opts, {
               tagName: 'css',
               allowGlobal: true,
@@ -80,7 +85,7 @@ export default function plugin() {
         },
 
         ImportDeclaration: {
-          exit(path, state) {
+          exit(path: NodePath<t.ImportDeclaration>, state: PluginState) {
             const { tagName } = state.defaultedOptions;
             const specifiers = path.get('specifiers');
             const tagImport = path
