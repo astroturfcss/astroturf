@@ -19,6 +19,8 @@ describe('fixtures', () => {
     const options = getOptions(fixture);
     const content = fs.readFileSync(fixture, 'utf8');
 
+    // if (!fixture.includes('styled-interpolations')) return;
+
     function expectErrorToMatchSnapshot(error, code) {
       // There may be an error, or may just be styles weren't extracted
       expect(

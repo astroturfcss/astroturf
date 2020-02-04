@@ -12,6 +12,7 @@ import {
   Style,
   UserInterpolation,
   ResolvedOptions,
+  StyleType,
 } from '../types';
 import cssUnits from './cssUnits';
 import getNameFromPath from './getNameFromPath';
@@ -29,7 +30,7 @@ export type TagLocation = 'STYLESHEET' | 'COMPONENT' | 'PROP';
 export interface Interpolation {
   imported: string;
   source: string;
-  isStyledComponent?: boolean;
+  type?: StyleType;
 }
 
 function defaultResolveDependency(
@@ -130,6 +131,21 @@ function resolveImport(path: NodePath): ResolvedImport | null {
   return { identifier, request, type: importPath.node.type };
 }
 
+function getImported(
+  path: NodePath<t.Expression>,
+  interpolation: UserInterpolation,
+) {
+  const { type } = interpolation;
+  if (!type) {
+    if (!path.isMemberExpression()) return 'cls1';
+    return (path.get('property') as any).node.name;
+  }
+
+  return type === 'stylesheet'
+    ? (path.get('property') as any).node.name
+    : 'cls1';
+}
+
 function resolveStyleInterpolation(
   path: NodePath<t.Expression>,
   nodeMap: NodeStyleMap,
@@ -137,14 +153,15 @@ function resolveStyleInterpolation(
   resolveDependency: DependencyResolver = defaultResolveDependency,
 ): Interpolation | null {
   const resolvedPath = resolveMemberExpression(path);
-
+  // console.log('HERE', resolvedPath);
   const style = resolvedPath && nodeMap.get(resolvedPath.node);
 
   if (style) {
     return {
-      imported: !style.isStyledComponent
-        ? (path.get('property') as any).node.name
-        : 'cls1',
+      imported:
+        style.type === 'stylesheet'
+          ? (path.get('property') as any).node.name
+          : 'cls1',
       source: relative(
         dirname(localStyle.absoluteFilePath),
         style.absoluteFilePath,
@@ -156,22 +173,14 @@ function resolveStyleInterpolation(
     const resolvedImport = resolveImport(path);
 
     if (resolvedImport) {
-      const { identifier } = resolvedImport;
       const interpolation: UserInterpolation | null =
         resolveDependency(resolvedImport, localStyle, path.node) ?? null;
 
       if (!interpolation) return null;
 
-      const isStyledComponent =
-        interpolation.isStyledComponent == null
-          ? identifier.toLowerCase()[0] !== identifier[0]
-          : interpolation.isStyledComponent;
-
       return {
-        imported: !isStyledComponent
-          ? (path.get('property') as any).node.name
-          : 'cls1',
         ...interpolation,
+        imported: interpolation.imported || getImported(path, interpolation),
       };
     }
   }

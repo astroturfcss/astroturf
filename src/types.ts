@@ -12,7 +12,7 @@ export interface ResolvedImport {
 export interface UserInterpolation {
   source: string;
   imported?: string;
-  isStyledComponent?: boolean;
+  type?: StyleType;
 }
 
 export type DependencyResolver = (
@@ -42,9 +42,12 @@ export interface ResolvedOptions {
   ) => string;
 }
 
+export type StyleType = 'stylesheet' | 'class' | 'styled';
+
 export interface BaseStyle {
   start: number;
   end: number;
+  type: StyleType;
   absoluteFilePath: string;
   relativeFilePath: string;
   identifier: string;
@@ -53,11 +56,11 @@ export interface BaseStyle {
 }
 
 export interface StaticStyle extends BaseStyle {
-  isStyledComponent: false;
+  type: 'stylesheet' | 'class';
 }
 
 export interface DynamicStyle extends BaseStyle {
-  isStyledComponent: boolean;
+  type: 'class' | 'styled';
   imports: string;
   interpolations: Array<{ id: string; unit: string }>;
 }

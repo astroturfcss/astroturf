@@ -70,7 +70,7 @@ function buildStyledComponent(
   const baseStyle = createStyleNode(path, displayName, opts);
   const style: DynamicStyle = {
     ...baseStyle,
-    isStyledComponent: true,
+    type: 'styled',
     interpolations: [],
     imports: '',
     value: '',

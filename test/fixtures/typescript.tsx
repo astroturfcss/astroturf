@@ -1,9 +1,9 @@
-import styled, { css } from 'astroturf';
+import styled, { css, stylesheet } from 'astroturf';
 import React from 'react';
 
 const SIZE = 75;
 
-const styles = css`
+const styles = stylesheet`
   .foo {
     color: red;
     width: ${SIZE}px;

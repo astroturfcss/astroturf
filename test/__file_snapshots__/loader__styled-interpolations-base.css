@@ -1,4 +1,6 @@
+.cls1 { /*!*/ }
+.cls2 {
+composes: cls1;
 
-  .item {
-    padding: 4rem;
-  }
+padding: 4rem;
+}

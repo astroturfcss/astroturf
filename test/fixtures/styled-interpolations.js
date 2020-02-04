@@ -1,25 +1,23 @@
 import styled, { css } from 'astroturf';
 
 const base = css`
-  .item {
-    padding: 4rem;
-  }
+  padding: 4rem;
 `;
 
 const other = css`
-  .other ${base.item} {
+  & ${base} {
     margin: 4rem;
   }
 `;
 
 const FancyBox = styled('div')`
   composes: global from global;
-  composes: ${other.other} ${other.other} ${base.item};
+  composes: ${other.other} ${other.other} ${base};
 
   color: red;
   width: 75px;
 
-  &${base.item} {
+  &${base} {
     padding: 5rem;
   }
 

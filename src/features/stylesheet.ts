@@ -6,7 +6,9 @@ import buildTaggedTemplate from '../utils/buildTaggedTemplate';
 import createStyleNode from '../utils/createStyleNode';
 import getDisplayName from '../utils/getDisplayName';
 import isCssTag from '../utils/isCssTag';
+import isStylesheetTag from '../utils/isStylesheetTag';
 import { COMPONENTS, STYLES } from '../utils/Symbols';
+import wrapInClass from '../utils/wrapInClass';
 
 function buildStyleRequire(
   path: NodePath<t.TaggedTemplateExpression>,
@@ -28,7 +30,7 @@ function buildStyleRequire(
   );
   const style: StaticStyle = {
     ...baseStyle,
-    isStyledComponent: false,
+    type: isSingleClass ? 'class' : 'stylesheet',
     code: '',
     value: '',
   };
@@ -41,7 +43,9 @@ function buildStyleRequire(
     pluginOptions: opts.defaultedOptions,
   });
 
-  style.value = `${imports}${text}`;
+  style.value = isSingleClass
+    ? imports + wrapInClass(text)
+    : `${imports}${text}`;
 
   if (styles.has(style.absoluteFilePath))
     throw path.buildCodeFrameError(
@@ -52,9 +56,14 @@ function buildStyleRequire(
 
   styles.set(style.absoluteFilePath, style);
 
-  const runtimeNode = opts.styleImports.add(style);
-
+  let runtimeNode: t.Node = opts.styleImports.add(style);
   style.code = runtimeNode.name;
+
+  if (isSingleClass) {
+    runtimeNode = t.memberExpression(runtimeNode, t.identifier('cls1'));
+
+    style.code += '.cls';
+  }
 
   nodeMap.set(runtimeNode, style);
   return runtimeNode;
@@ -65,10 +74,13 @@ export default {
     path: NodePath<t.TaggedTemplateExpression>,
     state: PluginState,
   ) {
-    const tagPath = path.get('tag');
+    const pluginOptions = state.defaultedOptions;
 
-    if (isCssTag(tagPath, state.defaultedOptions)) {
-      path.replaceWith(buildStyleRequire(path, state));
+    const tagPath = path.get('tag');
+    const isCss = isCssTag(tagPath, pluginOptions);
+    const isStyleSheet = !isCss && isStylesheetTag(tagPath, pluginOptions);
+    if (isCss || isStyleSheet) {
+      path.replaceWith(buildStyleRequire(path, state, isCss));
     }
   },
 };

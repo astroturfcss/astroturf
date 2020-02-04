@@ -1,7 +1,11 @@
-@value item as a0 from "styled-interpolations-base.css";
+@value cls1 as a0 from "styled-interpolations-base.css";
 
 
+.cls1 { /*!*/ }
+.cls2 {
+composes: cls1;
 
-  .other .a0 {
-    margin: 4rem;
-  }
+& .a0 {
+margin: 4rem;
+}
+}

@@ -200,7 +200,7 @@ module.exports = function loader(content, map, meta) {
           .replace(source, `~${style.absoluteFilePath}`)
           .replace(
             imported,
-            style.isStyledComponent ? 'cls1' : memberProperty,
+            style.type === 'stylesheet' ? memberProperty : 'cls1',
           );
       }),
     );
