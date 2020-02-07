@@ -26,10 +26,12 @@ describe('webpack loader', () => {
     expect(code).toContain('/** @jsx _j **/');
     expect(code).toContain('/** @jsxFrag _f **/');
 
-    expect(code).toContain('[require("./MyStyleFile-CssProp1_button.css")');
+    expect(code).toContain(
+      'import _CssProp1_button from "./MyStyleFile-CssProp1_button.css"',
+    );
+    expect(code).toContain('[_CssProp1_button');
 
     expect(code).toContain('import _styles from "./MyStyleFile-styles.css"');
-
     expect(code).toContain('const styles = _styles;');
   });
 

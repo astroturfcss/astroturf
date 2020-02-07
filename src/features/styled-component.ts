@@ -15,6 +15,7 @@ import buildTaggedTemplate from '../utils/buildTaggedTemplate';
 import createStyleNode from '../utils/createStyleNode';
 import getDisplayName from '../utils/getDisplayName';
 import hasAttrs from '../utils/hasAttrs';
+import StyleImportInjector from '../utils/ImportInjector';
 import isStyledTag from '../utils/isStyledTag';
 import isStyledTagShorthand from '../utils/isStyledTagShorthand';
 import normalizeAttrs from '../utils/normalizeAttrs';
@@ -25,7 +26,7 @@ import wrapInClass from '../utils/wrapInClass';
 
 const PURE_COMMENT = '/*#__PURE__*/';
 
-const buildImport = template('require(FILENAME);');
+// const buildImport = template('require(FILENAME);');
 
 const buildComponent = template(
   `TAG(ELEMENTTYPE, OPTIONS, {
@@ -40,6 +41,7 @@ interface Options {
   pluginOptions: ResolvedOptions;
   styledAttrs?: t.Node;
   styledOptions?: t.Node;
+  styleImports: StyleImportInjector;
   file: any;
 }
 
@@ -48,7 +50,13 @@ function buildStyledComponent(
   elementType: t.Node,
   opts: Options,
 ) {
-  const { file, pluginOptions, styledAttrs, styledOptions } = opts;
+  const {
+    file,
+    pluginOptions,
+    styledAttrs,
+    styledOptions,
+    styleImports,
+  } = opts;
   const cssState = file.get(STYLES) as StyleState;
   const nodeMap = file.get(COMPONENTS) as NodeStyleMap;
   const displayName = getDisplayName(path, opts, null);
@@ -82,6 +90,8 @@ function buildStyledComponent(
   style.interpolations = trimExpressions(dynamicInterpolations);
   style.value = imports + wrapInClass(text);
 
+  const importId = styleImports.add(style);
+
   const runtimeNode = buildComponent({
     TAG: pluginOptions.styledTag,
     ELEMENTTYPE: elementType,
@@ -89,9 +99,7 @@ function buildStyledComponent(
     OPTIONS: styledOptions || t.nullLiteral(),
     DISPLAYNAME: t.stringLiteral(displayName),
     VARS: toVarsArray(dynamicInterpolations),
-    IMPORT: (buildImport({
-      FILENAME: t.stringLiteral(style.relativeFilePath),
-    }) as any).expression,
+    IMPORT: importId,
   }) as t.ExpressionStatement;
 
   if (pluginOptions.generateInterpolations) {
@@ -132,6 +140,7 @@ export default {
           styledAttrs,
           styledOptions,
           file: state.file,
+          styleImports: state.styleImports,
         }),
       );
       path.addComment('leading', '#__PURE__');
@@ -145,6 +154,7 @@ export default {
         buildStyledComponent(path, componentType, {
           pluginOptions,
           file: state.file,
+          styleImports: state.styleImports,
         }),
       );
       path.addComment('leading', '#__PURE__');

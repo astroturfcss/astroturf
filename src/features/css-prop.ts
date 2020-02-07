@@ -1,11 +1,10 @@
 import chalk from 'chalk';
 import { NodePath } from '@babel/core';
 import generate from '@babel/generator';
-import { addNamed } from '@babel/helper-module-imports';
-import template from '@babel/template';
 import * as t from '@babel/types';
 
-import { DynamicStyle, PluginState, ResolvedOptions } from '../types';
+import { DynamicStyle, PluginState } from '../types';
+import addPragma from '../utils/addPragma';
 import buildTaggedTemplate from '../utils/buildTaggedTemplate';
 import createStyleNode from '../utils/createStyleNode';
 import getNameFromPath from '../utils/getNameFromPath';
@@ -23,7 +22,6 @@ type CssPropPluginState = PluginState & {
     jsxFrag: t.Identifier;
   };
 };
-const buildImport = template('require(FILENAME);');
 
 const isCreateElementCall = (p: NodePath) =>
   p.isCallExpression() &&
@@ -33,9 +31,10 @@ const isCreateElementCall = (p: NodePath) =>
 function buildCssProp(
   valuePath: NodePath<any>,
   name: string | null,
-  options: { file: any; pluginOptions: ResolvedOptions; isJsx?: boolean },
+  options: PluginState,
+  isJsx = false,
 ) {
-  const { file, pluginOptions, isJsx } = options;
+  const { file, defaultedOptions: pluginOptions } = options;
   const cssState = file.get(STYLES);
   const nodeMap = file.get(COMPONENTS);
 
@@ -56,7 +55,7 @@ function buildCssProp(
 
   const displayName = `CssProp${++cssState.id}_${name}`;
 
-  let vars;
+  let vars: t.ArrayExpression;
   const baseStyle = createStyleNode(valuePath, displayName, {
     file,
     pluginOptions,
@@ -104,14 +103,12 @@ function buildCssProp(
     return null;
   }
 
+  const importId = options.styleImports.add(style);
+
   let runtimeNode: t.Node = t.arrayExpression(
-    [
-      (buildImport({
-        FILENAME: t.stringLiteral(style.relativeFilePath),
-      }) as any).expression,
-      vars,
-    ].filter(Boolean),
+    [importId, vars!].filter(Boolean),
   );
+
   // FIXME?
   // @ts-ignore
   nodeMap.set(runtimeNode.expression, style);
@@ -134,25 +131,20 @@ const getObjectKey = (keyPath: NodePath) => {
   return (keyPath.node as any).name;
 };
 
-interface InnerVisitorState {
+interface InnerVisitorState extends PluginState {
   typeName: string | null;
-  pluginOptions: ResolvedOptions;
-  file: any;
   processed?: boolean;
 }
 
 const cssPropertyVisitors = {
   ObjectProperty(path: NodePath<t.ObjectProperty>, state: InnerVisitorState) {
-    const { file, pluginOptions, typeName } = state;
+    const { typeName } = state;
 
     if (getObjectKey(path.get('key') as NodePath) !== 'css') return;
 
     const valuePath = path.get('value');
 
-    const compiledNode = buildCssProp(valuePath, typeName, {
-      file,
-      pluginOptions,
-    });
+    const compiledNode = buildCssProp(valuePath, typeName, state);
 
     if (compiledNode) {
       valuePath.replaceWith(compiledNode);
@@ -177,22 +169,9 @@ export default {
 
       const { jsx, jsxFrag } = state[JSX_IDENTS];
 
-      const jsxPrgama = `* @jsx ${jsx.name} *`;
-      const jsxFragPrgama = `* @jsxFrag ${jsxFrag.name} *`;
+      const changes = addPragma(path, jsx, jsxFrag);
 
-      path.addComment('leading', jsxPrgama);
-      path.addComment('leading', jsxFragPrgama);
-
-      addNamed(path, 'jsx', 'astroturf', { nameHint: jsx.name });
-      addNamed(path, 'F', 'astroturf', { nameHint: jsxFrag.name });
-
-      state.file.get(STYLES).changeset.unshift(
-        { code: `/*${jsxPrgama}*/\n` },
-        { code: `/*${jsxFragPrgama}*/\n\n` },
-        {
-          code: `const { jsx: ${jsx.name}, F: ${jsxFrag.name} } = require('astroturf');\n`,
-        },
-      );
+      state.file.get(STYLES).changeset.unshift(...changes);
     },
   },
 
@@ -206,7 +185,13 @@ export default {
 
     const propsPath = path.get('arguments')[1];
 
-    const innerState = { pluginOptions, file, processed: false, typeName };
+    const innerState = {
+      ...state,
+      pluginOptions,
+      file,
+      processed: false,
+      typeName,
+    };
 
     // We aren't checking very hard that this is a React createElement call
     if (propsPath) {
@@ -231,7 +216,6 @@ export default {
 
   JSXAttribute(path: NodePath<t.JSXAttribute>, state: CssPropPluginState) {
     const { file } = state;
-    const pluginOptions = state.defaultedOptions;
 
     if (path.node.name.name !== 'css') return;
 
@@ -241,11 +225,8 @@ export default {
     const compiledNode = buildCssProp(
       valuePath,
       parentPath && getNameFromPath(parentPath.get('name') as NodePath),
-      {
-        file,
-        pluginOptions,
-        isJsx: true,
-      },
+      state,
+      true,
     );
 
     if (compiledNode) {

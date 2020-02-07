@@ -4,7 +4,6 @@ import chalk from 'chalk';
 import levenshtein from 'fast-levenshtein';
 import loaderUtils from 'loader-utils';
 import sortBy from 'lodash/sortBy';
-import MagicString from 'magic-string';
 import { codeFrameColumns } from '@babel/code-frame';
 
 import traverse from './traverse';
@@ -109,32 +108,22 @@ function collectStyles(src, filename, resolveDependency, opts) {
 }
 
 function replaceStyleTemplates(src, locations) {
-  const magicString = new MagicString(src);
+  locations = sortBy(locations, i => i.start || 0);
 
-  // locations = sortBy(locations, i => i.start || 0);
+  let offset = 0;
 
-  // let offset = 0;
+  function splice(str, start = 0, end = 0, replace) {
+    const result =
+      str.slice(0, start + offset) + replace + str.slice(end + offset);
 
-  // function splice(str, start = 0, end = 0, replace) {
-  //   const result =
-  //     str.slice(0, start + offset) + replace + str.slice(end + offset);
-
-  //   offset += replace.length - (end - start);
-  //   return result;
-  // }
+    offset += replace.length - (end - start);
+    return result;
+  }
 
   locations.forEach(({ start, end, code }) => {
-    if (code.endsWith(';')) code = code.slice(0, -1); // remove trailing semicolon
-
-    if (start !== end) {
-      magicString.overwrite(start, end, code);
-    } else {
-      magicString.appendLeft(start, code);
-    }
-    // src = splice(src, start, end, code);
+    src = splice(src, start, end, code);
   });
-  // console.log('W', locations, magicString.toString());
-  return magicString.toString();
+  return src;
 }
 
 const LOADER_PLUGIN = Symbol('loader added VM plugin');
@@ -251,7 +240,6 @@ module.exports = function loader(content, map, meta) {
     emitVirtualFile = plugin.addFile;
   }
 
-  // console.log('WAIT', resourcePath);
   return Promise.all(dependencies)
     .then(() => {
       styles.forEach(style => {
@@ -264,6 +252,4 @@ module.exports = function loader(content, map, meta) {
       cb(null, result);
     })
     .catch(cb);
-
-  // console.log('DONE', resourcePath);
 };

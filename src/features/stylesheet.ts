@@ -50,10 +50,7 @@ function buildStyleRequire(
 
   styles.set(style.absoluteFilePath, style);
 
-  const runtimeNode = opts.styleImports.addDefaultImport(
-    style.relativeFilePath,
-    style.identifier,
-  );
+  const runtimeNode = opts.styleImports.add(style);
 
   style.code = runtimeNode.name;
 

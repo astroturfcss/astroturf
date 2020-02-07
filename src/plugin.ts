@@ -34,6 +34,7 @@ export default function plugin(): PluginObj<PluginState> {
 
     post(file) {
       const { opts, styleImports } = this;
+      // eslint-disable-next-line prefer-const
       let { styles, changeset } = file.get(STYLES) as StyleState;
       const importNodes: NodePath[] = file.get(IMPORTS);
 
@@ -59,7 +60,7 @@ export default function plugin(): PluginObj<PluginState> {
       });
 
       const importAdditions = styleImports.inject();
-      // console.log('H', importAdditions);
+
       const styleList = Array.from(styles.values());
 
       changeset = changeset.concat(importAdditions, styleList);

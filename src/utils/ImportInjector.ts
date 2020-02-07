@@ -1,7 +1,9 @@
 import { NodePath } from '@babel/core';
+import { isModule } from '@babel/helper-module-imports';
 import * as t from '@babel/types';
 
-import { Change } from '../types';
+// eslint-disable-next-line import/no-cycle
+import { Change, Style } from '../types';
 
 function findLast<T>(
   array: T[],
@@ -13,24 +15,55 @@ function findLast<T>(
   return undefined;
 }
 
-export default class StyleImportInjector {
-  private nodes = new Set<t.ImportDeclaration>();
+function isRequire(path: NodePath) {
+  const isRequireExpression = (p: NodePath<any>) =>
+    p.isCallExpression() &&
+    p.get('callee').isIdentifier() &&
+    (p.get('callee').node as any).name === 'require';
 
-  private code = new WeakMap<t.ImportDeclaration, string>();
+  if (!path) return false;
+  if (path.isVariableDeclaration()) {
+    return path
+      .get('declarations')
+      .some(d => d && isRequireExpression(d.get('init')));
+  }
+  return isRequireExpression(path);
+}
+export default class StyleImportInjector {
+  private nodes = new Set<t.ImportDeclaration | t.VariableDeclaration>();
+
+  private code = new WeakMap<
+    t.ImportDeclaration | t.VariableDeclaration,
+    string
+  >();
 
   constructor(private program: NodePath<t.Program>) {}
 
-  addDefaultImport(source: string, nameHint?: string) {
+  add(style: Style) {
     const { scope } = this.program;
+    const source = style.relativeFilePath;
 
-    const ident = scope.generateUidIdentifier(nameHint);
-    const importNode = t.importDeclaration(
-      [t.importDefaultSpecifier(ident)],
-      t.stringLiteral(source),
-    );
+    const useEsm = isModule(this.program);
+    const ident = scope.generateUidIdentifier(style.identifier);
 
-    this.nodes.add(importNode);
-    this.code.set(importNode, `import ${ident.name} from "${source}";`);
+    if (useEsm) {
+      const importNode = t.importDeclaration(
+        [t.importDefaultSpecifier(ident)],
+        t.stringLiteral(source),
+      );
+
+      this.nodes.add(importNode);
+      this.code.set(importNode, `import ${ident.name} from "${source}";`);
+    } else {
+      const importNode = t.variableDeclaration('const', [
+        t.variableDeclarator(
+          ident,
+          t.callExpression(t.identifier('require'), [t.stringLiteral(source)]),
+        ),
+      ]);
+      this.nodes.add(importNode);
+      this.code.set(importNode, `const ${ident.name} = require("${source}");`);
+    }
 
     return ident;
   }
@@ -44,17 +77,17 @@ export default class StyleImportInjector {
       //
       // @ts-ignore
       const blockHoist = p.node._blockHoist ?? 1; // eslint-disable-line no-underscore-dangle
-      return blockHoist > 0 && p.isImportDeclaration();
+      return blockHoist > 0 && (p.isImportDeclaration() || isRequire(p));
     });
 
     const nodes = Array.from(this.nodes).reverse();
-    const end = (targetPath?.node?.end || 0) + 1;
+    const end = targetPath?.node?.end || 0;
     const changes: Change = {
       end,
       start: end,
-      code: Array.from(this.nodes, n => this.code.get(n))
+      code: `\n${Array.from(this.nodes, n => this.code.get(n))
         .filter(Boolean)
-        .join('\n'),
+        .join('\n')}\n`,
     };
 
     if (!targetPath) {

@@ -1,46 +1,37 @@
 /** @jsx _j **/
 /** @jsxFrag _f **/
-
-const { jsx: _j, F: _f } = require("astroturf");
+import { jsx as _j, F as _f } from "astroturf";
 import styled from "astroturf";
 import React from "react";
-
+import _styles from "./typescript-styles.css";
+import _Button from "./typescript-Button.css";
+import _CssProp1_Button from "./typescript-CssProp1_Button.css";
+import _CssProp2_Button from "./typescript-CssProp2_Button.css";
 const SIZE = 75;
-
-const styles = require("./typescript-styles.css");
-
+const styles = _styles;
 interface PropsType {
   children: JSX.Element;
   name: string;
 }
-
 function someMath<T extends { x: number }>(obj: T): T {
   console.log(Math.abs(obj.x));
   return obj as T;
 }
-
 const Button = /*#__PURE__*/ styled("button", null, {
   displayName: "Button",
-  styles: require("./typescript-Button.css"),
+  styles: _Button,
   attrs: null,
   vars: []
 });
-
 class Component extends React.Component<PropsType> {
   render() {
     return (
       <>
         <h2>{this.props.children}</h2>
-        <Button
-          variant="primary"
-          css={[require("./typescript-CssProp1_Button.css"), []]}
-        >
+        <Button variant="primary" css={[_CssProp1_Button, []]}>
           click
         </Button>
-        <Button
-          variant="secondary"
-          css={[require("./typescript-CssProp2_Button.css"), []]}
-        >
+        <Button variant="secondary" css={[_CssProp2_Button, []]}>
           cancel
         </Button>
       </>
