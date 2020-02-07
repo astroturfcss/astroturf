@@ -1,44 +1,33 @@
 import { NodePath } from '@babel/core';
-import template from '@babel/template';
 import * as t from '@babel/types';
 
-import {
-  NodeStyleMap,
-  PluginState,
-  ResolvedOptions,
-  StaticStyle,
-  StyleState,
-} from '../types';
+import { NodeStyleMap, PluginState, StaticStyle, StyleState } from '../types';
 import buildTaggedTemplate from '../utils/buildTaggedTemplate';
 import createStyleNode from '../utils/createStyleNode';
 import getDisplayName from '../utils/getDisplayName';
 import isCssTag from '../utils/isCssTag';
 import { COMPONENTS, STYLES } from '../utils/Symbols';
 
-const buildImport = template('require(FILENAME);');
-
-interface Options {
-  pluginOptions: ResolvedOptions;
-  file: any;
-}
-
 function buildStyleRequire(
   path: NodePath<t.TaggedTemplateExpression>,
-  opts: Options,
+  opts: PluginState,
 ) {
-  const { tagName } = opts.pluginOptions;
+  const { tagName } = opts.defaultedOptions;
   const { styles } = opts.file.get(STYLES) as StyleState;
   const nodeMap: NodeStyleMap = opts.file.get(COMPONENTS);
 
   const baseStyle = createStyleNode(
     path,
     getDisplayName(path, opts) || undefined,
-    opts,
+    {
+      pluginOptions: opts.defaultedOptions,
+      file: opts.file,
+    },
   );
   const style: StaticStyle = {
     ...baseStyle,
     isStyledComponent: false,
-    code: `require('${baseStyle.relativeFilePath}')`,
+    code: ``,
     value: '',
   };
 
@@ -47,7 +36,7 @@ function buildStyleRequire(
     nodeMap,
     style,
     useCssProperties: false,
-    ...opts.pluginOptions,
+    ...opts.defaultedOptions,
   });
 
   style.value = `${imports}${text}`;
@@ -60,11 +49,15 @@ function buildStyleRequire(
     );
 
   styles.set(style.absoluteFilePath, style);
-  const runtimeNode = buildImport({
-    FILENAME: t.stringLiteral(style.relativeFilePath),
-  }) as t.ExpressionStatement;
 
-  nodeMap.set(runtimeNode.expression, style);
+  const runtimeNode = opts.styleImports.addDefaultImport(
+    style.relativeFilePath,
+    style.identifier,
+  );
+
+  style.code = runtimeNode.name;
+
+  nodeMap.set(runtimeNode, style);
   return runtimeNode;
 }
 
@@ -73,17 +66,10 @@ export default {
     path: NodePath<t.TaggedTemplateExpression>,
     state: PluginState,
   ) {
-    const pluginOptions = state.defaultedOptions;
-
     const tagPath = path.get('tag');
 
-    if (isCssTag(tagPath, pluginOptions)) {
-      path.replaceWith(
-        buildStyleRequire(path, {
-          pluginOptions,
-          file: state.file,
-        }),
-      );
+    if (isCssTag(tagPath, state.defaultedOptions)) {
+      path.replaceWith(buildStyleRequire(path, state));
     }
   },
 };

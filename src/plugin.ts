@@ -11,9 +11,10 @@ import cssProp from './features/css-prop';
 import styledComponent from './features/styled-component';
 import stylesheet from './features/stylesheet';
 import { PluginState, ResolvedOptions, StyleState } from './types';
+import ImportInjector from './utils/ImportInjector';
 import { COMPONENTS, IMPORTS, STYLES } from './utils/Symbols';
 
-export default function plugin(): PluginObj<any> {
+export default function plugin(): PluginObj<PluginState> {
   return {
     pre(file) {
       file.set(IMPORTS, []);
@@ -32,7 +33,7 @@ export default function plugin(): PluginObj<any> {
     },
 
     post(file) {
-      const opts = this.opts as ResolvedOptions;
+      const { opts, styleImports } = this;
       let { styles, changeset } = file.get(STYLES) as StyleState;
       const importNodes: NodePath[] = file.get(IMPORTS);
 
@@ -57,9 +58,11 @@ export default function plugin(): PluginObj<any> {
           });
       });
 
+      const importAdditions = styleImports.inject();
+      // console.log('H', importAdditions);
       const styleList = Array.from(styles.values());
 
-      changeset = changeset.concat(styleList);
+      changeset = changeset.concat(importAdditions, styleList);
 
       file.metadata.astroturf = { styles: styleList, changeset };
 
@@ -74,7 +77,8 @@ export default function plugin(): PluginObj<any> {
     visitor: visitors.merge([
       {
         Program: {
-          enter(_: NodePath, state: any) {
+          enter(path: NodePath<t.Program>, state: any) {
+            state.styleImports = new ImportInjector(path);
             state.defaultedOptions = defaults(state.opts, {
               tagName: 'css',
               allowGlobal: true,

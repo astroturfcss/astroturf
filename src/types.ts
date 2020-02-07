@@ -1,5 +1,7 @@
 import { Node } from '@babel/types';
 
+import StyleImportInjector from './utils/ImportInjector';
+
 export interface ResolvedOptions {
   writeFiles: boolean;
   allowGlobal: boolean;
@@ -53,6 +55,8 @@ export interface StyleState {
 }
 
 export type PluginState = Record<symbol, any> & {
+  opts: Partial<ResolvedOptions>;
+  styleImports: StyleImportInjector;
   defaultedOptions: ResolvedOptions;
   file: any;
 };

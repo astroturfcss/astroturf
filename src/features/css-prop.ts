@@ -130,7 +130,7 @@ function buildCssProp(
 
 const getObjectKey = (keyPath: NodePath) => {
   if (keyPath.isStringLiteral()) return keyPath.node.value;
-  if (keyPath.isIdentifier()) keyPath.node.name;
+  if (keyPath.isIdentifier()) return keyPath.node.name;
   return (keyPath.node as any).name;
 };
 

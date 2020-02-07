@@ -4,6 +4,7 @@ import chalk from 'chalk';
 import levenshtein from 'fast-levenshtein';
 import loaderUtils from 'loader-utils';
 import sortBy from 'lodash/sortBy';
+import MagicString from 'magic-string';
 import { codeFrameColumns } from '@babel/code-frame';
 
 import traverse from './traverse';
@@ -108,24 +109,32 @@ function collectStyles(src, filename, resolveDependency, opts) {
 }
 
 function replaceStyleTemplates(src, locations) {
-  locations = sortBy(locations, i => i.start || 0);
+  const magicString = new MagicString(src);
 
-  let offset = 0;
+  // locations = sortBy(locations, i => i.start || 0);
 
-  function splice(str, start = 0, end = 0, replace) {
-    const result =
-      str.slice(0, start + offset) + replace + str.slice(end + offset);
+  // let offset = 0;
 
-    offset += replace.length - (end - start);
-    return result;
-  }
+  // function splice(str, start = 0, end = 0, replace) {
+  //   const result =
+  //     str.slice(0, start + offset) + replace + str.slice(end + offset);
+
+  //   offset += replace.length - (end - start);
+  //   return result;
+  // }
 
   locations.forEach(({ start, end, code }) => {
     if (code.endsWith(';')) code = code.slice(0, -1); // remove trailing semicolon
-    src = splice(src, start, end, code);
-  });
 
-  return src;
+    if (start !== end) {
+      magicString.overwrite(start, end, code);
+    } else {
+      magicString.appendLeft(start, code);
+    }
+    // src = splice(src, start, end, code);
+  });
+  // console.log('W', locations, magicString.toString());
+  return magicString.toString();
 }
 
 const LOADER_PLUGIN = Symbol('loader added VM plugin');
