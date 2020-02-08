@@ -29,6 +29,7 @@ function isRequire(path: NodePath) {
   }
   return isRequireExpression(path);
 }
+
 export default class StyleImportInjector {
   private nodes = new Set<t.ImportDeclaration | t.VariableDeclaration>();
 
@@ -71,7 +72,7 @@ export default class StyleImportInjector {
   inject() {
     const targetPath = findLast(this.program.get('body'), p => {
       // this is a babel mechanism for sorting body blocks
-      // I don't want to rely on it, but do want to respect < 1 values as neededing to go on the bottom
+      // I don't want to rely on it, but do want to respect < 1 values as needing to go on the bottom
       // we should not insert below those if possible
       // https://github.com/babel/babel/blob/v7.8.5/packages/babel-core/src/transformation/block-hoist-plugin.js
       //
