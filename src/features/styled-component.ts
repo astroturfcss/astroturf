@@ -26,8 +26,6 @@ import wrapInClass from '../utils/wrapInClass';
 
 const PURE_COMMENT = '/*#__PURE__*/';
 
-// const buildImport = template('require(FILENAME);');
-
 const buildComponent = template(
   `TAG(ELEMENTTYPE, OPTIONS, {
     displayName: DISPLAYNAME,

@@ -10,7 +10,7 @@ import * as t from '@babel/types';
 import cssProp from './features/css-prop';
 import styledComponent from './features/styled-component';
 import stylesheet from './features/stylesheet';
-import { PluginState, ResolvedOptions, StyleState } from './types';
+import { PluginState, StyleState } from './types';
 import ImportInjector from './utils/ImportInjector';
 import { COMPONENTS, IMPORTS, STYLES } from './utils/Symbols';
 
