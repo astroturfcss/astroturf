@@ -144,9 +144,6 @@
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.2.1"
   },
-  "resolutions": {
-    "fsevents": "^2.0.0"
-  },
   "readme": "ERROR: No README data found!",
   "_id": "astroturf@0.10.1"
 }
