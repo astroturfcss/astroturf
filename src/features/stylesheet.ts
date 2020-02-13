@@ -27,7 +27,7 @@ function buildStyleRequire(
   const style: StaticStyle = {
     ...baseStyle,
     isStyledComponent: false,
-    code: ``,
+    code: '',
     value: '',
   };
 
