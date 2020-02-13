@@ -505,6 +505,8 @@ You can also skip the included `css-loader` entirely if your preprocessor handle
 ]
 ```
 
+If you're using Create React App, currently it's not possible to use astroturf, unless you eject to edit the webpack configuration manually.
+
 ### Options
 
 astroturf accepts a few query options.
