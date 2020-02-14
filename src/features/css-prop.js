@@ -1,14 +1,14 @@
-import chalk from 'chalk';
 import generate from '@babel/generator';
 import { addNamed } from '@babel/helper-module-imports';
 import template from '@babel/template';
 import * as t from '@babel/types';
+import chalk from 'chalk';
 
+import { COMPONENTS, HAS_CSS_PROP, STYLES } from '../utils/Symbols';
 import buildTaggedTemplate from '../utils/buildTaggedTemplate';
 import createStyleNode from '../utils/createStyleNode';
 import getNameFromPath from '../utils/getNameFromPath';
 import isCssTag from '../utils/isCssTag';
-import { COMPONENTS, HAS_CSS_PROP, STYLES } from '../utils/Symbols';
 import toVarsArray from '../utils/toVarsArray';
 import trimExpressions from '../utils/trimExpressions';
 import wrapInClass from '../utils/wrapInClass';

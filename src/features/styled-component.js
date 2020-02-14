@@ -1,8 +1,9 @@
-import get from 'lodash/get';
 import generate from '@babel/generator';
 import template from '@babel/template';
 import * as t from '@babel/types';
+import get from 'lodash/get';
 
+import { COMPONENTS, STYLES } from '../utils/Symbols';
 import buildTaggedTemplate from '../utils/buildTaggedTemplate';
 import createStyleNode from '../utils/createStyleNode';
 import getDisplayName from '../utils/getDisplayName';
@@ -10,7 +11,6 @@ import hasAttrs from '../utils/hasAttrs';
 import isStyledTag from '../utils/isStyledTag';
 import isStyledTagShorthand from '../utils/isStyledTagShorthand';
 import normalizeAttrs from '../utils/normalizeAttrs';
-import { COMPONENTS, STYLES } from '../utils/Symbols';
 import toVarsArray from '../utils/toVarsArray';
 import trimExpressions from '../utils/trimExpressions';
 import wrapInClass from '../utils/wrapInClass';

@@ -1,6 +1,7 @@
-import { css } from 'astroturf'; // eslint-disable-line import/no-extraneous-dependencies
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import { css } from 'astroturf'; // eslint-disable-line import/no-extraneous-dependencies
 
 import Button from './Button';
 import ButtonToolbar from './ButtonToolbar';

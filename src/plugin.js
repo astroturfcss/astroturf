@@ -1,8 +1,8 @@
+import generate from '@babel/generator';
+import { visitors } from '@babel/traverse';
 import { stripIndent } from 'common-tags';
 import { outputFileSync } from 'fs-extra';
 import defaults from 'lodash/defaults';
-import generate from '@babel/generator';
-import { visitors } from '@babel/traverse';
 
 import cssProp from './features/css-prop';
 import styledComponent from './features/styled-component';

@@ -3,17 +3,23 @@ module.exports = {
   env: {
     browser: true,
   },
-  settings: {
-    'import/resolver': {
-      webpack: {
-        config: {
-          resolve: {
-            alias: {
-              astroturf$: `${__dirname}/../lib/index.js`,
+
+  overrides: [
+    {
+      files: ['src/**', 'sandbox/**'],
+      settings: {
+        'import/resolver': {
+          webpack: {
+            config: {
+              resolve: {
+                alias: {
+                  astroturf$: `${__dirname}/../lib/index.js`,
+                },
+              },
             },
           },
         },
       },
     },
-  },
+  ],
 };

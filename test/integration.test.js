@@ -3,6 +3,7 @@
  */
 
 import path from 'path';
+
 import ExtractCSS from 'mini-css-extract-plugin';
 import stripAnsi from 'strip-ansi';
 
