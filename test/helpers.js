@@ -21,13 +21,17 @@ const PARSER_OPTS = {
   ],
 };
 
+function normalizeNewLines(str) {
+  return str.replace(/\n\s*?\n/g, '\n').trim();
+}
+
 export function format(strings, ...values) {
   const str = strings.reduce(
     (acc, next, idx) => `${acc}${next}${values[idx] || ''}`,
     '',
   );
 
-  return prettier.format(str, { parser: 'babel' });
+  return normalizeNewLines(prettier.format(str, { parser: 'babel' }));
 }
 
 export async function run(src, options, filename = 'MyStyleFile.js') {
@@ -38,10 +42,11 @@ export async function run(src, options, filename = 'MyStyleFile.js') {
       [require('../src/plugin.ts'), { ...options, writeFiles: false }],
     ].filter(Boolean),
     parserOpts: PARSER_OPTS,
+    sourceType: 'unambiguous',
   });
 
   return [
-    prettier.format(code, { filepath: filename }),
+    normalizeNewLines(prettier.format(code, { filepath: filename })),
     metadata.astroturf.styles,
   ];
 }
@@ -70,7 +75,7 @@ export function runLoader(src, options, filename = 'MyStyleFile.js') {
         if (err) reject(err);
         else
           resolve([
-            prettier.format(result, { filepath: filename }),
+            normalizeNewLines(prettier.format(result, { filepath: filename })),
             meta.styles,
           ]);
       },

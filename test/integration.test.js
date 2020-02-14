@@ -62,7 +62,7 @@ describe('webpack integration', () => {
     };
   }
 
-  it('should work', async () => {
+  it.only('should work', async () => {
     const assets = await runWebpack(getConfig('./integration/main.js'));
 
     expect(assets['main.css'].source()).toMatchFile(

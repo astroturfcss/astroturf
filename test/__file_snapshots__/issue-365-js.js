@@ -190,10 +190,14 @@ module.exports = {"show":"issue-365-mixins__show"};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var astroturf__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf */ "./src/runtime/styled.js");
 /* harmony import */ var astroturf__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(astroturf__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _issue_365_mixins_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./issue-365-mixins.css */ "./test/integration/issue-365-mixins.css");
+/* harmony import */ var _issue_365_mixins_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_issue_365_mixins_css__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _issue_365_BlockStyled_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./issue-365-BlockStyled.css */ "./test/integration/issue-365-BlockStyled.css");
+/* harmony import */ var _issue_365_BlockStyled_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_issue_365_BlockStyled_css__WEBPACK_IMPORTED_MODULE_2__);
 
 
-const mixins = __webpack_require__(/*! ./issue-365-mixins.css */ "./test/integration/issue-365-mixins.css");
 
+const mixins = _issue_365_mixins_css__WEBPACK_IMPORTED_MODULE_1___default.a;
 const Block = React.createElement(BlockStyled, {
   active: false
 });
@@ -201,10 +205,11 @@ const BlockStyled =
 /*#__PURE__*/
 astroturf__WEBPACK_IMPORTED_MODULE_0___default()("div", null, {
   displayName: "BlockStyled",
-  styles: __webpack_require__(/*! ./issue-365-BlockStyled.css */ "./test/integration/issue-365-BlockStyled.css"),
+  styles: _issue_365_BlockStyled_css__WEBPACK_IMPORTED_MODULE_2___default.a,
   attrs: null,
   vars: []
 });
+;
 
 /***/ })
 

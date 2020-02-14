@@ -25,11 +25,12 @@ describe('styled', () => {
     expect(code).toEqual(
       format`
         import { styled } from 'astroturf';
+        import _ButtonBase from "./MyStyleFile-ButtonBase.css";
         const ButtonBase =
         /*#__PURE__*/
         styled('button', null, {
           displayName: \"ButtonBase\",
-          styles: require(\"./MyStyleFile-ButtonBase.css\"),
+          styles: _ButtonBase,
           attrs: null,
           vars: []
         });
@@ -56,10 +57,10 @@ describe('styled', () => {
     expect(code).toEqual(
       format`
         import { styled } from 'astroturf';
-
+        import _ButtonBase from "./MyStyleFile-ButtonBase.css";
         const ButtonBase = /*#__PURE__*/ styled('button', null, {
           displayName: \"ButtonBase\",
-          styles: require(\"./MyStyleFile-ButtonBase.css\"),
+          styles: _ButtonBase,
           attrs: null,
           vars: []
         });

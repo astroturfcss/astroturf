@@ -17,6 +17,7 @@ export default function traverse(
     code: false,
     ast: false,
     plugins: [[plugin, opts]],
+    sourceType: 'unambiguous',
     parserOpts: {
       allowImportExportEverywhere: true,
       allowReturnOutsideFunction: true,

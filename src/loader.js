@@ -121,10 +121,8 @@ function replaceStyleTemplates(src, locations) {
   }
 
   locations.forEach(({ start, end, code }) => {
-    if (code.endsWith(';')) code = code.slice(0, -1); // remove trailing semicolon
     src = splice(src, start, end, code);
   });
-
   return src;
 }
 
@@ -242,7 +240,6 @@ module.exports = function loader(content, map, meta) {
     emitVirtualFile = plugin.addFile;
   }
 
-  // console.log('WAIT', resourcePath);
   return Promise.all(dependencies)
     .then(() => {
       styles.forEach(style => {
@@ -255,6 +252,4 @@ module.exports = function loader(content, map, meta) {
       cb(null, result);
     })
     .catch(cb);
-
-  // console.log('DONE', resourcePath);
 };

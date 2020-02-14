@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 
 import { jsx } from '../src/index';
-import { testAllRunners } from './helpers';
+import { format, testAllRunners } from './helpers';
 
 describe('css prop', () => {
   testAllRunners('should compile string', async runner => {
@@ -114,6 +114,39 @@ describe('css prop', () => {
     expect(styles).toHaveLength(2);
     expect(styles[0].identifier).toEqual('CssProp1_div');
   });
+
+  testAllRunners.only(
+    'should inject imports in the right order',
+    async runner => {
+      const [code] = await runner(
+        `
+          import { css } from 'astroturf';
+          import Component from './Foo';
+
+          function Button() {
+            return (
+              <button
+                css={css\`
+                  color: blue;
+                \`}
+              >
+                <span css="height: 3rem;"/>
+              </button>
+            );
+          }
+        `,
+        { enableCssProp: true },
+      );
+
+      expect(code).toContain(
+        format`
+          import Component from './Foo';
+          import _CssProp1_button from "./MyStyleFile-CssProp1_button.css";
+          import _CssProp2_span from "./MyStyleFile-CssProp2_span.css";
+        `,
+      );
+    },
+  );
 
   testAllRunners('should warn when not enabled', async runner => {
     const spy = jest.spyOn(console, 'warn').mockImplementation(() => {});

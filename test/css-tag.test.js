@@ -1,6 +1,34 @@
 import { format, run, testAllRunners } from './helpers';
 
 describe('css tag', () => {
+  testAllRunners('should inject imports in the right order', async runner => {
+    const [code] = await runner(`
+      import { css } from 'astroturf';
+      import Component from './Foo';
+
+      const styles = css\`
+        .blue {
+          color: blue;
+        }
+      \`;
+      const styles2 = css\`
+        .blue {
+          color: blue;
+        }
+      \`;
+    `);
+
+    expect(code).toEqual(
+      format`
+        import Component from './Foo';
+        import _styles from "./MyStyleFile-styles.css"
+        import _styles2 from "./MyStyleFile-styles2.css"
+        const styles = _styles;
+        const styles2 = _styles2;
+      `,
+    );
+  });
+
   it('should remove css imports', async () => {
     const [code] = await run(`
       import { css } from 'astroturf';
@@ -14,7 +42,8 @@ describe('css tag', () => {
 
     expect(code).toEqual(
       format`
-        const styles = require("./MyStyleFile-styles.css");
+        import _styles from "./MyStyleFile-styles.css"
+        const styles = _styles;
       `,
     );
   });
@@ -33,8 +62,8 @@ describe('css tag', () => {
     expect(code).toEqual(
       format`
         import styled from 'astroturf';
-
-        const styles = require("./MyStyleFile-styles.css");
+        import _styles from "./MyStyleFile-styles.css"
+        const styles = _styles;
       `,
     );
   });
