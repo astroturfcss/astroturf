@@ -1,5 +1,7 @@
-const fs = require('fs-extra');
 const { basename, extname, join } = require('path');
+
+const fs = require('fs-extra');
+
 const { fixtures, run, runLoader } = require('./helpers');
 
 process.env.NODE_ENV = 'development';

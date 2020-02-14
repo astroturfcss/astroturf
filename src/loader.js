@@ -1,14 +1,15 @@
 import { dirname } from 'path';
 import util from 'util';
+
+import { codeFrameColumns } from '@babel/code-frame';
 import chalk from 'chalk';
 import levenshtein from 'fast-levenshtein';
 import loaderUtils from 'loader-utils';
 import sortBy from 'lodash/sortBy';
-import { codeFrameColumns } from '@babel/code-frame';
 
+import VirtualModulePlugin from './VirtualModulePlugin';
 import traverse from './traverse';
 import { getNameFromFile } from './utils/createFilename';
-import VirtualModulePlugin from './VirtualModulePlugin';
 
 const debug = util.debuglog('astroturf:loader');
 

@@ -1,7 +1,7 @@
 const cssLoader = require('css-loader');
+const postcssAtroot = require('postcss-atroot');
 const postcssLoader = require('postcss-loader');
 const postcssNested = require('postcss-nested');
-const postcssAtroot = require('postcss-atroot');
 
 function postcss(loader, css, map, meta, cb) {
   const ctx = { ...loader };

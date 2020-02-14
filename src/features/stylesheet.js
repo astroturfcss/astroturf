@@ -1,11 +1,11 @@
 import template from '@babel/template';
 import * as t from '@babel/types';
 
+import { COMPONENTS, STYLES } from '../utils/Symbols';
 import buildTaggedTemplate from '../utils/buildTaggedTemplate';
 import createStyleNode from '../utils/createStyleNode';
 import getDisplayName from '../utils/getDisplayName';
 import isCssTag from '../utils/isCssTag';
-import { COMPONENTS, STYLES } from '../utils/Symbols';
 
 const buildImport = template('require(FILENAME);');
 

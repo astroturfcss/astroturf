@@ -1,9 +1,11 @@
+const { relative, dirname } = require('path');
+
+const { transformAsync } = require('@babel/core');
 const fs = require('fs-extra');
-const webpack = require('webpack');
 const MemoryFS = require('memory-fs');
 const prettier = require('prettier');
-const { transformAsync } = require('@babel/core');
-const { relative, dirname } = require('path');
+const webpack = require('webpack');
+
 const loader = require('../src/loader');
 
 const PARSER_OPTS = {
@@ -127,10 +129,10 @@ export function runWebpack(config) {
 }
 
 function testAllRunnersImpl(t, msg, testFn) {
-  t.each([['babel', run], ['webpack', runLoader]])(
-    `${msg}  (%s)`,
-    (name, ...args) => testFn(...args),
-  );
+  t.each([
+    ['babel', run],
+    ['webpack', runLoader],
+  ])(`${msg}  (%s)`, (name, ...args) => testFn(...args));
 }
 
 export function testAllRunners(msg, testFn) {

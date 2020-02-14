@@ -1,4 +1,5 @@
 import { dirname, relative } from 'path';
+
 import groupBy from 'lodash/groupBy';
 import uniq from 'lodash/uniq';
 import resolve from 'resolve';
@@ -132,7 +133,7 @@ export default ({
     if (
       lastDynamic &&
       text.endsWith(`var(--${lastDynamic.id})`) &&
-      (matches = cooked.match(rUnit))
+      (matches = cooked.match(rUnit)) // eslint-disable-line no-cond-assign
     ) {
       const [, unit] = matches;
 

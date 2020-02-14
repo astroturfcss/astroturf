@@ -1,9 +1,9 @@
-const path = require('path');
-
 const { createHash } = require('crypto');
-const errors = require('errno');
-const util = require('util');
+const path = require('path');
 const { ReadableStream, WritableStream } = require('stream');
+const util = require('util');
+
+const errors = require('errno');
 const MemoryFileSystemError = require('memory-fs/lib/MemoryFileSystem');
 
 const debug = util.debuglog('astroturf:memory-fs');
