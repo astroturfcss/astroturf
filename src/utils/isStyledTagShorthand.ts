@@ -8,6 +8,7 @@ export default function isStyledTagShorthand(
   { styledTagName, allowGlobal }: ResolvedOptions,
 ): tagPath is NodePath<t.MemberExpression> {
   return (
+    styledTagName !== false &&
     tagPath.isMemberExpression() &&
     tagPath.get('property').isIdentifier() &&
     tagPath.get('object').node.name === styledTagName &&

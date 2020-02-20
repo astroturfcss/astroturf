@@ -59,13 +59,14 @@ function buildStyleRequire(
   let runtimeNode: t.Node = opts.styleImports.add(style);
   style.code = runtimeNode.name;
 
+  nodeMap.set(runtimeNode, style);
+
   if (isSingleClass) {
     runtimeNode = t.memberExpression(runtimeNode, t.identifier('cls1'));
 
-    style.code += '.cls';
+    style.code += '.cls1';
   }
 
-  nodeMap.set(runtimeNode, style);
   return runtimeNode;
 }
 

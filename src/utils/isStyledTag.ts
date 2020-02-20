@@ -13,6 +13,7 @@ const isStyledExpression = (
   calleePath: any,
   { styledTagName, allowGlobal }: ResolvedOptions,
 ) =>
+  styledTagName !== false &&
   calleePath.node.name === styledTagName &&
   (allowGlobal || calleePath.referencesImport('astroturf'));
 

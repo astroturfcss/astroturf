@@ -163,7 +163,7 @@ if (__DEV__) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"cls1":"issue-365-BlockStyled__cls1","cls2":"issue-365-BlockStyled__cls2 issue-365-BlockStyled__cls1","active":"issue-365-BlockStyled__active issue-365-mixins__show"};
+module.exports = {"cls1":"issue-365-BlockStyled__cls1","cls2":"issue-365-BlockStyled__cls2 issue-365-BlockStyled__cls1","active":"issue-365-BlockStyled__active issue-365-mixins__cls1"};
 
 /***/ }),
 
@@ -175,7 +175,7 @@ module.exports = {"cls1":"issue-365-BlockStyled__cls1","cls2":"issue-365-BlockSt
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"show":"issue-365-mixins__show"};
+module.exports = {"cls1":"issue-365-mixins__cls1","cls2":"issue-365-mixins__cls2 issue-365-mixins__cls1"};
 
 /***/ }),
 
@@ -197,7 +197,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const mixins = _issue_365_mixins_css__WEBPACK_IMPORTED_MODULE_1___default.a;
+const mixins = _issue_365_mixins_css__WEBPACK_IMPORTED_MODULE_1___default.a.cls1;
 const Block = React.createElement(BlockStyled, {
   active: false
 });

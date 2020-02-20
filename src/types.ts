@@ -1,4 +1,3 @@
-import { Node } from '@babel/types';
 import * as T from '@babel/types';
 // eslint-disable-next-line import/no-cycle
 import StyleImportInjector from './utils/ImportInjector';
@@ -25,9 +24,9 @@ export interface ResolvedOptions {
   writeFiles: boolean;
   allowGlobal: boolean;
 
-  cssTagName: string;
-  styledTagName: string;
-  stylesheetTagName: string;
+  cssTagName: string | false;
+  styledTagName: string | false;
+  stylesheetTagName: string | false;
 
   enableCssProp: boolean;
   noWarnings?: boolean;
@@ -67,7 +66,7 @@ export interface DynamicStyle extends BaseStyle {
 
 export type Style = StaticStyle | DynamicStyle;
 
-export type NodeStyleMap = Map<Node, Style>;
+export type NodeStyleMap = Map<T.Node, Style>;
 
 export interface Change {
   start: number;

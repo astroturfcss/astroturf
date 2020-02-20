@@ -153,7 +153,6 @@ function resolveStyleInterpolation(
   resolveDependency: DependencyResolver = defaultResolveDependency,
 ): Interpolation | null {
   const resolvedPath = resolveMemberExpression(path);
-  // console.log('HERE', resolvedPath);
   const style = resolvedPath && nodeMap.get(resolvedPath.node);
 
   if (style) {

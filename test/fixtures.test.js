@@ -14,7 +14,7 @@ const getOptions = f => {
   }
 };
 
-describe('fixtures', () => {
+describe.only('fixtures', () => {
   fixtures.forEach(fixture => {
     const options = getOptions(fixture);
     const content = fs.readFileSync(fixture, 'utf8');

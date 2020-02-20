@@ -3,14 +3,18 @@ import { format, run, testAllRunners } from './helpers';
 describe('css tag', () => {
   testAllRunners('should inject imports in the right order', async runner => {
     const [code] = await runner(`
-      import { css } from 'astroturf';
+      import { stylesheet } from 'astroturf';
       import Component from './Foo';
 
-      const styles = css\`
-        color: blue;
+      const styles = stylesheet\`
+        .blue {
+          color: blue;
+        }
       \`;
-      const styles2 = css\`
-        color: blue;
+      const styles2 = stylesheet\`
+        .blue {
+          color: blue;
+        }
       \`;
     `);
 
@@ -19,35 +23,39 @@ describe('css tag', () => {
         import Component from './Foo';
         import _styles from "./MyStyleFile-styles.css"
         import _styles2 from "./MyStyleFile-styles2.css"
-        const styles = _styles.cls1;
-        const styles2 = _styles2.cls1;
+        const styles = _styles;
+        const styles2 = _styles2;
       `,
     );
   });
 
-  it('should remove css imports', async () => {
+  it('should remove stylesheet imports', async () => {
     const [code] = await run(`
-      import { css } from 'astroturf';
+      import { stylesheet } from 'astroturf';
 
-      const styles = css\`
-        color: blue;
+      const styles = stylesheet\`
+        .blue {
+          color: blue;
+        }
       \`;
     `);
 
     expect(code).toEqual(
       format`
         import _styles from "./MyStyleFile-styles.css"
-        const styles = _styles.cls1;
+        const styles = _styles;
       `,
     );
   });
 
-  testAllRunners('should remove just the css import', async runner => {
+  testAllRunners('should remove just the stylesheet import', async runner => {
     const [code] = await runner(`
-      import styled, { css } from 'astroturf';
+      import styled, { stylesheet } from 'astroturf';
 
-      const styles = css\`
-        color: blue;
+      const styles = stylesheet\`
+        .blue {
+          color: blue;
+        }
       \`;
     `);
 
@@ -55,7 +63,7 @@ describe('css tag', () => {
       format`
         import styled from 'astroturf';
         import _styles from "./MyStyleFile-styles.css"
-        const styles = _styles.cls1;
+        const styles = _styles;
       `,
     );
   });
@@ -63,7 +71,7 @@ describe('css tag', () => {
   testAllRunners('allows different tag names', async runner => {
     const [, styles] = await runner(
       `
-      import { css as less } from 'astroturf';
+      import { stylesheet as less } from 'astroturf';
 
       const SIZE = 75;
 
@@ -97,7 +105,7 @@ describe('css tag', () => {
       await expect(
         runner(
           `
-        import { css as less } from 'astroturf';
+        import { stylesheet as less } from 'astroturf';
 
         less\`
           .blue {
@@ -132,7 +140,7 @@ describe('css tag', () => {
       \`;
     `,
       {
-        cssTagName: 'less',
+        stylesheetTagName: 'less',
         allowGlobal: false,
       },
     );
@@ -143,12 +151,12 @@ describe('css tag', () => {
   testAllRunners('handles non-simple interpolations', async () => {
     const [, styles] = await run(
       `
-      import { css } from 'astroturf';
+      import { stylesheet } from 'astroturf';
 
       const duration = 1000
       const durationMs = \`$\{duration + 500}ms\`;
 
-      const styles = css\`
+      const styles = stylesheet\`
         .bar {
           transition: all $\{durationMs};
         }

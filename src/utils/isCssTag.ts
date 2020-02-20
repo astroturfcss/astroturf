@@ -5,6 +5,7 @@ export default function isCssTag(
   { cssTagName, allowGlobal }: ResolvedOptions,
 ): boolean {
   return (
+    cssTagName !== false &&
     tagPath.node.name === cssTagName &&
     (tagPath.referencesImport('astroturf') ||
       (allowGlobal && tagPath.scope.hasGlobal(cssTagName)))

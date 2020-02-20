@@ -1,4 +1,4 @@
-import styled, { css } from 'astroturf';
+import styled, { css, stylesheet } from 'astroturf';
 import React from 'react';
 import Widget from 'widget';
 
@@ -7,7 +7,7 @@ import * as Buttons from './Button';
 
 const width = 75;
 
-const styles = css`
+const styles = stylesheet`
   .parent {
     color: red;
   }
