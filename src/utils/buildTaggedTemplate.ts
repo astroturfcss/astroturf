@@ -5,7 +5,14 @@ import resolve from 'resolve';
 import { NodePath } from '@babel/core';
 import * as t from '@babel/types';
 
-import { NodeStyleMap, Style } from '../types';
+import {
+  DependencyResolver,
+  NodeStyleMap,
+  ResolvedImport,
+  Style,
+  UserInterpolation,
+  ResolvedOptions,
+} from '../types';
 import cssUnits from './cssUnits';
 import getNameFromPath from './getNameFromPath';
 import hash from './murmurHash';
@@ -15,17 +22,9 @@ const rPlaceholder = /###ASTROTURF_PLACEHOLDER_\d*?###/g;
 // Match any valid CSS units followed by a separator such as ;, newline etc.
 const rUnit = new RegExp(`^(${cssUnits.join('|')})(;|,|\n| |\\))`);
 
-export interface ResolvedImport {
-  identifier: string;
-  request: string;
-  type: string;
-}
+const getPlaceholder = (idx: number) => `###ASTROTURF_PLACEHOLDER_${idx}###`;
 
-interface UserInterpolation {
-  source: string;
-  imported?: string;
-  isStyledComponent?: boolean;
-}
+export type TagLocation = 'STYLESHEET' | 'COMPONENT' | 'PROP';
 
 export interface Interpolation {
   imported: string;
@@ -43,6 +42,55 @@ function defaultResolveDependency(
   });
 
   return { source };
+}
+
+function assertDynamicInterpolationsLocation(
+  expr: NodePath<t.Expression>,
+  location: TagLocation,
+  opts: ResolvedOptions,
+) {
+  const parent = expr.findParent(p => p.isTaggedTemplateExpression()) as any;
+  // may be undefined in the `styled.button` case, or plain css prop case
+  const tagName = parent?.node.tag?.name;
+
+  const validLocation = location === 'COMPONENT' || location === 'PROP';
+
+  if (!validLocation) {
+    const jsxAttr = expr.findParent(p => p.isJSXAttribute()) as any;
+
+    if (jsxAttr) {
+      const propName = jsxAttr.node.name.name;
+      throw jsxAttr.buildCodeFrameError(
+        `This ${tagName} tag with dynamic expressions cannot be used with \`${propName}\` prop. ` +
+          `Dynamic styles can only be passed to the \`css\` prop. Move the style to css={...} to fix the issue${
+            !opts.enableCssProp
+              ? ' (and set the `enableCssProp` to `true` or `"cssProp"` in your astroturf options to allow this feature)'
+              : '.'
+          }`,
+      );
+    }
+
+    throw expr.buildCodeFrameError(
+      'The following expression could not be evaluated during compilation. ' +
+        'Dynamic expressions can only be used in the context of a component, ' +
+        'in a `css` prop, or styled() component helper',
+    );
+  }
+
+  // valid but not configured for this location
+  if (validLocation) {
+    if (!opts.customCssProperties)
+      throw expr.buildCodeFrameError(
+        'Dynamic expression compilation is not enabled. ' +
+          'To enable this usage set the the `customCssProperties` to `true` or `"cssProp"` in your astroturf options',
+      );
+
+    if (opts.customCssProperties === 'cssProp' && location === 'COMPONENT')
+      throw expr.buildCodeFrameError(
+        'Dynamic expression compilation is not enabled. ' +
+          'To enable this usage set the `customCssProperties` from `"cssProp"` to `true` in your astroturf options.',
+      );
+  }
 }
 
 function resolveMemberExpression(path: NodePath) {
@@ -86,7 +134,7 @@ function resolveStyleInterpolation(
   path: NodePath<t.Expression>,
   nodeMap: NodeStyleMap,
   localStyle: any,
-  resolveDependency = defaultResolveDependency,
+  resolveDependency: DependencyResolver = defaultResolveDependency,
 ): Interpolation | null {
   const resolvedPath = resolveMemberExpression(path);
 
@@ -130,8 +178,6 @@ function resolveStyleInterpolation(
   return null;
 }
 
-const getPlaceholder = (idx: number) => `###ASTROTURF_PLACEHOLDER_${idx}###`;
-
 export interface DynamicInterpolation {
   id: string;
   unit: string;
@@ -141,18 +187,16 @@ export interface DynamicInterpolation {
 interface Options {
   quasiPath: NodePath<t.TemplateLiteral>;
   nodeMap: NodeStyleMap;
-  tagName: string;
-  resolveDependency?: (imp: ResolvedImport, style: Style, node: t.Node) => any;
-  useCssProperties: boolean;
+  location: TagLocation;
+  pluginOptions: ResolvedOptions;
   style: Style;
 }
 
 export default ({
   quasiPath,
   nodeMap,
-  tagName,
-  resolveDependency,
-  useCssProperties,
+  pluginOptions,
+  location,
   style: localStyle,
 }: Options) => {
   const quasi = quasiPath.node;
@@ -201,7 +245,7 @@ export default ({
       expr,
       nodeMap,
       localStyle,
-      resolveDependency,
+      pluginOptions.resolveDependency,
     );
 
     if (interpolation) {
@@ -212,12 +256,7 @@ export default ({
       return;
     }
 
-    if (!useCssProperties) {
-      throw expr.buildCodeFrameError(
-        `Could not resolve interpolation to a value, ${tagName} returned class name, or styled component. ` +
-          'All interpolated styled components must be in the same file and values must be statically determinable at compile time.',
-      );
-    }
+    assertDynamicInterpolationsLocation(expr, location, pluginOptions);
 
     // custom properties need to start with a letter
     const id = `a${hash(`${localStyle.identifier}-${idx}`)}`;

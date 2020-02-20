@@ -1,6 +1,25 @@
 import { Node } from '@babel/types';
-
+import * as T from '@babel/types';
+// eslint-disable-next-line import/no-cycle
 import StyleImportInjector from './utils/ImportInjector';
+
+export interface ResolvedImport {
+  identifier: string;
+  request: string;
+  type: string;
+}
+
+export interface UserInterpolation {
+  source: string;
+  imported?: string;
+  isStyledComponent?: boolean;
+}
+
+export type DependencyResolver = (
+  interpolation: ResolvedImport,
+  localStyle: Style,
+  node: T.Expression,
+) => UserInterpolation | null;
 
 export interface ResolvedOptions {
   writeFiles: boolean;
@@ -9,6 +28,7 @@ export interface ResolvedOptions {
   styledTag: string;
   enableCssProp: boolean;
   noWarnings?: boolean;
+  resolveDependency?: DependencyResolver;
   generateInterpolations?: boolean;
   customCssProperties: 'cssProp' | boolean;
   extension: string;

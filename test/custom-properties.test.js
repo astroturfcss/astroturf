@@ -75,7 +75,47 @@ describe('custom properties', () => {
     );
   });
 
-  it('should disallow when configured off', async () => {
+  it('should disallow, wrong location', async () => {
+    await expect(
+      run(
+        `
+      import styled, { css } from 'astroturf';
+
+      const ButtonA = css\`
+        color: \${p => p.color};
+      \`
+      `,
+        { enableCssProp: true },
+      ),
+    ).rejects.toThrow(
+      /The following expression could not be evaluated during compilation\. Dynamic expressions can only be used in the context of a component, in a `css` prop, or styled\(\) component helper/,
+    );
+  });
+
+  it('should disallow, wrong prop', async () => {
+    await expect(
+      run(
+        `
+      import styled, { css } from 'astroturf';
+
+      function ButtonB({ color }) {
+        return (
+          <button
+            className={css\`
+              color: \${color};
+            \`}
+          />
+        );
+      }
+      `,
+        { enableCssProp: true },
+      ),
+    ).rejects.toThrow(
+      /This css tag with dynamic expressions cannot be used with `className` prop\. Dynamic styles can only be passed to the `css` prop\. Move the style to css=\{\.\.\.\} to fix the issue/,
+    );
+  });
+
+  it('should disallow when configured off, valid location', async () => {
     await expect(
       run(
         `
@@ -97,7 +137,9 @@ describe('custom properties', () => {
       `,
         { enableCssProp: true, customCssProperties: false },
       ),
-    ).rejects.toThrow(/Could not resolve interpolation to a value/);
+    ).rejects.toThrow(
+      /Dynamic expression compilation is not enabled\. To enable this usage set the the `customCssProperties` to `true` or `"cssProp"` in your astroturf options/,
+    );
   });
 
   it('should disallow Styled usage when configured off', async () => {
@@ -112,7 +154,9 @@ describe('custom properties', () => {
       `,
         { enableCssProp: true, customCssProperties: 'cssProp' },
       ),
-    ).rejects.toThrow(/Could not resolve interpolation to a value/);
+    ).rejects.toThrow(
+      /Dynamic expression compilation is not enabled\. To enable this usage set the `customCssProperties` from `"cssProp"` to `true` in your astroturf options/,
+    );
   });
 
   it('should apply styles', () => {

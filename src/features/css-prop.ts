@@ -84,11 +84,11 @@ function buildCssProp(
       const { text, imports, dynamicInterpolations } = buildTaggedTemplate({
         style,
         nodeMap,
-        ...pluginOptions,
+        pluginOptions,
+        location: 'PROP',
         quasiPath: exprPath.isTemplateLiteral()
           ? exprPath
           : exprPath.get('quasi'),
-        useCssProperties: !!pluginOptions.customCssProperties,
       });
 
       vars = toVarsArray(dynamicInterpolations);
