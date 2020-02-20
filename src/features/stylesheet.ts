@@ -35,8 +35,8 @@ function buildStyleRequire(
     quasiPath: path.get('quasi'),
     nodeMap,
     style,
-    useCssProperties: false,
-    ...opts.defaultedOptions,
+    location: 'STYLESHEET',
+    pluginOptions: opts.defaultedOptions,
   });
 
   style.value = `${imports}${text}`;

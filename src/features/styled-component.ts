@@ -79,9 +79,9 @@ function buildStyledComponent(
   const { text, dynamicInterpolations, imports } = buildTaggedTemplate({
     style,
     nodeMap,
-    ...opts.pluginOptions,
     quasiPath: path.get('quasi'),
-    useCssProperties: pluginOptions.customCssProperties === true,
+    location: 'COMPONENT',
+    pluginOptions: opts.pluginOptions,
   });
 
   style.imports = imports;
