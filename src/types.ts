@@ -39,6 +39,7 @@ export interface ResolvedOptions {
     opts: ResolvedOptions,
     id?: string,
   ) => string;
+  getRequirePath?: (from: string, to: string) => string;
 }
 
 export type StyleType = 'stylesheet' | 'class' | 'styled';
@@ -48,7 +49,7 @@ export interface BaseStyle {
   end: number;
   type: StyleType;
   absoluteFilePath: string;
-  relativeFilePath: string;
+  requirePath: string;
   identifier: string;
   value: string;
   code?: string;
@@ -76,6 +77,11 @@ export interface Change {
 
 export interface StyleState {
   styles: Map<string, Style>;
+  changeset: Change[];
+}
+
+export interface AstroturfMetadata {
+  styles: Style[];
   changeset: Change[];
 }
 

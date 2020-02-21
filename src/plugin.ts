@@ -63,7 +63,6 @@ export default function plugin(): PluginObj<PluginState> {
       });
 
       const importAdditions = styleImports.inject();
-
       const styleList = Array.from(styles.values());
 
       changeset = changeset.concat(importAdditions, styleList);

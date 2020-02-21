@@ -7,7 +7,7 @@ import { ResolvedOptions } from './types';
 export default function traverse(
   source: string,
   filename: string,
-  opts: ResolvedOptions,
+  opts: Partial<ResolvedOptions>,
 ) {
   const extname = path.extname(filename);
 

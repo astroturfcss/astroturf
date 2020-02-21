@@ -3,10 +3,10 @@
 import { jsx as _j, F as _f } from "astroturf";
 import styled from "astroturf";
 import React from "react";
-import _styles from "./typescript-styles.css";
-import _Button from "./typescript-Button.css";
-import _CssProp1_Button from "./typescript-CssProp1_Button.css";
-import _CssProp2_Button from "./typescript-CssProp2_Button.css";
+import _styles from "astroturf/css-loader?inline!./typescript-styles.css";
+import _Button from "astroturf/css-loader?inline!./typescript-Button.css";
+import _CssProp1_Button from "astroturf/css-loader?inline!./typescript-CssProp1_Button.css";
+import _CssProp2_Button from "astroturf/css-loader?inline!./typescript-CssProp2_Button.css";
 const SIZE = 75;
 const styles = _styles;
 interface PropsType {

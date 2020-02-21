@@ -1,6 +1,6 @@
 import styled from "astroturf";
-import _FancyBox from "./pass-options-FancyBox.css";
-import _FancierBox from "./pass-options-FancierBox.css";
+import _FancyBox from "astroturf/css-loader?inline!./pass-options-FancyBox.css";
+import _FancierBox from "astroturf/css-loader?inline!./pass-options-FancierBox.css";
 const SIZE = 75;
 // prettier-ignore
 const FancyBox = /*#__PURE__*/styled('div', {

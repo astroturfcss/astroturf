@@ -1,4 +1,4 @@
-import { basename, dirname, extname, join } from 'path';
+import { basename, dirname, extname, join, relative } from 'path';
 
 import { ResolvedOptions } from '../types';
 import pascalCase from './pascalCase';
@@ -7,6 +7,15 @@ export function getNameFromFile(fileName: string) {
   const name = basename(fileName, extname(fileName));
   if (name !== 'index') return pascalCase(name);
   return pascalCase(basename(dirname(fileName)));
+}
+
+export function createRequirePath(from: string, to: string) {
+  let relativePath = relative(dirname(from), to);
+
+  if (!relativePath.startsWith('.')) {
+    relativePath = `./${relativePath}`;
+  }
+  return relativePath;
 }
 
 export default function createFilename(

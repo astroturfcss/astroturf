@@ -1,14 +1,13 @@
-import { dirname, relative } from 'path';
 import { NodePath } from '@babel/core';
 
 import { ResolvedOptions } from '../types';
-import createFileName from './createFilename';
+import createFileName, { createRequirePath } from './createFilename';
 
 export interface IntermediateStyle {
   start: number;
   end: number;
   absoluteFilePath: string;
-  relativeFilePath: string;
+  requirePath: string;
   identifier: string;
 }
 
@@ -20,15 +19,11 @@ export default function createStyleNode(
   const { start, end } = path.node;
   const style: Partial<IntermediateStyle> = { start: start!, end: end! };
   const getFileName = pluginOptions.getFileName || createFileName;
+  const getRequirePath = pluginOptions.getRequirePath || createRequirePath;
 
   const hostFile = file.opts.filename;
   style.absoluteFilePath = getFileName(hostFile, pluginOptions, identifier);
-
-  let filename = relative(dirname(hostFile), style.absoluteFilePath);
-  if (!filename.startsWith('.')) {
-    filename = `./${filename}`;
-  }
-  style.relativeFilePath = filename;
+  style.requirePath = getRequirePath(hostFile, style.absoluteFilePath);
   style.identifier = identifier || '';
 
   return style as IntermediateStyle;

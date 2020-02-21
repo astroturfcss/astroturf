@@ -1,6 +1,6 @@
 import styled from "astroturf";
-import _FancyBox from "./multiple-components-FancyBox.css";
-import _FancyHeader from "./multiple-components-FancyHeader.css";
+import _FancyBox from "astroturf/css-loader?inline!./multiple-components-FancyBox.css";
+import _FancyHeader from "astroturf/css-loader?inline!./multiple-components-FancyHeader.css";
 const SIZE = 75;
 // prettier-ignore
 const FancyBox = /*#__PURE__*/styled('div', null, {

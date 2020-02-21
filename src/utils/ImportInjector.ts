@@ -42,7 +42,7 @@ export default class StyleImportInjector {
 
   add(style: Style) {
     const { scope } = this.program;
-    const source = style.relativeFilePath;
+    const source = style.requirePath;
 
     const useEsm = isModule(this.program);
     const ident = scope.generateUidIdentifier(style.identifier);

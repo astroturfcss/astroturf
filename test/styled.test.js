@@ -4,10 +4,10 @@ import React from 'react';
 
 import { withProps } from '../src/helpers';
 import styled from '../src/index';
-import { format, run, runLoader } from './helpers';
+import { format, loaderPrefix, run, runLoader } from './helpers';
 
 describe('styled', () => {
-  it('should compile', async () => {
+  it('should compile (babel)', async () => {
     const [code] = await run(
       `
       import { styled } from 'astroturf';
@@ -38,7 +38,7 @@ describe('styled', () => {
     );
   });
 
-  it('should compile', async () => {
+  it('should compile (webpack)', async () => {
     const [code] = await runLoader(
       `
       import { styled } from 'astroturf';
@@ -57,7 +57,7 @@ describe('styled', () => {
     expect(code).toEqual(
       format`
         import { styled } from 'astroturf';
-        import _ButtonBase from "./MyStyleFile-ButtonBase.css";
+        import _ButtonBase from "${loaderPrefix}./MyStyleFile-ButtonBase.css";
         const ButtonBase = /*#__PURE__*/ styled('button', null, {
           displayName: \"ButtonBase\",
           styles: _ButtonBase,
