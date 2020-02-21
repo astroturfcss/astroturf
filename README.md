@@ -22,8 +22,8 @@
 - [`as` prop](#as-prop)
 - [Setup](#setup)
   - [Options](#options)
-  - [Use with Gatsby](#use-with-gatsby)
   - [Use with Parcel](#use-with-parcel)
+  - [Use with Gatsby](#use-with-gatsby)
   - [Use with Preact](#use-with-preact)
   - [Use with Next.js](#use-with-nextjs)
   - [Use without webpack](#use-without-webpack)
@@ -509,8 +509,8 @@ You can also skip the included `css-loader` entirely if your preprocessor handle
 
 astroturf accepts a few query options.
 
-- **tagName**: (default: `'css'`) The tag identifier used to locate inline css literals and extract them.
-- **styledTag**: (default: `'styled'`) The tag identifier used to locate components.
+- **cssTagName**: (default: `'css'`) The tag identifier used to locate inline css literals and extract them.
+- **styledTagName**: (default: `'styled'`) The tag identifier used to locate components.
 - **extension**: (default: `'.css'`) the extension used for extracted "virtual" files. Change to whatever file type you want webpack to process extracted literals as.
 - **enableCssProp**: (default: false) compiles `css` props to styled components.
 
@@ -537,7 +537,6 @@ Add these lines to `package.json` to work with [Parcel](https://parceljs.org/) b
 ### Use with Gatsby
 
 See [gatsby-plugin-astroturf](https://github.com/silvenon/gatsby-plugin-astroturf)
-
 
 ### Use with Preact
 
@@ -566,7 +565,7 @@ module.exports = {
     [
       'astroturf/plugin',
       {
-        tagName: 'css',
+        cssTagName: 'css',
         extension: '.css',
         writeFiles: true, // Writes css files to disk using the result of `getFileName`
         getFileName(hostFilePath, pluginsOptions) {

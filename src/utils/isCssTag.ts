@@ -2,11 +2,12 @@ import { ResolvedOptions } from '../types';
 
 export default function isCssTag(
   tagPath: any,
-  { tagName, allowGlobal }: ResolvedOptions,
+  { cssTagName, allowGlobal }: ResolvedOptions,
 ): boolean {
   return (
-    tagPath.node.name === tagName &&
+    cssTagName !== false &&
+    tagPath.node.name === cssTagName &&
     (tagPath.referencesImport('astroturf') ||
-      (allowGlobal && tagPath.scope.hasGlobal(tagName)))
+      (allowGlobal && tagPath.scope.hasGlobal(cssTagName)))
   );
 }

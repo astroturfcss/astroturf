@@ -5,12 +5,13 @@ import { ResolvedOptions } from '../types';
 
 export default function isStyledTagShorthand(
   tagPath: any,
-  { styledTag, allowGlobal }: ResolvedOptions,
+  { styledTagName, allowGlobal }: ResolvedOptions,
 ): tagPath is NodePath<t.MemberExpression> {
   return (
+    styledTagName !== false &&
     tagPath.isMemberExpression() &&
     tagPath.get('property').isIdentifier() &&
-    tagPath.get('object').node.name === styledTag &&
+    tagPath.get('object').node.name === styledTagName &&
     (allowGlobal || tagPath.get('object').referencesImport('astroturf'))
   );
 }

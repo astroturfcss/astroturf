@@ -127,6 +127,8 @@ describe('styled', () => {
     await expect(
       run(
         `
+        import { styled } from 'astroturf';
+
         styled('p')\`
           color: blue;
         \`;

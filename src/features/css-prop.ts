@@ -63,7 +63,7 @@ function buildCssProp(
 
   const style: DynamicStyle = {
     ...baseStyle,
-    isStyledComponent: false,
+    type: 'class',
     interpolations: [],
     imports: '',
     value: '',

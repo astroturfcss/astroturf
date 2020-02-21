@@ -10,7 +10,7 @@ import * as t from '@babel/types';
 import cssProp from './features/css-prop';
 import styledComponent from './features/styled-component';
 import stylesheet from './features/stylesheet';
-import { PluginState, StyleState } from './types';
+import { PluginState, StyleState, ResolvedOptions } from './types';
 import ImportInjector from './utils/ImportInjector';
 import { COMPONENTS, IMPORTS, STYLES } from './utils/Symbols';
 
@@ -36,18 +36,21 @@ export default function plugin(): PluginObj<PluginState> {
       const { opts, styleImports } = this;
       // eslint-disable-next-line prefer-const
       let { styles, changeset } = file.get(STYLES) as StyleState;
-      const importNodes: NodePath[] = file.get(IMPORTS);
+      const importNodes: Array<{
+        path: NodePath;
+        specifiers: null | NodePath[];
+      }> = file.get(IMPORTS);
 
-      importNodes.forEach(path => {
-        const decl = !path.isImportDeclaration()
-          ? path.findParent(p => p.isImportDeclaration())
-          : path;
+      importNodes.forEach(({ path, specifiers }) => {
+        if (!path) return;
 
-        if (!decl) return;
+        const { start, end } = path.node;
 
-        const { start, end } = decl.node;
-
-        path.remove();
+        if (specifiers) {
+          specifiers.forEach(s => s.remove());
+        } else {
+          path.remove();
+        }
 
         if (opts.generateInterpolations)
           changeset.push({
@@ -55,7 +58,7 @@ export default function plugin(): PluginObj<PluginState> {
             end: end!,
             // if the path is just a removed specifier we need to regenerate
             // the import statement otherwise we remove the entire declaration
-            code: !path.isImportDeclaration() ? generate(decl.node).code : '',
+            code: specifiers ? generate(path.node).code : '',
           });
       });
 
@@ -81,32 +84,37 @@ export default function plugin(): PluginObj<PluginState> {
           enter(path: NodePath<t.Program>, state: any) {
             state.styleImports = new ImportInjector(path);
             state.defaultedOptions = defaults(state.opts, {
-              tagName: 'css',
-              allowGlobal: true,
-              styledTag: 'styled',
-              customCssProperties: 'cssProp', // or: true, false
-            });
+              cssTagName: 'css',
+              styledTagName: 'styled',
+              stylesheetTagName: 'stylesheet',
+              allowGlobal: false,
+              customCssProperties: 'cssProp',
+            }) as ResolvedOptions;
           },
         },
 
         ImportDeclaration: {
           exit(path: NodePath<t.ImportDeclaration>, state: PluginState) {
-            const { tagName } = state.defaultedOptions;
+            const { cssTagName, stylesheetTagName } = state.defaultedOptions;
             const specifiers = path.get('specifiers');
-            const tagImport = path
+            const tagImports = path
               .get('specifiers')
-              .find(
+              .filter(
                 p =>
                   p.isImportSpecifier() &&
-                  p.node.imported.name === 'css' &&
-                  p.node.local.name === tagName,
+                  ['css', 'stylesheet'].includes(p.node.imported.name) &&
+                  [cssTagName, stylesheetTagName].includes(p.node.local.name),
               );
 
-            if (tagImport) {
-              state.file
-                .get(IMPORTS)
-                .push(specifiers.length === 1 ? path : tagImport);
-            }
+            if (!tagImports.length) return;
+            // if the tagImports are ALL of the imported values then we want
+            // to pass the entire import to be removed.
+
+            state.file.get(IMPORTS).push({
+              path,
+              specifiers:
+                specifiers.length === tagImports.length ? null : tagImports,
+            });
           },
         },
       },

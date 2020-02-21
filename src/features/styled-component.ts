@@ -70,7 +70,7 @@ function buildStyledComponent(
   const baseStyle = createStyleNode(path, displayName, opts);
   const style: DynamicStyle = {
     ...baseStyle,
-    isStyledComponent: true,
+    type: 'styled',
     interpolations: [],
     imports: '',
     value: '',
@@ -91,7 +91,7 @@ function buildStyledComponent(
   const importId = styleImports.add(style);
 
   const runtimeNode = buildComponent({
-    TAG: pluginOptions.styledTag,
+    TAG: pluginOptions.styledTagName,
     ELEMENTTYPE: elementType,
     ATTRS: normalizeAttrs(styledAttrs),
     OPTIONS: styledOptions || t.nullLiteral(),

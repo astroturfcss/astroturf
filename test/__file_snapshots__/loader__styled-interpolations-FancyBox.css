@@ -1,4 +1,4 @@
-@value item as a0 from "styled-interpolations-base.css";
+@value cls1 as a0 from "styled-interpolations-base.css";
 
 
 .cls1 { /*!*/ }
@@ -6,8 +6,8 @@
 composes: cls1;
 
 composes: global from global;
-composes: other from "styled-interpolations-other.css";
-composes: item from "styled-interpolations-base.css";
+composes: cls1 from "styled-interpolations-other.css";
+composes: cls1 from "styled-interpolations-base.css";
 
 color: red;
 width: 75px;

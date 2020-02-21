@@ -1,4 +1,3 @@
-import { Node } from '@babel/types';
 import * as T from '@babel/types';
 // eslint-disable-next-line import/no-cycle
 import StyleImportInjector from './utils/ImportInjector';
@@ -12,7 +11,7 @@ export interface ResolvedImport {
 export interface UserInterpolation {
   source: string;
   imported?: string;
-  isStyledComponent?: boolean;
+  type?: StyleType;
 }
 
 export type DependencyResolver = (
@@ -24,8 +23,11 @@ export type DependencyResolver = (
 export interface ResolvedOptions {
   writeFiles: boolean;
   allowGlobal: boolean;
-  tagName: string;
-  styledTag: string;
+
+  cssTagName: string | false;
+  styledTagName: string | false;
+  stylesheetTagName: string | false;
+
   enableCssProp: boolean;
   noWarnings?: boolean;
   resolveDependency?: DependencyResolver;
@@ -39,9 +41,12 @@ export interface ResolvedOptions {
   ) => string;
 }
 
+export type StyleType = 'stylesheet' | 'class' | 'styled';
+
 export interface BaseStyle {
   start: number;
   end: number;
+  type: StyleType;
   absoluteFilePath: string;
   relativeFilePath: string;
   identifier: string;
@@ -50,18 +55,18 @@ export interface BaseStyle {
 }
 
 export interface StaticStyle extends BaseStyle {
-  isStyledComponent: false;
+  type: 'stylesheet' | 'class';
 }
 
 export interface DynamicStyle extends BaseStyle {
-  isStyledComponent: boolean;
+  type: 'class' | 'styled';
   imports: string;
   interpolations: Array<{ id: string; unit: string }>;
 }
 
 export type Style = StaticStyle | DynamicStyle;
 
-export type NodeStyleMap = Map<Node, Style>;
+export type NodeStyleMap = Map<T.Node, Style>;
 
 export interface Change {
   start: number;

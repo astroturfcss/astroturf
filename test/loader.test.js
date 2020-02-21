@@ -4,9 +4,10 @@ describe('webpack loader', () => {
   it('should add imports', async () => {
     const [code] = await runLoader(
       `
-      import { css } from 'astroturf';
+      import { css, stylesheet } from 'astroturf';
 
-      const styles = css\`\`
+      const cls = css\`\`
+      const styles = stylesheet\`\`
 
       function Button() {
         return (
@@ -33,6 +34,7 @@ describe('webpack loader', () => {
 
     expect(code).toContain('import _styles from "./MyStyleFile-styles.css"');
     expect(code).toContain('const styles = _styles;');
+    expect(code).toContain('const cls = _cls.cls1;');
   });
 
   it('finds different css tag names', async () => {
@@ -48,7 +50,7 @@ describe('webpack loader', () => {
       \`;
     `,
       {
-        tagName: 'less',
+        cssTagName: 'less',
         extension: '.less',
       },
     );
@@ -66,7 +68,8 @@ describe('webpack loader', () => {
       \`;
     `,
       {
-        styledTag: 's',
+        styledTagName: 's',
+        allowGlobal: true,
       },
     );
 
