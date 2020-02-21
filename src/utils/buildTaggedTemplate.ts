@@ -4,15 +4,7 @@ import { NodePath } from '@babel/core';
 import * as t from '@babel/types';
 import camelCase from 'lodash/camelCase';
 
-import {
-  DependencyResolver,
-  NodeStyleMap,
-  ResolvedImport,
-  Style,
-  UserInterpolation,
-  ResolvedOptions,
-  StyleType,
-} from '../types';
+import { NodeStyleMap, Style, ResolvedOptions } from '../types';
 import cssUnits from './cssUnits';
 import hash from './murmurHash';
 import isCssTag from './isCssTag';
@@ -25,6 +17,19 @@ const rPlaceholder = /###ASTROTURF_PLACEHOLDER_\d*?###/g;
 const rUnit = new RegExp(`^(${cssUnits.join('|')})(;|,|\n| |\\))`);
 
 const getPlaceholder = (idx: number) => `###ASTROTURF_PLACEHOLDER_${idx}###`;
+
+const toVarsArray = (interpolations: DynamicInterpolation[]) => {
+  const vars = interpolations.map(i =>
+    t.arrayExpression(
+      [
+        t.stringLiteral(i.id),
+        i.expr.node,
+        i.unit ? t.stringLiteral(i.unit) : null,
+      ].filter(Boolean),
+    ),
+  );
+  return t.arrayExpression(vars);
+};
 
 /**
  * Build a logical expression returning a class, trying both the
@@ -108,6 +113,10 @@ function assertDynamicInterpolationsLocation(
   }
 }
 
+/**
+ * Traverses an expression in a template string looking for additional astroturf
+ * styles. Inline css tags are replaced with an identifier to the class name
+ */
 function resolveVariants(
   exprPath: NodePath<t.Expression>,
   opts: Options,
@@ -118,8 +127,10 @@ function resolveVariants(
 
   exprPath.traverse({
     TaggedTemplateExpression(innerPath) {
-      if (!isCssTag(innerPath.get('tag'), opts.pluginOptions)) return;
-      console.log('I"M HERE');
+      if (!isCssTag(innerPath.get('tag'), opts.pluginOptions)) {
+        return;
+      }
+
       if (opts.allowVariants === false) {
         throw innerPath.buildCodeFrameError(
           'Nested Variants are not allowed here',
@@ -225,13 +236,6 @@ interface Options {
   style: Style;
 }
 
-interface ResolvedTemplate {
-  text: string;
-  dependencyImports: string;
-  // variants: ResolvedTemplate[];
-  dynamicInterpolations: Set<DynamicInterpolation>;
-}
-
 interface Rule {
   text: string;
   imports: string;
@@ -313,7 +317,6 @@ function buildTemplateImpl(opts: Options, state = { id: 0 }) {
     const exprNode = expr.node;
     const resolvedInnerTemplates = resolveVariants(expr, opts, state);
     if (resolvedInnerTemplates.length) {
-      console.log('HEELLO', expressions.length);
       variants.push({ expr: exprNode, rules: resolvedInnerTemplates });
       return;
     }
@@ -322,7 +325,7 @@ function buildTemplateImpl(opts: Options, state = { id: 0 }) {
 
     // custom properties need to start with a letter
     const id = `a${hash(`${localStyle.identifier}-${idx}`)}`;
-    console.log('VAR', id);
+
     lastDynamic = { id, expr, unit: '' };
     dynamicInterpolations.add(lastDynamic);
 
@@ -347,19 +350,6 @@ function buildTemplateImpl(opts: Options, state = { id: 0 }) {
     vars: Array.from(dynamicInterpolations),
   };
 }
-
-const toVarsArray = (interpolations: DynamicInterpolation[]) => {
-  const vars = interpolations.map(i =>
-    t.arrayExpression(
-      [
-        t.stringLiteral(i.id),
-        i.expr.node,
-        i.unit ? t.stringLiteral(i.unit) : null,
-      ].filter(Boolean),
-    ),
-  );
-  return t.arrayExpression(vars);
-};
 
 export default function buildTaggedTemplate(opts: Options) {
   const { location } = opts;

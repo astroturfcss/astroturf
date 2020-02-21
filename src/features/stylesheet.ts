@@ -8,7 +8,6 @@ import getDisplayName from '../utils/getDisplayName';
 import isCssTag from '../utils/isCssTag';
 import isStylesheetTag from '../utils/isStylesheetTag';
 import { COMPONENTS, STYLES } from '../utils/Symbols';
-import wrapInClass from '../utils/wrapInClass';
 
 function buildStyleRequire(
   path: NodePath<t.TaggedTemplateExpression>,
