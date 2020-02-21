@@ -1,6 +1,6 @@
 import s from "astroturf";
-import _FancyBox from "./styled-tag-FancyBox.css";
-import _FancierBox from "./styled-tag-FancierBox.css";
+import _FancyBox from "astroturf/css-loader?inline!./styled-tag-FancyBox.css";
+import _FancierBox from "astroturf/css-loader?inline!./styled-tag-FancierBox.css";
 // prettier-ignore
 const FancyBox = /*#__PURE__*/s('div', null, {
   displayName: "FancyBox",

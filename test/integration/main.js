@@ -44,6 +44,7 @@ const FancierBox = styled('div')`
   & > ${Button} {
     margin-left: 4px;
   }
+
   & > ${Buttons.Button} {
     margin-left: 8px;
   }

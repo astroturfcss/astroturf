@@ -25,6 +25,11 @@ function normalizeNewLines(str) {
   return str.replace(/\n\s*?\n/g, '\n').trim();
 }
 
+export const loaderPrefix = 'astroturf/css-loader?inline!';
+
+export const requirePath = (currentName, pathname) =>
+  `${currentName === 'babel' ? '' : loaderPrefix}${pathname}`;
+
 export function format(strings, ...values) {
   const str = strings.reduce(
     (acc, next, idx) => `${acc}${next}${values[idx] || ''}`,
@@ -98,6 +103,7 @@ export function runWebpack(config) {
       path: '/build',
     },
     optimization: {
+      ...config.optimization,
       runtimeChunk: true,
       splitChunks: {
         chunks: 'initial',
@@ -111,6 +117,7 @@ export function runWebpack(config) {
         reject(err);
         return;
       }
+
       if (stats.hasErrors() || stats.hasWarnings()) {
         const { errors, warnings } = stats.toJson();
         reject(
@@ -135,7 +142,12 @@ function testAllRunnersImpl(t, msg, testFn) {
   t.each([
     ['babel', run],
     ['webpack', runLoader],
-  ])(`${msg}  (%s)`, (name, ...args) => testFn(...args));
+  ])(`${msg}  (%s)`, (name, runner) =>
+    testFn(runner, {
+      current: name,
+      requirePath: p => requirePath(name, p),
+    }),
+  );
 }
 
 export function testAllRunners(msg, testFn) {

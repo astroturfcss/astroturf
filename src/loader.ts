@@ -4,51 +4,77 @@ import chalk from 'chalk';
 import levenshtein from 'fast-levenshtein';
 import loaderUtils from 'loader-utils';
 import sortBy from 'lodash/sortBy';
+import * as webpack from 'webpack';
 import { codeFrameColumns } from '@babel/code-frame';
+import { Expression, SourceLocation } from '@babel/types';
 
 import traverse from './traverse';
-import { getNameFromFile } from './utils/createFilename';
+import {
+  AstroturfMetadata,
+  Change,
+  DependencyResolver,
+  ResolvedImport,
+  ResolvedOptions,
+  Style,
+} from './types';
+import { createRequirePath, getNameFromFile } from './utils/createFilename';
+import getLoaderPrefix from './utils/getLoaderPrefix';
+// @ts-ignore
 import VirtualModulePlugin from './VirtualModulePlugin';
+
+type LoaderContext = webpack.loader.LoaderContext;
 
 const debug = util.debuglog('astroturf:loader');
 
-// can'ts use class syntax b/c babel doesn't transpile it correctly for Error
-function AstroturfLoaderError(
-  errorOrMessage,
-  codeFrame = errorOrMessage.codeFrame,
-) {
-  Error.call(this);
-  this.name = 'AstroturfLoaderError';
+type AstroturfLoaderError = new (...args: any[]) => AstroturfLoaderErrorClass;
+declare class AstroturfLoaderErrorClass extends Error {
+  constructor(msg: Error | string, codeFrame: any);
 
-  if (typeof errorOrMessage !== 'string') {
-    this.message = errorOrMessage.message;
-    this.error = errorOrMessage;
-
-    try {
-      this.stack = errorOrMessage.stack.replace(/^(.*?):/, `${this.name}:`);
-    } catch (err) {
-      Error.captureStackTrace(this, AstroturfLoaderError);
-    }
-  } else {
-    this.message = errorOrMessage;
-    Error.captureStackTrace(this, AstroturfLoaderError);
-  }
-
-  if (codeFrame) this.message += `\n\n${codeFrame}\n`;
+  error?: Error | string;
 }
 
-AstroturfLoaderError.prototype = Object.create(Error.prototype);
-AstroturfLoaderError.prototype.constructor = AstroturfLoaderError;
+// can'ts use class syntax b/c babel doesn't transpile it correctly for Error
+const AstroturfLoaderError: AstroturfLoaderError = (() => {
+  function ctor(
+    this: AstroturfLoaderErrorClass,
+    errorOrMessage: string | Error,
+    // @ts-ignore
+    codeFrame: any = errorOrMessage.codeFrame,
+  ) {
+    Error.call(this);
+    this.name = 'AstroturfLoaderError';
+
+    if (typeof errorOrMessage !== 'string') {
+      this.message = errorOrMessage.message;
+      this.error = errorOrMessage;
+
+      try {
+        this.stack = errorOrMessage.stack!.replace(/^(.*?):/, `${this.name}:`);
+      } catch (err) {
+        Error.captureStackTrace(this, ctor);
+      }
+    } else {
+      this.message = errorOrMessage;
+      Error.captureStackTrace(this, ctor);
+    }
+
+    if (codeFrame) this.message += `\n\n${codeFrame}\n`;
+  }
+
+  ctor.prototype = Object.create(Error.prototype);
+  ctor.prototype.constructor = ctor;
+  return ctor as any;
+})();
 
 function buildDependencyError(
-  content,
-  { type, identifier, request },
-  { styles, resource },
-  loc,
+  content: string,
+  { type, identifier, request }: ResolvedImport,
+  { styles, resource }: { styles: Style[]; resource: string },
+  loc: SourceLocation,
 ) {
   let idents = styles.map(s => s.identifier);
 
-  let closest;
+  let closest: string | undefined;
   let minDistance = 2;
   idents.forEach(ident => {
     const d = levenshtein.get(ident, identifier);
@@ -64,7 +90,7 @@ function buildDependencyError(
   }
   if (closest) idents = idents.filter(ident => ident !== closest);
 
-  idents = idents.map(s => chalk.yellow(s)).join(', ');
+  const identMsg = idents.map(s => chalk.yellow(s)).join(', ');
 
   const alternative = isDefaultImport
     ? `Instead try: ${chalk.yellow(`import ${closest} from '${request}';`)}`
@@ -86,13 +112,20 @@ function buildDependencyError(
       ) +
       `\n\n${
         closest
-          ? `${alternative}\n\nAlso available: ${idents}`
-          : `Available: ${idents}`
+          ? `${alternative}\n\nAlso available: ${identMsg}`
+          : `Available: ${identMsg}`
       }`,
   );
 }
 
-function collectStyles(src, filename, resolveDependency, opts) {
+function collectStyles(
+  src: string,
+  filename: string,
+  resolveDependency: DependencyResolver,
+  opts: Partial<ResolvedOptions>,
+): AstroturfMetadata {
+  const getRequirePath = opts.getRequirePath || createRequirePath;
+
   // maybe eventually return the ast directly if babel-loader supports it
   try {
     const { metadata } = traverse(src, filename, {
@@ -100,19 +133,24 @@ function collectStyles(src, filename, resolveDependency, opts) {
       resolveDependency,
       writeFiles: false,
       generateInterpolations: true,
-    });
-    return metadata.astroturf;
+      getRequirePath: (...args) => {
+        const file = getLoaderPrefix() + getRequirePath(...args);
+
+        return file;
+      },
+    })!;
+    return (metadata as any).astroturf;
   } catch (err) {
     throw new AstroturfLoaderError(err);
   }
 }
 
-function replaceStyleTemplates(src, locations) {
+function replaceStyleTemplates(src: string, locations: Change[]) {
   locations = sortBy(locations, i => i.start || 0);
 
   let offset = 0;
 
-  function splice(str, start = 0, end = 0, replace) {
+  function splice(str: string, start = 0, end = 0, replace: string) {
     const result =
       str.slice(0, start + offset) + replace + str.slice(end + offset);
 
@@ -120,7 +158,7 @@ function replaceStyleTemplates(src, locations) {
     return result;
   }
 
-  locations.forEach(({ start, end, code }) => {
+  locations.forEach(({ start, end, code = '' }) => {
     src = splice(src, start, end, code);
   });
   return src;
@@ -129,70 +167,54 @@ function replaceStyleTemplates(src, locations) {
 const LOADER_PLUGIN = Symbol('loader added VM plugin');
 const SEEN = Symbol('astroturf seen modules');
 
-module.exports = function loader(content, map, meta) {
+module.exports = function loader(
+  this: LoaderContext,
+  content: string,
+  _map?: any,
+  meta?: any,
+) {
   const { resourcePath, _compilation: compilation } = this;
-  const cb = this.async();
-
-  const timeout = async (ms, promise, err) => {
-    const handle = setTimeout(() => {
-      this.emitWarning(err);
-    }, ms);
-
-    try {
-      return await promise;
-    } finally {
-      clearTimeout(handle);
-    }
-  };
+  const cb = this.async()!;
 
   if (!compilation[SEEN]) compilation[SEEN] = new Map();
 
-  const loadModule = util.promisify((request, done) =>
+  const loadModule = util.promisify((request: string, done: any) =>
     this.loadModule(request, (err, _, __, module) => done(err, module)),
   );
 
   const resolve = util.promisify(this.resolve);
 
-  const buildDependency = async request => {
+  const buildDependency = async (request: string) => {
     const resource = await resolve(dirname(resourcePath), request);
-
-    const maybeCycle = compilation[SEEN].has(resource);
-
-    // It's hard to know if a seen module is due to a cycle or just already done
-    // I'm sure there is a cleaner way to handle this but IDK what it is, so we bail
-    // after a second of perceived deadlock
-    return maybeCycle
-      ? timeout(
-          10000,
-          loadModule(resource),
-          new AstroturfLoaderError(
-            'A possible cyclical style interpolation was detected in an interpolated stylesheet or component which is not supported.\n' +
-              `while importing "${request}" in ${resourcePath}`,
-          ),
-        )
-      : loadModule(resource);
+    return loadModule(resource);
   };
 
   const options = loaderUtils.getOptions(this) || {};
-  const dependencies = [];
+  const dependencies = [] as Promise<void>[];
 
-  function resolveDependency(interpolation, localStyle, node) {
+  function resolveDependency(
+    interpolation: ResolvedImport,
+    localStyle: Style,
+    node: Expression,
+  ) {
     const { identifier, request } = interpolation;
     if (!interpolation.identifier) return null;
     const { loc } = node;
 
-    const memberProperty = node.property && node.property.name;
+    const memberProperty = 'property' in node && node.property.name;
 
     const imported = `###ASTROTURF_IMPORTED_${dependencies.length}###`;
     const source = `###ASTROTURF_SOURCE_${dependencies.length}###`;
 
     debug(`resolving dependency: ${request}`);
     dependencies.push(
-      buildDependency(request).then(module => {
-        const style = module.styles.find(s => s.identifier === identifier);
+      buildDependency(request).then((module: any) => {
+        const style = module.styles.find(
+          (s: Style) => s.identifier === identifier,
+        );
 
         if (!style) {
-          throw buildDependencyError(content, interpolation, module, loc);
+          throw buildDependencyError(content, interpolation, module, loc!);
         }
 
         debug(`resolved request to: ${style.absoluteFilePath}`);
@@ -225,7 +247,7 @@ module.exports = function loader(content, map, meta) {
 
   compilation[SEEN].set(resourcePath, styles);
   this._module.styles = styles;
-
+  // @ts-ignore
   let { emitVirtualFile } = this;
 
   // The plugin isn't loaded
@@ -235,6 +257,7 @@ module.exports = function loader(content, map, meta) {
     if (!plugin) {
       debug('adding plugin to compiiler');
       plugin = VirtualModulePlugin.bootstrap(compilation);
+
       compiler[LOADER_PLUGIN] = plugin;
     }
     emitVirtualFile = plugin.addFile;

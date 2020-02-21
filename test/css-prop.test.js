@@ -115,9 +115,9 @@ describe('css prop', () => {
     expect(styles[0].identifier).toEqual('CssProp1_div');
   });
 
-  testAllRunners.only(
+  testAllRunners(
     'should inject imports in the right order',
-    async runner => {
+    async (runner, { requirePath }) => {
       const [code] = await runner(
         `
           import { css } from 'astroturf';
@@ -141,8 +141,12 @@ describe('css prop', () => {
       expect(code).toContain(
         format`
           import Component from './Foo';
-          import _CssProp1_button from "./MyStyleFile-CssProp1_button.css";
-          import _CssProp2_span from "./MyStyleFile-CssProp2_span.css";
+          import _CssProp1_button from "${requirePath(
+            './MyStyleFile-CssProp1_button.css',
+          )}";
+          import _CssProp2_span from "${requirePath(
+            './MyStyleFile-CssProp2_span.css',
+          )}";
         `,
       );
     },

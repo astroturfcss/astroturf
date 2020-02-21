@@ -1,64 +1,74 @@
-.Widget__cls1 { /*!*/ }
-.Widget__cls2 {
-
-height: 20px;
-width: 30px;
-background-color: #dfd;
+.Widget__cls1 {
+  /*!*/
 }
 
-  .Button-styles__cool {
-    content: '';
-  }
+.Widget__cls2 {
+  height: 20px;
+  width: 30px;
+  background-color: #dfd;
+}
+.Button-styles__cool {
+  content: "";
+}
+.Button__cls1 {
+  /*!*/
+}
 
-.Button__cls1 { /*!*/ }
 .Button__cls2 {
 }
 .main-styles__parent {
-    color: red;
-  }
+  color: red;
+}
 
-  .main-styles__test > .Button-styles__cool, .main-styles__test > .Widget__cls1 {
-    holla: yo;
-  }
+.main-styles__test > .Button-styles__cool, .main-styles__test > .Widget__cls1 {
+  holla: yo;
+}
+.main-FancyBox__cls1 {
+  /*!*/
+}
 
-.main-FancyBox__cls1 { /*!*/ }
 .main-FancyBox__cls2 {
-
-color: red;
-width: 75px;
+  color: red;
+  width: 75px;
 }
 .main-FancyBox__cls2.main-FancyBox__primary {
-background: white;
-color: palevioletred;
+  background: white;
+  color: palevioletred;
 }
-.main-FancierBox__cls1 { /*!*/ }
-.main-FancierBox__cls2 {
+.main-FancierBox__cls1 {
+  /*!*/
+}
 
-color: ultra-red;
+.main-FancierBox__cls2 {
+  color: ultra-red;
+  /* these are the same selector */
 }
 .main-FancierBox__cls2 > .main-FancyBox__cls1 {
-padding: 4em;
+  padding: 4em;
 }
 .main-styles__parent > .main-FancierBox__cls2 {
-margin: 2em;
-}
-/* these are the same selector */
-.main-FancierBox__cls2 > .Button__cls1 {
-margin-left: 4px;
+  margin: 2em;
 }
 .main-FancierBox__cls2 > .Button__cls1 {
-margin-left: 8px;
+  margin-left: 4px;
 }
-.main-CssProp1_div__cls1 { /*!*/ }
-.main-CssProp1_div__cls2 {
+.main-FancierBox__cls2 > .Button__cls1 {
+  margin-left: 8px;
+}
+.main-CssProp1_div__cls1 {
+  /*!*/
+}
 
-color: red;
+.main-CssProp1_div__cls2 {
+  color: red;
 }
 .main-CssProp1_div__cls2.main-CssProp1_div__foo {
-color: blue;
+  color: blue;
 }
-.main-CssProp2_span__cls1 { /*!*/ }
-.main-CssProp2_span__cls2 {
+.main-CssProp2_span__cls1 {
+  /*!*/
+}
 
-color: blue;
+.main-CssProp2_span__cls2 {
+  color: blue;
 }

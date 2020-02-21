@@ -1,4 +1,4 @@
-const { runLoader } = require('./helpers');
+const { runLoader, loaderPrefix } = require('./helpers');
 
 describe('webpack loader', () => {
   it('should add imports', async () => {
@@ -28,11 +28,13 @@ describe('webpack loader', () => {
     expect(code).toContain('/** @jsxFrag _f **/');
 
     expect(code).toContain(
-      'import _CssProp1_button from "./MyStyleFile-CssProp1_button.css"',
+      `import _CssProp1_button from "${loaderPrefix}./MyStyleFile-CssProp1_button.css"`,
     );
     expect(code).toContain('[_CssProp1_button');
 
-    expect(code).toContain('import _styles from "./MyStyleFile-styles.css"');
+    expect(code).toContain(
+      `import _styles from "${loaderPrefix}./MyStyleFile-styles.css"`,
+    );
     expect(code).toContain('const styles = _styles;');
     expect(code).toContain('const cls = _cls.cls1;');
   });

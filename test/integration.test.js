@@ -8,68 +8,96 @@ import stripAnsi from 'strip-ansi';
 
 import { runWebpack } from './helpers';
 
+function getBaseConfig(entry, options = { enableCssProp: true }) {
+  return {
+    devtool: false,
+    mode: 'development',
+    entry: {
+      main: require.resolve(entry),
+      vendor: ['react', 'react-dom', 'astroturf'],
+    },
+    optimization: {
+      sideEffects: true,
+    },
+    module: {
+      rules: [
+        {
+          test: /\.jsx?$/,
+          exclude: /node_modules|astroturf\/src/,
+          use: [
+            {
+              loader: 'babel-loader',
+              options: {
+                babelrc: false,
+                plugins: ['@babel/plugin-transform-react-jsx'],
+              },
+            },
+            {
+              loader: require.resolve('../src/loader.ts'),
+              options,
+            },
+          ],
+        },
+      ],
+    },
+    plugins: [],
+    resolve: {
+      modules: ['node_modules', 'shared'],
+      alias: {
+        astroturf: require.resolve('../src/runtime/styled'),
+      },
+    },
+    resolveLoader: {
+      alias: {
+        // this resolves the mocked value back to the file, which
+        // prevents snapshots from including file paths
+        'astroturf/css-loader': require.resolve('../src/css-loader'),
+      },
+    },
+  };
+}
+
+const cssModuleOptions = {
+  modules: {
+    localIdentName: '[name]__[local]',
+  },
+  importLoaders: 1,
+  esModule: true,
+};
+
 describe('webpack integration', () => {
   function getConfig(entry) {
-    return {
-      devtool: false,
-      mode: 'development',
-      entry: {
-        main: require.resolve(entry),
-        vendor: ['react', 'react-dom', 'astroturf'],
-      },
-      module: {
-        rules: [
-          {
-            test: /\.css$/,
-            use: [
-              ExtractCSS.loader,
-              {
-                loader: require.resolve('../src/css-loader'),
-                options: {
-                  modules: {
-                    localIdentName: '[name]__[local]',
-                  },
-                },
-              },
-            ],
-          },
-          {
-            test: /\.jsx?$/,
-            exclude: /node_modules|astroturf\/src/,
-            use: [
-              {
-                loader: 'babel-loader',
-                options: {
-                  babelrc: false,
-                  plugins: ['@babel/plugin-transform-react-jsx'],
-                },
-              },
-              {
-                loader: require.resolve('../src/loader'),
-                options: { enableCssProp: true },
-              },
-            ],
-          },
-        ],
-      },
-      resolve: {
-        modules: ['node_modules', 'shared'],
-        alias: {
-          astroturf: require.resolve('../src/runtime/styled'),
+    const config = getBaseConfig(entry, {
+      allowGlobal: true,
+      enableCssProp: true,
+    });
+
+    config.module.rules.unshift({
+      test: /\.css$/,
+      use: [
+        {
+          loader: ExtractCSS.loader,
+          options: { esModule: true },
         },
-      },
-      plugins: [new ExtractCSS()],
-    };
+        {
+          loader: 'css-loader',
+          options: cssModuleOptions,
+        },
+        'sass-loader',
+      ],
+    });
+    config.plugins.push(new ExtractCSS());
+    return config;
   }
 
-  it.only('should work', async () => {
+  it('should work', async () => {
     const assets = await runWebpack(getConfig('./integration/main.js'));
 
-    expect(assets['main.css'].source()).toMatchFile(
-      path.join(__dirname, '__file_snapshots__/integration-styles.css'),
-    );
     expect(assets['main.js'].source()).toMatchFile(
       path.join(__dirname, '__file_snapshots__/integration-js.js'),
+    );
+    expect(assets['main.css'].source()).toMatchFile(
+      path.join(__dirname, '__file_snapshots__/integration-styles.css'),
     );
   });
 
@@ -113,7 +141,7 @@ describe('webpack integration', () => {
     jest.restoreAllMocks();
   });
 
-  it.only('issue 365', async () => {
+  it('issue 365', async () => {
     const assets = await runWebpack(getConfig('./integration/issue-365.js'));
 
     expect(assets['main.css'].source()).toMatchFile(
@@ -121,6 +149,79 @@ describe('webpack integration', () => {
     );
     expect(assets['main.js'].source()).toMatchFile(
       path.join(__dirname, '__file_snapshots__/issue-365-js.js'),
+    );
+  });
+});
+
+describe('css-loader', () => {
+  function getConfig(entry) {
+    const config = getBaseConfig(entry, {
+      enableCssProp: true,
+      extension: '.scss',
+    });
+
+    config.module.rules.unshift(
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: ExtractCSS.loader,
+            options: { esModule: true },
+          },
+
+          {
+            loader: 'css-loader',
+            options: cssModuleOptions,
+          },
+        ],
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: ExtractCSS.loader,
+            options: { esModule: true },
+          },
+
+          {
+            loader: 'css-loader',
+            options: cssModuleOptions,
+          },
+          'sass-loader',
+        ],
+      },
+    );
+
+    config.plugins.push(new ExtractCSS());
+    return config;
+  }
+
+  it('should work', async () => {
+    const assets = await runWebpack(
+      getConfig('./integration/css-loader-1.js'),
+    );
+
+    expect(assets['main.css'].source()).toMatchFile(
+      path.join(__dirname, '__file_snapshots__/css-loader-1-styles.css'),
+    );
+    expect(assets['main.js'].source()).toMatchFile(
+      path.join(__dirname, '__file_snapshots__/css-loader-1-js.js'),
+    );
+  });
+
+  it('adds default plugins when last in chain', async () => {
+    const assets = await runWebpack(
+      getConfig('./integration/css-loader-2.js'),
+    );
+
+    const src = assets['main.css'].source();
+    expect(src).not.toContain('&:hover');
+
+    expect(src).toMatchFile(
+      path.join(__dirname, '__file_snapshots__/default-plugins-styles.css'),
+    );
+    expect(assets['main.js'].source()).toMatchFile(
+      path.join(__dirname, '__file_snapshots__/default-plugins-js.js'),
     );
   });
 });

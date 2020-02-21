@@ -444,7 +444,7 @@ const StyledFooter = styled(Footer, { allowAs: true })`
 
 ## Setup
 
-If you want the simplest, most bare-bones setup you can use the included `css-loader` which will setup css-modules and postcss-nested. This is the minimum setup necessary to get it working. Any options passed to the loader are passed to the official webpack `css-loader`
+This is all the setup necessary
 
 ```js
 {
@@ -452,7 +452,7 @@ If you want the simplest, most bare-bones setup you can use the included `css-lo
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader', 'astroturf/css-loader'],
+        use: ['style-loader', 'css-loader?modules=true'],
       },
       {
         test: /\.jsx?$/,
@@ -476,7 +476,7 @@ You can add on here as you would normally for additional preprocesser setup. Her
     rules: [
       {
         test: /\.module\.scss$/,
-        use: ['style-loader', 'astroturf/css-loader', 'sass-loader'],
+        use: ['style-loader', 'css-loader?modules=true', 'sass-loader'],
       },
       {
         test: /\.jsx?$/,
@@ -491,18 +491,6 @@ You can add on here as you would normally for additional preprocesser setup. Her
     ],
   }
 }
-```
-
-You can also skip the included `css-loader` entirely if your preprocessor handles nesting out of the box (like most do).
-
-```js
-[
-  {
-    test: /\.module\.scss$/,
-    use: ['style-loader', 'css-loader?modules=true', 'sass-loader'],
-  },
-  ...
-]
 ```
 
 ### Options

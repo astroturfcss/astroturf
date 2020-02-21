@@ -1,8 +1,10 @@
 import { format, run, testAllRunners } from './helpers';
 
 describe('css tag', () => {
-  testAllRunners('should inject imports in the right order', async runner => {
-    const [code] = await runner(`
+  testAllRunners(
+    'should inject imports in the right order',
+    async (runner, { requirePath }) => {
+      const [code] = await runner(`
       import { stylesheet } from 'astroturf';
       import Component from './Foo';
 
@@ -18,16 +20,17 @@ describe('css tag', () => {
       \`;
     `);
 
-    expect(code).toEqual(
-      format`
+      expect(code).toEqual(
+        format`
         import Component from './Foo';
-        import _styles from "./MyStyleFile-styles.css"
-        import _styles2 from "./MyStyleFile-styles2.css"
+        import _styles from "${requirePath('./MyStyleFile-styles.css')}"
+        import _styles2 from "${requirePath('./MyStyleFile-styles2.css')}"
         const styles = _styles;
         const styles2 = _styles2;
       `,
-    );
-  });
+      );
+    },
+  );
 
   it('should remove stylesheet imports', async () => {
     const [code] = await run(`
@@ -48,8 +51,10 @@ describe('css tag', () => {
     );
   });
 
-  testAllRunners('should remove just the stylesheet import', async runner => {
-    const [code] = await runner(`
+  testAllRunners(
+    'should remove just the stylesheet import',
+    async (runner, h) => {
+      const [code] = await runner(`
       import styled, { stylesheet } from 'astroturf';
 
       const styles = stylesheet\`
@@ -59,14 +64,15 @@ describe('css tag', () => {
       \`;
     `);
 
-    expect(code).toEqual(
-      format`
+      expect(code).toEqual(
+        format`
         import styled from 'astroturf';
-        import _styles from "./MyStyleFile-styles.css"
+        import _styles from "${h.requirePath('./MyStyleFile-styles.css')}"
         const styles = _styles;
       `,
-    );
-  });
+      );
+    },
+  );
 
   testAllRunners('allows different tag names', async runner => {
     const [, styles] = await runner(
