@@ -164,7 +164,11 @@ describe('css-loader', () => {
       {
         test: /\.css$/,
         use: [
-          ExtractCSS.loader,
+          {
+            loader: ExtractCSS.loader,
+            options: { esModule: true },
+          },
+
           {
             loader: 'css-loader',
             options: cssModuleOptions,
@@ -174,7 +178,11 @@ describe('css-loader', () => {
       {
         test: /\.scss$/,
         use: [
-          ExtractCSS.loader,
+          {
+            loader: ExtractCSS.loader,
+            options: { esModule: true },
+          },
+
           {
             loader: 'css-loader',
             options: cssModuleOptions,
