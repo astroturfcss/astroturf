@@ -444,7 +444,7 @@ const StyledFooter = styled(Footer, { allowAs: true })`
 
 ## Setup
 
-This all the setup necessary
+This is all the setup necessary
 
 ```js
 {
