@@ -40,7 +40,7 @@ export default class StyleImportInjector {
 
   constructor(private program: NodePath<t.Program>) {}
 
-  add(style: Style) {
+  add(style: { identifier?: string; relativeFilePath: string }) {
     const { scope } = this.program;
     const source = style.requirePath;
 

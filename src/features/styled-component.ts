@@ -20,9 +20,6 @@ import isStyledTag from '../utils/isStyledTag';
 import isStyledTagShorthand from '../utils/isStyledTagShorthand';
 import normalizeAttrs from '../utils/normalizeAttrs';
 import { COMPONENTS, STYLES } from '../utils/Symbols';
-import toVarsArray from '../utils/toVarsArray';
-import trimExpressions from '../utils/trimExpressions';
-import wrapInClass from '../utils/wrapInClass';
 
 const PURE_COMMENT = '/*#__PURE__*/';
 
@@ -31,7 +28,8 @@ const buildComponent = template(
     displayName: DISPLAYNAME,
     styles: IMPORT,
     attrs: ATTRS,
-    vars: VARS
+    vars: VARS,
+    variants: VARIANTS,
   })`,
 );
 
@@ -76,19 +74,20 @@ function buildStyledComponent(
     value: '',
   };
 
-  const { text, dynamicInterpolations, imports } = buildTaggedTemplate({
+  const importId = styleImports.add(style);
+
+  const { css, vars, variants, interpolations } = buildTaggedTemplate({
     style,
     nodeMap,
-    quasiPath: path.get('quasi'),
+    importId,
     location: 'COMPONENT',
+    quasiPath: path.get('quasi'),
     pluginOptions: opts.pluginOptions,
   });
 
-  style.imports = imports;
-  style.interpolations = trimExpressions(dynamicInterpolations);
-  style.value = imports + wrapInClass(text);
-
-  const importId = styleImports.add(style);
+  // style.imports = dependencyImports;
+  style.interpolations = interpolations;
+  style.value = css;
 
   const runtimeNode = buildComponent({
     TAG: pluginOptions.styledTagName,
@@ -96,7 +95,8 @@ function buildStyledComponent(
     ATTRS: normalizeAttrs(styledAttrs),
     OPTIONS: styledOptions || t.nullLiteral(),
     DISPLAYNAME: t.stringLiteral(displayName),
-    VARS: toVarsArray(dynamicInterpolations),
+    VARS: vars,
+    VARIANTS: variants,
     IMPORT: importId,
   }) as t.ExpressionStatement;
 

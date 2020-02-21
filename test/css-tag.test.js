@@ -143,7 +143,7 @@ describe('css tag', () => {
     expect(styles).toHaveLength(0);
   });
 
-  testAllRunners('handles non-simple interpolations', async () => {
+  testAllRunners.only('handles non-simple interpolations', async () => {
     const [, styles] = await run(
       `
       import { css } from 'astroturf';

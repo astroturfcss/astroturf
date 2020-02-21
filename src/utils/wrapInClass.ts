@@ -1,6 +1,6 @@
 import { stripIndents } from 'common-tags';
 
-export default function wrapInClass(text: string) {
+export function hoistImports(text: string) {
   const imports = [];
 
   let match;
@@ -11,7 +11,12 @@ export default function wrapInClass(text: string) {
     imports.push(match[0]);
   }
 
-  text = text.replace(rImports, '');
+  text = text.replace(rImports, '').trim();
+  return [text, imports] as const;
+}
+
+export default function wrapInClass(text: string) {
+  const [ruleset, imports] = hoistImports(text);
 
   // Components need two css classes, the actual style declarations and a hook class.
   // We need both so that that interpolations have a class that is _only_
@@ -24,7 +29,7 @@ export default function wrapInClass(text: string) {
     .cls2 {
       composes: cls1;
 
-      ${text.trim()}
+      ${ruleset}
     }`;
 
   if (imports.length) val = `${imports.join('\n')}\n${val}`;

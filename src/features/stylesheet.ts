@@ -35,17 +35,15 @@ function buildStyleRequire(
     value: '',
   };
 
-  const { text, imports } = buildTaggedTemplate({
+  const { css } = buildTaggedTemplate({
     quasiPath: path.get('quasi'),
     nodeMap,
     style,
-    location: 'STYLESHEET',
+    location: isSingleClass ? 'RULE' : 'STYLESHEET',
     pluginOptions: opts.defaultedOptions,
   });
 
-  style.value = isSingleClass
-    ? imports + wrapInClass(text)
-    : `${imports}${text}`;
+  style.value = css;
 
   if (styles.has(style.absoluteFilePath))
     throw path.buildCodeFrameError(
