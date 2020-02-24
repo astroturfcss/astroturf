@@ -1,6 +1,5 @@
 @value cls1 as a0 from "styled-interpolations-FancyBox.css";
 
-
 .cls1 { /*!*/ }
 .cls2 {
 composes: cls1;

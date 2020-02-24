@@ -10,23 +10,17 @@ const FancyBox =
   /*#__PURE__*/
   styled("div", null, {
     displayName: "FancyBox",
-    styles: _FancyBox,
-    attrs: null,
-    vars: []
+    styles: _FancyBox
   });
 const FancierBox =
   /*#__PURE__*/
   styled("div", null, {
     displayName: "FancierBox",
-    styles: _FancierBox,
-    attrs: null,
-    vars: []
+    styles: _FancierBox
   });
 const Button =
   /*#__PURE__*/
   styled(Button, null, {
     displayName: "Button",
-    styles: _Button,
-    attrs: null,
-    vars: []
+    styles: _Button
   });

@@ -5,15 +5,11 @@ const FancyBox =
   /*#__PURE__*/
   s("div", null, {
     displayName: "FancyBox",
-    styles: _FancyBox,
-    attrs: null,
-    vars: []
+    styles: _FancyBox
   });
 const FancierBox =
   /*#__PURE__*/
   s(FancyBox, null, {
     displayName: "FancierBox",
-    styles: _FancierBox,
-    attrs: null,
-    vars: []
+    styles: _FancierBox
   });

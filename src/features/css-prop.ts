@@ -11,6 +11,7 @@ import getNameFromPath from '../utils/getNameFromPath';
 import isCssTag from '../utils/isCssTag';
 import { COMPONENTS, HAS_CSS_PROP, STYLES } from '../utils/Symbols';
 import wrapInClass from '../utils/wrapInClass';
+import truthy from '../utils/truthy';
 
 const JSX_IDENTS = Symbol('Astroturf jsx identifiers');
 
@@ -98,7 +99,6 @@ function buildCssProp(
       vars = template.vars;
       variants = template.variants;
 
-      // style.imports = dependencyImports;
       style.interpolations = template.interpolations;
       style.value = template.css;
     }
@@ -109,7 +109,7 @@ function buildCssProp(
   }
 
   let runtimeNode: t.Node = t.arrayExpression(
-    [importId, vars!, variants!].filter(Boolean),
+    [importId, vars!, variants!].filter(truthy),
   );
 
   // FIXME?

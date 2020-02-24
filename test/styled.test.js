@@ -30,9 +30,7 @@ describe('styled', () => {
         /*#__PURE__*/
         styled('button', null, {
           displayName: \"ButtonBase\",
-          styles: _ButtonBase,
-          attrs: null,
-          vars: []
+          styles: _ButtonBase
         });
       `,
     );
@@ -60,9 +58,7 @@ describe('styled', () => {
         import _ButtonBase from "${loaderPrefix}./MyStyleFile-ButtonBase.css";
         const ButtonBase = /*#__PURE__*/ styled('button', null, {
           displayName: \"ButtonBase\",
-          styles: _ButtonBase,
-          attrs: null,
-          vars: []
+          styles: _ButtonBase
         });
       `,
     );
@@ -86,6 +82,7 @@ describe('styled', () => {
 
     expect(styles[0].value).toEqual(stripIndents`
       @import '~./styles/mixins.scss';
+
       .cls1 { /*!*/ }
       .cls2 {
       composes: cls1;

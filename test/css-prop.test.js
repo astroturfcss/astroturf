@@ -221,15 +221,19 @@ describe('css prop', () => {
           size: 'sm',
           theme: 'primary',
           foo: 1,
-          css: {
-            cls1: 'cls1',
-            green: 'green',
-            big: 'big',
-            dangerous: 'dangerous',
-            themePrimary: 'primary',
-            'size-sm': 'small',
-            'foo-1': 'foo',
-          },
+          css: [
+            {
+              cls1: 'cls1',
+              green: 'green',
+              big: 'big',
+              dangerous: 'dangerous',
+              themePrimary: 'primary',
+              'size-sm': 'small',
+              'foo-1': 'foo',
+            },
+            [],
+            [],
+          ],
         }),
       ).find('div.green.primary.small.foo'),
     ).toHaveLength(1);

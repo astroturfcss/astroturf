@@ -10,6 +10,7 @@ import hash from './murmurHash';
 import isCssTag from './isCssTag';
 import resolveDependency, { Dependency } from './resolveDependency';
 import wrapInClass, { hoistImports } from './wrapInClass';
+import truthy from './truthy';
 
 const rComposes = /\b(?:composes\s*?:\s*([^;>]*?)(?:from\s(.+?))?(?=[;}/\n\r]))/gim;
 const rPlaceholder = /###ASTROTURF_PLACEHOLDER_\d*?###/g;
@@ -25,7 +26,7 @@ const toVarsArray = (interpolations: DynamicInterpolation[]) => {
         t.stringLiteral(i.id),
         i.expr.node,
         i.unit ? t.stringLiteral(i.unit) : null,
-      ].filter(Boolean),
+      ].filter(truthy),
     ),
   );
   return t.arrayExpression(vars);
@@ -33,23 +34,15 @@ const toVarsArray = (interpolations: DynamicInterpolation[]) => {
 
 /**
  * Build a logical expression returning a class, trying both the
- * kebab and camel case names: `s['fooBar'] || s['foo-bar']
+ * kebab and camel case names: `s['fooBar']`
  *
  * @param {String} className
  */
 const buildStyleExpression = (id: t.Identifier, className: string) =>
-  t.logicalExpression(
-    '||',
-    t.memberExpression(
-      id,
-      t.stringLiteral(camelCase(className)), // remove the `.`
-      true,
-    ),
-    t.memberExpression(
-      id,
-      t.stringLiteral(className), // remove the `.`
-      true,
-    ),
+  t.memberExpression(
+    id,
+    t.stringLiteral(className), // remove the `.`
+    true,
   );
 
 export type Vars = t.ArrayExpression[];
@@ -142,7 +135,11 @@ function resolveVariants(
           'Dynamic variants are only allowed in css props',
         );
       }
-      const classId = `${opts.style.identifier}-variant-${state.id++}`;
+
+      // camel case so we don't need to check multiple cases at runtime
+      const classId = camelCase(
+        `${opts.style.identifier}-variant-${state.id++}`,
+      );
 
       // eslint-disable-next-line @typescript-eslint/no-use-before-define
       const { text, ...rest } = buildTemplateImpl(
@@ -153,11 +150,11 @@ function resolveVariants(
         },
         state,
       );
-      // exprPath.remove();
+
       innerPath.replaceWith(buildStyleExpression(importId!, classId));
 
       templates.push({
-        text: `.${classId} { ${text} }`,
+        text: `.${classId} {\n${text}\n}`,
         ...rest,
       });
     },
@@ -176,8 +173,8 @@ function replaceDependencyPlaceholders(
     const classList = classNames.replace(/(\n|\r|\n\r)/, '').split(/\s+/);
 
     const composed = classList
-      .map(className => depInterpolations.get(className)!)
-      .filter(Boolean);
+      .map(className => depInterpolations.get(className))
+      .filter(truthy);
 
     if (!composed.length) return composes;
 
@@ -215,16 +212,6 @@ function replaceDependencyPlaceholders(
 
   return [text, dependencyImports];
 }
-// css`
-//   color: red;
-
-//   ${primary && css`
-//     & > ${Bar} {
-//       color: blue
-
-//     }
-//   `}
-// `
 
 interface Options {
   quasiPath: NodePath<t.TemplateLiteral>;
@@ -324,7 +311,7 @@ function buildTemplateImpl(opts: Options, state = { id: 0 }) {
     assertDynamicInterpolationsLocation(expr, location, pluginOptions);
 
     // custom properties need to start with a letter
-    const id = `a${hash(`${localStyle.identifier}-${idx}`)}`;
+    const id = `a${hash(`${localStyle.identifier}-${state.id++}`)}`;
 
     lastDynamic = { id, expr, unit: '' };
     dynamicInterpolations.add(lastDynamic);
@@ -365,11 +352,11 @@ export default function buildTaggedTemplate(opts: Options) {
     for (const rule of variant.rules) {
       allImports += rule.imports;
       allVars.push(...rule.vars);
-      css += rule.text;
+      css += `\n${rule.text}`;
     }
   }
 
-  css = `${allImports.trim()}\n\n${css}`;
+  css = `${allImports.trim()}\n\n${css}`.trim();
 
   return {
     css,

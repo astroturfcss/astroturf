@@ -46,6 +46,12 @@ const camelCase = str =>
     '',
   );
 
+function resolveVariants(variants) {
+  return variants.length
+    ? variants.reduce((c, n) => (n ? `${c} ${n}` : c), '')
+    : '';
+}
+
 function varsToStyles(props, vars) {
   if (!vars || !vars.length) return props.style;
   const style = { ...props.style };
@@ -106,7 +112,7 @@ function propsToStyles(props, styles, hasModifiers) {
 
 function styled(type, options, settings) {
   if (__DEV__) {
-    if (Array.isArray(type))
+    if (settings == null)
       throw new Error(
         'This styled() template tag was mistakenly evaluated at runtime. ' +
           'Make sure astroturf is properly configured to compile this file',
@@ -118,7 +124,7 @@ function styled(type, options, settings) {
           'ensure that your versions are properly deduped and upgraded. ',
       );
   }
-  const { displayName, attrs, vars, styles } = settings;
+  const { displayName, attrs, vars, variants, styles } = settings;
 
   options = options || { allowAs: typeof type === 'string' };
 
@@ -136,6 +142,8 @@ function styled(type, options, settings) {
     if (allowAs) delete childProps.as;
     childProps.style = varsToStyles(childProps, vars);
     childProps.className = propsToStyles(childProps, styles, hasModifiers);
+
+    if (variants) childProps.className += resolveVariants(variants);
 
     return React.createElement(
       allowAs && props.as ? props.as : type,
@@ -161,6 +169,7 @@ function jsx(type, props, ...children) {
     const { css, ...childProps } = props;
     childProps.style = varsToStyles(childProps, css[1]);
     childProps.className = propsToStyles(childProps, css[0] || css, true);
+    childProps.className += resolveVariants(css[2]);
     props = childProps;
   }
   return React.createElement(type, props, ...children);
@@ -172,6 +181,12 @@ module.exports.jsx = jsx;
 module.exports.F = React.Fragment;
 
 if (__DEV__) {
+  module.exports.stylesheet = () => {
+    throw new Error(
+      'stylesheet template literal evaluated at runtime. ' +
+        'Make sure astroturf is properly configured to compile this file',
+    );
+  };
   module.exports.css = () => {
     throw new Error(
       'css template literal evaluated at runtime. ' +
@@ -207,11 +222,8 @@ const BlockStyled =
 /*#__PURE__*/
 astroturf__WEBPACK_IMPORTED_MODULE_0___default()("div", null, {
   displayName: "BlockStyled",
-  styles: astroturf_css_loader_inline_issue_365_BlockStyled_css__WEBPACK_IMPORTED_MODULE_2__["default"],
-  attrs: null,
-  vars: []
+  styles: astroturf_css_loader_inline_issue_365_BlockStyled_css__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
-;
 
 /***/ })
 

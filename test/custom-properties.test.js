@@ -46,7 +46,9 @@ describe('custom properties', () => {
 
       const i = style.interpolations[0];
 
-      expect(code).toContain(`css={[_CssProp1_button, [["${i.id}", color]]]}`);
+      expect(code).toContain(
+        `css={[_CssProp1_button, [["${i.id}", color]], []]}`,
+      );
     },
   );
 
@@ -71,7 +73,7 @@ describe('custom properties', () => {
     const i = style.interpolations[0];
 
     expect(code).toContain(
-      `css={[_CssProp1_button, [["${i.id}", duration, "ms"]]]}`,
+      `css={[_CssProp1_button, [["${i.id}", duration, "ms"]], []]}`,
     );
   });
 
@@ -169,6 +171,7 @@ describe('custom properties', () => {
             green: 'green',
           },
           [['aszd', 'blue']],
+          [],
         ],
       }),
     );
