@@ -1,7 +1,5 @@
-// TypeScript Version: 3.0
+import styled, { css } from 'astroturf/react';
 
-import styled, { css } from 'astroturf';
-import { mapProps, withProps } from 'astroturf/helpers';
 import * as React from 'react';
 
 // $ExpectType StyledFunction<"a", {}, never>
@@ -13,7 +11,6 @@ styled.div;
 // $ExpectType StyledFunction<"svg", {}, never>
 styled.svg;
 
-// tslint:disable-next-line:interface-over-type-literal
 type ReactClassProps0 = {
   readonly column: boolean;
 };
@@ -30,7 +27,6 @@ interface ReactClassProps2 {
 }
 declare class ReactClassComponent2 extends React.Component<ReactClassProps2> {}
 
-// tslint:disable-next-line: interface-over-type-literal
 type ReactSFCProps0 = {
   readonly column: boolean;
 };
@@ -102,11 +98,11 @@ const Button4 = styled<typeof ReactClassComponent0>(ReactClassComponent0)<
 
 const Button5 = styled<typeof ReactSFC0>(ReactSFC0)<PrimaryProps>``;
 <div>
-  <Button4 column={true} primary />
+  <Button4 column primary />
   <Button4 column={false} primary />
 </div>;
 <div>
-  <Button5 column={true} primary />
+  <Button5 column primary />
   <Button5 column={false} primary />
 </div>;
 
@@ -114,13 +110,13 @@ const Button5 = styled<typeof ReactSFC0>(ReactSFC0)<PrimaryProps>``;
 <Button4 />; // $ExpectError
 
 // - missing primary
-<Button4 column={true} />; // $ExpectError
+<Button4 column />; // $ExpectError
 
 // - missing primary, column
 <Button5 />; // $ExpectError
 
 // - missing primary
-<Button5 column={true} />; // $ExpectError
+<Button5 column />; // $ExpectError
 
 const Container0 = styled(ReactClassComponent0)``;
 <Container0 column={false} />;
@@ -135,7 +131,7 @@ const Container1 = Container0.withComponent('span');
 <Container1 href="foo" />; // $ExpectError
 
 const Container2 = Container0.withComponent(ReactSFC0);
-<Container2 column={true} />;
+<Container2 column />;
 
 // column missing
 <Container2 />; // $ExpectError
@@ -169,17 +165,17 @@ const Container5 = Container3.withComponent(ReactSFC2);
 <Container5 />; // $ExpectError
 
 // column not assignable
-<Container5 column={true} />; // $ExpectError
+<Container5 column />; // $ExpectError
 
 const StyledClass0 = styled(ReactClassComponent0)``;
 declare const ref0_0: (element: ReactClassComponent0 | null) => void;
 declare const ref0_1: (element: ReactClassComponent1 | null) => void;
 declare const ref0_2: (element: HTMLDivElement | null) => void;
-<StyledClass0 column={true} ref={ref0_0} />;
+<StyledClass0 column ref={ref0_0} />;
 
 // wrong ref types
-<StyledClass0 column={true} ref={ref0_1} />; // $ExpectError
-<StyledClass0 column={true} ref={ref0_2} />; // $ExpectError
+<StyledClass0 column ref={ref0_1} />; // $ExpectError
+<StyledClass0 column ref={ref0_2} />; // $ExpectError
 
 const StyledClass1 = StyledClass0.withComponent(ReactClassComponent1);
 declare const ref1_0: (element: ReactClassComponent1 | null) => void;
@@ -220,46 +216,6 @@ const AsComponent1 = styled('input')``;
 
 <AsComponent1<'a'> as="a" href="#" />;
 <AsComponent1<'a'> as="a" size="4" />; // $ExpectError
-
-{
-  interface InnerProps {
-    inn: number;
-    other: string;
-  }
-  interface OutterProps {
-    out: string;
-  }
-  const InnerComponent = ({ inn }: InnerProps) => <div>{inn}</div>;
-
-  const enhancer = mapProps((props: OutterProps) => ({ inn: 123 }));
-  const Enhanced = enhancer(InnerComponent);
-
-  <Enhanced other="foo" out="bar" />;
-}
-
-{
-  interface InnerProps {
-    inn: number;
-    other?: string;
-  }
-  interface OutterProps {
-    out: number;
-  }
-  const InnerComponent = ({ inn }: InnerProps) => <div>{inn}</div>;
-
-  const enhancer = withProps((props: OutterProps) => ({ inn: props.out }));
-  const Enhanced = enhancer(InnerComponent);
-  <Enhanced out={123} />;
-
-  const enhancer2 = withProps({ inn: 123 });
-  const Enhanced2 = enhancer2(InnerComponent);
-
-  <Enhanced2 other="1" />;
-  <InnerComponent inn={23} other="1" />;
-
-  // inn not assignable
-  <Enhanced2 inn={124} />; // $ExpectError
-}
 
 // attrs
 {

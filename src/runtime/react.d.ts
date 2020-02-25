@@ -1,6 +1,7 @@
 // TypeScript Version: 3.0
 
 // changed from: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/styled-components
+/* eslint-disable */
 
 import * as React from 'react';
 
