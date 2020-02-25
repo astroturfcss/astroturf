@@ -130,11 +130,7 @@ const camelCase = str =>
     '',
   );
 
-function resolveVariants(variants) {
-  return variants.length
-    ? variants.reduce((c, n) => (n ? `${c} ${n}` : c), '')
-    : '';
-}
+const resolveVariants = variants => variants.filter(Boolean).join(' ');
 
 function varsToStyles(props, vars) {
   if (!vars || !vars.length) return props.style;
@@ -227,7 +223,7 @@ function styled(type, options, settings) {
     childProps.style = varsToStyles(childProps, vars);
     childProps.className = propsToStyles(childProps, styles, hasModifiers);
 
-    if (variants) childProps.className += resolveVariants(variants);
+    if (variants) childProps.className += ` ${resolveVariants(variants)}`;
 
     return React.createElement(
       allowAs && props.as ? props.as : type,
@@ -253,7 +249,7 @@ function jsx(type, props, ...children) {
     const { css, ...childProps } = props;
     childProps.style = varsToStyles(childProps, css[1]);
     childProps.className = propsToStyles(childProps, css[0] || css, true);
-    childProps.className += resolveVariants(css[2]);
+    childProps.className += ` ${resolveVariants(css[2])}`;
     props = childProps;
   }
   return React.createElement(type, props, ...children);
