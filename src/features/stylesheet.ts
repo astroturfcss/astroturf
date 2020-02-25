@@ -8,7 +8,6 @@ import getDisplayName from '../utils/getDisplayName';
 import isCssTag from '../utils/isCssTag';
 import isStylesheetTag from '../utils/isStylesheetTag';
 import { COMPONENTS, STYLES } from '../utils/Symbols';
-import wrapInClass from '../utils/wrapInClass';
 
 function buildStyleRequire(
   path: NodePath<t.TaggedTemplateExpression>,
@@ -35,17 +34,15 @@ function buildStyleRequire(
     value: '',
   };
 
-  const { text, imports } = buildTaggedTemplate({
+  const { css } = buildTaggedTemplate({
     quasiPath: path.get('quasi'),
     nodeMap,
     style,
-    location: 'STYLESHEET',
+    location: isSingleClass ? 'RULE' : 'STYLESHEET',
     pluginOptions: opts.defaultedOptions,
   });
 
-  style.value = isSingleClass
-    ? imports + wrapInClass(text)
-    : `${imports}${text}`;
+  style.value = css;
 
   if (styles.has(style.absoluteFilePath))
     throw path.buildCodeFrameError(

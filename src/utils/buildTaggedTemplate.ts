@@ -1,22 +1,16 @@
-import { dirname, relative } from 'path';
 import groupBy from 'lodash/groupBy';
 import uniq from 'lodash/uniq';
-import resolve from 'resolve';
 import { NodePath } from '@babel/core';
 import * as t from '@babel/types';
+import camelCase from 'lodash/camelCase';
 
-import {
-  DependencyResolver,
-  NodeStyleMap,
-  ResolvedImport,
-  Style,
-  UserInterpolation,
-  ResolvedOptions,
-  StyleType,
-} from '../types';
+import { NodeStyleMap, Style, ResolvedOptions } from '../types';
 import cssUnits from './cssUnits';
-import getNameFromPath from './getNameFromPath';
 import hash from './murmurHash';
+import isCssTag from './isCssTag';
+import resolveDependency, { Dependency } from './resolveDependency';
+import wrapInClass, { hoistImports } from './wrapInClass';
+import truthy from './truthy';
 
 const rComposes = /\b(?:composes\s*?:\s*([^;>]*?)(?:from\s(.+?))?(?=[;}/\n\r]))/gim;
 const rPlaceholder = /###ASTROTURF_PLACEHOLDER_\d*?###/g;
@@ -25,24 +19,42 @@ const rUnit = new RegExp(`^(${cssUnits.join('|')})(;|,|\n| |\\))`);
 
 const getPlaceholder = (idx: number) => `###ASTROTURF_PLACEHOLDER_${idx}###`;
 
-export type TagLocation = 'STYLESHEET' | 'COMPONENT' | 'PROP';
+const toVarsArray = (interpolations: DynamicInterpolation[]) => {
+  const vars = interpolations.map(i =>
+    t.arrayExpression(
+      [
+        t.stringLiteral(i.id),
+        i.expr.node,
+        i.unit ? t.stringLiteral(i.unit) : null,
+      ].filter(truthy),
+    ),
+  );
+  return t.arrayExpression(vars);
+};
 
-export interface Interpolation {
-  imported: string;
-  source: string;
-  type?: StyleType;
-}
+/**
+ * Build a logical expression returning a class, trying both the
+ * kebab and camel case names: `s['fooBar']`
+ *
+ * @param {String} className
+ */
+const buildStyleExpression = (id: t.Identifier, className: string) =>
+  t.memberExpression(
+    id,
+    t.stringLiteral(className), // remove the `.`
+    true,
+  );
 
-function defaultResolveDependency(
-  { request }: ResolvedImport,
-  localStyle: Style,
-  _node: t.Node,
-): UserInterpolation {
-  const source = resolve.sync(request, {
-    basedir: dirname(localStyle.absoluteFilePath),
-  });
+export type Vars = t.ArrayExpression[];
 
-  return { source };
+export type Variants = t.Expression[];
+
+export type TagLocation = 'STYLESHEET' | 'RULE' | 'COMPONENT' | 'PROP';
+
+export interface DynamicInterpolation {
+  id: string;
+  unit: string;
+  expr: NodePath<t.Expression>;
 }
 
 function assertDynamicInterpolationsLocation(
@@ -94,126 +106,151 @@ function assertDynamicInterpolationsLocation(
   }
 }
 
-function resolveMemberExpression(path: NodePath) {
-  let nextPath: NodePath = (path as any).resolve();
-  while (nextPath && nextPath.isMemberExpression()) {
-    nextPath = (nextPath.get('object') as any).resolve();
-  }
-  return nextPath;
-}
-
-function resolveImport(path: NodePath): ResolvedImport | null {
-  const resolvedPath = resolveMemberExpression(path);
-  const binding =
-    'name' in resolvedPath.node &&
-    typeof resolvedPath.node.name === 'string' &&
-    resolvedPath.scope.getBinding(resolvedPath.node.name);
-
-  if (!binding || binding.kind !== 'module') return null;
-
-  const importPath = binding.path;
-  const parent = importPath.parentPath;
-  if (!parent.isImportDeclaration()) return null;
-
-  const request = parent.node.source.value;
-  let identifier = '';
-
-  if (importPath.isImportNamespaceSpecifier()) {
-    if (!path.isMemberExpression()) throw new Error('this is weird');
-    identifier = getNameFromPath(path.get('property') as NodePath)!;
-  } else if (importPath.isImportDefaultSpecifier()) {
-    identifier = getNameFromPath(resolvedPath)!;
-  } else if (importPath.isImportSpecifier()) {
-    // TODO: this isn't correct doesn't do member expressions
-    identifier = getNameFromPath(importPath.get('imported'))!;
-  }
-
-  return { identifier, request, type: importPath.node.type };
-}
-
-function getImported(
-  path: NodePath<t.Expression>,
-  interpolation: UserInterpolation,
+/**
+ * Traverses an expression in a template string looking for additional astroturf
+ * styles. Inline css tags are replaced with an identifier to the class name
+ */
+function resolveVariants(
+  exprPath: NodePath<t.Expression>,
+  opts: Options,
+  state: any,
 ) {
-  const { type } = interpolation;
-  if (!type) {
-    if (!path.isMemberExpression()) return 'cls1';
-    return (path.get('property') as any).node.name;
-  }
+  const { importId } = opts;
+  const templates = [] as any[];
 
-  return type === 'stylesheet'
-    ? (path.get('property') as any).node.name
-    : 'cls1';
+  exprPath.traverse({
+    TaggedTemplateExpression(innerPath) {
+      if (!isCssTag(innerPath.get('tag'), opts.pluginOptions)) {
+        return;
+      }
+
+      if (opts.allowVariants === false) {
+        throw innerPath.buildCodeFrameError(
+          'Nested Variants are not allowed here',
+        );
+      }
+
+      if (opts.location !== 'PROP') {
+        throw exprPath.buildCodeFrameError(
+          'Dynamic variants are only allowed in css props',
+        );
+      }
+
+      // camel case so we don't need to check multiple cases at runtime
+      const classId = camelCase(
+        `${opts.style.identifier}-variant-${state.id++}`,
+      );
+
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      const { text, ...rest } = buildTemplateImpl(
+        {
+          ...opts,
+          quasiPath: innerPath.get('quasi'),
+          allowVariants: false,
+        },
+        state,
+      );
+
+      innerPath.replaceWith(buildStyleExpression(importId!, classId));
+
+      templates.push({
+        text: `.${classId} {\n${text}\n}`,
+        ...rest,
+      });
+    },
+  });
+  return templates;
 }
 
-function resolveStyleInterpolation(
-  path: NodePath<t.Expression>,
-  nodeMap: NodeStyleMap,
-  localStyle: any,
-  resolveDependency: DependencyResolver = defaultResolveDependency,
-): Interpolation | null {
-  const resolvedPath = resolveMemberExpression(path);
-  const style = resolvedPath && nodeMap.get(resolvedPath.node);
+function replaceDependencyPlaceholders(
+  depInterpolations: Map<string, DependencyWithExpr>,
+  text: string,
+  dependencyImports: string,
+  id: number,
+) {
+  // Replace references in `composes` rules
+  text = text.replace(rComposes, (composes, classNames: string, fromPart) => {
+    const classList = classNames.replace(/(\n|\r|\n\r)/, '').split(/\s+/);
 
-  if (style) {
-    return {
-      imported:
-        style.type === 'stylesheet'
-          ? (path.get('property') as any).node.name
-          : 'cls1',
-      source: relative(
-        dirname(localStyle.absoluteFilePath),
-        style.absoluteFilePath,
-      ),
-    };
-  }
+    const composed = classList
+      .map(className => depInterpolations.get(className))
+      .filter(truthy);
 
-  if (resolveDependency) {
-    const resolvedImport = resolveImport(path);
+    if (!composed.length) return composes;
 
-    if (resolvedImport) {
-      const interpolation: UserInterpolation | null =
-        resolveDependency(resolvedImport, localStyle, path.node) ?? null;
-
-      if (!interpolation) return null;
-
-      return {
-        ...interpolation,
-        imported: interpolation.imported || getImported(path, interpolation),
-      };
+    if (fromPart) {
+      // don't want to deal with this case right now
+      throw composed[0].expr.buildCodeFrameError(
+        'A styled interpolation found inside a `composes` rule with a "from". ' +
+          'Interpolated values should be in their own `composes` without specifying the file.',
+      );
     }
-  }
-  return null;
-}
+    if (composed.length < classList.length) {
+      throw composed[0].expr.buildCodeFrameError(
+        'Mixing interpolated and non-interpolated classes in a `composes` rule is not allowed.',
+      );
+    }
 
-export interface DynamicInterpolation {
-  id: string;
-  unit: string;
-  expr: NodePath<t.Expression>;
+    return Object.entries(groupBy(composed, i => i.source)).reduce(
+      (acc, [source, values]) => {
+        const classes = uniq(values.map(v => v.imported)).join(' ');
+        return `${
+          acc ? `${acc};\n` : ''
+        }composes: ${classes} from "${source}"`;
+      },
+      '',
+    );
+  });
+
+  text = text.replace(rPlaceholder, match => {
+    const { imported, source } = depInterpolations.get(match)!;
+    const localName = `a${id++}`;
+
+    dependencyImports += `@value ${imported} as ${localName} from "${source}";\n`;
+    return `.${localName}`;
+  });
+
+  return [text, dependencyImports];
 }
 
 interface Options {
   quasiPath: NodePath<t.TemplateLiteral>;
+  importId?: t.Identifier;
   nodeMap: NodeStyleMap;
   location: TagLocation;
+  allowVariants?: boolean;
   pluginOptions: ResolvedOptions;
   style: Style;
 }
 
-export default ({
-  quasiPath,
-  nodeMap,
-  pluginOptions,
-  location,
-  style: localStyle,
-}: Options) => {
+interface Rule {
+  text: string;
+  imports: string;
+  vars: DynamicInterpolation[];
+  variants: Array<{ expr: any; rules: Rule[] }>;
+}
+
+type DependencyWithExpr = Dependency & {
+  expr: NodePath<t.Expression>;
+};
+
+function buildTemplateImpl(opts: Options, state = { id: 0 }) {
+  const {
+    quasiPath,
+    nodeMap,
+    pluginOptions,
+    location,
+    style: localStyle,
+  } = opts;
   const quasi = quasiPath.node;
 
-  const styleInterpolations = new Map();
+  const variants: Rule['variants'] = [];
+  const depInterpolations = new Map<string, DependencyWithExpr>();
   const dynamicInterpolations = new Set<DynamicInterpolation>();
   const expressions = quasiPath.get('expressions');
 
   let text = '';
+  let dependencyImports = '';
   let lastDynamic: DynamicInterpolation | null = null;
 
   quasi.quasis.forEach((tmplNode, idx) => {
@@ -249,25 +286,32 @@ export default ({
     }
 
     // TODO: dedupe the same expressions in a tag
-    const interpolation = resolveStyleInterpolation(
+    const resolvedDep = resolveDependency(
       expr,
       nodeMap,
       localStyle,
       pluginOptions.resolveDependency,
     );
 
-    if (interpolation) {
+    if (resolvedDep) {
       const ph = getPlaceholder(idx);
-      styleInterpolations.set(ph, { ...interpolation, expr });
+      depInterpolations.set(ph, { ...resolvedDep, expr });
       text += ph;
 
+      return;
+    }
+
+    const exprNode = expr.node;
+    const resolvedInnerTemplates = resolveVariants(expr, opts, state);
+    if (resolvedInnerTemplates.length) {
+      variants.push({ expr: exprNode, rules: resolvedInnerTemplates });
       return;
     }
 
     assertDynamicInterpolationsLocation(expr, location, pluginOptions);
 
     // custom properties need to start with a letter
-    const id = `a${hash(`${localStyle.identifier}-${idx}`)}`;
+    const id = `a${hash(`${localStyle.identifier}-${state.id++}`)}`;
 
     lastDynamic = { id, expr, unit: '' };
     dynamicInterpolations.add(lastDynamic);
@@ -275,55 +319,49 @@ export default ({
     text += `var(--${id})`;
   });
 
-  // Replace references in `composes` rules
-  text = text.replace(rComposes, (composes, classNames: string, fromPart) => {
-    const classList = classNames.replace(/(\n|\r|\n\r)/, '').split(/\s+/);
+  [text, dependencyImports] = replaceDependencyPlaceholders(
+    depInterpolations,
+    text,
+    dependencyImports,
+    state.id,
+  );
 
-    const composed = classList
-      .map(className => styleInterpolations.get(className))
-      .filter(Boolean);
+  if (dependencyImports) dependencyImports += '\n\n';
 
-    if (!composed.length) return composes;
-
-    if (fromPart) {
-      // don't want to deal with this case right now
-      throw composed[0].expr.buildCodeFrameError(
-        'A styled interpolation found inside a `composes` rule with a "from". ' +
-          'Interpolated values should be in their own `composes` without specifying the file.',
-      );
-    }
-    if (composed.length < classList.length) {
-      throw composed[0].expr.buildCodeFrameError(
-        'Mixing interpolated and non-interpolated classes in a `composes` rule is not allowed.',
-      );
-    }
-
-    return Object.entries(groupBy(composed, i => i.source)).reduce(
-      (acc, [source, values]) => {
-        const classes = uniq(values.map(v => v.imported)).join(' ');
-        return `${
-          acc ? `${acc};\n` : ''
-        }composes: ${classes} from "${source}"`;
-      },
-      '',
-    );
-  });
-
-  let id = 0;
-  let imports = '';
-  text = text.replace(rPlaceholder, match => {
-    const { imported, source } = styleInterpolations.get(match);
-    const localName = `a${id++}`;
-
-    imports += `@value ${imported} as ${localName} from "${source}";\n`;
-    return `.${localName}`;
-  });
-
-  if (imports) imports += '\n\n';
+  const [rule, imports] = hoistImports(text);
 
   return {
-    text,
-    imports,
-    dynamicInterpolations,
+    variants,
+    text: rule,
+    imports: `${dependencyImports}${imports}`,
+    vars: Array.from(dynamicInterpolations),
   };
-};
+}
+
+export default function buildTaggedTemplate(opts: Options) {
+  const { location } = opts;
+  const { text, vars, imports, variants } = buildTemplateImpl(opts, { id: 0 });
+
+  const allVars = vars;
+  const allVariants = [] as any[];
+  let allImports = imports;
+  let css = location === 'STYLESHEET' ? text : wrapInClass(text);
+
+  for (const variant of variants) {
+    allVariants.push(variant.expr);
+    for (const rule of variant.rules) {
+      allImports += rule.imports;
+      allVars.push(...rule.vars);
+      css += `\n${rule.text}`;
+    }
+  }
+
+  css = `${allImports.trim()}\n\n${css}`.trim();
+
+  return {
+    css,
+    interpolations: allVars.map(({ expr: _, ...i }) => i),
+    vars: toVarsArray(allVars),
+    variants: t.arrayExpression(allVariants),
+  };
+}

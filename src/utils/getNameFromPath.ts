@@ -2,6 +2,7 @@ import { NodePath } from '@babel/core';
 
 import getMembers from './getMembers';
 import pascalCase from './pascalCase';
+import truthy from './truthy';
 
 const getLiteralValue = (node: any): string => node.raw || node.value;
 
@@ -12,7 +13,7 @@ export default function getNameFromPath(path: NodePath): string | null {
     return pascalCase(
       getMembers(path)
         .map(m => getNameFromPath(m.path))
-        .filter(Boolean)
+        .filter(truthy)
         .join('-'),
     );
   }

@@ -5,7 +5,5 @@ const FancyBox =
   /*#__PURE__*/
   styled("div", null, {
     displayName: "FancyBox",
-    styles: _FancyBox,
-    attrs: null,
-    vars: []
+    styles: _FancyBox
   });

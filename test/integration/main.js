@@ -54,13 +54,13 @@ export function MyComponent() {
   return (
     <>
       <div
-        foo
         css={css`
           color: red;
 
-          &.foo {
-            color: blue;
-          }
+          ${foo &&
+            css`
+              color: blue;
+            `}
         `}
       >
         <div>hey </div>

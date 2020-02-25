@@ -6,8 +6,7 @@ const RedPasswordInput =
   styled("input", null, {
     displayName: "RedPasswordInput",
     styles: _RedPasswordInput,
-    attrs: props => ({ ...props, type: "password" }),
-    vars: []
+    attrs: props => ({ ...props, type: "password" })
   });
 const RedPasswordInput2 =
   /*#__PURE__*/
@@ -16,6 +15,5 @@ const RedPasswordInput2 =
     styles: _RedPasswordInput2,
     attrs: p => ({
       type: "password"
-    }),
-    vars: []
+    })
   });

@@ -4,6 +4,7 @@ import * as t from '@babel/types';
 
 // eslint-disable-next-line import/no-cycle
 import { Change, Style } from '../types';
+import truthy from './truthy';
 
 function findLast<T>(
   array: T[],
@@ -40,7 +41,7 @@ export default class StyleImportInjector {
 
   constructor(private program: NodePath<t.Program>) {}
 
-  add(style: Style) {
+  add(style: { identifier?: string; relativeFilePath: string }) {
     const { scope } = this.program;
     const source = style.requirePath;
 
@@ -87,7 +88,7 @@ export default class StyleImportInjector {
       end,
       start: end,
       code: `\n${Array.from(this.nodes, n => this.code.get(n))
-        .filter(Boolean)
+        .filter(truthy)
         .join('\n')}\n`,
     };
 

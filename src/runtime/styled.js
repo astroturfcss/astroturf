@@ -9,6 +9,8 @@ const camelCase = str =>
     '',
   );
 
+const resolveVariants = variants => variants.filter(Boolean).join(' ');
+
 function varsToStyles(props, vars) {
   if (!vars || !vars.length) return props.style;
   const style = { ...props.style };
@@ -69,7 +71,7 @@ function propsToStyles(props, styles, hasModifiers) {
 
 function styled(type, options, settings) {
   if (__DEV__) {
-    if (Array.isArray(type))
+    if (settings == null)
       throw new Error(
         'This styled() template tag was mistakenly evaluated at runtime. ' +
           'Make sure astroturf is properly configured to compile this file',
@@ -81,7 +83,7 @@ function styled(type, options, settings) {
           'ensure that your versions are properly deduped and upgraded. ',
       );
   }
-  const { displayName, attrs, vars, styles } = settings;
+  const { displayName, attrs, vars, variants, styles } = settings;
 
   options = options || { allowAs: typeof type === 'string' };
 
@@ -99,6 +101,8 @@ function styled(type, options, settings) {
     if (allowAs) delete childProps.as;
     childProps.style = varsToStyles(childProps, vars);
     childProps.className = propsToStyles(childProps, styles, hasModifiers);
+
+    if (variants) childProps.className += ` ${resolveVariants(variants)}`;
 
     return React.createElement(
       allowAs && props.as ? props.as : type,
@@ -124,6 +128,7 @@ function jsx(type, props, ...children) {
     const { css, ...childProps } = props;
     childProps.style = varsToStyles(childProps, css[1]);
     childProps.className = propsToStyles(childProps, css[0] || css, true);
+    childProps.className += ` ${resolveVariants(css[2])}`;
     props = childProps;
   }
   return React.createElement(type, props, ...children);
@@ -135,6 +140,12 @@ module.exports.jsx = jsx;
 module.exports.F = React.Fragment;
 
 if (__DEV__) {
+  module.exports.stylesheet = () => {
+    throw new Error(
+      'stylesheet template literal evaluated at runtime. ' +
+        'Make sure astroturf is properly configured to compile this file',
+    );
+  };
   module.exports.css = () => {
     throw new Error(
       'css template literal evaluated at runtime. ' +

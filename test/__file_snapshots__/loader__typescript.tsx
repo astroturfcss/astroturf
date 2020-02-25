@@ -19,19 +19,17 @@ function someMath<T extends { x: number }>(obj: T): T {
 }
 const Button = /*#__PURE__*/ styled("button", null, {
   displayName: "Button",
-  styles: _Button,
-  attrs: null,
-  vars: []
+  styles: _Button
 });
 class Component extends React.Component<PropsType> {
   render() {
     return (
       <>
         <h2>{this.props.children}</h2>
-        <Button variant="primary" css={[_CssProp1_Button, []]}>
+        <Button variant="primary" css={[_CssProp1_Button, [], []]}>
           click
         </Button>
-        <Button variant="secondary" css={[_CssProp2_Button, []]}>
+        <Button variant="secondary" css={[_CssProp2_Button, [], []]}>
           cancel
         </Button>
       </>

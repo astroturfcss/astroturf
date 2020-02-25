@@ -5,13 +5,9 @@ const SIZE = 75;
 // prettier-ignore
 const FancyBox = /*#__PURE__*/styled('div', null, {
   displayName: "FancyBox",
-  styles: _FancyBox,
-  attrs: null,
-  vars: []
+  styles: _FancyBox
 });
 const FancyHeader = /*#__PURE__*/ styled("h2", null, {
   displayName: "FancyHeader",
-  styles: _FancyHeader,
-  attrs: null,
-  vars: []
+  styles: _FancyHeader
 });

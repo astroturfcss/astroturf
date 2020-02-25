@@ -8,7 +8,7 @@ export interface ResolvedImport {
   type: string;
 }
 
-export interface UserInterpolation {
+export interface UserDependency {
   source: string;
   imported?: string;
   type?: StyleType;
@@ -18,7 +18,7 @@ export type DependencyResolver = (
   interpolation: ResolvedImport,
   localStyle: Style,
   node: T.Expression,
-) => UserInterpolation | null;
+) => UserDependency | null;
 
 export interface ResolvedOptions {
   writeFiles: boolean;

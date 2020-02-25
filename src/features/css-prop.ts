@@ -10,9 +10,8 @@ import createStyleNode from '../utils/createStyleNode';
 import getNameFromPath from '../utils/getNameFromPath';
 import isCssTag from '../utils/isCssTag';
 import { COMPONENTS, HAS_CSS_PROP, STYLES } from '../utils/Symbols';
-import toVarsArray from '../utils/toVarsArray';
-import trimExpressions from '../utils/trimExpressions';
 import wrapInClass from '../utils/wrapInClass';
+import truthy from '../utils/truthy';
 
 const JSX_IDENTS = Symbol('Astroturf jsx identifiers');
 
@@ -55,7 +54,8 @@ function buildCssProp(
 
   const displayName = `CssProp${++cssState.id}_${name}`;
 
-  let vars: t.ArrayExpression;
+  let vars: t.ArrayExpression, variants: t.ArrayExpression;
+
   const baseStyle = createStyleNode(valuePath, displayName, {
     file,
     pluginOptions,
@@ -69,8 +69,11 @@ function buildCssProp(
     value: '',
   };
 
+  let importId: t.Identifier | undefined;
+
   if (valuePath.isStringLiteral()) {
     style.value = wrapInClass(valuePath.node.value);
+    importId = options.styleImports.add(style);
   } else {
     const exprPath = valuePath.isJSXExpressionContainer()
       ? valuePath.get('expression')
@@ -81,9 +84,11 @@ function buildCssProp(
       (exprPath.isTaggedTemplateExpression() &&
         isCssTag(exprPath.get('tag'), pluginOptions))
     ) {
-      const { text, imports, dynamicInterpolations } = buildTaggedTemplate({
+      importId = options.styleImports.add(style);
+      const template = buildTaggedTemplate({
         style,
         nodeMap,
+        importId,
         pluginOptions,
         location: 'PROP',
         quasiPath: exprPath.isTemplateLiteral()
@@ -91,22 +96,20 @@ function buildCssProp(
           : exprPath.get('quasi'),
       });
 
-      vars = toVarsArray(dynamicInterpolations);
+      vars = template.vars;
+      variants = template.variants;
 
-      style.imports = imports;
-      style.interpolations = trimExpressions(dynamicInterpolations);
-      style.value = imports + wrapInClass(text);
+      style.interpolations = template.interpolations;
+      style.value = template.css;
     }
   }
 
-  if (!style.value) {
+  if (!importId) {
     return null;
   }
 
-  const importId = options.styleImports.add(style);
-
   let runtimeNode: t.Node = t.arrayExpression(
-    [importId, vars!].filter(Boolean),
+    [importId, vars!, variants!].filter(truthy),
   );
 
   // FIXME?

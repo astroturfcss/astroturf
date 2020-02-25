@@ -1,7 +1,6 @@
 import get from 'lodash/get';
 import { NodePath } from '@babel/core';
 import generate from '@babel/generator';
-import template from '@babel/template';
 import * as t from '@babel/types';
 
 import {
@@ -20,20 +19,27 @@ import isStyledTag from '../utils/isStyledTag';
 import isStyledTagShorthand from '../utils/isStyledTagShorthand';
 import normalizeAttrs from '../utils/normalizeAttrs';
 import { COMPONENTS, STYLES } from '../utils/Symbols';
-import toVarsArray from '../utils/toVarsArray';
-import trimExpressions from '../utils/trimExpressions';
-import wrapInClass from '../utils/wrapInClass';
+import truthy from '../utils/truthy';
 
 const PURE_COMMENT = '/*#__PURE__*/';
 
-const buildComponent = template(
-  `TAG(ELEMENTTYPE, OPTIONS, {
-    displayName: DISPLAYNAME,
-    styles: IMPORT,
-    attrs: ATTRS,
-    vars: VARS
-  })`,
-);
+const buildComponent = (nodes: any) =>
+  t.callExpression(nodes.TAG, [
+    nodes.ELEMENTTYPE,
+    nodes.OPTIONS,
+    t.objectExpression(
+      [
+        t.objectProperty(t.identifier('displayName'), nodes.DISPLAYNAME),
+        t.objectProperty(t.identifier('styles'), nodes.IMPORT),
+        !t.isNullLiteral(nodes.ATTRS) &&
+          t.objectProperty(t.identifier('attrs'), nodes.ATTRS),
+        nodes.VARS.elements.length &&
+          t.objectProperty(t.identifier('vars'), nodes.VARS),
+        nodes.VARIANTS.elements.length &&
+          t.objectProperty(t.identifier('variants'), nodes.VARIANTS),
+      ].filter(truthy),
+    ),
+  ]);
 
 interface Options {
   pluginOptions: ResolvedOptions;
@@ -76,36 +82,37 @@ function buildStyledComponent(
     value: '',
   };
 
-  const { text, dynamicInterpolations, imports } = buildTaggedTemplate({
+  const importId = styleImports.add(style);
+
+  const { css, vars, variants, interpolations } = buildTaggedTemplate({
     style,
     nodeMap,
-    quasiPath: path.get('quasi'),
+    importId,
     location: 'COMPONENT',
+    quasiPath: path.get('quasi'),
     pluginOptions: opts.pluginOptions,
   });
 
-  style.imports = imports;
-  style.interpolations = trimExpressions(dynamicInterpolations);
-  style.value = imports + wrapInClass(text);
-
-  const importId = styleImports.add(style);
+  style.interpolations = interpolations;
+  style.value = css;
 
   const runtimeNode = buildComponent({
-    TAG: pluginOptions.styledTagName,
+    TAG: t.identifier(pluginOptions.styledTagName),
     ELEMENTTYPE: elementType,
     ATTRS: normalizeAttrs(styledAttrs),
     OPTIONS: styledOptions || t.nullLiteral(),
     DISPLAYNAME: t.stringLiteral(displayName),
-    VARS: toVarsArray(dynamicInterpolations),
+    VARS: vars,
+    VARIANTS: variants,
     IMPORT: importId,
-  }) as t.ExpressionStatement;
+  });
 
   if (pluginOptions.generateInterpolations) {
     style.code = `${PURE_COMMENT}${generate(runtimeNode).code}`;
   }
 
   cssState.styles.set(style.absoluteFilePath, style);
-  nodeMap.set(runtimeNode.expression, style);
+  nodeMap.set(runtimeNode, style);
   return runtimeNode;
 }
 

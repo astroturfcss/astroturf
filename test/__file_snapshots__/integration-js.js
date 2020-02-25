@@ -38,7 +38,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
-/* harmony default export */ __webpack_exports__["default"] = ({"cls1":"main-CssProp1_div__cls1","cls2":"main-CssProp1_div__cls2 main-CssProp1_div__cls1","foo":"main-CssProp1_div__foo"});
+/* harmony default export */ __webpack_exports__["default"] = ({"cls1":"main-CssProp1_div__cls1","cls2":"main-CssProp1_div__cls2 main-CssProp1_div__cls1","cssProp1DivVariant0":"main-CssProp1_div__cssProp1DivVariant0"});
 
 /***/ }),
 
@@ -130,6 +130,8 @@ const camelCase = str =>
     '',
   );
 
+const resolveVariants = variants => variants.filter(Boolean).join(' ');
+
 function varsToStyles(props, vars) {
   if (!vars || !vars.length) return props.style;
   const style = { ...props.style };
@@ -190,7 +192,7 @@ function propsToStyles(props, styles, hasModifiers) {
 
 function styled(type, options, settings) {
   if (__DEV__) {
-    if (Array.isArray(type))
+    if (settings == null)
       throw new Error(
         'This styled() template tag was mistakenly evaluated at runtime. ' +
           'Make sure astroturf is properly configured to compile this file',
@@ -202,7 +204,7 @@ function styled(type, options, settings) {
           'ensure that your versions are properly deduped and upgraded. ',
       );
   }
-  const { displayName, attrs, vars, styles } = settings;
+  const { displayName, attrs, vars, variants, styles } = settings;
 
   options = options || { allowAs: typeof type === 'string' };
 
@@ -220,6 +222,8 @@ function styled(type, options, settings) {
     if (allowAs) delete childProps.as;
     childProps.style = varsToStyles(childProps, vars);
     childProps.className = propsToStyles(childProps, styles, hasModifiers);
+
+    if (variants) childProps.className += ` ${resolveVariants(variants)}`;
 
     return React.createElement(
       allowAs && props.as ? props.as : type,
@@ -245,6 +249,7 @@ function jsx(type, props, ...children) {
     const { css, ...childProps } = props;
     childProps.style = varsToStyles(childProps, css[1]);
     childProps.className = propsToStyles(childProps, css[0] || css, true);
+    childProps.className += ` ${resolveVariants(css[2])}`;
     props = childProps;
   }
   return React.createElement(type, props, ...children);
@@ -256,6 +261,12 @@ module.exports.jsx = jsx;
 module.exports.F = React.Fragment;
 
 if (__DEV__) {
+  module.exports.stylesheet = () => {
+    throw new Error(
+      'stylesheet template literal evaluated at runtime. ' +
+        'Make sure astroturf is properly configured to compile this file',
+    );
+  };
   module.exports.css = () => {
     throw new Error(
       'css template literal evaluated at runtime. ' +
@@ -289,11 +300,8 @@ const Button =
 /*#__PURE__*/
 astroturf__WEBPACK_IMPORTED_MODULE_0___default()('button', null, {
   displayName: "Button",
-  styles: astroturf_css_loader_inline_Button_css__WEBPACK_IMPORTED_MODULE_2__["default"],
-  attrs: null,
-  vars: []
+  styles: astroturf_css_loader_inline_Button_css__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
-;
 /* harmony default export */ __webpack_exports__["default"] = (Button);
 
 /***/ }),
@@ -339,26 +347,19 @@ const FancyBox =
 /*#__PURE__*/
 astroturf__WEBPACK_IMPORTED_MODULE_0___default()('div', null, {
   displayName: "FancyBox",
-  styles: astroturf_css_loader_inline_main_FancyBox_css__WEBPACK_IMPORTED_MODULE_5__["default"],
-  attrs: null,
-  vars: []
+  styles: astroturf_css_loader_inline_main_FancyBox_css__WEBPACK_IMPORTED_MODULE_5__["default"]
 });
-;
 const FancierBox =
 /*#__PURE__*/
 astroturf__WEBPACK_IMPORTED_MODULE_0___default()('div', null, {
   displayName: "FancierBox",
-  styles: astroturf_css_loader_inline_main_FancierBox_css__WEBPACK_IMPORTED_MODULE_6__["default"],
-  attrs: null,
-  vars: []
+  styles: astroturf_css_loader_inline_main_FancierBox_css__WEBPACK_IMPORTED_MODULE_6__["default"]
 });
-;
 function MyComponent() {
   return Object(astroturf__WEBPACK_IMPORTED_MODULE_0__["jsx"])(astroturf__WEBPACK_IMPORTED_MODULE_0__["F"], null, Object(astroturf__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
-    foo: true,
-    css: [astroturf_css_loader_inline_main_CssProp1_div_css__WEBPACK_IMPORTED_MODULE_7__["default"], []]
+    css: [astroturf_css_loader_inline_main_CssProp1_div_css__WEBPACK_IMPORTED_MODULE_7__["default"], [], [foo && astroturf_css_loader_inline_main_CssProp1_div_css__WEBPACK_IMPORTED_MODULE_7__["default"]["cssProp1DivVariant0"]]]
   }, Object(astroturf__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", null, "hey "), Object(astroturf__WEBPACK_IMPORTED_MODULE_0__["jsx"])("span", {
-    css: [astroturf_css_loader_inline_main_CssProp2_span_css__WEBPACK_IMPORTED_MODULE_8__["default"], []]
+    css: [astroturf_css_loader_inline_main_CssProp2_span_css__WEBPACK_IMPORTED_MODULE_8__["default"], [], []]
   }, "yo")));
 }
 /* harmony default export */ __webpack_exports__["default"] = (FancierBox);
@@ -383,11 +384,8 @@ const Widget =
 /*#__PURE__*/
 astroturf__WEBPACK_IMPORTED_MODULE_0___default()('div', null, {
   displayName: "Widget",
-  styles: astroturf_css_loader_inline_Widget_css__WEBPACK_IMPORTED_MODULE_1__["default"],
-  attrs: null,
-  vars: []
+  styles: astroturf_css_loader_inline_Widget_css__WEBPACK_IMPORTED_MODULE_1__["default"]
 });
-;
 /* harmony default export */ __webpack_exports__["default"] = (Widget);
 
 /***/ })
