@@ -93,7 +93,6 @@ function buildStyledComponent(
     pluginOptions: opts.pluginOptions,
   });
 
-  // style.imports = dependencyImports;
   style.interpolations = interpolations;
   style.value = css;
 
