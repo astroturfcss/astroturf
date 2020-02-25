@@ -1,4 +1,4 @@
-import styled from "astroturf";
+import styled from "astroturf/react";
 import _FancyBox from "./styled-FancyBox.css";
 import _FancierBox from "./styled-FancierBox.css";
 const SIZE = 75; // prettier-ignore

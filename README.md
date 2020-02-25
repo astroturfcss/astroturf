@@ -78,7 +78,7 @@ const styles = css`
 For those that want something a bit more like styled-components or Emotion, there is a component API!
 
 ```js
-import styled, { css } from 'astroturf';
+import styled, { css } from 'astroturf/react';
 
 const Button = styled('button')`
   color: black;
@@ -382,7 +382,7 @@ A common task with styled components is to map their props or set default values
 astroturf cribs from Styled Components, by including an `attrs()` api.
 
 ```jsx
-import styled from 'astroturf';
+import styled from 'astroturf/react';
 
 // Provide a default `type` props
 const PasswordInput = styled('input').attrs({

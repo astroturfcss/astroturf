@@ -1,4 +1,4 @@
-import styled, { css } from 'astroturf';
+import styled, { css } from 'astroturf/react';
 
 const base = css`
   padding: 4rem;

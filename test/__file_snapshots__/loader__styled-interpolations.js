@@ -1,4 +1,4 @@
-import styled from "astroturf";
+import styled from "astroturf/react";
 import _base from "astroturf/css-loader?inline!./styled-interpolations-base.css";
 import _other from "astroturf/css-loader?inline!./styled-interpolations-other.css";
 import _FancyBox from "astroturf/css-loader?inline!./styled-interpolations-FancyBox.css";

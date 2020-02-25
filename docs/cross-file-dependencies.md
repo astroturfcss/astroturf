@@ -5,7 +5,7 @@ astroturf allows targeting other styled components, or stylesheet modules.
 **ButtonToolbar.js**
 
 ```js
-import styled from 'astroturf';
+import styled from 'astroturf/react';
 
 import Button from './Button';
 
@@ -33,7 +33,7 @@ something like this:
 **Button.js**
 
 ```js
-import styled from 'astroturf';
+import styled from 'astroturf/react';
 
 const Button = styled('button')`
   /* ... */

@@ -1,4 +1,4 @@
-import styled, { css, stylesheet } from 'astroturf';
+import styled, { css, stylesheet } from 'astroturf/react';
 import React from 'react';
 import Widget from 'widget';
 

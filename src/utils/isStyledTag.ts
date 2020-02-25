@@ -15,7 +15,7 @@ const isStyledExpression = (
 ) =>
   styledTagName !== false &&
   calleePath.node.name === styledTagName &&
-  (allowGlobal || calleePath.referencesImport('astroturf'));
+  (allowGlobal || calleePath.referencesImport('astroturf/react'));
 
 export default function isStyledTag(
   tagPath: NodePath,

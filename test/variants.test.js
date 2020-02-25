@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 import React from 'react';
 
-import { jsx } from '../src/index';
+import { jsx } from '../src/runtime/jsx';
 import { testAllRunners } from './helpers';
 
 describe('variants', () => {

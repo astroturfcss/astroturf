@@ -3,7 +3,7 @@ import { isModule } from '@babel/helper-module-imports';
 import * as t from '@babel/types';
 
 // eslint-disable-next-line import/no-cycle
-import { Change, Style } from '../types';
+import { Change } from '../types';
 import truthy from './truthy';
 
 function findLast<T>(
@@ -41,7 +41,7 @@ export default class StyleImportInjector {
 
   constructor(private program: NodePath<t.Program>) {}
 
-  add(style: { identifier?: string; relativeFilePath: string }) {
+  add(style: { identifier?: string; requirePath: string }) {
     const { scope } = this.program;
     const source = style.requirePath;
 

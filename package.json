@@ -2,7 +2,8 @@
   "name": "astroturf",
   "version": "0.10.2",
   "description": "Extract and process inline CSS literals in JavaScript files",
-  "main": "lib/index.js",
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "lint": "tsc -p . --noEmit && eslint .",
@@ -10,9 +11,16 @@
     "test:ts": "dtslint types",
     "tdd": "jest --watch",
     "prepublishOnly": "yarn build",
-    "build": "4c build && cpy types/*.d.ts lib",
+    "copy:types": "cpy types/*.d.ts lib/cjs && cpy types/*.d.ts lib/esm",
+    "build:pick": "cherry-pick --cwd=lib --input-dir=../src/runtime --cjs-dir=cjs --esm-dir=esm",
+    "build:runtime": "4c build src/runtime --no-copy-files --no-types",
+    "build:tools": "4c build -d lib --no-esm -- --ignore \"**/runtime/**\"",
+    "build": "yarn build:tools && yarn build:runtime && yarn build:pick && yarn copy:types",
     "release": "4c release",
     "start": "yarn --cwd ./example start"
+  },
+  "publishConfig": {
+    "directory": "lib"
   },
   "repository": {
     "type": "git",
@@ -53,9 +61,6 @@
       "build",
       "__file_snapshots__"
     ]
-  },
-  "release": {
-    "publishDir": "lib"
   },
   "author": {
     "name": "4Catalyzer"
@@ -114,6 +119,7 @@
     "babel-eslint": "^10.0.1",
     "babel-jest": "^25.1.0",
     "babel-loader": "^8.0.6",
+    "cherry-pick": "^0.5.0",
     "cpy-cli": "^2.0.0",
     "doctoc": "^1.4.0",
     "dtslint": "^2.0.5",

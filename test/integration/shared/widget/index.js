@@ -1,4 +1,4 @@
-import styled from 'astroturf';
+import styled from 'astroturf/react';
 
 const Widget = styled('div')`
   height: 20px;

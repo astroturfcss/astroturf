@@ -1,4 +1,4 @@
-import styled from "astroturf";
+import styled from "astroturf/react";
 import _FancyBox from "./element-shorthand-FancyBox.css";
 const SIZE = 75;
 const FancyBox =

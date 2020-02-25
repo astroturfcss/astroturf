@@ -1,4 +1,4 @@
-import { styled } from 'astroturf';
+import styled  from 'astroturf/react';
 
 const RedPasswordInput = styled('input').attrs({ type: 'password' })`
   background-color: red;

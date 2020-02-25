@@ -8,6 +8,7 @@ export default function isCssTag(
     cssTagName !== false &&
     tagPath.node.name === cssTagName &&
     (tagPath.referencesImport('astroturf') ||
+      tagPath.referencesImport('astroturf/react') ||
       (allowGlobal && tagPath.scope.hasGlobal(cssTagName)))
   );
 }

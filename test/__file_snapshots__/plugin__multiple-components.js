@@ -1,4 +1,4 @@
-import styled from "astroturf";
+import styled from "astroturf/react";
 import _FancyBox from "./multiple-components-FancyBox.css";
 import _FancyHeader from "./multiple-components-FancyHeader.css";
 const SIZE = 75; // prettier-ignore
