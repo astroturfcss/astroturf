@@ -5,11 +5,12 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
+      node: {},
       webpack: {
         config: {
           resolve: {
             alias: {
-              astroturf$: `${__dirname}/../lib/index.js`,
+              astroturf: `${__dirname}/../lib`,
             },
           },
         },

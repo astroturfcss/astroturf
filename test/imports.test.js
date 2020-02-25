@@ -4,7 +4,7 @@ describe('import ordering', () => {
   describe('esm', () => {
     const esmCode = `
       import Component from './Foo';
-      import styled, { css } from 'astroturf';
+      import styled, { css } from 'astroturf/react';
       import Component2 from './Foo2';
 
       const styles = css\`
@@ -42,9 +42,9 @@ describe('import ordering', () => {
 
       expect(code).toContain(
         format`
-          import { jsx as _j, F as _f } from "astroturf";
+          import { jsx as _j, F as _f } from "astroturf/jsx";
           import Component from "./Foo";
-          import styled from "astroturf";
+          import styled from "astroturf/react";
           import Component2 from './Foo2';
           import _styles from "./MyStyleFile-styles.css";
           import _CssProp1_button from "./MyStyleFile-CssProp1_button.css";
@@ -60,9 +60,9 @@ describe('import ordering', () => {
 
       expect(code).toContain(
         format`
-          import { jsx as _j, F as _f } from "astroturf";
+          import { jsx as _j, F as _f } from "astroturf/jsx";
           import Component from "./Foo";
-          import styled from "astroturf";
+          import styled from "astroturf/react";
           import Component2 from './Foo2';
           import _styles from "${loaderPrefix}./MyStyleFile-styles.css";
           import _CssProp1_button from "${loaderPrefix}./MyStyleFile-CssProp1_button.css";
@@ -121,7 +121,7 @@ describe('import ordering', () => {
 
       expect(code).toContain(
         format`
-          const { jsx: _j, F: _f } = require(\"astroturf\");
+          const { jsx: _j, F: _f } = require("astroturf/jsx");
           const Component = require("./Foo");
           const Component2 = require("./Foo2");
           const _styles = require("./MyStyleFile-styles.css");
@@ -140,7 +140,7 @@ describe('import ordering', () => {
 
       expect(code).toContain(
         format`
-          const { jsx: _j, F: _f } = require(\"astroturf\");
+          const { jsx: _j, F: _f } = require("astroturf/jsx");
 
           const Component = require("./Foo");
           const Component2 = require("./Foo2");

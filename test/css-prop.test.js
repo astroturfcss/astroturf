@@ -1,6 +1,6 @@
 import { mount } from 'enzyme';
 
-import { jsx } from '../src/index';
+import { jsx } from '../src/runtime/jsx';
 import { format, testAllRunners } from './helpers';
 
 describe('css prop', () => {
@@ -215,27 +215,15 @@ describe('css prop', () => {
     expect(
       mount(
         jsx('div', {
-          green: true,
-          big: undefined,
-          dangerous: null,
-          size: 'sm',
-          theme: 'primary',
-          foo: 1,
           css: [
             {
               cls1: 'cls1',
-              green: 'green',
-              big: 'big',
-              dangerous: 'dangerous',
-              themePrimary: 'primary',
-              'size-sm': 'small',
-              'foo-1': 'foo',
             },
             [],
             [],
           ],
         }),
-      ).find('div.green.primary.small.foo'),
+      ).find('div.cls1'),
     ).toHaveLength(1);
   });
 });

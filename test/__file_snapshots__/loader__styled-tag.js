@@ -1,4 +1,4 @@
-import s from "astroturf";
+import s from "astroturf/react";
 import _FancyBox from "astroturf/css-loader?inline!./styled-tag-FancyBox.css";
 import _FancierBox from "astroturf/css-loader?inline!./styled-tag-FancierBox.css";
 // prettier-ignore

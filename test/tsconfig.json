@@ -10,7 +10,7 @@
     "baseUrl": "../",
     "paths": {
       "astroturf": ["types"],
-      "astroturf/helpers": ["types/helpers.d.ts"]
+      "astroturf/react": ["types/react.d.ts"]
     }
   }
 }

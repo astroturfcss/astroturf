@@ -2,15 +2,14 @@ import { stripIndents } from 'common-tags';
 import { mount } from 'enzyme';
 import React from 'react';
 
-import { withProps } from '../src/helpers';
-import styled from '../src/index';
+import styled from '../src/runtime/react';
 import { format, loaderPrefix, run, runLoader } from './helpers';
 
 describe('styled', () => {
   it('should compile (babel)', async () => {
     const [code] = await run(
       `
-      import { styled } from 'astroturf';
+      import styled from 'astroturf/react';
       const ButtonBase = styled('button')\`
         @import '~./styles/mixins.scss';
 
@@ -24,7 +23,7 @@ describe('styled', () => {
 
     expect(code).toEqual(
       format`
-        import { styled } from 'astroturf';
+        import styled from 'astroturf/react';
         import _ButtonBase from "./MyStyleFile-ButtonBase.css";
         const ButtonBase =
         /*#__PURE__*/
@@ -39,7 +38,7 @@ describe('styled', () => {
   it('should compile (webpack)', async () => {
     const [code] = await runLoader(
       `
-      import { styled } from 'astroturf';
+      import styled from 'astroturf/react';
 
       const ButtonBase = styled('button')\`
         @import '~./styles/mixins.scss';
@@ -54,7 +53,7 @@ describe('styled', () => {
 
     expect(code).toEqual(
       format`
-        import { styled } from 'astroturf';
+        import styled from 'astroturf/react';
         import _ButtonBase from "${loaderPrefix}./MyStyleFile-ButtonBase.css";
         const ButtonBase = /*#__PURE__*/ styled('button', null, {
           displayName: \"ButtonBase\",
@@ -67,7 +66,7 @@ describe('styled', () => {
   it('should hoist imports outside of wrapping class', async () => {
     const [, styles] = await run(
       `
-      import { styled } from 'astroturf';
+      import styled from 'astroturf/react';
 
       const ButtonBase = styled('button')\`
         @import '~./styles/mixins.scss';
@@ -98,7 +97,7 @@ describe('styled', () => {
   it('should infer display names', async () => {
     const [, styles] = await run(
       `
-      import styled from 'astroturf';
+      import styled from 'astroturf/react';
 
       const Foo = () => {};
       const bar = 'qux';
@@ -124,7 +123,7 @@ describe('styled', () => {
     await expect(
       run(
         `
-        import { styled } from 'astroturf';
+        import styled from 'astroturf/react';
 
         styled('p')\`
           color: blue;
@@ -242,7 +241,7 @@ describe('styled', () => {
       camelName: 'fancyBox',
     });
 
-    const Component = styled(withProps({})(Inner), null, {
+    const Component = styled(Inner, null, {
       displayName: 'Outer',
       styles: { green: 'green' },
       kebabName: 'outer',

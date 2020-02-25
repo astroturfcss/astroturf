@@ -45,7 +45,7 @@ module.exports = {
   mode: 'development',
   resolve: {
     alias: {
-      astroturf: path.resolve(__dirname, '../lib/index.js'),
+      astroturf: path.resolve(__dirname, '../lib'),
     },
   },
   plugins: [plugins.html()],

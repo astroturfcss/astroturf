@@ -10,11 +10,13 @@ const opts: TemplateBuilderOptions = {
   placeholderWhitelist: new Set(['JSX', 'JSX_FRAG']),
 };
 
-const importPattern = 'import { jsx as JSX, F as JSX_FRAG } from "astroturf";';
+const importPattern =
+  'import { jsx as JSX, F as JSX_FRAG } from "astroturf/jsx";';
+
 const buildImport = template(importPattern, opts);
 
 const requirePattern =
-  'const { jsx: JSX, F: JSX_FRAG } = require("astroturf");';
+  'const { jsx: JSX, F: JSX_FRAG } = require("astroturf/jsx");';
 
 const buildRequire = template(requirePattern, opts);
 

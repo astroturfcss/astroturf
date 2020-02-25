@@ -1,4 +1,4 @@
-import styled from "astroturf";
+import styled from "astroturf/react";
 import _FancyBox from "astroturf/css-loader?inline!./styled-FancyBox.css";
 import _FancierBox from "astroturf/css-loader?inline!./styled-FancierBox.css";
 const SIZE = 75;

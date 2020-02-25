@@ -1,4 +1,4 @@
-import styled, { css } from 'astroturf';
+import styled, { css } from 'astroturf/react';
 
 const mixins = css`
   display: block;

@@ -1,4 +1,4 @@
-import s from 'astroturf';
+import s from 'astroturf/react';
 
 // prettier-ignore
 const FancyBox = s('div')`

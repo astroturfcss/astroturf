@@ -1,6 +1,6 @@
 import { mount } from 'enzyme';
 
-import { jsx } from '../src/index';
+import { jsx } from '../src/runtime/jsx';
 import { run, testAllRunners } from './helpers';
 
 describe('custom properties', () => {
@@ -9,7 +9,7 @@ describe('custom properties', () => {
     async runner => {
       const [code, [style]] = await runner(
         `
-        import styled from 'astroturf';
+        import styled from 'astroturf/react';
 
         const Button = styled.button\`
           color: \${p => p.color};
@@ -148,7 +148,7 @@ describe('custom properties', () => {
     await expect(
       run(
         `
-      import styled, { css } from 'astroturf';
+      import styled, { css } from 'astroturf/react';
 
       const ButtonA = styled.button\`
         color: \${p => p.color};
@@ -164,18 +164,16 @@ describe('custom properties', () => {
   it('should apply styles', () => {
     const wrapper = mount(
       jsx('div', {
-        green: true,
         css: [
           {
             cls1: 'cls1',
-            green: 'green',
           },
           [['aszd', 'blue']],
           [],
         ],
       }),
     );
-    expect(wrapper.find('div.green')).toHaveLength(1);
+    expect(wrapper.find('div.cls1')).toHaveLength(1);
     expect(wrapper.prop('style')).toEqual({
       '--aszd': 'blue',
     });

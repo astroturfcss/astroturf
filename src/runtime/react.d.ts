@@ -1,6 +1,7 @@
 // TypeScript Version: 3.0
 
 // changed from: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/styled-components
+/* eslint-disable */
 
 import * as React from 'react';
 
@@ -137,18 +138,9 @@ export function css(
   ...args: any[]
 ): Record<string, string>;
 
+export function styledsheet(
+  template: TemplateStringsArray,
+  ...args: any[]
+): Record<string, string>;
+
 export default styled;
-
-declare module 'react' {
-  interface DOMAttributes<T> {
-    css?: string | Record<string, string>;
-  }
-}
-
-declare global {
-  namespace JSX {
-    interface IntrinsicAttributes {
-      css?: string | Record<string, string>;
-    }
-  }
-}

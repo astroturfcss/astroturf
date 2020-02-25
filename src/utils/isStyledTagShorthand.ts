@@ -12,6 +12,6 @@ export default function isStyledTagShorthand(
     tagPath.isMemberExpression() &&
     tagPath.get('property').isIdentifier() &&
     tagPath.get('object').node.name === styledTagName &&
-    (allowGlobal || tagPath.get('object').referencesImport('astroturf'))
+    (allowGlobal || tagPath.get('object').referencesImport('astroturf/react'))
   );
 }

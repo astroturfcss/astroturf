@@ -2,17 +2,25 @@
   "name": "astroturf",
   "version": "0.10.2",
   "description": "Extract and process inline CSS literals in JavaScript files",
-  "main": "lib/index.js",
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "lint": "tsc -p . --noEmit && eslint .",
     "test": "yarn test:ts && jest",
-    "test:ts": "dtslint types",
+    "test:ts": "yarn eslint types --ext .tsx --ext .ts",
     "tdd": "jest --watch",
     "prepublishOnly": "yarn build",
-    "build": "4c build && cpy types/*.d.ts lib",
+    "copy:types": "cpy types/*.d.ts lib/cjs && cpy types/*.d.ts lib/esm",
+    "build:pick": "cherry-pick --cwd=lib --input-dir=../src/runtime --cjs-dir=cjs --esm-dir=esm",
+    "build:runtime": "4c build src/runtime --no-copy-files --no-types",
+    "build:tools": "4c build -d lib --no-esm -- --ignore \"**/runtime/**\"",
+    "build": "yarn build:tools && yarn build:runtime && yarn build:pick && yarn copy:types",
     "release": "4c release",
     "start": "yarn --cwd ./example start"
+  },
+  "publishConfig": {
+    "directory": "lib"
   },
   "repository": {
     "type": "git",
@@ -32,11 +40,6 @@
       "doctoc"
     ]
   },
-  "importSort": {
-    ".js, .ts, .tsx": {
-      "style": "@4c/import-sort"
-    }
-  },
   "prettier": {
     "printWidth": 79,
     "singleQuote": true,
@@ -53,9 +56,6 @@
       "build",
       "__file_snapshots__"
     ]
-  },
-  "release": {
-    "publishDir": "lib"
   },
   "author": {
     "name": "4Catalyzer"
@@ -89,8 +89,6 @@
     "lodash": "^4.17.15",
     "memory-fs": "^0.5.0",
     "postcss": "^7.0.26",
-    "postcss-atroot": "^0.1.3",
-    "postcss-loader": "^3.0.0",
     "postcss-nested": "^4.1.1",
     "resolve": "^1.15.1"
   },
@@ -114,9 +112,9 @@
     "babel-eslint": "^10.0.1",
     "babel-jest": "^25.1.0",
     "babel-loader": "^8.0.6",
+    "cherry-pick": "^0.5.0",
     "cpy-cli": "^2.0.0",
     "doctoc": "^1.4.0",
-    "dtslint": "^2.0.5",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "eslint": "^6.8.0",
@@ -130,6 +128,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^2.3.0",
+    "eslint-plugin-ts-expect": "^1.0.1",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^4.2.1",
     "jest": "^25.1.0",
@@ -147,7 +146,5 @@
     "webpack": "^4.41.5",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.10.3"
-  },
-  "readme": "ERROR: No README data found!",
-  "_id": "astroturf@0.10.1"
+  }
 }

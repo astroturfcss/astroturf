@@ -14,7 +14,7 @@ function getBaseConfig(entry, options = { enableCssProp: true }) {
     mode: 'development',
     entry: {
       main: require.resolve(entry),
-      vendor: ['react', 'react-dom', 'astroturf'],
+      vendor: ['react', 'react-dom', 'astroturf', 'astroturf/react'],
     },
     optimization: {
       sideEffects: true,
@@ -44,7 +44,7 @@ function getBaseConfig(entry, options = { enableCssProp: true }) {
     resolve: {
       modules: ['node_modules', 'shared'],
       alias: {
-        astroturf: require.resolve('../src/runtime/styled'),
+        astroturf: path.resolve(__dirname, '../src/runtime'),
       },
     },
     resolveLoader: {
@@ -90,7 +90,7 @@ describe('webpack integration', () => {
     return config;
   }
 
-  it('should work', async () => {
+  it.only('should work', async () => {
     const assets = await runWebpack(getConfig('./integration/main.js'));
 
     expect(assets['main.js'].source()).toMatchFile(

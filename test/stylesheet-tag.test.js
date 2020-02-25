@@ -55,7 +55,7 @@ describe('css tag', () => {
     'should remove just the stylesheet import',
     async (runner, h) => {
       const [code] = await runner(`
-      import styled, { stylesheet } from 'astroturf';
+      import styled, { stylesheet } from 'astroturf/react';
 
       const styles = stylesheet\`
         .blue {
@@ -66,7 +66,7 @@ describe('css tag', () => {
 
       expect(code).toEqual(
         format`
-        import styled from 'astroturf';
+        import styled from 'astroturf/react';
         import _styles from "${h.requirePath('./MyStyleFile-styles.css')}"
         const styles = _styles;
       `,
