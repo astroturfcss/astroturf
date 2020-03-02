@@ -25,9 +25,7 @@ describe('styled', () => {
     expect(code).toEqual(
       format`
         import { styled } from 'astroturf';
-        const ButtonBase =
-        /*#__PURE__*/
-        styled('button', null, {
+        const ButtonBase = /*#__PURE__*/ styled('button', null, {
           displayName: \"ButtonBase\",
           styles: require(\"./MyStyleFile-ButtonBase.css\"),
           attrs: null,

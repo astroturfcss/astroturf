@@ -197,9 +197,7 @@ const mixins = __webpack_require__(/*! ./issue-365-mixins.css */ "./test/integra
 const Block = React.createElement(BlockStyled, {
   active: false
 });
-const BlockStyled =
-/*#__PURE__*/
-astroturf__WEBPACK_IMPORTED_MODULE_0___default()("div", null, {
+const BlockStyled = /*#__PURE__*/astroturf__WEBPACK_IMPORTED_MODULE_0___default()("div", null, {
   displayName: "BlockStyled",
   styles: __webpack_require__(/*! ./issue-365-BlockStyled.css */ "./test/integration/issue-365-BlockStyled.css"),
   attrs: null,

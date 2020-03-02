@@ -193,9 +193,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var astroturf__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(astroturf__WEBPACK_IMPORTED_MODULE_0__);
 
 const styles = __webpack_require__(/*! ./Button-styles.css */ "./test/integration/Button-styles.css");
-const Button =
-/*#__PURE__*/
-astroturf__WEBPACK_IMPORTED_MODULE_0___default()('button', null, {
+const Button = /*#__PURE__*/astroturf__WEBPACK_IMPORTED_MODULE_0___default()('button', null, {
   displayName: "Button",
   styles: __webpack_require__(/*! ./Button.css */ "./test/integration/Button.css"),
   attrs: null,
@@ -213,7 +211,7 @@ astroturf__WEBPACK_IMPORTED_MODULE_0___default()('button', null, {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"cls1":"main-CssProp1_div__cls1","foo":"main-CssProp1_div__foo"};
+module.exports = {"cls1":"main-CssProp1_div__cls1","cls2":"main-CssProp1_div__cls2 main-CssProp1_div__cls1","foo":"main-CssProp1_div__foo"};
 
 /***/ }),
 
@@ -225,7 +223,7 @@ module.exports = {"cls1":"main-CssProp1_div__cls1","foo":"main-CssProp1_div__foo
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"cls1":"main-CssProp2_span__cls1"};
+module.exports = {"cls1":"main-CssProp2_span__cls1","cls2":"main-CssProp2_span__cls2 main-CssProp2_span__cls1"};
 
 /***/ }),
 
@@ -237,7 +235,7 @@ module.exports = {"cls1":"main-CssProp2_span__cls1"};
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"a0":"main-FancyBox__cls1","a1":"main-styles__parent","a2":"Button__cls1","a3":"Button__cls1","cls1":"main-FancierBox__cls1"};
+module.exports = {"a0":"main-FancyBox__cls1","a1":"main-styles__parent","a2":"Button__cls1","a3":"Button__cls1","cls1":"main-FancierBox__cls1","cls2":"main-FancierBox__cls2 main-FancierBox__cls1"};
 
 /***/ }),
 
@@ -249,7 +247,7 @@ module.exports = {"a0":"main-FancyBox__cls1","a1":"main-styles__parent","a2":"Bu
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"cls1":"main-FancyBox__cls1","primary":"main-FancyBox__primary","cls2":"main-FancyBox__cls2 main-FancyBox__cls1 foo"};
+module.exports = {"cls1":"main-FancyBox__cls1","cls2":"main-FancyBox__cls2 main-FancyBox__cls1 foo","primary":"main-FancyBox__primary"};
 
 /***/ }),
 
@@ -289,10 +287,6 @@ const {
   F: _f
 } = __webpack_require__(/*! astroturf */ "./src/runtime/styled.js");
 
-const _default = __webpack_require__(/*! ./main-CssProp1_div.css */ "./test/integration/main-CssProp1_div.css");
-
-const _default2 = __webpack_require__(/*! ./main-CssProp2_span.css */ "./test/integration/main-CssProp2_span.css");
-
 
 
 
@@ -302,17 +296,13 @@ const width = 75;
 
 const styles = __webpack_require__(/*! ./main-styles.css */ "./test/integration/main-styles.css");
 
-const FancyBox =
-/*#__PURE__*/
-astroturf__WEBPACK_IMPORTED_MODULE_0___default()('div', null, {
+const FancyBox = /*#__PURE__*/astroturf__WEBPACK_IMPORTED_MODULE_0___default()('div', null, {
   displayName: "FancyBox",
   styles: __webpack_require__(/*! ./main-FancyBox.css */ "./test/integration/main-FancyBox.css"),
   attrs: null,
   vars: []
 });
-const FancierBox =
-/*#__PURE__*/
-astroturf__WEBPACK_IMPORTED_MODULE_0___default()('div', null, {
+const FancierBox = /*#__PURE__*/astroturf__WEBPACK_IMPORTED_MODULE_0___default()('div', null, {
   displayName: "FancierBox",
   styles: __webpack_require__(/*! ./main-FancierBox.css */ "./test/integration/main-FancierBox.css"),
   attrs: null,
@@ -321,9 +311,9 @@ astroturf__WEBPACK_IMPORTED_MODULE_0___default()('div', null, {
 function MyComponent() {
   return _j(_f, null, _j("div", {
     foo: true,
-    css: [_default, []]
+    css: [__webpack_require__(/*! ./main-CssProp1_div.css */ "./test/integration/main-CssProp1_div.css"), []]
   }, _j("div", null, "hey "), _j("span", {
-    css: [_default2, []]
+    css: [__webpack_require__(/*! ./main-CssProp2_span.css */ "./test/integration/main-CssProp2_span.css"), []]
   }, "yo")));
 }
 /* harmony default export */ __webpack_exports__["default"] = (FancierBox);
@@ -338,7 +328,7 @@ function MyComponent() {
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-module.exports = {"cls1":"Widget__cls1"};
+module.exports = {"cls1":"Widget__cls1","cls2":"Widget__cls2 Widget__cls1"};
 
 /***/ }),
 
@@ -354,9 +344,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var astroturf__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf */ "./src/runtime/styled.js");
 /* harmony import */ var astroturf__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(astroturf__WEBPACK_IMPORTED_MODULE_0__);
 
-const Widget =
-/*#__PURE__*/
-astroturf__WEBPACK_IMPORTED_MODULE_0___default()('div', null, {
+const Widget = /*#__PURE__*/astroturf__WEBPACK_IMPORTED_MODULE_0___default()('div', null, {
   displayName: "Widget",
   styles: __webpack_require__(/*! ./Widget.css */ "./test/integration/shared/widget/Widget.css"),
   attrs: null,

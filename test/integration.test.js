@@ -114,7 +114,7 @@ describe('webpack integration', () => {
     jest.restoreAllMocks();
   });
 
-  it.only('issue 365', async () => {
+  it('issue 365', async () => {
     const assets = await runWebpack(getConfig('./integration/issue-365.js'));
 
     expect(assets['main.css'].source()).toMatchFile(
