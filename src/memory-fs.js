@@ -11,8 +11,8 @@ const debug = util.debuglog('astroturf:memory-fs');
 const returnsTrue = () => true;
 const returnsFalse = () => false;
 
-const md5 = input => {
-  const hash = createHash('md5');
+const md4 = input => {
+  const hash = createHash('md4');
   hash.update(input);
   return hash.digest('hex');
 };
@@ -53,7 +53,7 @@ class MemoryFs {
 
   addFile = (p, data, updateMtime = false) => {
     p = path.normalize(p);
-    const hash = md5(data);
+    const hash = md4(data);
     const existing = this.paths.get(p);
 
     const keepTime = !updateMtime && existing && existing.hash === hash;

@@ -176,7 +176,7 @@ module.exports = function loader(content, map, meta) {
       : loadModule(resource);
   };
 
-  const options = loaderUtils.getOptions(this) || {};
+  const options = loaderUtils.getOptions(this);
   const dependencies = [];
 
   function resolveDependency(interpolation, localStyle, node) {
