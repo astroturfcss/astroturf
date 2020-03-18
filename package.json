@@ -72,7 +72,7 @@
     "errno": "^0.1.7",
     "fast-levenshtein": "^2.0.6",
     "fs-extra": "^8.0.0",
-    "loader-utils": "^1.2.3",
+    "loader-utils": "^2.0.0",
     "lodash": "^4.17.15",
     "memory-fs": "^0.5.0",
     "postcss-atroot": "^0.1.3",
