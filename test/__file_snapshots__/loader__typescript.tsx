@@ -23,7 +23,7 @@ const Button = /*#__PURE__*/ styled("button", null, {
   displayName: "Button",
   styles: require("./typescript-Button.css"),
   attrs: null,
-  vars: []
+  vars: [],
 });
 
 class Component extends React.Component<PropsType> {

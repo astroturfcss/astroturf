@@ -4,7 +4,7 @@ const React = require('react'); // eslint-disable-line import/no-extraneous-depe
 const getName = (name, C) => `${name}(${C.displayName || C.name || C})`;
 
 function mapProps(mapper) {
-  return Component =>
+  return (Component) =>
     Object.assign(
       React.forwardRef((p, ref) => <Component ref={ref} {...mapper(p)} />),
       {
@@ -15,7 +15,7 @@ function mapProps(mapper) {
 }
 
 function withProps(objOrMapper) {
-  return Component =>
+  return (Component) =>
     Object.assign(
       React.forwardRef((p, ref) => (
         <Component

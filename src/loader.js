@@ -47,11 +47,11 @@ function buildDependencyError(
   { styles, resource },
   loc,
 ) {
-  let idents = styles.map(s => s.identifier);
+  let idents = styles.map((s) => s.identifier);
 
   let closest;
   let minDistance = 2;
-  idents.forEach(ident => {
+  idents.forEach((ident) => {
     const d = levenshtein.get(ident, identifier);
     if (d < minDistance) {
       minDistance = d;
@@ -61,11 +61,11 @@ function buildDependencyError(
   const isDefaultImport = type === 'ImportDefaultSpecifier';
 
   if (!closest && isDefaultImport) {
-    closest = idents.find(ident => ident === getNameFromFile(resource));
+    closest = idents.find((ident) => ident === getNameFromFile(resource));
   }
-  if (closest) idents = idents.filter(ident => ident !== closest);
+  if (closest) idents = idents.filter((ident) => ident !== closest);
 
-  idents = idents.map(s => chalk.yellow(s)).join(', ');
+  idents = idents.map((s) => chalk.yellow(s)).join(', ');
 
   const alternative = isDefaultImport
     ? `Instead try: ${chalk.yellow(`import ${closest} from '${request}';`)}`
@@ -109,7 +109,7 @@ function collectStyles(src, filename, resolveDependency, opts) {
 }
 
 function replaceStyleTemplates(src, locations) {
-  locations = sortBy(locations, i => i.start || 0);
+  locations = sortBy(locations, (i) => i.start || 0);
 
   let offset = 0;
 
@@ -156,7 +156,7 @@ module.exports = function loader(content, map, meta) {
 
   const resolve = util.promisify(this.resolve);
 
-  const buildDependency = async request => {
+  const buildDependency = async (request) => {
     const resource = await resolve(dirname(resourcePath), request);
 
     const maybeCycle = compilation[SEEN].has(resource);
@@ -191,8 +191,8 @@ module.exports = function loader(content, map, meta) {
 
     debug(`resolving dependency: ${request}`);
     dependencies.push(
-      buildDependency(request).then(module => {
-        const style = module.styles.find(s => s.identifier === identifier);
+      buildDependency(request).then((module) => {
+        const style = module.styles.find((s) => s.identifier === identifier);
 
         if (!style) {
           throw buildDependencyError(content, interpolation, module, loc);
@@ -246,7 +246,7 @@ module.exports = function loader(content, map, meta) {
   // console.log('WAIT', resourcePath);
   return Promise.all(dependencies)
     .then(() => {
-      styles.forEach(style => {
+      styles.forEach((style) => {
         const mtime = emitVirtualFile(style.absoluteFilePath, style.value);
         compilation.fileTimestamps.set(style.absoluteFilePath, +mtime);
       });

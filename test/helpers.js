@@ -84,8 +84,8 @@ export function runLoader(src, options, filename = 'MyStyleFile.js') {
 
 export const fixtures = fs
   .readdirSync(`${__dirname}/fixtures`)
-  .map(file => `${__dirname}/fixtures/${file}`)
-  .filter(f => !f.endsWith('.json'));
+  .map((file) => `${__dirname}/fixtures/${file}`)
+  .filter((f) => !f.endsWith('.json'));
 
 export function runWebpack(config) {
   const compiler = webpack({

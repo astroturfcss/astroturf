@@ -6,7 +6,7 @@ import { run, testAllRunners } from './helpers';
 describe('custom properties', () => {
   testAllRunners(
     'should allow Styled dynamic interpolations',
-    async runner => {
+    async (runner) => {
       const [code, [style]] = await runner(
         `
         import styled from 'astroturf';
@@ -26,7 +26,7 @@ describe('custom properties', () => {
 
   testAllRunners(
     'should allow css prop dynamic interpolations ',
-    async runner => {
+    async (runner) => {
       const [code, [style]] = await runner(
         `
       import { css } from 'astroturf';
@@ -52,7 +52,7 @@ describe('custom properties', () => {
     },
   );
 
-  testAllRunners('should handle units correctly', async runner => {
+  testAllRunners('should handle units correctly', async (runner) => {
     const [code, [style]] = await runner(
       `
       import { css } from 'astroturf';

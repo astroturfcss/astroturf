@@ -18,5 +18,5 @@ const FancierBox = /*#__PURE__*/ styled(FancyBox, options, {
   displayName: "FancierBox",
   styles: require("./pass-options-FancierBox.css"),
   attrs: null,
-  vars: []
+  vars: [],
 });
