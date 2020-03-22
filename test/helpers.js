@@ -132,7 +132,7 @@ function testAllRunnersImpl(t, msg, testFn) {
   t.each([
     ['babel', run],
     ['webpack', runLoader],
-  ])(`${msg}  (%s)`, (name, ...args) => testFn(...args));
+  ])(`${msg} (%s)`, (name, ...args) => testFn(...args));
 }
 
 export function testAllRunners(msg, testFn) {

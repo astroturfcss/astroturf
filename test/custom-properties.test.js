@@ -20,12 +20,12 @@ describe('custom properties', () => {
 
       const i = style.interpolations[0];
 
-      expect(code).toContain(`vars: [["${i.id}", p => p.color]]`);
+      expect(code).toContain(`vars: [["${i.id}", (p) => p.color]]`);
     },
   );
 
   testAllRunners(
-    'should allow css prop dynamic interpolations ',
+    'should allow css prop dynamic interpolations',
     async (runner) => {
       const [code, [style]] = await runner(
         `
@@ -75,7 +75,7 @@ describe('custom properties', () => {
     expect(code).toContain(
       `css={[
         require("./MyStyleFile-CssProp1_button.css"),
-        [["${i.id}", duration, "ms"]]
+        [["${i.id}", duration, "ms"]],
       ]}`,
     );
   });
