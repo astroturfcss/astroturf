@@ -6,7 +6,7 @@ import { run, testAllRunners } from './helpers';
 describe('custom properties', () => {
   testAllRunners(
     'should allow Styled dynamic interpolations',
-    async runner => {
+    async (runner) => {
       const [code, [style]] = await runner(
         `
         import styled from 'astroturf';
@@ -20,13 +20,13 @@ describe('custom properties', () => {
 
       const i = style.interpolations[0];
 
-      expect(code).toContain(`vars: [["${i.id}", p => p.color]]`);
+      expect(code).toContain(`vars: [["${i.id}", (p) => p.color]]`);
     },
   );
 
   testAllRunners(
-    'should allow css prop dynamic interpolations ',
-    async runner => {
+    'should allow css prop dynamic interpolations',
+    async (runner) => {
       const [code, [style]] = await runner(
         `
       import { css } from 'astroturf';
@@ -52,7 +52,7 @@ describe('custom properties', () => {
     },
   );
 
-  testAllRunners('should handle units correctly', async runner => {
+  testAllRunners('should handle units correctly', async (runner) => {
     const [code, [style]] = await runner(
       `
       import { css } from 'astroturf';
@@ -75,7 +75,7 @@ describe('custom properties', () => {
     expect(code).toContain(
       `css={[
         require("./MyStyleFile-CssProp1_button.css"),
-        [["${i.id}", duration, "ms"]]
+        [["${i.id}", duration, "ms"]],
       ]}`,
     );
   });

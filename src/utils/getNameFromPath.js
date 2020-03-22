@@ -7,7 +7,7 @@ export default function getNameFromPath(path) {
   if (path.isMemberExpression() || path.isJSXMemberExpression()) {
     return pascalCase(
       getMembers(path)
-        .map(m => getNameFromPath(m.path))
+        .map((m) => getNameFromPath(m.path))
         .filter(Boolean)
         .join('-'),
     );

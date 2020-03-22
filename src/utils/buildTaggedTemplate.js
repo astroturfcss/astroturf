@@ -102,7 +102,7 @@ function resolveStyleInterpolation(
   return null;
 }
 
-const getPlaceholder = idx => `###ASTROTURF_PLACEHOLDER_${idx}###`;
+const getPlaceholder = (idx) => `###ASTROTURF_PLACEHOLDER_${idx}###`;
 
 export default ({
   quasiPath,
@@ -191,7 +191,7 @@ export default ({
     const classList = classNames.replace(/(\n|\r|\n\r)/, '').split(/\s+/);
 
     const composed = classList
-      .map(className => styleInterpolations.get(className))
+      .map((className) => styleInterpolations.get(className))
       .filter(Boolean);
 
     if (!composed.length) return composes;
@@ -209,9 +209,9 @@ export default ({
       );
     }
 
-    return Object.entries(groupBy(composed, i => i.source)).reduce(
+    return Object.entries(groupBy(composed, (i) => i.source)).reduce(
       (acc, [source, values]) => {
-        const classes = uniq(values.map(v => v.imported)).join(' ');
+        const classes = uniq(values.map((v) => v.imported)).join(' ');
         return `${
           acc ? `${acc};\n` : ''
         }composes: ${classes} from "${source}"`;
@@ -222,7 +222,7 @@ export default ({
 
   let id = 0;
   let imports = '';
-  text = text.replace(rPlaceholder, match => {
+  text = text.replace(rPlaceholder, (match) => {
     const { imported, source } = styleInterpolations.get(match);
     const localName = `a${id++}`;
 

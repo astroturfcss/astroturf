@@ -14,5 +14,5 @@ const FancierBox = /*#__PURE__*/ styled(FancyBox, null, {
   displayName: "FancierBox",
   styles: require("./styled-FancierBox.css"),
   attrs: null,
-  vars: []
+  vars: [],
 });

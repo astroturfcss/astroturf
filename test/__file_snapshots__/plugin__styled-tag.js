@@ -4,11 +4,11 @@ const FancyBox = /*#__PURE__*/ s("div", null, {
   displayName: "FancyBox",
   styles: require("./styled-tag-FancyBox.css"),
   attrs: null,
-  vars: []
+  vars: [],
 });
 const FancierBox = /*#__PURE__*/ s(FancyBox, null, {
   displayName: "FancierBox",
   styles: require("./styled-tag-FancierBox.css"),
   attrs: null,
-  vars: []
+  vars: [],
 });

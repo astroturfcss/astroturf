@@ -11,7 +11,7 @@ const debug = util.debuglog('astroturf:memory-fs');
 const returnsTrue = () => true;
 const returnsFalse = () => false;
 
-const md4 = input => {
+const md4 = (input) => {
   const hash = createHash('md4');
   hash.update(input);
   return hash.digest('hex');
@@ -35,7 +35,7 @@ class MemoryFs {
     this.paths = new Map();
 
     ['stat', 'readdir', 'rmdir', 'unlink', 'readFile', 'writeFile'].forEach(
-      fn => {
+      (fn) => {
         this[fn] = (...args) => {
           const cb = args.pop();
           let result;
@@ -84,9 +84,9 @@ class MemoryFs {
 
   exists = (p, cb) => cb(this.existsSync(p));
 
-  existsSync = p => this.paths.has(path.normalize(p));
+  existsSync = (p) => this.paths.has(path.normalize(p));
 
-  statSync = p => {
+  statSync = (p) => {
     const file = this.paths.get(path.normalize(p));
     if (file)
       return {
@@ -121,7 +121,7 @@ class MemoryFs {
     return read(this.paths.get(p), optsOrEncoding);
   };
 
-  readdirSync = p => {
+  readdirSync = (p) => {
     const results = [];
     p = path.normalize(p);
     this.paths.forEach((_, key) => {
@@ -129,7 +129,7 @@ class MemoryFs {
     });
   };
 
-  rmdirSync = p => {
+  rmdirSync = (p) => {
     p = path.normalize(p);
 
     this.paths.forEach((_, key) => {
@@ -137,7 +137,7 @@ class MemoryFs {
     });
   };
 
-  unlinkSync = p => this.paths.delete(p);
+  unlinkSync = (p) => this.paths.delete(p);
 
   writeFileSync = (p, data) => {
     this.addFile(p, data, true);
