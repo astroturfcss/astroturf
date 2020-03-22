@@ -72,4 +72,4 @@ function doHash(str, seed = 0) {
   return h >>> 0;
 }
 
-export default code => doHash(code).toString(36);
+export default (code) => doHash(code).toString(36);

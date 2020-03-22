@@ -6,7 +6,7 @@ import { mapProps, withProps } from '../src/helpers';
 describe('helpers', () => {
   describe('mapProps', () => {
     it('should set displayName', () => {
-      const DoReMi = mapProps(p => p)('div');
+      const DoReMi = mapProps((p) => p)('div');
 
       const div = mount(<DoReMi />).find('mapProps(div)');
 
@@ -14,7 +14,7 @@ describe('helpers', () => {
     });
 
     test('mapProps maps owner props to child props', () => {
-      const mapper = jest.fn(props => ({
+      const mapper = jest.fn((props) => ({
         ...props,
         bar: props.bar + 1,
       }));
@@ -31,7 +31,7 @@ describe('helpers', () => {
     });
 
     it('should accept a ref', () => {
-      const DoReMi = mapProps(p => p)('div');
+      const DoReMi = mapProps((p) => p)('div');
       const ref = React.createRef();
       mount(<DoReMi ref={ref} />);
 
@@ -73,7 +73,7 @@ describe('helpers', () => {
     });
 
     it('should accept a function', () => {
-      const DoReMi = withProps(props => ({
+      const DoReMi = withProps((props) => ({
         'data-so': props['data-la'],
       }))('div');
 

@@ -37,7 +37,7 @@ function buildStyledComponent(path, elementType, opts) {
   if (!displayName)
     throw path.buildCodeFrameError(
       // the expression case should always be the problem but just in case, let's avoid a potentially weird error.
-      path.findParent(p => p.isExpressionStatement())
+      path.findParent((p) => p.isExpressionStatement())
         ? 'The output of this styled component is never used. Either assign it to a variable or export it.'
         : 'Could not determine a displayName for this styled component. Each component must be uniquely identifiable, either as the default export of the module or by assigning it to a unique identifier',
     );

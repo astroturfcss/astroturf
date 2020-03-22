@@ -4,7 +4,7 @@ import { jsx } from '../src/index';
 import { testAllRunners } from './helpers';
 
 describe('css prop', () => {
-  testAllRunners('should compile string', async runner => {
+  testAllRunners('should compile string', async (runner) => {
     const [, styles] = await runner(
       `
       import { css } from 'astroturf';
@@ -23,7 +23,7 @@ describe('css prop', () => {
     expect(styles[0].identifier).toEqual('CssProp1_button');
   });
 
-  testAllRunners('should compile template literal', async runner => {
+  testAllRunners('should compile template literal', async (runner) => {
     const [, [style]] = await runner(
       `
       import { css } from 'astroturf';
@@ -44,7 +44,7 @@ describe('css prop', () => {
     expect(style.identifier).toEqual('CssProp1_button');
   });
 
-  testAllRunners('should compile css tag', async runner => {
+  testAllRunners('should compile css tag', async (runner) => {
     const [, [style]] = await runner(
       `
       import { css } from 'astroturf';
@@ -65,7 +65,7 @@ describe('css prop', () => {
     expect(style.identifier).toEqual('CssProp1_button');
   });
 
-  testAllRunners('should interpolate static vars', async runner => {
+  testAllRunners('should interpolate static vars', async (runner) => {
     const [, [style]] = await runner(
       `
       import { css } from 'astroturf';
@@ -88,9 +88,11 @@ describe('css prop', () => {
     expect(style.value).toMatch('1500ms');
   });
 
-  testAllRunners('should find when used with createElement', async runner => {
-    const [code, styles] = await runner(
-      `
+  testAllRunners(
+    'should find when used with createElement',
+    async (runner) => {
+      const [code, styles] = await runner(
+        `
       function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
       import { css } from 'astroturf';
@@ -107,15 +109,16 @@ describe('css prop', () => {
         }), React.createElement('span', { css: 'width: 3rem' }));
       });
     `,
-      { enableCssProp: true },
-    );
+        { enableCssProp: true },
+      );
 
-    expect(code).not.toMatch('React.createElement');
-    expect(styles).toHaveLength(2);
-    expect(styles[0].identifier).toEqual('CssProp1_div');
-  });
+      expect(code).not.toMatch('React.createElement');
+      expect(styles).toHaveLength(2);
+      expect(styles[0].identifier).toEqual('CssProp1_div');
+    },
+  );
 
-  testAllRunners('should warn when not enabled', async runner => {
+  testAllRunners('should warn when not enabled', async (runner) => {
     const spy = jest.spyOn(console, 'warn').mockImplementation(() => {});
 
     const [, styles] = await runner(
@@ -146,7 +149,7 @@ describe('css prop', () => {
 
   testAllRunners(
     'should only compile with appropriate css import',
-    async runner => {
+    async (runner) => {
       const [, styles] = await runner(
         `
         const Widget = (props) =>

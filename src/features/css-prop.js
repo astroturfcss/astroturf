@@ -17,7 +17,7 @@ const JSX_IDENTS = Symbol('Astroturf jsx identifiers');
 
 const buildImport = template('require(FILENAME);');
 
-const isCreateElementCall = p =>
+const isCreateElementCall = (p) =>
   p.isCallExpression() &&
   p.get('callee.property').node &&
   p.get('callee.property').node.name === 'createElement';
@@ -202,7 +202,7 @@ export default {
     if (path.node.name.name !== 'css') return;
 
     const valuePath = path.get('value');
-    const parentPath = path.findParent(p => p.isJSXOpeningElement());
+    const parentPath = path.findParent((p) => p.isJSXOpeningElement());
 
     const compiledNode = buildCssProp(
       valuePath,

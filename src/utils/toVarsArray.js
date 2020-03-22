@@ -1,8 +1,8 @@
 import * as t from '@babel/types';
 
-export default interpolations =>
+export default (interpolations) =>
   t.ArrayExpression(
-    Array.from(interpolations, i =>
+    Array.from(interpolations, (i) =>
       t.ArrayExpression(
         [
           t.StringLiteral(i.id),

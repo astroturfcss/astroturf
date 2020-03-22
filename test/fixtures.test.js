@@ -6,7 +6,7 @@ const { fixtures, run, runLoader } = require('./helpers');
 
 process.env.NODE_ENV = 'development';
 
-const getOptions = f => {
+const getOptions = (f) => {
   try {
     return fs.readJsonSync(
       `${__dirname}/fixtures/${basename(f, extname(f))}.json`,
@@ -17,7 +17,7 @@ const getOptions = f => {
 };
 
 describe('fixtures', () => {
-  fixtures.forEach(fixture => {
+  fixtures.forEach((fixture) => {
     const options = getOptions(fixture);
     const content = fs.readFileSync(fixture, 'utf8');
 
@@ -66,7 +66,7 @@ describe('fixtures', () => {
           });
 
           it(`styles`, () => {
-            (result[1] || []).forEach(s => {
+            (result[1] || []).forEach((s) => {
               expect(s.value).toMatchFile(
                 join(
                   __dirname,
@@ -115,7 +115,7 @@ describe('fixtures', () => {
           });
 
           it(`styles`, () => {
-            (result[1] || []).forEach(s => {
+            (result[1] || []).forEach((s) => {
               expect(s.value).toMatchFile(
                 join(
                   __dirname,

@@ -30,7 +30,7 @@ function buildStyleRequire(path, opts) {
 
   if (styles.has(style.absoluteFilePath))
     throw path.buildCodeFrameError(
-      path.findParent(p => p.isExpressionStatement())
+      path.findParent((p) => p.isExpressionStatement())
         ? `There are multiple anonymous ${tagName} tags that would conflict. Differentiate each tag by assigning the output to a unique identifier`
         : `There are multiple ${tagName} tags with the same inferred identifier. Differentiate each tag by assigning the output to a unique identifier`,
     );

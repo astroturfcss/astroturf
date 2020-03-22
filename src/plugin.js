@@ -32,9 +32,9 @@ export default function plugin() {
       let { styles, changeset } = file.get(STYLES);
       const importNodes = file.get(IMPORTS);
 
-      importNodes.forEach(path => {
+      importNodes.forEach((path) => {
         const decl = !path.isImportDeclaration()
-          ? path.findParent(p => p.isImportDeclaration())
+          ? path.findParent((p) => p.isImportDeclaration())
           : path;
 
         if (!decl) return;
@@ -86,7 +86,7 @@ export default function plugin() {
             const tagImport = path
               .get('specifiers')
               .find(
-                p =>
+                (p) =>
                   p.isImportSpecifier() &&
                   p.node.imported.name === 'css' &&
                   p.node.local.name === tagName,

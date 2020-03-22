@@ -77,7 +77,7 @@ describe('webpack integration', () => {
   it('should provide a helpful error when failing to resolve a default', async () => {
     const error = await runWebpack(
       getConfig('./integration/error-default-import.js'),
-    ).catch(err => err);
+    ).catch((err) => err);
 
     const message = stripAnsi(error.message);
 
@@ -90,7 +90,7 @@ describe('webpack integration', () => {
   it('should provide a helpful error when failing to resolve a named import', async () => {
     const error = await runWebpack(
       getConfig('./integration/error-named-import.js'),
-    ).catch(err => err);
+    ).catch((err) => err);
 
     const message = stripAnsi(error.message);
 
@@ -103,7 +103,9 @@ describe('webpack integration', () => {
   it.skip('should throw on cycles', async () => {
     const timeout = global.setTimeout;
 
-    jest.spyOn(global, 'setTimeout').mockImplementation(fn => timeout(fn, 0));
+    jest
+      .spyOn(global, 'setTimeout')
+      .mockImplementation((fn) => timeout(fn, 0));
 
     const result = runWebpack(getConfig('./integration/cycle.js'));
 
