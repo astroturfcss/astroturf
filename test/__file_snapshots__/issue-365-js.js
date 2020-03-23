@@ -194,7 +194,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const mixins = __webpack_require__(/*! ./issue-365-mixins.css */ "./test/integration/issue-365-mixins.css");
 
-const Block = React.createElement(BlockStyled, {
+const Block = /*#__PURE__*/React.createElement(BlockStyled, {
   active: false
 });
 const BlockStyled = /*#__PURE__*/astroturf__WEBPACK_IMPORTED_MODULE_0___default()("div", null, {
