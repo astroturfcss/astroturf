@@ -1,8 +1,8 @@
 /** @jsxFrag _f **/
 
 /** @jsx _j **/
-import { F as _f2 } from "astroturf";
-import { jsx as _j2 } from "astroturf";
+import { F as _f } from "astroturf";
+import { jsx as _j } from "astroturf";
 import React from "react";
 
 function Button() {

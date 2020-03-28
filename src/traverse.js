@@ -4,21 +4,23 @@ import { transformSync } from '@babel/core';
 
 import plugin from './plugin';
 
-export default function traverse(source, filename, opts) {
+export default function traverse(source, map, filename, opts) {
   const extname = path.extname(filename);
 
   return transformSync(source, {
     filename,
     babelrc: false,
-    code: false,
+    code: true,
     ast: false,
     plugins: [[plugin, opts]],
+    inputSourceMap: map || undefined,
+    sourceMaps: true,
     parserOpts: {
       allowImportExportEverywhere: true,
       allowReturnOutsideFunction: true,
       allowSuperOutsideMethod: true,
       sourceType: 'unambiguous',
-      sourceFilename: true,
+      filenameRelative: filename,
 
       plugins: [
         'jsx',

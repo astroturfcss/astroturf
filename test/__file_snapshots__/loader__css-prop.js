@@ -1,8 +1,8 @@
-/** @jsx _j **/
 /** @jsxFrag _f **/
 
-const { jsx: _j, F: _f } = require("astroturf");
-
+/** @jsx _j **/
+import { F as _f } from "astroturf";
+import { jsx as _j } from "astroturf";
 import React from "react";
 
 function Button() {
@@ -14,6 +14,7 @@ function Button2() {
 }
 
 const color = "orange";
+
 function Button3() {
   return (
     <>

@@ -5,7 +5,6 @@ const FancyBox = /*#__PURE__*/s('div', null, {
   attrs: null,
   vars: []
 });
-
 const FancierBox = /*#__PURE__*/ s(FancyBox, null, {
   displayName: "FancierBox",
   styles: require("./styled-global-FancierBox.css"),

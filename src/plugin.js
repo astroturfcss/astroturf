@@ -1,4 +1,3 @@
-import generate from '@babel/generator';
 import { visitors } from '@babel/traverse';
 import { stripIndent } from 'common-tags';
 import { outputFileSync } from 'fs-extra';
@@ -17,7 +16,6 @@ export default function plugin() {
       if (!file.has(STYLES)) {
         file.set(STYLES, {
           id: 0,
-          changeset: [],
           styles: new Map(),
         });
       }
@@ -29,7 +27,7 @@ export default function plugin() {
 
     post(file) {
       const { opts } = this;
-      let { styles, changeset } = file.get(STYLES);
+      let { styles } = file.get(STYLES);
       const importNodes = file.get(IMPORTS);
 
       importNodes.forEach((path) => {
@@ -39,25 +37,12 @@ export default function plugin() {
 
         if (!decl) return;
 
-        const { start, end } = decl.node;
-
         path.remove();
-
-        if (opts.generateInterpolations)
-          changeset.push({
-            start,
-            end,
-            // if the path is just a removed specifier we need to regenerate
-            // the import statement otherwise we remove the entire declaration
-            code: !path.isImportDeclaration() ? generate(decl.node).code : '',
-          });
       });
 
       styles = Array.from(styles.values());
 
-      changeset = changeset.concat(styles);
-
-      file.metadata.astroturf = { styles, changeset };
+      file.metadata.astroturf = { styles };
 
       if (opts.writeFiles !== false) {
         styles.forEach(({ absoluteFilePath, value }) => {

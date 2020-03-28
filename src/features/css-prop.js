@@ -133,8 +133,15 @@ export default {
       // We need to re-export Fragment because of
       // https://github.com/babel/babel/pull/7996#issuecomment-519653431
       state[JSX_IDENTS] = {
-        jsx: path.scope.generateUidIdentifier('j'),
-        jsxFrag: path.scope.generateUidIdentifier('f'),
+        init: (file) => {
+          state[JSX_IDENTS].jsx =
+            state[JSX_IDENTS].jsx ||
+            addNamed(file.path, 'jsx', 'astroturf', { nameHint: 'j' });
+
+          state[JSX_IDENTS].jsxFrag =
+            state[JSX_IDENTS].jsxFrag ||
+            addNamed(file.path, 'F', 'astroturf', { nameHint: 'f' });
+        },
       };
     },
 
@@ -148,17 +155,6 @@ export default {
 
       path.addComment('leading', jsxPrgama);
       path.addComment('leading', jsxFragPrgama);
-
-      addNamed(path, 'jsx', 'astroturf', { nameHint: jsx.name });
-      addNamed(path, 'F', 'astroturf', { nameHint: jsxFrag.name });
-
-      state.file.get(STYLES).changeset.unshift(
-        { code: `/*${jsxPrgama}*/\n` },
-        { code: `/*${jsxFragPrgama}*/\n\n` },
-        {
-          code: `const { jsx: ${jsx.name}, F: ${jsxFrag.name} } = require('astroturf');\n`,
-        },
-      );
     },
   },
 
@@ -180,15 +176,9 @@ export default {
     }
 
     if (innerState.processed) {
+      state[JSX_IDENTS].init(file);
       const { jsx } = state[JSX_IDENTS];
-      const { changeset } = file.get(STYLES);
       const callee = path.get('callee');
-
-      changeset.push({
-        code: jsx.name,
-        start: callee.node.start,
-        end: callee.node.end,
-      });
 
       callee.replaceWith(jsx);
       file.set(HAS_CSS_PROP, true);
@@ -216,6 +206,7 @@ export default {
 
     if (compiledNode) {
       valuePath.replaceWith(compiledNode);
+      state[JSX_IDENTS].init(file);
       file.set(HAS_CSS_PROP, true);
     }
   },

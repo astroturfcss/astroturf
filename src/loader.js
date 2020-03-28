@@ -5,7 +5,6 @@ import { codeFrameColumns } from '@babel/code-frame';
 import chalk from 'chalk';
 import levenshtein from 'fast-levenshtein';
 import loaderUtils from 'loader-utils';
-import sortBy from 'lodash/sortBy';
 
 import VirtualModulePlugin from './VirtualModulePlugin';
 import traverse from './traverse';
@@ -93,40 +92,18 @@ function buildDependencyError(
   );
 }
 
-function collectStyles(src, filename, resolveDependency, opts) {
+function collectStyles(src, map, filename, resolveDependency, opts) {
   // maybe eventually return the ast directly if babel-loader supports it
   try {
-    const { metadata } = traverse(src, filename, {
+    return traverse(src, map, filename, {
       ...opts,
       resolveDependency,
       writeFiles: false,
       generateInterpolations: true,
     });
-    return metadata.astroturf;
   } catch (err) {
     throw new AstroturfLoaderError(err);
   }
-}
-
-function replaceStyleTemplates(src, locations) {
-  locations = sortBy(locations, (i) => i.start || 0);
-
-  let offset = 0;
-
-  function splice(str, start = 0, end = 0, replace) {
-    const result =
-      str.slice(0, start + offset) + replace + str.slice(end + offset);
-
-    offset += replace.length - (end - start);
-    return result;
-  }
-
-  locations.forEach(({ start, end, code }) => {
-    if (code.endsWith(';')) code = code.slice(0, -1); // remove trailing semicolon
-    src = splice(src, start, end, code);
-  });
-
-  return src;
 }
 
 const LOADER_PLUGIN = Symbol('loader added VM plugin');
@@ -211,12 +188,15 @@ module.exports = function loader(content, map, meta) {
     return { source, imported };
   }
 
-  const { styles = [], changeset } = collectStyles(
+  const collectStylesResult = collectStyles(
     content,
+    map,
     resourcePath,
     resolveDependency,
     options,
   );
+
+  const { styles = [] } = collectStylesResult.metadata.astroturf;
 
   if (meta) {
     meta.styles = styles;
@@ -251,9 +231,7 @@ module.exports = function loader(content, map, meta) {
         compilation.fileTimestamps.set(style.absoluteFilePath, +mtime);
       });
 
-      const result = replaceStyleTemplates(content, changeset);
-
-      cb(null, result);
+      cb(null, collectStylesResult.code, collectStylesResult.map);
     })
     .catch(cb);
 

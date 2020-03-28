@@ -1,10 +1,10 @@
-/** @jsx _j **/
 /** @jsxFrag _f **/
 
-const { jsx: _j, F: _f } = require("astroturf");
+/** @jsx _j **/
+import { F as _f } from "astroturf";
+import { jsx as _j } from "astroturf";
 import styled from "astroturf";
 import React from "react";
-
 const SIZE = 75;
 
 const styles = require("./typescript-styles.css");
@@ -14,7 +14,11 @@ interface PropsType {
   name: string;
 }
 
-function someMath<T extends { x: number }>(obj: T): T {
+function someMath<
+  T extends {
+    x: number;
+  }
+>(obj: T): T {
   console.log(Math.abs(obj.x));
   return obj as T;
 }

@@ -1,15 +1,12 @@
 import styled from "astroturf";
+const SIZE = 75; // prettier-ignore
 
-const SIZE = 75;
-
-// prettier-ignore
-const FancyBox = /*#__PURE__*/styled('div', null, {
+const FancyBox = /*#__PURE__*/ styled("div", null, {
   displayName: "FancyBox",
   styles: require("./styled-FancyBox.css"),
   attrs: null,
-  vars: []
+  vars: [],
 });
-
 const FancierBox = /*#__PURE__*/ styled(FancyBox, null, {
   displayName: "FancierBox",
   styles: require("./styled-FancierBox.css"),

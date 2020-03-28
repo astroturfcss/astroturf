@@ -279,13 +279,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var widget__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! widget */ "./test/integration/shared/widget/index.js");
 /* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Button */ "./test/integration/Button.js");
+/** @jsxFrag _f **/
+
 /** @jsx _j **/
 
-/** @jsxFrag _f **/
-const {
-  jsx: _j,
-  F: _f
-} = __webpack_require__(/*! astroturf */ "./src/runtime/styled.js");
 
 
 
@@ -309,10 +306,10 @@ const FancierBox = /*#__PURE__*/astroturf__WEBPACK_IMPORTED_MODULE_0___default()
   vars: []
 });
 function MyComponent() {
-  return _j(_f, null, _j("div", {
+  return Object(astroturf__WEBPACK_IMPORTED_MODULE_0__["jsx"])(astroturf__WEBPACK_IMPORTED_MODULE_0__["F"], null, Object(astroturf__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
     foo: true,
     css: [__webpack_require__(/*! ./main-CssProp1_div.css */ "./test/integration/main-CssProp1_div.css"), []]
-  }, _j("div", null, "hey "), _j("span", {
+  }, Object(astroturf__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", null, "hey "), Object(astroturf__WEBPACK_IMPORTED_MODULE_0__["jsx"])("span", {
     css: [__webpack_require__(/*! ./main-CssProp2_span.css */ "./test/integration/main-CssProp2_span.css"), []]
   }, "yo")));
 }
