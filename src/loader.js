@@ -6,6 +6,7 @@ import chalk from 'chalk';
 import levenshtein from 'fast-levenshtein';
 import loaderUtils from 'loader-utils';
 import sortBy from 'lodash/sortBy';
+import MagicString from 'magic-string';
 
 import VirtualModulePlugin from './VirtualModulePlugin';
 import traverse from './traverse';
@@ -108,25 +109,25 @@ function collectStyles(src, filename, resolveDependency, opts) {
   }
 }
 
-function replaceStyleTemplates(src, locations) {
+function replaceStyleTemplates(filename, src, locations) {
   locations = sortBy(locations, (i) => i.start || 0);
 
-  let offset = 0;
+  const magic = new MagicString(src);
 
-  function splice(str, start = 0, end = 0, replace) {
-    const result =
-      str.slice(0, start + offset) + replace + str.slice(end + offset);
-
-    offset += replace.length - (end - start);
-    return result;
-  }
-
-  locations.forEach(({ start, end, code }) => {
+  locations.forEach(({ start = 0, end = 0, code }) => {
     if (code.endsWith(';')) code = code.slice(0, -1); // remove trailing semicolon
-    src = splice(src, start, end, code);
+
+    if (start === end) {
+      magic.appendLeft(start, code);
+    } else {
+      magic.overwrite(start, end, code);
+    }
   });
 
-  return src;
+  return {
+    code: magic.toString(),
+    map: magic.generateMap({ includeContent: true, source: filename }),
+  };
 }
 
 const LOADER_PLUGIN = Symbol('loader added VM plugin');
@@ -251,9 +252,9 @@ module.exports = function loader(content, map, meta) {
         compilation.fileTimestamps.set(style.absoluteFilePath, +mtime);
       });
 
-      const result = replaceStyleTemplates(content, changeset);
+      const result = replaceStyleTemplates(resourcePath, content, changeset);
 
-      cb(null, result);
+      cb(null, result.code, result.map);
     })
     .catch(cb);
 
