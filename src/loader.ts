@@ -7,6 +7,7 @@ import sortBy from 'lodash/sortBy';
 import * as webpack from 'webpack';
 import { codeFrameColumns } from '@babel/code-frame';
 import { Expression, SourceLocation } from '@babel/types';
+import MagicString from 'magic-string';
 
 import traverse from './traverse';
 import {
@@ -145,23 +146,29 @@ function collectStyles(
   }
 }
 
-function replaceStyleTemplates(src: string, locations: Change[]) {
+function replaceStyleTemplates(
+  filename: string,
+  src: string,
+  locations: Change[],
+) {
   locations = sortBy(locations, i => i.start || 0);
 
-  let offset = 0;
+  const magic = new MagicString(src);
 
-  function splice(str: string, start = 0, end = 0, replace: string) {
-    const result =
-      str.slice(0, start + offset) + replace + str.slice(end + offset);
+  locations.forEach(({ start = 0, end = 0, code }) => {
+    if (code.endsWith(';')) code = code.slice(0, -1); // remove trailing semicolon
 
-    offset += replace.length - (end - start);
-    return result;
-  }
-
-  locations.forEach(({ start, end, code = '' }) => {
-    src = splice(src, start, end, code);
+    if (start === end) {
+      magic.appendLeft(start, code);
+    } else {
+      magic.overwrite(start, end, code);
+    }
   });
-  return src;
+
+  return {
+    code: magic.toString(),
+    map: magic.generateMap({ includeContent: true, source: filename }),
+  };
 }
 
 const LOADER_PLUGIN = Symbol('loader added VM plugin');
@@ -270,9 +277,9 @@ module.exports = function loader(
         compilation.fileTimestamps.set(style.absoluteFilePath, +mtime);
       });
 
-      const result = replaceStyleTemplates(content, changeset);
+      const result = replaceStyleTemplates(resourcePath, content, changeset);
 
-      cb(null, result);
+      cb(null, result.code, result.map as any);
     })
     .catch(cb);
 };
