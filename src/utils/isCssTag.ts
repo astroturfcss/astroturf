@@ -2,7 +2,10 @@ import { ResolvedOptions } from '../types';
 
 export default function isCssTag(
   tagPath: any,
-  { cssTagName, allowGlobal }: ResolvedOptions,
+  {
+    cssTagName,
+    allowGlobal,
+  }: Pick<ResolvedOptions, 'cssTagName' | 'allowGlobal'>,
 ): boolean {
   return (
     cssTagName !== false &&

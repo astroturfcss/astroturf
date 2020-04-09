@@ -148,23 +148,24 @@ In addition to the `styled` helper, styles can be defined directly on components
 You first need to enable this feature via the `enableCssProp` option in your loader config
 
 ```jsx
-function Button({ variant, children }) {
+function Button({ variant, bgColor, children }) {
   return (
     <button
-      variant={variant}
       css={css`
         color: black;
         border: 1px solid black;
-        background-color: white;
+        background-color: ${bgColor};
 
-        &.variant-primary {
-          color: blue;
-          border: 1px solid blue;
-        }
+        ${variant === 'primary' &&
+          css`
+            color: blue;
+            border: 1px solid blue;
+          `}
 
-        &.variant-secondary {
-          color: green;
-        }
+        ${variant === 'secondary' &&
+          css`
+            color: green;
+          `}
       `}
     >
       {children}
@@ -211,14 +212,12 @@ How you accomplish that is mostly up to your preprocessor. Leverage Sass variabl
 ```js
 // Button.js
 
-const helpers = css`
-  .heavy {
-    font-weight: 900;
-  }
+const heavy = css`
+  font-weight: 900;
 `;
 
 const Title = styled('h3')`
-  composes: ${helpers.heavy};
+  composes: ${heavy};
 
   font-size: 12%;
 `;
@@ -497,10 +496,13 @@ You can add on here as you would normally for additional preprocesser setup. Her
 
 astroturf accepts a few query options.
 
+- **stylesheetTagName**: (default: `'stylesheet'`) The tag identifier used to locate inline stylesheets declarations.
 - **cssTagName**: (default: `'css'`) The tag identifier used to locate inline css literals and extract them.
 - **styledTagName**: (default: `'styled'`) The tag identifier used to locate components.
 - **extension**: (default: `'.css'`) the extension used for extracted "virtual" files. Change to whatever file type you want webpack to process extracted literals as.
 - **enableCssProp**: (default: false) compiles `css` props to styled components.
+- **customCssProperties**: (default: 'cssProp') enables or disables custom value interpolation, You can disable this feature if you need to target environments that
+  do not support CSS custom properties.
 
 **Note:** astroturf expects uncompiled JavaScript code, If you are using babel or Typescript to transform tagged template literals, ensure the loader runs _before_ babel or typescript loaders.
 

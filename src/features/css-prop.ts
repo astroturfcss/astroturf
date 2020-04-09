@@ -22,7 +22,7 @@ type CssPropPluginState = PluginState & {
   };
 };
 
-const isCreateElementCall = (p: NodePath) =>
+export const isCreateElementCall = (p: NodePath) =>
   p.isCallExpression() &&
   (p.get('callee.property') as any).node &&
   (p.get('callee.property') as any).node.name === 'createElement';
