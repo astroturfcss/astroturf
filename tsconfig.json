@@ -4,5 +4,5 @@
     "rootDir": "src",
     "outDir": "lib"
   },
-  "include": ["src", "codemods"]
+  "include": ["src"]
 }

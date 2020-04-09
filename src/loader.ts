@@ -155,7 +155,7 @@ function replaceStyleTemplates(
 
   const magic = new MagicString(src);
 
-  locations.forEach(({ start = 0, end = 0, code }) => {
+  locations.forEach(({ start = 0, end = 0, code = '' }) => {
     if (code.endsWith(';')) code = code.slice(0, -1); // remove trailing semicolon
 
     if (start === end) {
