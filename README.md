@@ -463,7 +463,7 @@ If you want the simplest, most bare-bones setup you can use the included `css-lo
         test: /\.tsx?$/,
         use: ['ts-loader', 'astroturf/loader'],
       },
-    ];
+    ],
   }
 }
 ```
