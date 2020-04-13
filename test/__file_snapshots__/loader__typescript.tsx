@@ -19,7 +19,7 @@ function someMath<T extends { x: number }>(obj: T): T {
 }
 const Button = /*#__PURE__*/ styled("button", null, {
   displayName: "Button",
-  styles: _Button
+  styles: _Button,
 });
 class Component extends React.Component<PropsType> {
   render() {

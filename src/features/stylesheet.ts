@@ -2,12 +2,12 @@ import { NodePath } from '@babel/core';
 import * as t from '@babel/types';
 
 import { NodeStyleMap, PluginState, StaticStyle, StyleState } from '../types';
+import { COMPONENTS, STYLES } from '../utils/Symbols';
 import buildTaggedTemplate from '../utils/buildTaggedTemplate';
 import createStyleNode from '../utils/createStyleNode';
 import getDisplayName from '../utils/getDisplayName';
 import isCssTag from '../utils/isCssTag';
 import isStylesheetTag from '../utils/isStylesheetTag';
-import { COMPONENTS, STYLES } from '../utils/Symbols';
 
 function buildStyleRequire(
   path: NodePath<t.TaggedTemplateExpression>,
@@ -46,7 +46,7 @@ function buildStyleRequire(
 
   if (styles.has(style.absoluteFilePath))
     throw path.buildCodeFrameError(
-      path.findParent(p => p.isExpressionStatement())
+      path.findParent((p) => p.isExpressionStatement())
         ? `There are multiple anonymous ${tagName} tags that would conflict. Differentiate each tag by assigning the output to a unique identifier`
         : `There are multiple ${tagName} tags with the same inferred identifier. Differentiate each tag by assigning the output to a unique identifier`,
     );

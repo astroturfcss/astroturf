@@ -3,5 +3,5 @@ import _FancyBox from "astroturf/css-loader?inline!./element-shorthand-FancyBox.
 const SIZE = 75;
 const FancyBox = /*#__PURE__*/ styled("div", null, {
   displayName: "FancyBox",
-  styles: _FancyBox
+  styles: _FancyBox,
 });

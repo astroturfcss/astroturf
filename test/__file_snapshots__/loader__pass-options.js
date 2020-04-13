@@ -12,5 +12,5 @@ const FancyBox = /*#__PURE__*/styled('div', {
 const options = {};
 const FancierBox = /*#__PURE__*/ styled(FancyBox, options, {
   displayName: "FancierBox",
-  styles: _FancierBox
+  styles: _FancierBox,
 });

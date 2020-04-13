@@ -7,7 +7,7 @@ import { testAllRunners } from './helpers';
 describe('variants', () => {
   testAllRunners(
     'should allow css prop dynamic interpolations ',
-    async runner => {
+    async (runner) => {
       const [code, styles] = await runner(
         `
       import { css } from 'astroturf';
@@ -26,7 +26,7 @@ describe('variants', () => {
         );
       }
       `,
-        { enableCssProp: true, customCssProperties: 'cssProp' },
+        { enableCssProp: true, enableDynamicInterpolations: 'cssProp' },
       );
 
       expect(styles).toHaveLength(1);
@@ -36,15 +36,17 @@ describe('variants', () => {
       css={[
         _CssProp1_button,
         [],
-        [primary && _CssProp1_button["cssProp1ButtonVariant0"]]
+        [primary && _CssProp1_button["cssProp1ButtonVariant0"]],
       ]}`,
       );
     },
   );
 
-  testAllRunners('should allow multiple classes per variant', async runner => {
-    const [code, styles] = await runner(
-      `
+  testAllRunners(
+    'should allow multiple classes per variant',
+    async (runner) => {
+      const [code, styles] = await runner(
+        `
       import { css } from 'astroturf';
 
       function Button({ color, primary }) {
@@ -63,27 +65,28 @@ describe('variants', () => {
         );
       }
       `,
-      { enableCssProp: true, customCssProperties: 'cssProp' },
-    );
+        { enableCssProp: true, enableDynamicInterpolations: 'cssProp' },
+      );
 
-    expect(styles).toHaveLength(1);
-    const i = styles[0].interpolations[0];
+      expect(styles).toHaveLength(1);
+      const i = styles[0].interpolations[0];
 
-    expect(code).toContain(
-      `
+      expect(code).toContain(
+        `
       css={[
         _CssProp1_button,
         [["${i.id}", color]],
         [
           primary
             ? _CssProp1_button["cssProp1ButtonVariant1"]
-            : _CssProp1_button["cssProp1ButtonVariant2"]
-        ]
+            : _CssProp1_button["cssProp1ButtonVariant2"],
+        ],
       ]}`,
-    );
-  });
+      );
+    },
+  );
 
-  testAllRunners('should handle nested iterpolations', async runner => {
+  testAllRunners('should handle nested iterpolations', async (runner) => {
     const [code, styles] = await runner(
       `
       import { css } from 'astroturf';
@@ -110,7 +113,7 @@ describe('variants', () => {
         );
       }
       `,
-      { enableCssProp: true, customCssProperties: 'cssProp' },
+      { enableCssProp: true, enableDynamicInterpolations: 'cssProp' },
     );
 
     expect(styles).toHaveLength(2);
@@ -123,9 +126,9 @@ describe('variants', () => {
         _CssProp1_button,
         [
           ["${i.id}", color],
-          ["${i2.id}", height]
+          ["${i2.id}", height],
         ],
-        [primary && _CssProp1_button["cssProp1ButtonVariant1"]]
+        [primary && _CssProp1_button["cssProp1ButtonVariant1"]],
       ]}`,
     );
   });

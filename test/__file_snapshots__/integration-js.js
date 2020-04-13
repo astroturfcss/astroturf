@@ -340,9 +340,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const styles = astroturf_css_loader_inline_Button_styles_css__WEBPACK_IMPORTED_MODULE_1__["default"];
-const Button =
-/*#__PURE__*/
-Object(astroturf_react__WEBPACK_IMPORTED_MODULE_0__["default"])('button', null, {
+const Button = /*#__PURE__*/Object(astroturf_react__WEBPACK_IMPORTED_MODULE_0__["default"])('button', null, {
   displayName: "Button",
   styles: astroturf_css_loader_inline_Button_css__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
@@ -387,15 +385,11 @@ __webpack_require__.r(__webpack_exports__);
 
 const width = 75;
 const styles = astroturf_css_loader_inline_main_styles_css__WEBPACK_IMPORTED_MODULE_5__["default"];
-const FancyBox =
-/*#__PURE__*/
-Object(astroturf_react__WEBPACK_IMPORTED_MODULE_1__["default"])('div', null, {
+const FancyBox = /*#__PURE__*/Object(astroturf_react__WEBPACK_IMPORTED_MODULE_1__["default"])('div', null, {
   displayName: "FancyBox",
   styles: astroturf_css_loader_inline_main_FancyBox_css__WEBPACK_IMPORTED_MODULE_6__["default"]
 });
-const FancierBox =
-/*#__PURE__*/
-Object(astroturf_react__WEBPACK_IMPORTED_MODULE_1__["default"])('div', null, {
+const FancierBox = /*#__PURE__*/Object(astroturf_react__WEBPACK_IMPORTED_MODULE_1__["default"])('div', null, {
   displayName: "FancierBox",
   styles: astroturf_css_loader_inline_main_FancierBox_css__WEBPACK_IMPORTED_MODULE_7__["default"]
 });
@@ -423,9 +417,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var astroturf_css_loader_inline_Widget_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! astroturf/css-loader?inline!./Widget.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/shared/widget/Widget.css");
 
 
-const Widget =
-/*#__PURE__*/
-Object(astroturf_react__WEBPACK_IMPORTED_MODULE_0__["default"])('div', null, {
+const Widget = /*#__PURE__*/Object(astroturf_react__WEBPACK_IMPORTED_MODULE_0__["default"])('div', null, {
   displayName: "Widget",
   styles: astroturf_css_loader_inline_Widget_css__WEBPACK_IMPORTED_MODULE_1__["default"]
 });

@@ -4,12 +4,12 @@ import _RedPasswordInput2 from "astroturf/css-loader?inline!./with-props-RedPass
 const RedPasswordInput = /*#__PURE__*/ styled("input", null, {
   displayName: "RedPasswordInput",
   styles: _RedPasswordInput,
-  attrs: props => ({ ...props, type: "password" })
+  attrs: (props) => ({ ...props, type: "password" }),
 });
 const RedPasswordInput2 = /*#__PURE__*/ styled("input", null, {
   displayName: "RedPasswordInput2",
   styles: _RedPasswordInput2,
-  attrs: p => ({
-    type: "password"
-  })
+  attrs: (p) => ({
+    type: "password",
+  }),
 });

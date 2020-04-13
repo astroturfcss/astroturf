@@ -9,5 +9,5 @@ const FancyBox = /*#__PURE__*/styled('div', null, {
 });
 const FancyHeader = /*#__PURE__*/ styled("h2", null, {
   displayName: "FancyHeader",
-  styles: _FancyHeader
+  styles: _FancyHeader,
 });

@@ -1,16 +1,16 @@
-import { stripIndent } from 'common-tags';
-import { outputFileSync } from 'fs-extra';
-import defaults from 'lodash/defaults';
 import { PluginObj } from '@babel/core';
 import generate from '@babel/generator';
 // @ts-ignore
 import { NodePath, visitors } from '@babel/traverse';
 import * as t from '@babel/types';
+import { stripIndent } from 'common-tags';
+import { outputFileSync } from 'fs-extra';
+import defaults from 'lodash/defaults';
 
 import cssProp from './features/css-prop';
 import styledComponent from './features/styled-component';
 import stylesheet from './features/stylesheet';
-import { PluginState, StyleState, ResolvedOptions } from './types';
+import { PluginState, ResolvedOptions, StyleState } from './types';
 import ImportInjector from './utils/ImportInjector';
 import { COMPONENTS, IMPORTS, STYLES } from './utils/Symbols';
 
@@ -47,7 +47,7 @@ export default function plugin(): PluginObj<PluginState> {
         const { start, end } = path.node;
 
         if (specifiers) {
-          specifiers.forEach(s => s.remove());
+          specifiers.forEach((s) => s.remove());
         } else {
           path.remove();
         }
@@ -87,7 +87,8 @@ export default function plugin(): PluginObj<PluginState> {
               styledTagName: 'styled',
               stylesheetTagName: 'stylesheet',
               allowGlobal: false,
-              customCssProperties: 'cssProp',
+              enableCssProp: true,
+              enableDynamicInterpolations: 'cssProp',
             }) as ResolvedOptions;
           },
         },
@@ -99,7 +100,7 @@ export default function plugin(): PluginObj<PluginState> {
             const tagImports = path
               .get('specifiers')
               .filter(
-                p =>
+                (p) =>
                   p.isImportSpecifier() &&
                   ['css', 'stylesheet'].includes(p.node.imported.name) &&
                   [cssTagName, stylesheetTagName].includes(p.node.local.name),
