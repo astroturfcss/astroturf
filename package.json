@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/4Catalyzer/astroturf.git"
+    "url": "https://github.com/4Catalyzer/astroturf.git"
   },
   "husky": {
     "hooks": {
@@ -47,12 +47,13 @@
       "__file_snapshots__"
     ]
   },
+  "publishConfig": {
+    "directory": "lib"
+  },
   "release": {
-    "publishDir": "lib"
+    "conventionalCommits": true
   },
-  "author": {
-    "name": "4Catalyzer"
-  },
+  "author": "4Catalyzer",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/4Catalyzer/astroturf/issues"
@@ -125,7 +126,5 @@
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
-  },
-  "readme": "ERROR: No README data found!",
-  "_id": "astroturf@0.10.1"
+  }
 }
