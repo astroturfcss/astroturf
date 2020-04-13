@@ -148,6 +148,7 @@ function collectStyles(
 }
 
 function replaceStyleTemplates(
+  loaderContext: LoaderContext,
   filename: string,
   src: string,
   locations: Change[],
@@ -168,7 +169,9 @@ function replaceStyleTemplates(
 
   return {
     code: magic.toString(),
-    map: magic.generateMap({ includeContent: true, source: filename }),
+    map: loaderContext.sourceMap
+      ? magic.generateMap({ includeContent: true, source: filename })
+      : null,
   };
 }
 
@@ -278,7 +281,12 @@ module.exports = function loader(
         compilation.fileTimestamps.set(style.absoluteFilePath, +mtime);
       });
 
-      const result = replaceStyleTemplates(resourcePath, content, changeset);
+      const result = replaceStyleTemplates(
+        this,
+        resourcePath,
+        content,
+        changeset,
+      );
 
       cb(null, result.code, result.map as any);
     })
