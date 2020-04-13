@@ -1,3 +1,14 @@
+## [0.10.4](https://github.com/4Catalyzer/astroturf/compare/v0.10.3...v0.10.4) (2020-04-13)
+
+
+### Bug Fixes
+
+* Don't generate source map unnecessarily ([#586](https://github.com/4Catalyzer/astroturf/issues/586)) ([260849b](https://github.com/4Catalyzer/astroturf/commit/260849bff773081341a084e63bc2618c3fbd3d34))
+
+
+
+
+
 # [0.10.3](https://github.com/4Catalyzer/astroturf/compare/v0.10.2...v0.10.3) (2020-04-08)
 
 
