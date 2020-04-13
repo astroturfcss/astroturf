@@ -109,7 +109,7 @@ function collectStyles(src, filename, resolveDependency, opts) {
   }
 }
 
-function replaceStyleTemplates(filename, src, locations) {
+function replaceStyleTemplates(loaderContext, filename, src, locations) {
   locations = sortBy(locations, (i) => i.start || 0);
 
   const magic = new MagicString(src);
@@ -126,7 +126,9 @@ function replaceStyleTemplates(filename, src, locations) {
 
   return {
     code: magic.toString(),
-    map: magic.generateMap({ includeContent: true, source: filename }),
+    map: loaderContext.sourceMap
+      ? magic.generateMap({ includeContent: true, source: filename })
+      : null,
   };
 }
 
@@ -244,7 +246,6 @@ module.exports = function loader(content, map, meta) {
     emitVirtualFile = plugin.addFile;
   }
 
-  // console.log('WAIT', resourcePath);
   return Promise.all(dependencies)
     .then(() => {
       styles.forEach((style) => {
@@ -252,11 +253,14 @@ module.exports = function loader(content, map, meta) {
         compilation.fileTimestamps.set(style.absoluteFilePath, +mtime);
       });
 
-      const result = replaceStyleTemplates(resourcePath, content, changeset);
+      const result = replaceStyleTemplates(
+        this,
+        resourcePath,
+        content,
+        changeset,
+      );
 
       cb(null, result.code, result.map);
     })
     .catch(cb);
-
-  // console.log('DONE', resourcePath);
 };
