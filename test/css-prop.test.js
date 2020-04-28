@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 
 import { jsx } from '../src/runtime/jsx';
-import { format, testAllRunners } from './helpers';
+import { format, run, testAllRunners } from './helpers';
 
 describe('css prop', () => {
   testAllRunners('should compile string', async (runner) => {
@@ -207,6 +207,32 @@ describe('css prop', () => {
       expect(styles).toHaveLength(0);
     },
   );
+
+  describe.only('optimization', () => {
+    it('should stryt', async () => {
+      const r = await run(
+        `
+          import { css } from 'astroturf';
+
+          function Button({ color }) {
+            return (
+              <button
+                style={{ color: 'red' }}
+                {...other}
+                {...vdfg}
+                css={css\`
+                  color: \${color};
+                \`}
+              />
+            );
+          }
+        `,
+        { enableCssProp: true },
+      );
+
+      console.log(r);
+    });
+  });
 
   it('should render the component correctly', () => {
     expect(
