@@ -1,14 +1,16 @@
 import { dirname } from 'path';
 import util from 'util';
+
+import { codeFrameColumns } from '@babel/code-frame';
+import { Expression, SourceLocation } from '@babel/types';
 import chalk from 'chalk';
 import levenshtein from 'fast-levenshtein';
 import loaderUtils from 'loader-utils';
 import sortBy from 'lodash/sortBy';
-import * as webpack from 'webpack';
-import { codeFrameColumns } from '@babel/code-frame';
-import { Expression, SourceLocation } from '@babel/types';
 import MagicString from 'magic-string';
+import * as webpack from 'webpack';
 
+import VirtualModulePlugin from './VirtualModulePlugin';
 import traverse from './traverse';
 import {
   AstroturfMetadata,
@@ -21,7 +23,6 @@ import {
 import { createRequirePath, getNameFromFile } from './utils/createFilename';
 import getLoaderPrefix from './utils/getLoaderPrefix';
 // @ts-ignore
-import VirtualModulePlugin from './VirtualModulePlugin';
 
 type LoaderContext = webpack.loader.LoaderContext;
 
@@ -73,11 +74,11 @@ function buildDependencyError(
   { styles, resource }: { styles: Style[]; resource: string },
   loc: SourceLocation,
 ) {
-  let idents = styles.map(s => s.identifier);
+  let idents = styles.map((s) => s.identifier);
 
   let closest: string | undefined;
   let minDistance = 2;
-  idents.forEach(ident => {
+  idents.forEach((ident) => {
     const d = levenshtein.get(ident, identifier);
     if (d < minDistance) {
       minDistance = d;
@@ -87,11 +88,11 @@ function buildDependencyError(
   const isDefaultImport = type === 'ImportDefaultSpecifier';
 
   if (!closest && isDefaultImport) {
-    closest = idents.find(ident => ident === getNameFromFile(resource));
+    closest = idents.find((ident) => ident === getNameFromFile(resource));
   }
-  if (closest) idents = idents.filter(ident => ident !== closest);
+  if (closest) idents = idents.filter((ident) => ident !== closest);
 
-  const identMsg = idents.map(s => chalk.yellow(s)).join(', ');
+  const identMsg = idents.map((s) => chalk.yellow(s)).join(', ');
 
   const alternative = isDefaultImport
     ? `Instead try: ${chalk.yellow(`import ${closest} from '${request}';`)}`
@@ -151,7 +152,7 @@ function replaceStyleTemplates(
   src: string,
   locations: Change[],
 ) {
-  locations = sortBy(locations, i => i.start || 0);
+  locations = sortBy(locations, (i) => i.start || 0);
 
   const magic = new MagicString(src);
 
@@ -272,7 +273,7 @@ module.exports = function loader(
 
   return Promise.all(dependencies)
     .then(() => {
-      styles.forEach(style => {
+      styles.forEach((style) => {
         const mtime = emitVirtualFile(style.absoluteFilePath, style.value);
         compilation.fileTimestamps.set(style.absoluteFilePath, +mtime);
       });

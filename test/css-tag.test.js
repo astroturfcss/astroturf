@@ -63,7 +63,7 @@ describe('css tag', () => {
     );
   });
 
-  testAllRunners('allows different tag names', async runner => {
+  testAllRunners('allows different tag names', async (runner) => {
     const [, styles] = await runner(
       `
       import { css as less } from 'astroturf';
@@ -96,7 +96,7 @@ describe('css tag', () => {
 
   testAllRunners(
     'should throw when there are ambigious identifiers',
-    async runner => {
+    async (runner) => {
       await expect(
         runner(
           `
@@ -122,7 +122,7 @@ describe('css tag', () => {
     },
   );
 
-  testAllRunners('respects the allowGlobal setting', async runner => {
+  testAllRunners('respects the allowGlobal setting', async (runner) => {
     const [, styles] = await runner(
       `
       const styles = less\`

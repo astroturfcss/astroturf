@@ -1,16 +1,16 @@
-import groupBy from 'lodash/groupBy';
-import uniq from 'lodash/uniq';
 import { NodePath } from '@babel/core';
 import * as t from '@babel/types';
 import camelCase from 'lodash/camelCase';
+import groupBy from 'lodash/groupBy';
+import uniq from 'lodash/uniq';
 
-import { NodeStyleMap, Style, ResolvedOptions } from '../types';
+import { NodeStyleMap, ResolvedOptions, Style } from '../types';
 import cssUnits from './cssUnits';
-import hash from './murmurHash';
 import isCssTag from './isCssTag';
+import hash from './murmurHash';
 import resolveDependency, { Dependency } from './resolveDependency';
-import wrapInClass, { hoistImports } from './wrapInClass';
 import truthy from './truthy';
+import wrapInClass, { hoistImports } from './wrapInClass';
 
 const rComposes = /\b(?:composes\s*?:\s*([^;>]*?)(?:from\s(.+?))?(?=[;}/\n\r]))/gim;
 const rPlaceholder = /###ASTROTURF_PLACEHOLDER_\d*?###/g;
@@ -170,6 +170,7 @@ function replaceDependencyPlaceholders(
   text: string,
   dependencyImports: string,
   id: number,
+  opts: ResolvedOptions,
 ) {
   // Replace references in `composes` rules
   text = text.replace(rComposes, (composes, classNames: string, fromPart) => {
@@ -209,7 +210,12 @@ function replaceDependencyPlaceholders(
     const { imported, source } = depInterpolations.get(match)!;
     const localName = `a${id++}`;
 
+    if (opts.experiments.modularCssExternals) {
+      return `:external(${imported} from "${source}")`;
+    }
+
     dependencyImports += `@value ${imported} as ${localName} from "${source}";\n`;
+
     return `.${localName}`;
   });
 
@@ -327,6 +333,7 @@ function buildTemplateImpl(opts: Options, state = { id: 0 }) {
     text,
     dependencyImports,
     state.id,
+    opts.pluginOptions,
   );
 
   if (dependencyImports) dependencyImports += '\n\n';

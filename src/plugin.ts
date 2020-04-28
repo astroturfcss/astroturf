@@ -89,6 +89,7 @@ export default function plugin(): PluginObj<PluginState> {
               allowGlobal: false,
               enableCssProp: true,
               enableDynamicInterpolations: 'cssProp',
+              experiments: {},
             }) as ResolvedOptions;
           },
         },

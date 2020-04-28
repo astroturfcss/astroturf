@@ -37,7 +37,7 @@ class VirtualModulePlugin {
     this.fs = new MemoryFs();
 
     if (files) {
-      Object.keys(files).forEach(key => {
+      Object.keys(files).forEach((key) => {
         this.addFile(key, files[key]);
       });
     }
@@ -88,7 +88,7 @@ class VirtualModulePlugin {
     const augmentOnCompile = () => {
       this.augmentCompilerFileSystem(compiler);
     };
-    const augmentLoaderContext = loaderContext => {
+    const augmentLoaderContext = (loaderContext) => {
       loaderContext.emitVirtualFile = this.addFile;
     };
 
@@ -97,12 +97,12 @@ class VirtualModulePlugin {
 
     if (compiler.hooks) {
       compiler.hooks.compile.tap(PLUGIN, augmentOnCompile);
-      compiler.hooks.compilation.tap(PLUGIN, compilation => {
+      compiler.hooks.compilation.tap(PLUGIN, (compilation) => {
         compilation.hooks.normalModuleLoader.tap(PLUGIN, augmentLoaderContext);
       });
     } else {
       compiler.plugin('compile', augmentOnCompile);
-      compiler.plugin('compilation', compilation => {
+      compiler.plugin('compilation', (compilation) => {
         compilation.plugin('normal-module-loader', augmentLoaderContext);
       });
     }

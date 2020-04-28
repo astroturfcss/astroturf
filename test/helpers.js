@@ -1,9 +1,11 @@
+const { relative, dirname } = require('path');
+
+const { transformAsync } = require('@babel/core');
 const fs = require('fs-extra');
-const webpack = require('webpack');
 const MemoryFS = require('memory-fs');
 const prettier = require('prettier');
-const { transformAsync } = require('@babel/core');
-const { relative, dirname } = require('path');
+const webpack = require('webpack');
+
 const loader = require('../src/loader');
 
 const PARSER_OPTS = {
@@ -92,8 +94,8 @@ export function runLoader(src, options, filename = 'MyStyleFile.js') {
 
 export const fixtures = fs
   .readdirSync(`${__dirname}/fixtures`)
-  .map(file => `${__dirname}/fixtures/${file}`)
-  .filter(f => !f.endsWith('.json'));
+  .map((file) => `${__dirname}/fixtures/${file}`)
+  .filter((f) => !f.endsWith('.json'));
 
 export function runWebpack(config) {
   const compiler = webpack({
@@ -145,7 +147,7 @@ function testAllRunnersImpl(t, msg, testFn) {
   ])(`${msg}  (%s)`, (name, runner) =>
     testFn(runner, {
       current: name,
-      requirePath: p => requirePath(name, p),
+      requirePath: (p) => requirePath(name, p),
     }),
   );
 }

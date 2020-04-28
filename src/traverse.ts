@@ -1,4 +1,5 @@
 import path from 'path';
+
 import { transformSync } from '@babel/core';
 
 import plugin from './plugin';

@@ -1,7 +1,8 @@
 import path from 'path';
+
 import { getOptions, parseQuery } from 'loader-utils';
-import postcssNested from 'postcss-nested';
 import postcss from 'postcss';
+import postcssNested from 'postcss-nested';
 import * as webpack from 'webpack';
 
 type Loader = webpack.loader.Loader;
@@ -30,7 +31,7 @@ const loader: Loader = function astroturfCssLoader(
         prev: prevMap || undefined,
       },
     })
-    .then(result => {
+    .then((result) => {
       const map = result.map ? result.map.toJSON() : undefined;
 
       if (map) {
@@ -49,7 +50,7 @@ const loader: Loader = function astroturfCssLoader(
 
       cb(null, result.css, map, meta);
     })
-    .catch(err => cb(err));
+    .catch((err) => cb(err));
 };
 
 /**
@@ -58,7 +59,7 @@ const loader: Loader = function astroturfCssLoader(
  */
 export function pitch(this: LoaderContext) {
   const loaderOpts = getOptions(this) || {};
-  let cssIdx = this.loaders.findIndex(l => l.path.includes('css-loader/'));
+  let cssIdx = this.loaders.findIndex((l) => l.path.includes('css-loader/'));
   const cssLoader = this.loaders[cssIdx];
 
   if (!cssLoader) {
@@ -91,7 +92,7 @@ export function pitch(this: LoaderContext) {
 
     loaders.splice(cssIdx + 1, 0, { request: me.path });
 
-    const prefix = loaders.map(x => x.request).join('!');
+    const prefix = loaders.map((x) => x.request).join('!');
 
     // Mark this module as side effect free so it can be optimized away
     // by Webpack. I don't think there is a more public way to do this.

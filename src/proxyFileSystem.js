@@ -15,7 +15,7 @@ export default function proxyFileSystem(realFs, virtualFs) {
   const fs = Object.create(proto);
   const proxiedMethods = { __isProxiedFileSystem: true };
 
-  TO_PROXY.forEach(method => {
+  TO_PROXY.forEach((method) => {
     // only proxy methods present in the real fs
     if (typeof realFs[method] !== 'function') return;
 
