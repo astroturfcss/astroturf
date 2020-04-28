@@ -13,8 +13,11 @@ import { COMPONENTS, HAS_CSS_PROP, STYLES } from '../utils/Symbols';
 import toVarsArray from '../utils/toVarsArray';
 import trimExpressions from '../utils/trimExpressions';
 import wrapInClass from '../utils/wrapInClass';
+import isCreateElementCall from '../utils/isCreateElementCall';
 
 const JSX_IDENTS = Symbol('Astroturf jsx identifiers');
+
+type Var = [t.StringLiteral, t.Expression, t.StringLiteral | undefined];
 
 type CssPropPluginState = PluginState & {
   [JSX_IDENTS]: {
@@ -23,10 +26,160 @@ type CssPropPluginState = PluginState & {
   };
 };
 
-const isCreateElementCall = (p: NodePath) =>
-  p.isCallExpression() &&
-  (p.get('callee.property') as any).node &&
-  (p.get('callee.property') as any).node.name === 'createElement';
+const isSpread = (p: NodePath<any>): p is NodePath<t.JSXSpreadAttribute> =>
+  p.isJSXSpreadAttribute();
+
+const assign = (...nodes: t.Expression[]) =>
+  t.callExpression(
+    t.memberExpression(t.identifier('Object'), t.identifier('assign')),
+    nodes,
+  );
+
+const findPropIndex = <T extends NodePath<any>>(attrs: T[], key: string) =>
+  attrs.findIndex(a => a.isJSXAttribute() && a.node.name.name === key);
+
+const unwrapValue = (attr: NodePath<t.JSXAttribute>) => {
+  const value = attr.get('value');
+  return value.isJSXExpressionContainer()
+    ? value.get('expression')
+    : (value as NodePath<t.StringLiteral>);
+};
+
+function buildStyleAttribute(
+  attrs: NodePath<t.JSXAttribute | t.JSXSpreadAttribute>[],
+  vars: t.ArrayExpression,
+) {
+  const idx = findPropIndex(attrs, 'style');
+  const style = idx === -1 ? null : (attrs[idx] as NodePath<t.JSXAttribute>);
+  const spreads: any = (idx === -1 ? attrs : attrs.slice(idx))
+    .filter(isSpread)
+    .map(({ node }) =>
+      t.memberExpression(node.argument, t.identifier('style')),
+    );
+
+  if (style) {
+    spreads.unshift(unwrapValue(style).node);
+    style.remove();
+  }
+
+  const props = vars.elements.map((el: t.ArrayExpression) => {
+    const [id, value, unit] = el.elements as Var;
+    return t.objectProperty(
+      t.stringLiteral(`--${id.value}`),
+      unit
+        ? t.binaryExpression(
+            '+',
+            t.callExpression(t.identifier('String'), [value]),
+            unit,
+          )
+        : value,
+    );
+  });
+
+  const varObj = t.objectExpression(props);
+
+  if (!spreads.length) return varObj;
+
+  const values = spreads.reduce((curr: any, next: any) =>
+    t.logicalExpression('||', next!, curr),
+  );
+
+  console.log(spreads);
+  return assign(t.objectExpression(props), values);
+}
+
+function buildClassNameAttribute(
+  attrs: NodePath<t.JSXAttribute | t.JSXSpreadAttribute>[],
+  rootId: t.Identifier,
+) {
+  const idx = findPropIndex(attrs, 'className');
+  const className =
+    idx === -1 ? null : (attrs[idx] as NodePath<t.JSXAttribute>);
+
+  const values: any = (idx === -1 ? attrs : attrs.slice(idx))
+    .filter(isSpread)
+    .map(({ node }) =>
+      t.logicalExpression(
+        '||',
+        t.memberExpression(node.argument, t.identifier('className')),
+        t.stringLiteral(''),
+      ),
+    );
+
+  if (className) {
+    values.unshift(unwrapValue(className).node);
+    className.remove();
+  }
+
+  values.push(t.memberExpression(rootId, t.identifier('cls1')));
+
+  return values.reduce((curr: any, next: any) =>
+    t.binaryExpression(
+      '+',
+      next!,
+      t.binaryExpression('+', t.stringLiteral(' '), curr),
+    ),
+  );
+}
+
+function tryToInlineJsx(
+  path: NodePath<t.JSXAttribute>,
+  node: t.ArrayExpression,
+  state: PluginState,
+) {
+  const parent = path.parentPath as NodePath<t.JSXOpeningElement>;
+  const attrs = parent.get('attributes');
+
+  const [rootId, vars] = node.elements as [t.Identifier, t.ArrayExpression];
+
+  const style = buildStyleAttribute(attrs, vars);
+  const className = buildClassNameAttribute(attrs, rootId);
+  // @ts-ignore
+  parent.pushContainer('attributes', [
+    t.jsxAttribute(t.jsxIdentifier('style'), t.jsxExpressionContainer(style)),
+    t.jsxAttribute(
+      t.jsxIdentifier('className'),
+      t.jsxExpressionContainer(className),
+    ),
+  ]);
+
+  // const nextClassName = className
+  //   ? t.jsxExpressionContainer(
+  //       t.binaryExpression(
+  //         '+',
+  //         unwrapValue(className).node as any,
+  //         t.memberExpression(rootId, t.identifier('cls1')),
+  //       ),
+  //     )
+  //   : t.memberExpression(rootId, t.identifier('cls1'));
+
+  // const nextStyle = style
+  //   ? t.jsxExpressionContainer(
+  //       t.binaryExpression(
+  //         '+',
+  //         unwrapValue(className).node as any,
+  //         t.memberExpression(rootId, t.identifier('cls1')),
+  //       ),
+  //     )
+  //   : t.memberExpression(rootId, t.identifier('cls1'));
+
+  // if (className) {
+  //   const value = unwrapValue(className).node!;
+  //   className
+  //     .get('value')
+  //     .replaceWith(
+  //       t.jsxExpressionContainer(
+  //         t.binaryExpression(
+  //           '+',
+  //           value as any,
+  //           t.memberExpression(rootId, t.identifier('cls1')),
+  //         ),
+  //       ),
+  //     );
+  // } else {
+  //   path.replaceWithMultiple([]);
+  // }
+}
 
 function buildCssProp(
   valuePath: NodePath<any>,
@@ -105,19 +258,20 @@ function buildCssProp(
 
   const importId = options.styleImports.add(style);
 
-  let runtimeNode: t.Node = t.arrayExpression(
+  let runtimeNode:
+    | t.ArrayExpression
+    | t.JSXExpressionContainer = t.arrayExpression(
     [importId, vars!].filter(Boolean),
   );
 
   // FIXME?
   // @ts-ignore
   nodeMap.set(runtimeNode.expression, style);
+  cssState.styles.set(style.absoluteFilePath, style);
 
   if (isJsx) {
     runtimeNode = t.jsxExpressionContainer(runtimeNode);
   }
-
-  cssState.styles.set(style.absoluteFilePath, style);
 
   if (pluginOptions.generateInterpolations)
     style.code = generate(runtimeNode).code;
@@ -222,7 +376,7 @@ export default {
     const valuePath = path.get('value');
     const parentPath = path.findParent(p => p.isJSXOpeningElement());
 
-    const compiledNode = buildCssProp(
+    const compiledNode: any = buildCssProp(
       valuePath,
       parentPath && getNameFromPath(parentPath.get('name') as NodePath),
       state,
@@ -230,6 +384,7 @@ export default {
     );
 
     if (compiledNode) {
+      tryToInlineJsx(path, compiledNode.expression, state);
       valuePath.replaceWith(compiledNode);
       file.set(HAS_CSS_PROP, true);
     }
