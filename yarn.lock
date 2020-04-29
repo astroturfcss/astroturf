@@ -1344,13 +1344,13 @@
     globby "^11.0.0"
     read-yaml-file "^1.1.0"
 
-"@modular-css/processor@^25.3.1":
-  version "25.3.1"
-  resolved "https://registry.yarnpkg.com/@modular-css/processor/-/processor-25.3.1.tgz#bbef7344c642dc3f3bdfe6af513de8a932db9870"
-  integrity sha512-S4UIu4PWCYu7Bx09zZ4AHE+UefYLWsWEP7nnQk1bg4aXFrWPnaZHxSF8bJ0Ieg8YJdrFRi8M+ShMF+xP7PMPzg==
+"@modular-css/processor@^25.6.0":
+  version "25.6.0"
+  resolved "https://registry.yarnpkg.com/@modular-css/processor/-/processor-25.6.0.tgz#457d3490669b013beaa89d933efe3f9c54b6edfa"
+  integrity sha512-JtPyveh/ut42uD6Pss6Pfbj4dq9wwfVrWSZdxPz3wr/nl8r8m4btL5m4hfW09MIaA0+xWORHpw9Bpb+3nf/v5A==
   dependencies:
-    dependency-graph "^0.8.0"
-    escape-string-regexp "^2.0.0"
+    dependency-graph "^0.9.0"
+    escape-string-regexp "^3.0.0"
     lodash "^4.17.0"
     postcss "^7.0.0"
     postcss-selector-parser "^6.0.2"
@@ -3665,20 +3665,22 @@ css-loader@^3.5.3:
     schema-utils "^2.6.6"
     semver "^6.3.0"
 
-css-module-loader@^1.0.0-beta.3:
-  version "1.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/css-module-loader/-/css-module-loader-1.0.0-beta.3.tgz#f11fdb9b62411d802a147b59bb959f0919b9a971"
-  integrity sha512-CSQ+26o+c4rEUd+fzSmSkQrabKqyiVWTzTTQZBg9l6MXCiHb7LeRlzH6S2lfSMPGON+vjhsalZCF1Wh5N6qs5A==
+css-module-loader@^1.0.0-beta.5:
+  version "1.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/css-module-loader/-/css-module-loader-1.0.0-beta.5.tgz#190bc53d259aa1b960a668aab36c3a548dd1202c"
+  integrity sha512-Fazx+k1Y3KKUAKz9qLI9JeGsOa1p02ROPisDKrfMBlT4h2rtBXYuR5w158VtIH8Ozz3ixWOqR0NYugIMqV4nAg==
   dependencies:
-    "@modular-css/processor" "^25.3.1"
+    "@modular-css/processor" "^25.6.0"
     cssesc "^3.0.0"
-    fs-extra "^8.1.0"
-    loader-utils "^1.2.3"
+    fs-extra "^9.0.0"
+    icss-utils "^4.1.1"
+    loader-utils "^2.0.0"
     lodash "^4.17.15"
     memory-fs "^0.5.0"
-    postcss "^7.0.26"
+    postcss "^7.0.27"
+    postcss-selector-parser "^6.0.2"
     sass-loader "^8.0.2"
-    webpack "^4.41.5"
+    webpack "^4.43.0"
 
 css-select-base-adapter@^0.1.1:
   version "0.1.1"
@@ -3967,10 +3969,10 @@ depd@~1.1.2:
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.2.tgz#9bcd52e14c097763e749b274c4346ed2e560b5a9"
   integrity sha1-m81S4UwJd2PnSbJ0xDRu0uVgtak=
 
-dependency-graph@^0.8.0:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/dependency-graph/-/dependency-graph-0.8.1.tgz#9b8cae3aa2c7bd95ccb3347a09a2d1047a6c3c5a"
-  integrity sha512-g213uqF8fyk40W8SBjm079n3CZB4qSpCrA2ye1fLGzH/4HEgB6tzuW2CbLE7leb4t45/6h44Ud59Su1/ROTfqw==
+dependency-graph@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/dependency-graph/-/dependency-graph-0.9.0.tgz#11aed7e203bc8b00f48356d92db27b265c445318"
+  integrity sha512-9YLIBURXj4DJMFALxXw9K3Y3rwb5Fk0X5/8ipCzaN84+gKxoHK43tVKRNakCQbiEx07E8Uwhuq21BpUagFhZ8w==
 
 des.js@^1.0.0:
   version "1.0.1"
@@ -4437,7 +4439,7 @@ escape-html@~1.0.3:
   resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
   integrity sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=
 
-escape-string-regexp@2.0.0, escape-string-regexp@^2.0.0:
+escape-string-regexp@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-2.0.0.tgz#a30304e99daa32e23b2fd20f51babd07cffca344"
   integrity sha512-UpzcLCXolUWcNu5HtVMHYdXJjArjsF9C0aNnquZYY4uW/Vu0miy5YoWvbV345HauVvcAUnpRuhMMcqTcGOY2+w==
@@ -4446,6 +4448,11 @@ escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
+
+escape-string-regexp@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-3.0.0.tgz#1dad9cc28aed682be0de197280f79911a5fccd61"
+  integrity sha512-11dXIUC3umvzEViLP117d0KN6LJzZxh5+9F4E/7WLAAw7GrHk8NpUR+g9iJi/pe9C0py4F8rs0hreyRCwlAuZg==
 
 escodegen@^1.11.1:
   version "1.13.0"
@@ -8963,7 +8970,7 @@ postcss-value-parser@^4.0.0, postcss-value-parser@^4.0.3:
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.1.0.tgz#443f6a20ced6481a2bda4fa8532a6e55d789a2cb"
   integrity sha512-97DXOFbQJhk71ne5/Mt6cOu6yxsSfM0QGQyl0L25Gca4yGWEGJaig7l7gbCX623VqTBNGLRLaVUCnNkcedlRSQ==
 
-postcss@^7.0.0, postcss@^7.0.14, postcss@^7.0.16, postcss@^7.0.2, postcss@^7.0.21, postcss@^7.0.26, postcss@^7.0.27, postcss@^7.0.5, postcss@^7.0.6:
+postcss@^7.0.0, postcss@^7.0.14, postcss@^7.0.16, postcss@^7.0.2, postcss@^7.0.21, postcss@^7.0.27, postcss@^7.0.5, postcss@^7.0.6:
   version "7.0.27"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.27.tgz#cc67cdc6b0daa375105b7c424a85567345fc54d9"
   integrity sha512-WuQETPMcW9Uf1/22HWUWP9lgsIC+KEHg2kozMflKjbeUtw9ujvFX6QmIfozaErDkmLWS9WEnEdEe6Uo9/BNTdQ==
@@ -11578,7 +11585,7 @@ webpack-sources@^1.1.0, webpack-sources@^1.4.0, webpack-sources@^1.4.1:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@^4.41.5, webpack@^4.43.0:
+webpack@^4.43.0:
   version "4.43.0"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.43.0.tgz#c48547b11d563224c561dad1172c8aa0b8a678e6"
   integrity sha512-GW1LjnPipFW2Y78OOab8NJlCflB7EFskMih2AHdvjbpKMeDJqEgSx24cXXXiPS65+WSwVyxtDsJH6jGX2czy+g==

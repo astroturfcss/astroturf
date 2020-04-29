@@ -1,0 +1,8 @@
+{
+  "version": "v1",
+  "packages": {
+    "css-module-loader": {
+      "signature": "ba7d9e63cdcf0e0b1730033934326ca6"
+    }
+  }
+}

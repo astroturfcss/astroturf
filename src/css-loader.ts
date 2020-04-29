@@ -1,8 +1,10 @@
 import path from 'path';
 
+import cssModuleLoader from 'css-module-loader';
 import { getOptions, parseQuery } from 'loader-utils';
 import postcss from 'postcss';
 import postcssNested from 'postcss-nested';
+// import postcssPkg from 'postcss/package.json';
 import * as webpack from 'webpack';
 
 type Loader = webpack.loader.Loader;
@@ -15,42 +17,65 @@ const loader: Loader = function astroturfCssLoader(
   prevMap: any,
   meta?: any,
 ) {
-  const isLast = this.loaderIndex === this.loaders.length - 1;
+  const { modules } = getOptions(this) || {};
 
-  if (!isLast) {
-    return css;
+  const processMinimally = () =>
+    postcss([postcssNested()])
+      .process(css, {
+        from: this.resourcePath,
+        map: {
+          inline: true,
+          prev: prevMap || undefined,
+        },
+      })
+      .then((result) => {
+        const map = result.map ? result.map.toJSON() : undefined;
+
+        if (map) {
+          map.file = path.resolve(map.file!);
+          map.sources = map.sources.map((src: string) => path.resolve(src));
+        }
+        if (!meta) {
+          meta = {};
+        }
+
+        meta.ast = {
+          type: 'postcss',
+          version: result.processor!.version,
+          root: result.root,
+        };
+
+        return [result.css, map] as const;
+      });
+
+  const shouldProcess = this.loaderIndex === this.loaders.length - 1;
+  if (shouldProcess) {
+    const cb = this.async() as any;
+
+    processMinimally()
+      .then(([nextCss, map]) => {
+        if (modules) {
+          cssModuleLoader.call(
+            { ...this, async: () => cb },
+            nextCss,
+            map,
+            meta,
+          );
+        } else {
+          cb(null, nextCss, map, meta);
+        }
+      })
+      .catch((err) => cb(err));
+
+    return undefined;
   }
 
-  const cb = this.async() as any;
+  if (modules) {
+    cssModuleLoader.call(this, css, prevMap, meta);
+    return undefined;
+  }
 
-  postcss([postcssNested()])
-    .process(css, {
-      from: this.resourcePath,
-      map: {
-        inline: true,
-        prev: prevMap || undefined,
-      },
-    })
-    .then((result) => {
-      const map = result.map ? result.map.toJSON() : undefined;
-
-      if (map) {
-        map.file = path.resolve(map.file!);
-        map.sources = map.sources.map((src: string) => path.resolve(src));
-      }
-      if (!meta) {
-        meta = {};
-      }
-
-      meta.ast = {
-        type: 'postcss',
-        version: result.processor!.version,
-        root: result.root,
-      };
-
-      cb(null, result.css, map, meta);
-    })
-    .catch((err) => cb(err));
+  return css;
 };
 
 /**
@@ -86,11 +111,12 @@ export function pitch(this: LoaderContext) {
   // when modules simply re-export something else and are marked as sideEffect free.
   if (loaderOpts.inline) {
     const loaders = [...this.loaders];
+    const query = loaderOpts.modules ? '?modules' : '';
     const [me] = loaders.splice(this.loaderIndex, 1);
 
     if (this.loaderIndex < cssIdx) cssIdx--;
 
-    loaders.splice(cssIdx + 1, 0, { request: me.path });
+    loaders.splice(cssIdx + 1, 0, { request: `${me.path}${query}` });
 
     const prefix = loaders.map((x) => x.request).join('!');
 

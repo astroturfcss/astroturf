@@ -225,4 +225,36 @@ describe('css-loader', () => {
       path.join(__dirname, '__file_snapshots__/default-plugins-js.js'),
     );
   });
+
+  it.only('self compile', async () => {
+    const config = getBaseConfig('./integration/css-loader-3.js', {
+      extension: '.scss',
+    });
+
+    config.module.rules.unshift({
+      test: /\.css$/,
+      use: [
+        {
+          loader: ExtractCSS.loader,
+          options: { esModule: true },
+        },
+
+        'css-loader',
+      ],
+    });
+    config.plugins.push(new ExtractCSS());
+
+    const assets = await runWebpack(config);
+
+    const src = assets['main.css'].source();
+    console.log(assets['main.js'].source());
+    expect(src).not.toContain('&:hover');
+
+    // expect(src).toMatchFile(
+    //   path.join(__dirname, '__file_snapshots__/default-plugins-styles.css'),
+    // );
+    // expect(assets['main.js'].source()).toMatchFile(
+    //   path.join(__dirname, '__file_snapshots__/default-plugins-js.js'),
+    // );
+  });
 });

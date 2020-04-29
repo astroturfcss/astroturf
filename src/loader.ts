@@ -136,7 +136,9 @@ function collectStyles(
       writeFiles: false,
       generateInterpolations: true,
       getRequirePath: (...args) => {
-        const file = getLoaderPrefix() + getRequirePath(...args);
+        const file =
+          getLoaderPrefix(opts.experiments?.selfCompile) +
+          getRequirePath(...args);
 
         return file;
       },
