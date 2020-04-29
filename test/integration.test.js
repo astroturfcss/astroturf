@@ -3,6 +3,7 @@
  */
 
 import path from 'path';
+
 import ExtractCSS from 'mini-css-extract-plugin';
 import stripAnsi from 'strip-ansi';
 
@@ -69,7 +70,6 @@ describe('webpack integration', () => {
   function getConfig(entry) {
     const config = getBaseConfig(entry, {
       allowGlobal: true,
-      enableCssProp: true,
     });
 
     config.module.rules.unshift({
@@ -90,7 +90,7 @@ describe('webpack integration', () => {
     return config;
   }
 
-  it.only('should work', async () => {
+  it('should work', async () => {
     const assets = await runWebpack(getConfig('./integration/main.js'));
 
     expect(assets['main.js'].source()).toMatchFile(
@@ -104,7 +104,7 @@ describe('webpack integration', () => {
   it('should provide a helpful error when failing to resolve a default', async () => {
     const error = await runWebpack(
       getConfig('./integration/error-default-import.js'),
-    ).catch(err => err);
+    ).catch((err) => err);
 
     const message = stripAnsi(error.message);
 
@@ -117,7 +117,7 @@ describe('webpack integration', () => {
   it('should provide a helpful error when failing to resolve a named import', async () => {
     const error = await runWebpack(
       getConfig('./integration/error-named-import.js'),
-    ).catch(err => err);
+    ).catch((err) => err);
 
     const message = stripAnsi(error.message);
 
@@ -130,7 +130,9 @@ describe('webpack integration', () => {
   it.skip('should throw on cycles', async () => {
     const timeout = global.setTimeout;
 
-    jest.spyOn(global, 'setTimeout').mockImplementation(fn => timeout(fn, 0));
+    jest
+      .spyOn(global, 'setTimeout')
+      .mockImplementation((fn) => timeout(fn, 0));
 
     const result = runWebpack(getConfig('./integration/cycle.js'));
 
@@ -156,7 +158,6 @@ describe('webpack integration', () => {
 describe('css-loader', () => {
   function getConfig(entry) {
     const config = getBaseConfig(entry, {
-      enableCssProp: true,
       extension: '.scss',
     });
 

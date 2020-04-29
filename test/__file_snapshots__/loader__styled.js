@@ -9,5 +9,5 @@ const FancyBox = /*#__PURE__*/styled('div', null, {
 });
 const FancierBox = /*#__PURE__*/ styled(FancyBox, null, {
   displayName: "FancierBox",
-  styles: _FancierBox
+  styles: _FancierBox,
 });

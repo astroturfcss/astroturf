@@ -9,7 +9,6 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [Usage](#usage)
 - [Component API](#component-api)
 - [`css` prop](#css-prop)
@@ -157,15 +156,15 @@ function Button({ variant, bgColor, children }) {
         background-color: ${bgColor};
 
         ${variant === 'primary' &&
-          css`
-            color: blue;
-            border: 1px solid blue;
-          `}
+        css`
+          color: blue;
+          border: 1px solid blue;
+        `}
 
         ${variant === 'secondary' &&
-          css`
-            color: green;
-          `}
+        css`
+          color: green;
+        `}
       `}
     >
       {children}
@@ -500,8 +499,8 @@ astroturf accepts a few query options.
 - **cssTagName**: (default: `'css'`) The tag identifier used to locate inline css literals and extract them.
 - **styledTagName**: (default: `'styled'`) The tag identifier used to locate components.
 - **extension**: (default: `'.css'`) the extension used for extracted "virtual" files. Change to whatever file type you want webpack to process extracted literals as.
-- **enableCssProp**: (default: false) compiles `css` props to styled components.
-- **customCssProperties**: (default: 'cssProp') enables or disables custom value interpolation, You can disable this feature if you need to target environments that
+- **enableCssProp**: (default: true) compiles `css` props to styled components.
+- **enableDynamicInterpolations**: (default: 'cssProp') enables or disables custom value interpolation, You can disable this feature if you need to target environments that
   do not support CSS custom properties.
 
 **Note:** astroturf expects uncompiled JavaScript code, If you are using babel or Typescript to transform tagged template literals, ensure the loader runs _before_ babel or typescript loaders.

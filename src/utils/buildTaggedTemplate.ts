@@ -1,16 +1,16 @@
-import groupBy from 'lodash/groupBy';
-import uniq from 'lodash/uniq';
 import { NodePath } from '@babel/core';
 import * as t from '@babel/types';
 import camelCase from 'lodash/camelCase';
+import groupBy from 'lodash/groupBy';
+import uniq from 'lodash/uniq';
 
-import { NodeStyleMap, Style, ResolvedOptions } from '../types';
+import { NodeStyleMap, ResolvedOptions, Style } from '../types';
 import cssUnits from './cssUnits';
-import hash from './murmurHash';
 import isCssTag from './isCssTag';
+import hash from './murmurHash';
 import resolveDependency, { Dependency } from './resolveDependency';
-import wrapInClass, { hoistImports } from './wrapInClass';
 import truthy from './truthy';
+import wrapInClass, { hoistImports } from './wrapInClass';
 
 const rComposes = /\b(?:composes\s*?:\s*([^;>]*?)(?:from\s(.+?))?(?=[;}/\n\r]))/gim;
 const rPlaceholder = /###ASTROTURF_PLACEHOLDER_\d*?###/g;
@@ -20,7 +20,7 @@ const rUnit = new RegExp(`^(${cssUnits.join('|')})(;|,|\n| |\\))`);
 const getPlaceholder = (idx: number) => `###ASTROTURF_PLACEHOLDER_${idx}###`;
 
 const toVarsArray = (interpolations: DynamicInterpolation[]) => {
-  const vars = interpolations.map(i =>
+  const vars = interpolations.map((i) =>
     t.arrayExpression(
       [
         t.stringLiteral(i.id),
@@ -62,14 +62,14 @@ function assertDynamicInterpolationsLocation(
   location: TagLocation,
   opts: ResolvedOptions,
 ) {
-  const parent = expr.findParent(p => p.isTaggedTemplateExpression()) as any;
+  const parent = expr.findParent((p) => p.isTaggedTemplateExpression()) as any;
   // may be undefined in the `styled.button` case, or plain css prop case
   const tagName = parent?.node.tag?.name;
 
   const validLocation = location === 'COMPONENT' || location === 'PROP';
 
   if (!validLocation) {
-    const jsxAttr = expr.findParent(p => p.isJSXAttribute()) as any;
+    const jsxAttr = expr.findParent((p) => p.isJSXAttribute()) as any;
 
     if (jsxAttr) {
       const propName = jsxAttr.node.name.name;
@@ -92,16 +92,19 @@ function assertDynamicInterpolationsLocation(
 
   // valid but not configured for this location
   if (validLocation) {
-    if (!opts.customCssProperties)
+    if (!opts.enableDynamicInterpolations)
       throw expr.buildCodeFrameError(
         'Dynamic expression compilation is not enabled. ' +
-          'To enable this usage set the the `customCssProperties` to `true` or `"cssProp"` in your astroturf options',
+          'To enable this usage set the the `enableDynamicInterpolations` to `true` or `"cssProp"` in your astroturf options',
       );
 
-    if (opts.customCssProperties === 'cssProp' && location === 'COMPONENT')
+    if (
+      opts.enableDynamicInterpolations === 'cssProp' &&
+      location === 'COMPONENT'
+    )
       throw expr.buildCodeFrameError(
         'Dynamic expression compilation is not enabled. ' +
-          'To enable this usage set the `customCssProperties` from `"cssProp"` to `true` in your astroturf options.',
+          'To enable this usage set the `enableDynamicInterpolations` from `"cssProp"` to `true` in your astroturf options.',
       );
   }
 }
@@ -167,13 +170,14 @@ function replaceDependencyPlaceholders(
   text: string,
   dependencyImports: string,
   id: number,
+  opts: ResolvedOptions,
 ) {
   // Replace references in `composes` rules
   text = text.replace(rComposes, (composes, classNames: string, fromPart) => {
     const classList = classNames.replace(/(\n|\r|\n\r)/, '').split(/\s+/);
 
     const composed = classList
-      .map(className => depInterpolations.get(className))
+      .map((className) => depInterpolations.get(className))
       .filter(truthy);
 
     if (!composed.length) return composes;
@@ -191,9 +195,9 @@ function replaceDependencyPlaceholders(
       );
     }
 
-    return Object.entries(groupBy(composed, i => i.source)).reduce(
+    return Object.entries(groupBy(composed, (i) => i.source)).reduce(
       (acc, [source, values]) => {
-        const classes = uniq(values.map(v => v.imported)).join(' ');
+        const classes = uniq(values.map((v) => v.imported)).join(' ');
         return `${
           acc ? `${acc};\n` : ''
         }composes: ${classes} from "${source}"`;
@@ -202,11 +206,16 @@ function replaceDependencyPlaceholders(
     );
   });
 
-  text = text.replace(rPlaceholder, match => {
+  text = text.replace(rPlaceholder, (match) => {
     const { imported, source } = depInterpolations.get(match)!;
     const localName = `a${id++}`;
 
+    if (opts.experiments.modularCssExternals) {
+      return `:external(${imported} from "${source}")`;
+    }
+
     dependencyImports += `@value ${imported} as ${localName} from "${source}";\n`;
+
     return `.${localName}`;
   });
 
@@ -324,6 +333,7 @@ function buildTemplateImpl(opts: Options, state = { id: 0 }) {
     text,
     dependencyImports,
     state.id,
+    opts.pluginOptions,
   );
 
   if (dependencyImports) dependencyImports += '\n\n';

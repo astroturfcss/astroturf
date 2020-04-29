@@ -25,11 +25,11 @@ function Button4({ theme }) {
   return _j(
     "button",
     {
-      css: [_CssProp4_button, [["a1qka8js", theme]], []]
+      css: [_CssProp4_button, [["a1qka8js", theme]], []],
     },
     "Hi there",
     _j("span", {
-      css: [_CssProp5_span]
+      css: [_CssProp5_span],
     })
   );
 }

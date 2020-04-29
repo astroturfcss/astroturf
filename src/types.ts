@@ -1,4 +1,5 @@
 import * as T from '@babel/types';
+
 // eslint-disable-next-line import/no-cycle
 import StyleImportInjector from './utils/ImportInjector';
 
@@ -29,10 +30,11 @@ export interface ResolvedOptions {
   stylesheetTagName: string | false;
 
   enableCssProp: boolean;
+  enableDynamicInterpolations: 'cssProp' | boolean;
+
   noWarnings?: boolean;
   resolveDependency?: DependencyResolver;
   generateInterpolations?: boolean;
-  customCssProperties: 'cssProp' | boolean;
   extension: string;
   getFileName?: (
     hostFile: string,
@@ -40,6 +42,11 @@ export interface ResolvedOptions {
     id?: string,
   ) => string;
   getRequirePath?: (from: string, to: string) => string;
+
+  experiments: {
+    modularCssExternals?: boolean;
+    selfCompile?: boolean;
+  };
 }
 
 export type StyleType = 'stylesheet' | 'class' | 'styled';

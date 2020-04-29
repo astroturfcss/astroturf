@@ -8,5 +8,5 @@ const FancyBox = /*#__PURE__*/s('div', null, {
 });
 const FancierBox = /*#__PURE__*/ s(FancyBox, null, {
   displayName: "FancierBox",
-  styles: _FancierBox
+  styles: _FancierBox,
 });

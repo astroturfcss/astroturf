@@ -1,14 +1,15 @@
-import { NodePath } from '@babel/core';
 import { dirname, relative } from 'path';
-import resolve from 'resolve';
+
+import { NodePath } from '@babel/core';
 import * as t from '@babel/types';
+import resolve from 'resolve';
 
 import {
+  DependencyResolver,
+  NodeStyleMap,
   ResolvedImport,
   Style,
   UserDependency,
-  NodeStyleMap,
-  DependencyResolver,
 } from '../types';
 import getNameFromPath from './getNameFromPath';
 

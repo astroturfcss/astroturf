@@ -1,7 +1,7 @@
-import get from 'lodash/get';
 import { NodePath } from '@babel/core';
 import generate from '@babel/generator';
 import * as t from '@babel/types';
+import get from 'lodash/get';
 
 import {
   DynamicStyle,
@@ -10,15 +10,15 @@ import {
   ResolvedOptions,
   StyleState,
 } from '../types';
+import StyleImportInjector from '../utils/ImportInjector';
+import { COMPONENTS, STYLES } from '../utils/Symbols';
 import buildTaggedTemplate from '../utils/buildTaggedTemplate';
 import createStyleNode from '../utils/createStyleNode';
 import getDisplayName from '../utils/getDisplayName';
 import hasAttrs from '../utils/hasAttrs';
-import StyleImportInjector from '../utils/ImportInjector';
 import isStyledTag from '../utils/isStyledTag';
 import isStyledTagShorthand from '../utils/isStyledTagShorthand';
 import normalizeAttrs from '../utils/normalizeAttrs';
-import { COMPONENTS, STYLES } from '../utils/Symbols';
 import truthy from '../utils/truthy';
 
 const PURE_COMMENT = '/*#__PURE__*/';
@@ -68,7 +68,7 @@ function buildStyledComponent(
   if (!displayName)
     throw path.buildCodeFrameError(
       // the expression case should always be the problem but just in case, let's avoid a potentially weird error.
-      path.findParent(p => p.isExpressionStatement())
+      path.findParent((p) => p.isExpressionStatement())
         ? 'The output of this styled component is never used. Either assign it to a variable or export it.'
         : 'Could not determine a displayName for this styled component. Each component must be uniquely identifiable, either as the default export of the module or by assigning it to a unique identifier',
     );

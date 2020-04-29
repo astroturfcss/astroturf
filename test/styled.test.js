@@ -25,9 +25,7 @@ describe('styled', () => {
       format`
         import styled from 'astroturf/react';
         import _ButtonBase from "./MyStyleFile-ButtonBase.css";
-        const ButtonBase =
-        /*#__PURE__*/
-        styled('button', null, {
+        const ButtonBase = /*#__PURE__*/ styled('button', null, {
           displayName: \"ButtonBase\",
           styles: _ButtonBase
         });
@@ -257,7 +255,7 @@ describe('styled', () => {
     it('should provide from object', () => {
       const Component = styled('div', null, {
         displayName: 'FancyBox',
-        attrs: p => ({ ...p, green: true }),
+        attrs: (p) => ({ ...p, green: true }),
         styles: { cls1: 'cls1', green: 'green' },
         kebabName: 'fancy-box',
         camelName: 'fancyBox',
@@ -274,7 +272,7 @@ describe('styled', () => {
     it('should provide from function which maps props', () => {
       const Component = styled('div', null, {
         displayName: 'FancyBox',
-        attrs: p => ({ green: p.foo }),
+        attrs: (p) => ({ green: p.foo }),
         styles: { cls1: 'cls1', green: 'green' },
         kebabName: 'fancy-box',
         camelName: 'fancyBox',
