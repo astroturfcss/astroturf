@@ -208,29 +208,201 @@ describe('css prop', () => {
     },
   );
 
-  describe.only('optimization', () => {
-    it('should stryt', async () => {
-      const r = await run(
+  describe.only('inline optimization', () => {
+    async function runInline(jsxStr) {
+      const [code] = await run(
         `
           import { css } from 'astroturf';
 
           function Button({ color }) {
-            return (
-              <button
-                style={{ color: 'red' }}
-                {...other}
-                {...vdfg}
-                css={css\`
-                  color: \${color};
-                \`}
-              />
-            );
+            return (${jsxStr});
           }
         `,
-        { enableCssProp: true },
+        { experiments: { inlineCssPropOptimization: true } },
       );
 
-      console.log(r);
+      expect(code).not.toContain('css={');
+      return code;
+    }
+
+    it('style no conflicts', async () => {
+      const code = await runInline(`
+        <button
+          css={css\`
+            color: \${color};
+          \`}
+        />
+      `);
+
+      expect(code).toIgnoreIndentAndContain(`
+        style={{
+          "--akeopjh": color,
+        }}
+        className={_CssProp1_button.cls1}
+      `);
+    });
+
+    it('style: reuse the style object', async () => {
+      const code = await runInline(`
+        <button
+          style={{ backgroundColor: "red" }}
+          css={css\`
+            color: \${color};
+          \`}
+        />
+      `);
+
+      expect(code).toIgnoreIndentAndContain(`
+        style={{
+          backgroundColor: "red",
+          "--akeopjh": color,
+        }}
+        className={_CssProp1_button.cls1}
+      `);
+    });
+
+    it('style: should Object.assign when unclear', async () => {
+      const code = await runInline(`
+        <button
+          style={style}
+          css={css\`
+            color: \${color};
+          \`}
+        />
+      `);
+
+      expect(code).toIgnoreIndentAndContain(`
+        style={Object.assign(
+          {
+            "--akeopjh": color,
+          },
+          style
+        )}
+        className={_CssProp1_button.cls1}
+      `);
+    });
+
+    it('style: should handle spread', async () => {
+      const code = await runInline(`
+        <button
+          {...spread}
+          css={css\`
+            color: \${color};
+          \`}
+        />
+      `);
+
+      expect(code).toIgnoreIndentAndContain(`
+        style={Object.assign(
+          {
+            "--akeopjh": color,
+          },
+          spread.style
+        )}
+        className={\`\${spread.className ?? ""} \${_CssProp1_button.cls1}\`.trim()}
+      `);
+    });
+
+    it('should handle multiple spreads', async () => {
+      const code = await runInline(`
+        <button
+          {...spread}
+          {...other}
+          css={css\`
+            color: \${color};
+          \`}
+        />
+      `);
+
+      expect(code).toIgnoreIndentAndContain(`
+        style={Object.assign(
+          {
+            "--akeopjh": color,
+          },
+          other.style || spread.style
+        )}
+        className={\`\${other.className ?? spread.className ?? ""} \${
+          _CssProp1_button.cls1
+        }\`.trim()}
+      `);
+    });
+
+    it('should ignore spreads when style comes after', async () => {
+      const code = await runInline(`
+        <button
+          {...spread}
+          {...other}
+          style={style}
+          css={css\`
+            color: \${color};
+          \`}
+        />
+      `);
+
+      expect(code).toIgnoreIndentAndContain(`
+        style={Object.assign(
+          {
+            "--akeopjh": color,
+          },
+          style
+        )}
+        className={\`\${other.className ?? spread.className ?? ""} \${
+          _CssProp1_button.cls1
+        }\`.trim()}
+      `);
+    });
+
+    it('should handle spreads with style', async () => {
+      const code = await runInline(`
+        <button
+          style={style}
+          {...spread}
+          {...other}
+          css={css\`
+            color: \${color};
+          \`}
+        />
+      `);
+
+      expect(code).toIgnoreIndentAndContain(`
+        style={Object.assign(
+          {
+            "--akeopjh": color,
+          },
+          other.style || spread.style || style
+        )}
+        className={\`\${other.className ?? spread.className ?? ""} \${
+          _CssProp1_button.cls1
+        }\`.trim()}
+      `);
+    });
+
+    it('should handle spreads with style object', async () => {
+      const code = await runInline(`
+        <button
+          style={{ color: 'red' }}
+          {...spread}
+          {...other}
+          css={css\`
+            color: \${color};
+          \`}
+        />
+      `);
+
+      expect(code).toIgnoreIndentAndContain(`
+        style={Object.assign(
+          {
+            "--akeopjh": color,
+          },
+          other.style ||
+            spread.style || {
+              color: "red",
+            }
+        )}
+        className={\`\${other.className ?? spread.className ?? ""} \${
+          _CssProp1_button.cls1
+        }\`.trim()}
+      `);
     });
   });
 

@@ -46,6 +46,7 @@ export interface ResolvedOptions {
   experiments: {
     modularCssExternals?: boolean;
     selfCompile?: boolean;
+    inlineCssPropOptimization?: boolean;
   };
 }
 

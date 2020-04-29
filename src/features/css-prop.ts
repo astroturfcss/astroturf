@@ -9,9 +9,11 @@ import addPragma from '../utils/addPragma';
 import buildTaggedTemplate from '../utils/buildTaggedTemplate';
 import createStyleNode from '../utils/createStyleNode';
 import getNameFromPath from '../utils/getNameFromPath';
+import isCreateElementCall from '../utils/isCreateElementCall';
 import isCssTag from '../utils/isCssTag';
 import truthy from '../utils/truthy';
 import wrapInClass from '../utils/wrapInClass';
+import { inlineJsx } from './css-prop-inline';
 
 const JSX_IDENTS = Symbol('Astroturf jsx identifiers');
 
@@ -21,11 +23,6 @@ type CssPropPluginState = PluginState & {
     jsxFrag: t.Identifier;
   };
 };
-
-export const isCreateElementCall = (p: NodePath) =>
-  p.isCallExpression() &&
-  (p.get('callee.property') as any).node &&
-  (p.get('callee.property') as any).node.name === 'createElement';
 
 function buildCssProp(
   valuePath: NodePath<any>,
@@ -218,14 +215,14 @@ export default {
   },
 
   JSXAttribute(path: NodePath<t.JSXAttribute>, state: CssPropPluginState) {
-    const { file } = state;
+    const { file, defaultedOptions } = state;
 
     if (path.node.name.name !== 'css') return;
 
     const valuePath = path.get('value');
     const parentPath = path.findParent((p) => p.isJSXOpeningElement());
 
-    const compiledNode = buildCssProp(
+    const compiledNode: any = buildCssProp(
       valuePath,
       parentPath && getNameFromPath(parentPath.get('name') as NodePath),
       state,
@@ -233,7 +230,13 @@ export default {
     );
 
     if (compiledNode) {
-      valuePath.replaceWith(compiledNode);
+      if (defaultedOptions.experiments.inlineCssPropOptimization) {
+        inlineJsx(path, compiledNode.expression, state);
+        path.remove();
+      } else {
+        valuePath.replaceWith(compiledNode);
+      }
+
       file.set(HAS_CSS_PROP, true);
     }
   },
