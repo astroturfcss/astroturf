@@ -58,6 +58,12 @@ function getBaseConfig(entry, options = { enableCssProp: true }) {
   };
 }
 
+const toMatchFile = (src, fileName) => {
+  expect(src).toMatchFile(
+    path.join(__dirname, '__file_snapshots__', fileName),
+  );
+};
+
 const cssModuleOptions = {
   modules: {
     localIdentName: '[name]__[local]',
@@ -127,7 +133,7 @@ describe('webpack integration', () => {
     expect(message).toEqual(expect.stringContaining('Imported as MyButton'));
   });
 
-  it.skip('should throw on cycles', async () => {
+  it('should throw on cycles', async () => {
     const timeout = global.setTimeout;
 
     jest
@@ -218,43 +224,73 @@ describe('css-loader', () => {
     const src = assets['main.css'].source();
     expect(src).not.toContain('&:hover');
 
-    expect(src).toMatchFile(
-      path.join(__dirname, '__file_snapshots__/default-plugins-styles.css'),
+    toMatchFile(src, 'default-plugins-styles.css');
+
+    toMatchFile(assets['main.js'].source(), 'default-plugins-js.js');
+  });
+});
+
+describe('self-compile', () => {
+  function getConfig(entry) {
+    const config = getBaseConfig(entry, {
+      extension: '.scss',
+      experiments: {
+        selfCompile: true,
+      },
+    });
+
+    config.module.rules.unshift(
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: ExtractCSS.loader,
+            options: { esModule: true },
+          },
+          'css-loader',
+        ],
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: ExtractCSS.loader,
+            options: { esModule: true },
+          },
+          {
+            loader: 'css-loader',
+            options: { importLoaders: 1 },
+          },
+          'sass-loader',
+        ],
+      },
     );
-    expect(assets['main.js'].source()).toMatchFile(
-      path.join(__dirname, '__file_snapshots__/default-plugins-js.js'),
+
+    config.plugins.push(new ExtractCSS());
+    return config;
+  }
+
+  it('works', async () => {
+    const assets = await runWebpack(
+      getConfig('./integration/modular-css/main.js'),
     );
+
+    toMatchFile(assets['main.css'].source(), 'self-compile/main-styles.css');
+    toMatchFile(assets['main.js'].source(), 'self-compile/main-js.js');
   });
 
-  it.only('self compile', async () => {
-    const config = getBaseConfig('./integration/css-loader-3.js', {
-      extension: '.scss',
-    });
-
-    config.module.rules.unshift({
-      test: /\.css$/,
-      use: [
-        {
-          loader: ExtractCSS.loader,
-          options: { esModule: true },
-        },
-
-        'css-loader',
-      ],
-    });
-    config.plugins.push(new ExtractCSS());
-
-    const assets = await runWebpack(config);
+  it('self compile', async () => {
+    const assets = await runWebpack(
+      getConfig('./integration/css-loader-3.js'),
+    );
 
     const src = assets['main.css'].source();
-    console.log(assets['main.js'].source());
     expect(src).not.toContain('&:hover');
 
-    // expect(src).toMatchFile(
-    //   path.join(__dirname, '__file_snapshots__/default-plugins-styles.css'),
-    // );
-    // expect(assets['main.js'].source()).toMatchFile(
-    //   path.join(__dirname, '__file_snapshots__/default-plugins-js.js'),
-    // );
+    toMatchFile(src, 'self-compile/default-plugins-styles.css');
+    toMatchFile(
+      assets['main.js'].source(),
+      'self-compile/default-plugins-js.js',
+    );
   });
 });

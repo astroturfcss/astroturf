@@ -210,7 +210,7 @@ function replaceDependencyPlaceholders(
     const { imported, source } = depInterpolations.get(match)!;
     const localName = `a${id++}`;
 
-    if (opts.experiments.modularCssExternals) {
+    if (opts.experiments.modularCssExternals || opts.experiments.selfCompile) {
       return `:external(${imported} from "${source}")`;
     }
 

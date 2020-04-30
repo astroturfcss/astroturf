@@ -1,0 +1,16 @@
+.Widget--cls1--2bJtp {
+  /*!*/
+}
+
+.Widget--cls2--2Sffc {
+  height: 20px;
+  width: 30px;
+  background-color: #dfd;
+}
+.main-styles--parent--10ybz {
+  color: red;
+}
+
+.main-styles--test--2c1zf > .Widget--cls1--2bJtp {
+  holla: yo;
+}

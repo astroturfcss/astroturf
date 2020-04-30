@@ -5,8 +5,8 @@ import { toMatchFile } from 'jest-file-snapshot';
 expect.extend({ toMatchFile });
 Enzyme.configure({ adapter: new Adapter() });
 
-jest.mock('../src/utils/getLoaderPrefix', () => () =>
-  'astroturf/css-loader?inline!',
+jest.mock('../src/utils/getLoaderPrefix', () => (modules = false) =>
+  `astroturf/css-loader?inline${modules ? '&modules' : ''}!`,
 );
 
 // eslint-disable-next-line no-underscore-dangle
