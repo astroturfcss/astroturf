@@ -1,8 +1,11 @@
 language: node_js
 node_js:
-  - stable
+  - node
+  - lts/*
 
-cache: yarn
+cache:
+  yarn: true
+  npm: true
 
 branches:
   only:
