@@ -26,8 +26,14 @@ module.exports = {
         },
       },
     },
+    {
+      resolve: 'gatsby-plugin-css',
+      options: {
+        useDefaultPostcss: false,
+        useCssModuleLoader: true,
+      },
+    },
     'gatsby-plugin-mdx',
     'gatsby-plugin-typescript',
-    'gatsby-plugin-postcss',
   ],
 };

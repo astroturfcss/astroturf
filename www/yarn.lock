@@ -5525,15 +5525,15 @@ gatsby-page-utils@^0.2.0:
     lodash "^4.17.15"
     micromatch "^3.1.10"
 
-gatsby-plugin-css@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/gatsby-plugin-css/-/gatsby-plugin-css-1.0.1.tgz#b89168004e08e574ff8c3553280a51a1d5c2a6a2"
-  integrity sha512-SrOXdmmUIhBPl93xjgGBpq0C8B2lhPwh5hYDkvXJ1DJbQw+eI6rxeZ1caWK6T2l1lLkkNsGmcNQtRdknYjmG5w==
+gatsby-plugin-css@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-css/-/gatsby-plugin-css-1.0.2.tgz#62ffe33b1df7eead3fafdd2f5dcc1f094f7a186d"
+  integrity sha512-3ipKkLCJgl1w/Hw7VqT43tHhxL5rX434ToEKQOO2f1j8+ZpOnmKokjuieQmXYWWD3R2CxFlT1p8aCoJLHAi9vw==
   dependencies:
     css-loader "^3.5.3"
     css-module-loader "^1.0.0-beta.6"
     cuid "^2.1.8"
-    postcss-scss "^2.0.0"
+    loader-utils "^2.0.0"
 
 gatsby-plugin-mdx@^1.2.4:
   version "1.2.4"
@@ -9814,13 +9814,6 @@ postcss-reduce-transforms@^4.0.2:
     has "^1.0.0"
     postcss "^7.0.0"
     postcss-value-parser "^3.0.0"
-
-postcss-scss@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/postcss-scss/-/postcss-scss-2.0.0.tgz#248b0a28af77ea7b32b1011aba0f738bda27dea1"
-  integrity sha512-um9zdGKaDZirMm+kZFKKVsnKPF7zF7qBAtIfTSnZXD1jZ0JNZIxdB6TxQOjCnlSzLRInVl2v3YdBh/M881C4ug==
-  dependencies:
-    postcss "^7.0.0"
 
 postcss-selector-parser@^3.0.0:
   version "3.1.2"
