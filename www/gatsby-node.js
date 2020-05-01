@@ -1,6 +1,24 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable global-require */
+
 const path = require('path');
 
-exports.onCreateWebpackConfig = ({ actions }) => {
+const { createWebpackRule } = require('gatsby-plugin-css');
+
+const postcssConfig = require('./postcss.config');
+
+exports.onCreateWebpackConfig = ({ actions, ...api }) => {
+  const {
+    oneOf: [moduleRule],
+  } = createWebpackRule({
+    api,
+    modulesTest: /\.astroturf$/,
+    useCssModuleLoader: true,
+    postcssPlugins: postcssConfig.config,
+  });
+
+  // console.log('H', moduleRule);
+
   actions.setWebpackConfig({
     module: {
       rules: [
@@ -10,7 +28,7 @@ exports.onCreateWebpackConfig = ({ actions }) => {
           use: {
             loader: require.resolve('../lib/loader'),
             options: {
-              extension: '.astroturf.css',
+              extension: '.astroturf',
               enableCssProp: true,
               experiments: {
                 modularCssExternals: true,
@@ -18,12 +36,7 @@ exports.onCreateWebpackConfig = ({ actions }) => {
             },
           },
         },
-        {
-          test: /\.astroturf.css$/,
-          use: {
-            loader: 'css-module-loader',
-          },
-        },
+        moduleRule,
       ],
     },
     resolve: {
