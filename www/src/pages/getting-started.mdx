@@ -1,0 +1,122 @@
+import Layout from '../components/Layout';
+
+export default Layout;
+
+# Getting Started
+
+<p>
+  <Brand>astroturf</Brand> lets you write CSS in your JavaScript files without
+  adding any runtime layer, and with your existing CSS processing pipeline.
+</p>
+
+- **Zero runtime CSS-in-JS.** Get many of the same benefits as CSS-in-JS,
+  but without the loss of flexibility in requiring framework-specific CSS
+  processing, and while keeping your CSS fully static with no runtime style parsing.
+- Use your existing tools – **Sass, PostCSS, Less** – but still write
+  your style definitions in your JavaScript files
+- **Whole component in the single file**. Write CSS in a template literal,
+  then use it as if it were in a separate file
+
+## Usage
+
+A goal of <Brand>astroturf</Brand> is to provide approachable
+scoped and managable CSS according to everyone's level of comfort. Pick the level of
+abstraction that is right for _you_!
+
+### Scoped StyleSheets
+
+Leavaging the <Brand>MAGIC</Brand> of compilation, astroturf lets you define styles
+from the comfort of your JavaScript (or TypeScript) files; Framework optional!
+
+```jsx
+import { stylesheet } from 'astroturf';
+
+const height = 2;
+
+const styles = stylesheet`
+  .btn {
+    appearance: none;
+    height: ${height}rem;
+    display: inline-block;
+    padding: .5rem 1rem;
+  }
+
+  .primary {
+    color: white:
+    border: 1px solid white;
+    background-color: taupe;
+
+    &:hover {
+      color: taupe:
+      border-color: taupe;
+      background-color: white;
+    }
+  }
+`;
+
+const Button = ({ primary }) => {
+  const button = document.createElement('button');
+  button.classList.add(styles.btn, primary && styles.primary);
+  return button;
+};
+```
+
+Through our proprietary "Extraction Process" each stylesheet is
+turned into it's own CSS file.
+
+For those who like a more <Brand>MODULAR</Brand> approach the `css` tag is ready and
+waiting. The `css` tag creates single CSS classes:
+
+```jsx
+import React from 'react';
+import { css } from 'astroturf';
+
+const btn = css`
+  color: black;
+  border: 1px solid black;
+  background-color: white;
+`;
+
+export default function Button({ children }) {
+  return <button className={btn}>{children}</button>;
+}
+```
+
+When processed, the `css` block will be extracted into a `.css` file,
+taking advantage of any and all of the other loaders configured to handle css.
+
+## React!
+
+Embracing the component lifestyle? <Brand>astroturf</Brand> has you covered with
+built-in integration with <Brand>React.JS™</Brand>. The versitile `css` tag helps
+transform your plain ol' components into bueatiful works of art.
+
+```jsx noFormat
+import * as React from 'react';
+import { css } from 'astroturf';
+
+function Button({ variant, bgColor, children }) {
+  return (
+    <button
+      css={css`
+        color: black;
+        border: 1px solid black;
+        background-color: ${bgColor};
+
+        ${variant === 'primary' &&
+        css`
+          color: blue;
+          border: 1px solid blue;
+        `}
+
+        ${variant === 'secondary' &&
+        css`
+          color: green;
+        `}
+      `}
+    >
+      {children}
+    </button>
+  );
+}
+```

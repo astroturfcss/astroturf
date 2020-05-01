@@ -1,15 +1,15 @@
-// declare global {
-//   namespace JSX {
-//     interface IntrinsicAttributes {
-//       css?: string | Record<string, string>;
-//     }
-//   }
-// }
-// declare module 'react' {
-//   interface DOMAttributes<T> {
-//     css?: string | Record<string, string>;
-//   }
-// }
+declare global {
+  namespace JSX {
+    interface IntrinsicAttributes {
+      css?: string | Record<string, string>;
+    }
+  }
+}
+declare module 'react' {
+  interface DOMAttributes<T> {
+    css?: string | Record<string, string>;
+  }
+}
 
 export function css(
   template: TemplateStringsArray,

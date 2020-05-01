@@ -138,7 +138,7 @@ export function css(
   ...args: any[]
 ): Record<string, string>;
 
-export function styledsheet(
+export function stylesheet(
   template: TemplateStringsArray,
   ...args: any[]
 ): Record<string, string>;

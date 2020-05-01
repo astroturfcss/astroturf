@@ -1,7 +1,7 @@
 import { stripIndents } from 'common-tags';
 
 export function hoistImports(text: string) {
-  const imports = [];
+  const imports = [] as string[];
 
   let match;
   const rImports = /@import.*?(?:$|;)/g;

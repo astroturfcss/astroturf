@@ -2,3 +2,5 @@ node_modules
 lib
 *_extracted_style.css
 *.log
+.cache/
+public/
