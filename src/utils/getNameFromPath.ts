@@ -12,7 +12,7 @@ export default function getNameFromPath(path: NodePath): string | null {
   if (path.isMemberExpression() || path.isJSXMemberExpression()) {
     return pascalCase(
       getMembers(path)
-        .map(m => getNameFromPath(m.path))
+        .map((m) => getNameFromPath(m.path))
         .filter(truthy)
         .join('-'),
     );

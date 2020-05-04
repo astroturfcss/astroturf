@@ -4,11 +4,15 @@ import proxyFileSystem from './proxyFileSystem';
 const PLUGIN = 'css-literal-loader';
 
 class VirtualModulePlugin {
+  augmented = false;
+
+  fs: MemoryFs;
+
   /**
    * Apply an instance of the plugin to compilation.
    * helpful for adding the plugin inside a loader.
    */
-  static bootstrap(compilation, files) {
+  static bootstrap(compilation: any, files?: any) {
     const { compiler } = compilation;
     const plugin = new VirtualModulePlugin(files);
 
@@ -43,7 +47,7 @@ class VirtualModulePlugin {
     }
   }
 
-  addFile = (virtualPath, content) => {
+  addFile = (virtualPath: string, content: any) => {
     this.fs.addFile(virtualPath, content);
   };
 

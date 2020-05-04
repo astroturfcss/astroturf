@@ -1,9 +1,9 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["main"],{
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/issue-365-BlockStyled.css":
-/*!*******************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-0!./node_modules/css-loader/dist/cjs.js??ref--4-1!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/issue-365-BlockStyled.css ***!
-  \*******************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/issue-365-BlockStyled.css":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-0!./node_modules/css-loader/dist/cjs.js??ref--4-1!./src/css-loader.ts!./test/integration/issue-365-BlockStyled.css ***!
+  \****************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -14,10 +14,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/issue-365-mixins.css":
-/*!**************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-0!./node_modules/css-loader/dist/cjs.js??ref--4-1!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/issue-365-mixins.css ***!
-  \**************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/issue-365-mixins.css":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-0!./node_modules/css-loader/dist/cjs.js??ref--4-1!./src/css-loader.ts!./test/integration/issue-365-mixins.css ***!
+  \***********************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -249,8 +249,8 @@ function styled(type, options, settings) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "./src/runtime/react.js");
-/* harmony import */ var astroturf_css_loader_inline_issue_365_mixins_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! astroturf/css-loader?inline!./issue-365-mixins.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/issue-365-mixins.css");
-/* harmony import */ var astroturf_css_loader_inline_issue_365_BlockStyled_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! astroturf/css-loader?inline!./issue-365-BlockStyled.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/issue-365-BlockStyled.css");
+/* harmony import */ var astroturf_css_loader_inline_issue_365_mixins_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! astroturf/css-loader?inline!./issue-365-mixins.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/issue-365-mixins.css");
+/* harmony import */ var astroturf_css_loader_inline_issue_365_BlockStyled_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! astroturf/css-loader?inline!./issue-365-BlockStyled.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/issue-365-BlockStyled.css");
 
 
 

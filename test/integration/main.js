@@ -1,6 +1,7 @@
 import styled, { css, stylesheet } from 'astroturf/react';
 import React from 'react';
 import Widget from 'widget';
+import Doodad from 'withConfig';
 
 import Button, { styles as btnStyles } from './Button';
 import * as Buttons from './Button';
@@ -58,9 +59,9 @@ export function MyComponent() {
           color: red;
 
           ${foo &&
-            css`
-              color: blue;
-            `}
+          css`
+            color: blue;
+          `}
         `}
       >
         <div>hey </div>

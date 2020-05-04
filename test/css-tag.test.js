@@ -28,6 +28,27 @@ describe('css tag', () => {
     },
   );
 
+  testAllRunners('should allow disabling', async (runner) => {
+    const [, styles] = await runner(
+      `
+        import { css } from 'astroturf';
+
+        const styles = css\`
+          .foo {
+            color: red;
+          }
+        \`;
+      `,
+      {
+        cssTagName: false,
+        stylesheetTagName: 'css',
+      },
+    );
+
+    expect(styles).toHaveLength(1);
+    expect(styles[0].type).toEqual('stylesheet');
+  });
+
   it('should remove css imports', async () => {
     const [code] = await run(`
       import { css } from 'astroturf';
@@ -102,7 +123,7 @@ describe('css tag', () => {
           `
         import { css as less } from 'astroturf';
 
-        less\`
+        less\`a
           .blue {
             color: blue;
           }

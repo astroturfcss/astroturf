@@ -72,20 +72,35 @@ describe('webpack integration', () => {
       allowGlobal: true,
     });
 
-    config.module.rules.unshift({
-      test: /\.css$/,
-      use: [
-        {
-          loader: ExtractCSS.loader,
-          options: { esModule: true },
-        },
-        {
-          loader: 'css-loader',
-          options: cssModuleOptions,
-        },
-        'sass-loader',
-      ],
-    });
+    config.module.rules.unshift(
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: ExtractCSS.loader,
+            options: { esModule: true },
+          },
+          {
+            loader: 'css-loader',
+            options: cssModuleOptions,
+          },
+        ],
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: ExtractCSS.loader,
+            options: { esModule: true },
+          },
+          {
+            loader: 'css-loader',
+            options: cssModuleOptions,
+          },
+          'sass-loader',
+        ],
+      },
+    );
     config.plugins.push(new ExtractCSS());
     return config;
   }

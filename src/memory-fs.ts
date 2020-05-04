@@ -1,17 +1,17 @@
-const { createHash } = require('crypto');
-const path = require('path');
-const { ReadableStream, WritableStream } = require('stream');
-const util = require('util');
+import { createHash } from 'crypto';
+import path from 'path';
+import Stream from 'stream';
+import util from 'util';
 
-const errors = require('errno');
-const MemoryFileSystemError = require('memory-fs/lib/MemoryFileSystem');
+import errors from 'errno';
+import MemoryFileSystemError from 'memory-fs/lib/MemoryFileSystem';
 
 const debug = util.debuglog('astroturf:memory-fs');
 
 const returnsTrue = () => true;
 const returnsFalse = () => false;
 
-const md5 = (input) => {
+const md5 = (input: string) => {
   const hash = createHash('md5');
   hash.update(input);
   return hash.digest('hex');
@@ -31,12 +31,12 @@ const read = (file, optsOrEncoding) => {
  * and it doesn't support stat timestamps
  */
 class MemoryFs {
-  constructor() {
-    this.paths = new Map();
+  private paths = new Map<string, any>();
 
+  constructor() {
     ['stat', 'readdir', 'rmdir', 'unlink', 'readFile', 'writeFile'].forEach(
       (fn) => {
-        this[fn] = (...args) => {
+        this[fn] = (...args: any[]) => {
           const cb = args.pop();
           let result;
           try {
@@ -51,7 +51,7 @@ class MemoryFs {
     );
   }
 
-  addFile = (p, data, updateMtime = false) => {
+  addFile = (p: string, data: any, updateMtime = false) => {
     p = path.normalize(p);
     const hash = md5(data);
     const existing = this.paths.get(p);
@@ -82,11 +82,11 @@ class MemoryFs {
 
   getPaths = () => this.paths;
 
-  exists = (p, cb) => cb(this.existsSync(p));
+  exists = (p: any, cb: (exists: boolean) => void) => cb(this.existsSync(p));
 
-  existsSync = (p) => this.paths.has(path.normalize(p));
+  existsSync = (p: string) => this.paths.has(path.normalize(p));
 
-  statSync = (p) => {
+  statSync = (p: string) => {
     const file = this.paths.get(path.normalize(p));
     if (file)
       return {
@@ -112,7 +112,7 @@ class MemoryFs {
     throw new MemoryFileSystemError(errors.code.ENOENT, p, 'stat');
   };
 
-  readFileSync = (p, optsOrEncoding) => {
+  readFileSync = (p: string, optsOrEncoding?: any) => {
     p = path.normalize(p);
 
     if (!this.existsSync(p))
@@ -121,15 +121,16 @@ class MemoryFs {
     return read(this.paths.get(p), optsOrEncoding);
   };
 
-  readdirSync = (p) => {
-    const results = [];
+  readdirSync = (p: string) => {
+    const results = [] as string[];
     p = path.normalize(p);
     this.paths.forEach((_, key) => {
       if (key.startsWith(p)) results.push(key);
     });
+    return results;
   };
 
-  rmdirSync = (p) => {
+  rmdirSync = (p: string) => {
     p = path.normalize(p);
 
     this.paths.forEach((_, key) => {
@@ -137,15 +138,15 @@ class MemoryFs {
     });
   };
 
-  unlinkSync = (p) => this.paths.delete(p);
+  unlinkSync = (p: string) => this.paths.delete(p);
 
-  writeFileSync = (p, data) => {
+  writeFileSync = (p: string, data: any) => {
     this.addFile(p, data, true);
   };
 
   /** stream methods taken from memory-fs */
   createReadStream(p, options) {
-    const stream = new ReadableStream();
+    const stream = new Stream.Readable();
     let done = false;
     let data;
     try {
@@ -176,8 +177,9 @@ class MemoryFs {
   }
 
   createWriteStream(p) {
-    const stream = new WritableStream();
+    const stream = new Stream.Writable();
     try {
+      // @ts-ignore
       this.writeFileSync(p, Buffer.from(0));
     } catch (e) {
       stream.once('prefinish', () => {
@@ -185,7 +187,7 @@ class MemoryFs {
       });
       return stream;
     }
-    const bl = [];
+    const bl = [] as any[];
     let len = 0;
 
     // eslint-disable-next-line no-underscore-dangle
@@ -196,6 +198,14 @@ class MemoryFs {
     };
     return stream;
   }
+
+  writeFile(
+    _p: string,
+    _data: any,
+    _callback: (error?: Error | null | undefined) => void,
+  ) {
+    throw new Error('Method not implemented.');
+  }
 }
 
-module.exports = MemoryFs;
+export default MemoryFs;
