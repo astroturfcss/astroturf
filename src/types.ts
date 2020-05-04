@@ -22,6 +22,7 @@ export type DependencyResolver = (
 ) => UserDependency | null;
 
 export interface ResolvedOptions {
+  configFile?: string | boolean;
   writeFiles: boolean;
   allowGlobal: boolean;
 

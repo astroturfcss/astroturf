@@ -1,17 +1,18 @@
-import chalk from 'chalk';
 import { NodePath } from '@babel/core';
 import generate from '@babel/generator';
 import * as t from '@babel/types';
+import chalk from 'chalk';
 
-import { DynamicStyle, PluginState } from '../types';
+import { DynamicStyle, PluginState, ResolvedOptions } from '../types';
+import { COMPONENTS, HAS_CSS_PROP, STYLES } from '../utils/Symbols';
 import addPragma from '../utils/addPragma';
 import buildTaggedTemplate from '../utils/buildTaggedTemplate';
 import createStyleNode from '../utils/createStyleNode';
 import getNameFromPath from '../utils/getNameFromPath';
 import isCssTag from '../utils/isCssTag';
-import { COMPONENTS, HAS_CSS_PROP, STYLES } from '../utils/Symbols';
-import wrapInClass from '../utils/wrapInClass';
+import isStylesheetTag from '../utils/isStylesheetTag';
 import truthy from '../utils/truthy';
+import wrapInClass from '../utils/wrapInClass';
 
 const JSX_IDENTS = Symbol('Astroturf jsx identifiers');
 
@@ -21,6 +22,13 @@ type CssPropPluginState = PluginState & {
     jsxFrag: t.Identifier;
   };
 };
+
+// XXX: if the single class cssProp is disabled fallback to the stylesheet tag
+//  this enables pre v1 tag meaning for folks that want to do an incremental migration
+const isCssPropTag = (tagPath: NodePath, options: ResolvedOptions) =>
+  options.cssTagName === false
+    ? isStylesheetTag(tagPath, options)
+    : isCssTag(tagPath, options);
 
 export const isCreateElementCall = (p: NodePath) =>
   p.isCallExpression() &&
@@ -82,7 +90,7 @@ function buildCssProp(
     if (
       exprPath.isTemplateLiteral() ||
       (exprPath.isTaggedTemplateExpression() &&
-        isCssTag(exprPath.get('tag'), pluginOptions))
+        isCssPropTag(exprPath.get('tag'), pluginOptions))
     ) {
       importId = options.styleImports.add(style);
       const template = buildTaggedTemplate({
@@ -223,7 +231,7 @@ export default {
     if (path.node.name.name !== 'css') return;
 
     const valuePath = path.get('value');
-    const parentPath = path.findParent(p => p.isJSXOpeningElement());
+    const parentPath = path.findParent((p) => p.isJSXOpeningElement());
 
     const compiledNode = buildCssProp(
       valuePath,

@@ -11,6 +11,7 @@ import MagicString from 'magic-string';
 import * as webpack from 'webpack';
 
 import VirtualModulePlugin from './VirtualModulePlugin';
+import config from './config';
 import traverse from './traverse';
 import {
   AstroturfMetadata,
@@ -178,7 +179,22 @@ function replaceStyleTemplates(
 const LOADER_PLUGIN = Symbol('loader added VM plugin');
 const SEEN = Symbol('astroturf seen modules');
 
-module.exports = function loader(
+async function resolveOptions(
+  loaderContext: LoaderContext,
+): Promise<Partial<ResolvedOptions>> {
+  const loaderOpts = loaderUtils.getOptions(loaderContext) || {};
+
+  if (loaderOpts.config === false) {
+    return loaderOpts;
+  }
+  const result = await (typeof loaderOpts.config === 'string'
+    ? config.load(loaderOpts.config)
+    : config.search(loaderContext.resourcePath));
+
+  return result?.config || loaderOpts;
+}
+
+module.exports = async function loader(
   this: LoaderContext,
   content: string,
   _map?: any,
@@ -195,13 +211,12 @@ module.exports = function loader(
 
   const resolve = util.promisify(this.resolve);
 
+  const dependencies = [] as Promise<void>[];
+
   const buildDependency = async (request: string) => {
     const resource = await resolve(dirname(resourcePath), request);
     return loadModule(resource);
   };
-
-  const options = loaderUtils.getOptions(this) || {};
-  const dependencies = [] as Promise<void>[];
 
   function resolveDependency(
     interpolation: ResolvedImport,
@@ -241,54 +256,60 @@ module.exports = function loader(
     return { source, imported };
   }
 
-  const { styles = [], changeset } = collectStyles(
-    content,
-    resourcePath,
-    resolveDependency,
-    options,
-  );
+  try {
+    const options = await resolveOptions(this);
 
-  if (meta) {
-    meta.styles = styles;
-  }
+    const { styles = [], changeset } = collectStyles(
+      content,
+      resourcePath,
+      resolveDependency,
+      options,
+    );
 
-  if (!styles.length) {
-    return cb(null, content);
-  }
-
-  compilation[SEEN].set(resourcePath, styles);
-  this._module.styles = styles;
-  // @ts-ignore
-  let { emitVirtualFile } = this;
-
-  // The plugin isn't loaded
-  if (!emitVirtualFile) {
-    const { compiler } = compilation;
-    let plugin = compiler[LOADER_PLUGIN];
-    if (!plugin) {
-      debug('adding plugin to compiiler');
-      plugin = VirtualModulePlugin.bootstrap(compilation);
-
-      compiler[LOADER_PLUGIN] = plugin;
+    if (meta) {
+      meta.styles = styles;
     }
-    emitVirtualFile = plugin.addFile;
+
+    if (!styles.length) {
+      return cb(null, content);
+    }
+
+    compilation[SEEN].set(resourcePath, styles);
+    this._module.styles = styles;
+    // @ts-ignore
+    let { emitVirtualFile } = this;
+
+    // The plugin isn't loaded
+    if (!emitVirtualFile) {
+      const { compiler } = compilation;
+      let plugin = compiler[LOADER_PLUGIN];
+      if (!plugin) {
+        debug('adding plugin to compiiler');
+        plugin = VirtualModulePlugin.bootstrap(compilation);
+
+        compiler[LOADER_PLUGIN] = plugin;
+      }
+      emitVirtualFile = plugin.addFile;
+    }
+
+    return Promise.all(dependencies)
+      .then(() => {
+        styles.forEach((style) => {
+          const mtime = emitVirtualFile(style.absoluteFilePath, style.value);
+          compilation.fileTimestamps.set(style.absoluteFilePath, +mtime);
+        });
+
+        const result = replaceStyleTemplates(
+          this,
+          resourcePath,
+          content,
+          changeset,
+        );
+
+        cb(null, result.code, result.map as any);
+      })
+      .catch(cb);
+  } catch (err) {
+    return cb(err);
   }
-
-  return Promise.all(dependencies)
-    .then(() => {
-      styles.forEach((style) => {
-        const mtime = emitVirtualFile(style.absoluteFilePath, style.value);
-        compilation.fileTimestamps.set(style.absoluteFilePath, +mtime);
-      });
-
-      const result = replaceStyleTemplates(
-        this,
-        resourcePath,
-        content,
-        changeset,
-      );
-
-      cb(null, result.code, result.map as any);
-    })
-    .catch(cb);
 };

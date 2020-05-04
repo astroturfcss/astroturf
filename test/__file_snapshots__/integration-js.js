@@ -1,9 +1,23 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["main"],{
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/Button-styles.css":
-/*!***********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-0!./node_modules/css-loader/dist/cjs.js??ref--4-1!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/Button-styles.css ***!
-  \***********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/shared/withConfig/index-Doodad.scss":
+/*!*****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--5-0!./node_modules/css-loader/dist/cjs.js??ref--5-1!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/shared/withConfig/index-Doodad.scss ***!
+  \*****************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+/* harmony default export */ __webpack_exports__["default"] = ({"cls1":"index-Doodad__cls1","cls2":"index-Doodad__cls2 index-Doodad__cls1"});
+
+/***/ }),
+
+/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/Button-styles.css":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-0!./node_modules/css-loader/dist/cjs.js??ref--4-1!./src/css-loader.ts!./test/integration/Button-styles.css ***!
+  \********************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -14,10 +28,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/Button.css":
-/*!****************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-0!./node_modules/css-loader/dist/cjs.js??ref--4-1!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/Button.css ***!
-  \****************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/Button.css":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-0!./node_modules/css-loader/dist/cjs.js??ref--4-1!./src/css-loader.ts!./test/integration/Button.css ***!
+  \*************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -28,10 +42,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/main-CssProp1_div.css":
-/*!***************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-0!./node_modules/css-loader/dist/cjs.js??ref--4-1!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/main-CssProp1_div.css ***!
-  \***************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/main-CssProp1_div.css":
+/*!************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-0!./node_modules/css-loader/dist/cjs.js??ref--4-1!./src/css-loader.ts!./test/integration/main-CssProp1_div.css ***!
+  \************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -42,10 +56,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/main-CssProp2_span.css":
-/*!****************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-0!./node_modules/css-loader/dist/cjs.js??ref--4-1!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/main-CssProp2_span.css ***!
-  \****************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/main-CssProp2_span.css":
+/*!*************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-0!./node_modules/css-loader/dist/cjs.js??ref--4-1!./src/css-loader.ts!./test/integration/main-CssProp2_span.css ***!
+  \*************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -56,10 +70,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/main-FancierBox.css":
-/*!*************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-0!./node_modules/css-loader/dist/cjs.js??ref--4-1!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/main-FancierBox.css ***!
-  \*************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/main-FancierBox.css":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-0!./node_modules/css-loader/dist/cjs.js??ref--4-1!./src/css-loader.ts!./test/integration/main-FancierBox.css ***!
+  \**********************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -70,10 +84,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/main-FancyBox.css":
-/*!***********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-0!./node_modules/css-loader/dist/cjs.js??ref--4-1!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/main-FancyBox.css ***!
-  \***********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/main-FancyBox.css":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-0!./node_modules/css-loader/dist/cjs.js??ref--4-1!./src/css-loader.ts!./test/integration/main-FancyBox.css ***!
+  \********************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -84,10 +98,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/main-styles.css":
-/*!*********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-0!./node_modules/css-loader/dist/cjs.js??ref--4-1!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/main-styles.css ***!
-  \*********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/main-styles.css":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-0!./node_modules/css-loader/dist/cjs.js??ref--4-1!./src/css-loader.ts!./test/integration/main-styles.css ***!
+  \******************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -98,10 +112,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/shared/widget/Widget.css":
-/*!******************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-0!./node_modules/css-loader/dist/cjs.js??ref--4-1!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/shared/widget/Widget.css ***!
-  \******************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/shared/widget/Widget.css":
+/*!***************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-0!./node_modules/css-loader/dist/cjs.js??ref--4-1!./src/css-loader.ts!./test/integration/shared/widget/Widget.css ***!
+  \***************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -334,8 +348,8 @@ function styled(type, options, settings) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "styles", function() { return styles; });
 /* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "./src/runtime/react.js");
-/* harmony import */ var astroturf_css_loader_inline_Button_styles_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! astroturf/css-loader?inline!./Button-styles.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/Button-styles.css");
-/* harmony import */ var astroturf_css_loader_inline_Button_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! astroturf/css-loader?inline!./Button.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/Button.css");
+/* harmony import */ var astroturf_css_loader_inline_Button_styles_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! astroturf/css-loader?inline!./Button-styles.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/Button-styles.css");
+/* harmony import */ var astroturf_css_loader_inline_Button_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! astroturf/css-loader?inline!./Button.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/Button.css");
 
 
 
@@ -363,12 +377,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var widget__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! widget */ "./test/integration/shared/widget/index.js");
-/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Button */ "./test/integration/Button.js");
-/* harmony import */ var astroturf_css_loader_inline_main_styles_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-styles.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/main-styles.css");
-/* harmony import */ var astroturf_css_loader_inline_main_FancyBox_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-FancyBox.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/main-FancyBox.css");
-/* harmony import */ var astroturf_css_loader_inline_main_FancierBox_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-FancierBox.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/main-FancierBox.css");
-/* harmony import */ var astroturf_css_loader_inline_main_CssProp1_div_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-CssProp1_div.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/main-CssProp1_div.css");
-/* harmony import */ var astroturf_css_loader_inline_main_CssProp2_span_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-CssProp2_span.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/main-CssProp2_span.css");
+/* harmony import */ var withConfig__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! withConfig */ "./test/integration/shared/withConfig/index.js");
+/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Button */ "./test/integration/Button.js");
+/* harmony import */ var astroturf_css_loader_inline_main_styles_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-styles.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/main-styles.css");
+/* harmony import */ var astroturf_css_loader_inline_main_FancyBox_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-FancyBox.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/main-FancyBox.css");
+/* harmony import */ var astroturf_css_loader_inline_main_FancierBox_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-FancierBox.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/main-FancierBox.css");
+/* harmony import */ var astroturf_css_loader_inline_main_CssProp1_div_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-CssProp1_div.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/main-CssProp1_div.css");
+/* harmony import */ var astroturf_css_loader_inline_main_CssProp2_span_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-CssProp2_span.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/main-CssProp2_span.css");
 /** @jsx _j **/
 
 /** @jsxFrag _f **/
@@ -383,21 +398,22 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 const width = 75;
-const styles = astroturf_css_loader_inline_main_styles_css__WEBPACK_IMPORTED_MODULE_5__["default"];
+const styles = astroturf_css_loader_inline_main_styles_css__WEBPACK_IMPORTED_MODULE_6__["default"];
 const FancyBox = /*#__PURE__*/Object(astroturf_react__WEBPACK_IMPORTED_MODULE_1__["default"])('div', null, {
   displayName: "FancyBox",
-  styles: astroturf_css_loader_inline_main_FancyBox_css__WEBPACK_IMPORTED_MODULE_6__["default"]
+  styles: astroturf_css_loader_inline_main_FancyBox_css__WEBPACK_IMPORTED_MODULE_7__["default"]
 });
 const FancierBox = /*#__PURE__*/Object(astroturf_react__WEBPACK_IMPORTED_MODULE_1__["default"])('div', null, {
   displayName: "FancierBox",
-  styles: astroturf_css_loader_inline_main_FancierBox_css__WEBPACK_IMPORTED_MODULE_7__["default"]
+  styles: astroturf_css_loader_inline_main_FancierBox_css__WEBPACK_IMPORTED_MODULE_8__["default"]
 });
 function MyComponent() {
   return Object(astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["jsx"])(astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["F"], null, Object(astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
-    css: [astroturf_css_loader_inline_main_CssProp1_div_css__WEBPACK_IMPORTED_MODULE_8__["default"], [], [foo && astroturf_css_loader_inline_main_CssProp1_div_css__WEBPACK_IMPORTED_MODULE_8__["default"]["cssProp1DivVariant0"]]]
+    css: [astroturf_css_loader_inline_main_CssProp1_div_css__WEBPACK_IMPORTED_MODULE_9__["default"], [], [foo && astroturf_css_loader_inline_main_CssProp1_div_css__WEBPACK_IMPORTED_MODULE_9__["default"]["cssProp1DivVariant0"]]]
   }, Object(astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", null, "hey "), Object(astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["jsx"])("span", {
-    css: [astroturf_css_loader_inline_main_CssProp2_span_css__WEBPACK_IMPORTED_MODULE_9__["default"], [], []]
+    css: [astroturf_css_loader_inline_main_CssProp2_span_css__WEBPACK_IMPORTED_MODULE_10__["default"], [], []]
   }, "yo")));
 }
 /* harmony default export */ __webpack_exports__["default"] = (FancierBox);
@@ -414,7 +430,7 @@ function MyComponent() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "./src/runtime/react.js");
-/* harmony import */ var astroturf_css_loader_inline_Widget_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! astroturf/css-loader?inline!./Widget.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/shared/widget/Widget.css");
+/* harmony import */ var astroturf_css_loader_inline_Widget_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! astroturf/css-loader?inline!./Widget.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/shared/widget/Widget.css");
 
 
 const Widget = /*#__PURE__*/Object(astroturf_react__WEBPACK_IMPORTED_MODULE_0__["default"])('div', null, {
@@ -422,6 +438,27 @@ const Widget = /*#__PURE__*/Object(astroturf_react__WEBPACK_IMPORTED_MODULE_0__[
   styles: astroturf_css_loader_inline_Widget_css__WEBPACK_IMPORTED_MODULE_1__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (Widget);
+
+/***/ }),
+
+/***/ "./test/integration/shared/withConfig/index.js":
+/*!*****************************************************!*\
+  !*** ./test/integration/shared/withConfig/index.js ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "./src/runtime/react.js");
+/* harmony import */ var astroturf_css_loader_inline_index_Doodad_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! astroturf/css-loader?inline!./index-Doodad.scss */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/shared/withConfig/index-Doodad.scss");
+
+
+const Doodad = /*#__PURE__*/Object(astroturf_react__WEBPACK_IMPORTED_MODULE_0__["default"])('div', null, {
+  displayName: "Doodad",
+  styles: astroturf_css_loader_inline_index_Doodad_scss__WEBPACK_IMPORTED_MODULE_1__["default"]
+});
+/* harmony default export */ __webpack_exports__["default"] = (Doodad);
 
 /***/ })
 

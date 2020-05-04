@@ -5,6 +5,7 @@ import pascalCase from './pascalCase';
 
 export function getNameFromFile(fileName: string) {
   const name = basename(fileName, extname(fileName));
+
   if (name !== 'index') return pascalCase(name);
   return pascalCase(basename(dirname(fileName)));
 }

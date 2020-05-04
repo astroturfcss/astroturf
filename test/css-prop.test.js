@@ -208,6 +208,31 @@ describe('css prop', () => {
     },
   );
 
+  testAllRunners('fallsback to stylesheet prop', async (runner) => {
+    const [, styles] = await runner(
+      `
+        import { css } from 'astroturf';
+
+        function Button() {
+          return (
+            <button
+              css={css\`
+                color: blue;
+              \`}
+            />
+          );
+        }
+      `,
+      {
+        cssTagName: false,
+        stylesheetTagName: 'css',
+      },
+    );
+
+    expect(styles).toHaveLength(1);
+    expect(styles[0].type).toEqual('class');
+  });
+
   it('should render the component correctly', () => {
     expect(
       mount(
