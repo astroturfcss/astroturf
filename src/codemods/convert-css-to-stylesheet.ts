@@ -1,7 +1,8 @@
 import { PluginObj } from '@babel/core';
 import * as t from '@babel/types';
-import isCssTag from '../src/utils/isCssTag';
-import { ResolvedOptions } from '../src/types';
+
+import { ResolvedOptions } from '../types';
+import isCssTag from '../utils/isCssTag';
 
 type PluginState = Record<symbol, any> & {
   opts: Partial<ResolvedOptions>;
@@ -31,7 +32,8 @@ export default function plugin(): PluginObj<PluginState> {
               const cssImport = path
                 .get('specifiers')
                 .find(
-                  s => s.isImportSpecifier() && s.node.imported.name === 'css',
+                  (s) =>
+                    s.isImportSpecifier() && s.node.imported.name === 'css',
                 );
 
               if (shouldAdd) {
@@ -65,7 +67,7 @@ export default function plugin(): PluginObj<PluginState> {
           return;
         }
 
-        if (path.findParent(p => p.isJSXAttribute())) {
+        if (path.findParent((p) => p.isJSXAttribute())) {
           state.file.set('HAS_LEGIT_CSS', true);
           return;
         }

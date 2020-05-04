@@ -1,5 +1,5 @@
-import * as t from '@babel/types';
 import { PluginObj } from '@babel/core';
+import * as t from '@babel/types';
 
 export default function plugin(): PluginObj {
   return {
@@ -13,7 +13,7 @@ export default function plugin(): PluginObj {
         const styled = path
           .get('specifiers')
           .find(
-            s =>
+            (s) =>
               s.isImportDefaultSpecifier() ||
               (s.isImportSpecifier() && s.node.imported.name === 'styled'),
           );
