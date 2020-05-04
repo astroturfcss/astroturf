@@ -191,7 +191,7 @@ class MemoryFs {
     let len = 0;
 
     // eslint-disable-next-line no-underscore-dangle
-    stream._write = (chunk, encoding, callback) => {
+    stream._write = (chunk, _, callback) => {
       bl.push(chunk);
       len += chunk.length;
       this.writeFile(p, Buffer.concat(bl, len), callback);
