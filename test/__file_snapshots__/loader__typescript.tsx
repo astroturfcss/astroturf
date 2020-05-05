@@ -1,6 +1,6 @@
-/** @jsx _j **/
-/** @jsxFrag _f **/
-import { jsx as _j, F as _f } from "astroturf/jsx";
+/** @jsx _j.jsx **/
+/** @jsxFrag _j.F **/
+import * as _j from "astroturf/jsx";
 import styled from "astroturf/react";
 import React from "react";
 import _styles from "astroturf/css-loader?inline!./typescript-styles.css";

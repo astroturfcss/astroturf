@@ -172,16 +172,15 @@ export default {
       // https://github.com/babel/babel/pull/7996#issuecomment-519653431
       state[JSX_IDENTS] = {
         jsx: path.scope.generateUidIdentifier('j'),
-        jsxFrag: path.scope.generateUidIdentifier('f'),
       };
     },
 
     exit(path: NodePath<t.Program>, state: CssPropPluginState) {
       if (!state.file.get(HAS_CSS_PROP)) return;
 
-      const { jsx, jsxFrag } = state[JSX_IDENTS];
+      const { jsx } = state[JSX_IDENTS];
 
-      const changes = addPragma(path, jsx, jsxFrag);
+      const changes = addPragma(path, jsx);
 
       state.file.get(STYLES).changeset.unshift(...changes);
     },
@@ -214,14 +213,15 @@ export default {
       const { jsx } = state[JSX_IDENTS];
       const { changeset } = file.get(STYLES);
       const callee = path.get('callee');
+      const callNode = t.memberExpression(jsx, t.identifier('jsx'));
 
       changeset.push({
-        code: jsx.name,
+        code: `${jsx.name}.jsx`,
         start: callee.node.start,
         end: callee.node.end,
       });
 
-      callee.replaceWith(jsx);
+      callee.replaceWith(callNode);
       file.set(HAS_CSS_PROP, true);
     }
   },

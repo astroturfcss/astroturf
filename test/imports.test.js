@@ -42,7 +42,7 @@ describe('import ordering', () => {
 
       expect(code).toContain(
         format`
-          import { jsx as _j, F as _f } from "astroturf/jsx";
+          import * as _j from "astroturf/jsx";
           import Component from "./Foo";
           import styled from "astroturf/react";
           import Component2 from './Foo2';
@@ -60,7 +60,7 @@ describe('import ordering', () => {
 
       expect(code).toContain(
         format`
-          import { jsx as _j, F as _f } from "astroturf/jsx";
+          import * as _j from "astroturf/jsx";
           import Component from "./Foo";
           import styled from "astroturf/react";
           import Component2 from './Foo2';
@@ -121,7 +121,7 @@ describe('import ordering', () => {
 
       expect(code).toContain(
         format`
-          const { jsx: _j, F: _f } = require("astroturf/jsx");
+          const _j = require("astroturf/jsx");
           const Component = require("./Foo");
           const Component2 = require("./Foo2");
           const _styles = require("./MyStyleFile-styles.css");
@@ -140,7 +140,7 @@ describe('import ordering', () => {
 
       expect(code).toContain(
         format`
-          const { jsx: _j, F: _f } = require("astroturf/jsx");
+          const _j = require("astroturf/jsx");
 
           const Component = require("./Foo");
           const Component2 = require("./Foo2");

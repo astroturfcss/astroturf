@@ -1,6 +1,6 @@
-/** @jsx _j **/
-/** @jsxFrag _f **/
-import { jsx as _j, F as _f } from "astroturf/jsx";
+/** @jsx _j.jsx **/
+/** @jsxFrag _j.F **/
+import * as _j from "astroturf/jsx";
 import React from "react";
 import _CssProp1_button from "astroturf/css-loader?inline!./css-prop-CssProp1_button.css";
 import _CssProp2_button from "astroturf/css-loader?inline!./css-prop-CssProp2_button.css";
@@ -22,13 +22,13 @@ function Button3() {
   );
 }
 function Button4({ theme }) {
-  return _j(
+  return _j.jsx(
     "button",
     {
       css: [_CssProp4_button, [["a1qka8js", theme]]],
     },
     "Hi there",
-    _j("span", {
+    _j.jsx("span", {
       css: [_CssProp5_span],
     })
   );

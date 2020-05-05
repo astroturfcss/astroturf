@@ -385,9 +385,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var astroturf_css_loader_inline_main_FancierBox_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-FancierBox.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/main-FancierBox.css");
 /* harmony import */ var astroturf_css_loader_inline_main_CssProp1_div_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-CssProp1_div.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/main-CssProp1_div.css");
 /* harmony import */ var astroturf_css_loader_inline_main_CssProp2_span_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-CssProp2_span.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/main-CssProp2_span.css");
-/** @jsx _j **/
+/** @jsx _j.jsx **/
 
-/** @jsxFrag _f **/
+/** @jsxFrag _j.F **/
 
 
 
@@ -411,9 +411,9 @@ const FancierBox = /*#__PURE__*/Object(astroturf_react__WEBPACK_IMPORTED_MODULE_
   styles: astroturf_css_loader_inline_main_FancierBox_css__WEBPACK_IMPORTED_MODULE_8__["default"]
 });
 function MyComponent() {
-  return Object(astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["jsx"])(astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["F"], null, Object(astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
+  return astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["jsx"](astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["F"], null, astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["jsx"]("div", {
     css: [astroturf_css_loader_inline_main_CssProp1_div_css__WEBPACK_IMPORTED_MODULE_9__["default"], null, [foo && astroturf_css_loader_inline_main_CssProp1_div_css__WEBPACK_IMPORTED_MODULE_9__["default"]["cssProp1DivVariant0"]]]
-  }, Object(astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", null, "hey "), Object(astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["jsx"])("span", {
+  }, astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["jsx"]("div", null, "hey "), astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["jsx"]("span", {
     css: [astroturf_css_loader_inline_main_CssProp2_span_css__WEBPACK_IMPORTED_MODULE_10__["default"]]
   }, "yo")));
 }
