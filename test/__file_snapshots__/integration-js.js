@@ -158,17 +158,18 @@ const css = () => {
 /*!****************************!*\
   !*** ./src/runtime/jsx.js ***!
   \****************************/
-/*! exports provided: resolveVariants, varsToStyles, F, jsx */
+/*! exports provided: resolveVariants, varsToStyles, jsx, F, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "resolveVariants", function() { return resolveVariants; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "varsToStyles", function() { return varsToStyles; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "F", function() { return F; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "jsx", function() { return jsx; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "F", function() { return react__WEBPACK_IMPORTED_MODULE_0__["Fragment"]; });
+
 // eslint-disable-next-line import/no-extraneous-dependencies
 
 
@@ -185,8 +186,6 @@ function varsToStyles(props, vars) {
   return style;
 }
 
-const F = react__WEBPACK_IMPORTED_MODULE_0__["Fragment"];
-
 function jsx(type, props, ...children) {
   if (props && props.css) {
     const { css, className, ...childProps } = props;
@@ -200,6 +199,14 @@ function jsx(type, props, ...children) {
 
   return Object(react__WEBPACK_IMPORTED_MODULE_0__["createElement"])(type, props, ...children);
 }
+jsx.F = react__WEBPACK_IMPORTED_MODULE_0__["Fragment"];
+
+// the reason for the crazy exports here is that you need to do a BUNCH of work
+// to keep typescript from eliding (removing) the jsx imports
+// see: https://github.com/babel/babel/pull/11523
+
+
+/* harmony default export */ __webpack_exports__["default"] = (jsx);
 
 
 /***/ }),
@@ -385,7 +392,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var astroturf_css_loader_inline_main_FancierBox_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-FancierBox.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/main-FancierBox.css");
 /* harmony import */ var astroturf_css_loader_inline_main_CssProp1_div_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-CssProp1_div.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/main-CssProp1_div.css");
 /* harmony import */ var astroturf_css_loader_inline_main_CssProp2_span_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-CssProp2_span.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/main-CssProp2_span.css");
-/** @jsx _j.jsx **/
+/** @jsx _j **/
 
 /** @jsxFrag _j.F **/
 
@@ -411,9 +418,9 @@ const FancierBox = /*#__PURE__*/Object(astroturf_react__WEBPACK_IMPORTED_MODULE_
   styles: astroturf_css_loader_inline_main_FancierBox_css__WEBPACK_IMPORTED_MODULE_8__["default"]
 });
 function MyComponent() {
-  return astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["jsx"](astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["F"], null, astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["jsx"]("div", {
+  return Object(astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["default"])(astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["default"].F, null, Object(astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["default"])("div", {
     css: [astroturf_css_loader_inline_main_CssProp1_div_css__WEBPACK_IMPORTED_MODULE_9__["default"], null, [foo && astroturf_css_loader_inline_main_CssProp1_div_css__WEBPACK_IMPORTED_MODULE_9__["default"]["cssProp1DivVariant0"]]]
-  }, astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["jsx"]("div", null, "hey "), astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["jsx"]("span", {
+  }, Object(astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["default"])("div", null, "hey "), Object(astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["default"])("span", {
     css: [astroturf_css_loader_inline_main_CssProp2_span_css__WEBPACK_IMPORTED_MODULE_10__["default"]]
   }, "yo")));
 }

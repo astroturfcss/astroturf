@@ -10,7 +10,7 @@ const opts: TemplateBuilderOptions = {
   placeholderWhitelist: new Set(['JSX', 'JSX_FRAG']),
 };
 
-const importPattern = 'import * as JSX from "astroturf/jsx";';
+const importPattern = 'import JSX from "astroturf/jsx";';
 
 const buildImport = template(importPattern, opts);
 
@@ -38,7 +38,9 @@ export default function addPragma(
   if (targetPath) targetPath.insertBefore(importNode);
   else (path as any).unshiftContainer('body', importNode);
 
-  const jsxPrgama = `* @jsx ${JSX.name}.jsx *`;
+  // This pattern of imports is necessary otherwise babel typescript will
+  // remove the import as "type only"
+  const jsxPrgama = `* @jsx ${JSX.name} *`;
   const jsxFragPrgama = `* @jsxFrag ${JSX.name}.F *`;
 
   path.addComment('leading', jsxPrgama);

@@ -42,7 +42,7 @@ describe('import ordering', () => {
 
       expect(code).toContain(
         format`
-          import * as _j from "astroturf/jsx";
+          import _j from "astroturf/jsx";
           import Component from "./Foo";
           import styled from "astroturf/react";
           import Component2 from './Foo2';
@@ -60,7 +60,7 @@ describe('import ordering', () => {
 
       expect(code).toContain(
         format`
-          import * as _j from "astroturf/jsx";
+          import _j from "astroturf/jsx";
           import Component from "./Foo";
           import styled from "astroturf/react";
           import Component2 from './Foo2';

@@ -24,7 +24,7 @@ describe('webpack loader', () => {
       { enableCssProp: true },
     );
 
-    expect(code).toContain('/** @jsx _j.jsx **/');
+    expect(code).toContain('/** @jsx _j **/');
     expect(code).toContain('/** @jsxFrag _j.F **/');
 
     expect(code).toContain(

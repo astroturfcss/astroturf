@@ -14,9 +14,7 @@ export function varsToStyles(props, vars) {
   return style;
 }
 
-export const F = Fragment;
-
-export function jsx(type, props, ...children) {
+function jsx(type, props, ...children) {
   if (props && props.css) {
     const { css, className, ...childProps } = props;
     const componentClassName = css[0].cls2 || css[0].cls1;
@@ -29,3 +27,11 @@ export function jsx(type, props, ...children) {
 
   return createElement(type, props, ...children);
 }
+jsx.F = Fragment;
+
+// the reason for the crazy exports here is that you need to do a BUNCH of work
+// to keep typescript from eliding (removing) the jsx imports
+// see: https://github.com/babel/babel/pull/11523
+export { jsx, Fragment as F };
+
+export default jsx;
