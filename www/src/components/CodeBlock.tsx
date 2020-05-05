@@ -1,10 +1,11 @@
-import React from 'react';
-import { Prism } from '@docpocalypse/prism-react-renderer';
 import { CodeBlock as BaseCodBlock } from '@docpocalypse/code-live';
-import theme from './theme';
+import { Prism } from '@docpocalypse/prism-react-renderer';
 import { css } from 'astroturf/react';
-import prettier from 'prettier/standalone';
 import parserBabel from 'prettier/parser-babel';
+import prettier from 'prettier/standalone';
+import React, { useLayoutEffect, useRef, useState } from 'react';
+
+import theme from './theme';
 
 // @ts-ignore
 Prism.languages.insertBefore('jsx', 'template-string', {
@@ -37,49 +38,75 @@ const getLanguage = (className = '') => {
   return mode;
 };
 
-const toText = (node: React.ReactNode): string => {
-  const nodes = React.Children.toArray(node);
-
-  return nodes
-    .filter((c) => c !== true && c !== false && c !== null)
-    .reduce<string>((str, next) => {
-      if (!React.isValidElement(next)) return str + String(next);
-
-      return str + toText(next.props.children);
-    }, '');
-};
+let charWidth: number | undefined;
 
 function CodeBlock(props: any) {
+  const ref = useRef<HTMLDivElement>(null);
   const {
     children,
     originalType: _1,
     metastring: _2,
     mdxType: _3,
     parentName: _4,
+    noFormat,
+    printWidth: defaultPrintWidth,
     ...codeProps
   } = props.children?.props ?? {};
+
+  const [printWidth, setPrintWidth] = useState<number>(defaultPrintWidth);
 
   // const flatCode = toText(children);
   const language = codeProps.language || getLanguage(codeProps.className);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useLayoutEffect(() => {
+    const pre = ref.current!.firstElementChild!;
+    const style = getComputedStyle(pre);
+
+    if (charWidth == null) {
+      const measure = document.createElement('div');
+
+      measure.innerText = '0';
+      measure.style.font = style.font;
+      measure.style.opacity = '0';
+      measure.style.position = 'absolute';
+      document.body.appendChild(measure);
+      charWidth = measure.getBoundingClientRect().width;
+      document.body.removeChild(measure);
+    }
+    // console.log(div, charWidth);
+    let width =
+      pre.getBoundingClientRect().width -
+      (parseFloat(style.paddingLeft) + parseFloat(style.paddingRight));
+
+    width = Math.floor(width / charWidth);
+    if (width !== printWidth) setPrintWidth(width);
+  });
+
   return (
-    <BaseCodBlock
-      {...codeProps}
-      theme={theme}
-      language={language}
-      code={
-        props.noFormat
-          ? children
-          : prettier.format(children, {
-              parser: 'babel',
-              printWidth: 40,
-              plugins: [parserBabel],
-            })
-      }
-      css={css`
-        composes: p-4, bg-secondary-lighter, rounded-lg, shadow, overflow-x-auto, mb-6, -mx-6 from global;
-      `}
-    />
+    <div ref={ref}>
+      <BaseCodBlock
+        {...codeProps}
+        theme={theme}
+        language={language}
+        code={
+          noFormat || printWidth == null
+            ? children
+            : prettier.format(children, {
+                parser: 'babel',
+                printWidth,
+                plugins: [parserBabel],
+              })
+        }
+        css={css`
+          composes: p-4, bg-secondary-lighter, shadow, overflow-x-auto, mb-6, -mx-6 from global;
+
+          @media (min-width: theme(screens.md)) {
+            border-radius: theme(borderRadius.lg);
+          }
+        `}
+      />
+    </div>
   );
 }
 

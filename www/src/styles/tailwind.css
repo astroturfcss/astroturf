@@ -2,8 +2,6 @@
 
 html {
   @apply antialiased m-0;
-
-  height: 100%;
 }
 
 body {
@@ -35,6 +33,10 @@ h1 {
 
 .text-shadow {
   text-shadow: 3px 2px 0px #5c5a5a;
+}
+
+.text-shadow-sm {
+  text-shadow: 2px 1px 0px #5c5a5a;
 }
 
 h2,

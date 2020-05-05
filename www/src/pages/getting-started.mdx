@@ -85,33 +85,81 @@ export default function Button({ children }) {
 When processed, the `css` block will be extracted into a `.css` file,
 taking advantage of any and all of the other loaders configured to handle css.
 
-## React!
+## React.JS™!
 
 Embracing the component lifestyle? <Brand>astroturf</Brand> has you covered with
 built-in integration with <Brand>React.JS™</Brand>. The versatile `css` tag helps
 transform your plain ol' components into beautiful works of art.
 
-```jsx noFormat
+```jsx
 import * as React from 'react';
 import { css } from 'astroturf';
 
-function Button({ variant, bgColor, children }) {
+function Button({ children, ...props }) {
+  return (
+    <button
+      {...props}
+      css={css`
+        color: blue;
+        border: 1px solid blue;
+        padding: 0 1rem;
+      `}
+    >
+      {children}
+    </button>
+  );
+}
+```
+
+Additional `className` props are automically combined with the provided css
+with no additional effort.
+
+## Dynamic Props and You
+
+While not a "real" CSS-in-JS library <Brand>astroturf</Brand> still provides
+a level of dynamic styling you've come to expect from component styling. Individual
+CSS property values can be fully specified at runtime by transpiling interpolations
+to "CSS Custom Properties". Use dynamic interpolations anywhere CSS custom properties are
+allowed!
+
+```jsx
+import * as React from 'react';
+import { css } from 'astroturf';
+
+function Button({ bgColor, children }) {
   return (
     <button
       css={css`
         color: black;
         border: 1px solid black;
         background-color: ${bgColor};
+      `}
+    >
+      {children}
+    </button>
+  );
+}
+```
+
+### Component Variants
+
+In addition to individual property values, <Brand>astroturf</Brand> can also create
+larger component "variants" by nesting `css` tags inside the root componnent definition.
+
+```jsx
+import * as React from 'react';
+import { css } from 'astroturf';
+
+function Button({ variant = 'primary', children }) {
+  return (
+    <button
+      css={css`
+        border: 1px solid transparent;
 
         ${variant === 'primary' &&
         css`
           color: blue;
-          border: 1px solid blue;
-        `}
-
-        ${variant === 'secondary' &&
-        css`
-          color: green;
+          border-color: blue;
         `}
       `}
     >
@@ -120,3 +168,6 @@ function Button({ variant, bgColor, children }) {
   );
 }
 ```
+
+Each inner `css` interpolation compiles to seperate CSS Class Name, and is toggled
+at runtime when the inner expression returns true.
