@@ -264,7 +264,7 @@ function buildTemplateImpl(opts: Options, state = { id: 0 }) {
   let lastDynamic: DynamicInterpolation | null = null;
 
   quasi.quasis.forEach((tmplNode, idx) => {
-    const { cooked } = tmplNode.value;
+    const { raw } = tmplNode.value;
     const expr = expressions[idx];
 
     let matches;
@@ -275,14 +275,14 @@ function buildTemplateImpl(opts: Options, state = { id: 0 }) {
       lastDynamic &&
       text.endsWith(`var(--${lastDynamic.id})`) &&
       // eslint-disable-next-line no-cond-assign
-      (matches = cooked!.match(rUnit))
+      (matches = raw.match(rUnit))
     ) {
       const [, unit] = matches;
 
       lastDynamic.unit = unit;
-      text += cooked!.replace(rUnit, '$2');
+      text += raw.replace(rUnit, '$2');
     } else {
-      text += cooked;
+      text += raw;
     }
 
     if (!expr) {
