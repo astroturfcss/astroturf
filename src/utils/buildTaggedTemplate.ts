@@ -344,7 +344,7 @@ function buildTemplateImpl(opts: Options, state = { id: 0 }) {
   return {
     variants,
     text: rule,
-    imports: `${dependencyImports}${imports}`,
+    imports: `${dependencyImports}${imports.join('\n')}`,
     vars: Array.from(dynamicInterpolations),
   };
 }
