@@ -9,6 +9,7 @@ import cssUnits from './cssUnits';
 import isCssTag from './isCssTag';
 import hash from './murmurHash';
 import resolveDependency, { Dependency } from './resolveDependency';
+import trimEnd from './trimEnd';
 import truthy from './truthy';
 import wrapInClass, { hoistImports } from './wrapInClass';
 
@@ -22,11 +23,11 @@ const getPlaceholder = (idx: number) => `###ASTROTURF_PLACEHOLDER_${idx}###`;
 const toVarsArray = (interpolations: DynamicInterpolation[]) => {
   const vars = interpolations.map((i) =>
     t.arrayExpression(
-      [
+      trimEnd([
         t.stringLiteral(i.id),
         i.expr.node,
         i.unit ? t.stringLiteral(i.unit) : null,
-      ].filter(truthy),
+      ]),
     ),
   );
   return t.arrayExpression(vars);

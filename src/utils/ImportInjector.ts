@@ -26,7 +26,7 @@ function isRequire(path: NodePath) {
   if (path.isVariableDeclaration()) {
     return path
       .get('declarations')
-      .some(d => d && isRequireExpression(d.get('init')));
+      .some((d) => d && isRequireExpression(d.get('init')));
   }
   return isRequireExpression(path);
 }
@@ -71,7 +71,7 @@ export default class StyleImportInjector {
   }
 
   inject() {
-    const targetPath = findLast(this.program.get('body'), p => {
+    const targetPath = findLast(this.program.get('body'), (p) => {
       // this is a babel mechanism for sorting body blocks
       // I don't want to rely on it, but do want to respect < 1 values as needing to go on the bottom
       // we should not insert below those if possible
@@ -87,7 +87,7 @@ export default class StyleImportInjector {
     const changes: Change = {
       end,
       start: end,
-      code: `\n${Array.from(this.nodes, n => this.code.get(n))
+      code: `\n${Array.from(this.nodes, (n) => this.code.get(n))
         .filter(truthy)
         .join('\n')}\n`,
     };

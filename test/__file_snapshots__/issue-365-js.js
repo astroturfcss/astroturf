@@ -74,7 +74,8 @@ __webpack_require__.r(__webpack_exports__);
 // eslint-disable-next-line import/no-extraneous-dependencies
 
 
-const resolveVariants = variants => variants.filter(Boolean).join(' ');
+const resolveVariants = (variants) =>
+  !variants ? '' : variants.filter(Boolean).join(' ');
 
 function varsToStyles(props, vars) {
   if (!vars || !vars.length) return props.style;
@@ -116,12 +117,12 @@ function jsx(type, props, ...children) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./jsx */ "./src/runtime/jsx.js");
-/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! . */ "./src/runtime/index.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "css", function() { return ___WEBPACK_IMPORTED_MODULE_2__["css"]; });
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! . */ "./src/runtime/index.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "css", function() { return ___WEBPACK_IMPORTED_MODULE_1__["css"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "stylesheet", function() { return ___WEBPACK_IMPORTED_MODULE_2__["stylesheet"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "stylesheet", function() { return ___WEBPACK_IMPORTED_MODULE_1__["stylesheet"]; });
 
+/* harmony import */ var _jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./jsx */ "./src/runtime/jsx.js");
 // eslint-disable-next-line import/no-extraneous-dependencies
 
 
@@ -131,7 +132,7 @@ __webpack_require__.r(__webpack_exports__);
 // eslint-disable-next-line no-control-regex
 const reWords = /[A-Z\xc0-\xd6\xd8-\xde]?[a-z\xdf-\xf6\xf8-\xff]+(?:['’](?:d|ll|m|re|s|t|ve))?(?=[\xac\xb1\xd7\xf7\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\xbf\u2000-\u206f \t\x0b\f\xa0\ufeff\n\r\u2028\u2029\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000]|[A-Z\xc0-\xd6\xd8-\xde]|$)|(?:[A-Z\xc0-\xd6\xd8-\xde]|[^\ud800-\udfff\xac\xb1\xd7\xf7\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\xbf\u2000-\u206f \t\x0b\f\xa0\ufeff\n\r\u2028\u2029\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\d+\u2700-\u27bfa-z\xdf-\xf6\xf8-\xffA-Z\xc0-\xd6\xd8-\xde])+(?:['’](?:D|LL|M|RE|S|T|VE))?(?=[\xac\xb1\xd7\xf7\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\xbf\u2000-\u206f \t\x0b\f\xa0\ufeff\n\r\u2028\u2029\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000]|[A-Z\xc0-\xd6\xd8-\xde](?:[a-z\xdf-\xf6\xf8-\xff]|[^\ud800-\udfff\xac\xb1\xd7\xf7\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\xbf\u2000-\u206f \t\x0b\f\xa0\ufeff\n\r\u2028\u2029\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\d+\u2700-\u27bfa-z\xdf-\xf6\xf8-\xffA-Z\xc0-\xd6\xd8-\xde])|$)|[A-Z\xc0-\xd6\xd8-\xde]?(?:[a-z\xdf-\xf6\xf8-\xff]|[^\ud800-\udfff\xac\xb1\xd7\xf7\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\xbf\u2000-\u206f \t\x0b\f\xa0\ufeff\n\r\u2028\u2029\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\d+\u2700-\u27bfa-z\xdf-\xf6\xf8-\xffA-Z\xc0-\xd6\xd8-\xde])+(?:['’](?:d|ll|m|re|s|t|ve))?|[A-Z\xc0-\xd6\xd8-\xde]+(?:['’](?:D|LL|M|RE|S|T|VE))?|\d*(?:1ST|2ND|3RD|(?![123])\dTH)(?=\b|[a-z_])|\d*(?:1st|2nd|3rd|(?![123])\dth)(?=\b|[A-Z_])|\d+|(?:[\u2700-\u27bf]|(?:\ud83c[\udde6-\uddff]){2}|[\ud800-\udbff][\udc00-\udfff])[\ufe0e\ufe0f]?(?:[\u0300-\u036f\ufe20-\ufe2f\u20d0-\u20ff]|\ud83c[\udffb-\udfff])?(?:\u200d(?:[^\ud800-\udfff]|(?:\ud83c[\udde6-\uddff]){2}|[\ud800-\udbff][\udc00-\udfff])[\ufe0e\ufe0f]?(?:[\u0300-\u036f\ufe20-\ufe2f\u20d0-\u20ff]|\ud83c[\udffb-\udfff])?)*/g;
 
-const camelCase = str =>
+const camelCase = (str) =>
   (str.match(reWords) || []).reduce(
     (acc, next) => acc + (!acc ? next : next[0].toUpperCase() + next.slice(1)),
     '',
@@ -144,7 +145,7 @@ function propsToStyles(props, styles, hasModifiers) {
     : componentClassName;
 
   if (hasModifiers) {
-    Object.keys(props).forEach(propName => {
+    Object.keys(props).forEach((propName) => {
       const propValue = props[propName];
       const typeOf = typeof propValue;
 
@@ -207,7 +208,7 @@ function styled(type, options, settings) {
   const allowAs = type.isAstroturf ? false : options.allowAs;
 
   const hasModifiers = Object.keys(styles).some(
-    className => className !== (styles.cls2 || styles.cls1),
+    (className) => className !== (styles.cls2 || styles.cls1),
   );
 
   const decorated = Object(react__WEBPACK_IMPORTED_MODULE_0__["forwardRef"])((rawProps, ref) => {
@@ -215,17 +216,17 @@ function styled(type, options, settings) {
     const childProps = { ...props, ref };
 
     if (allowAs) delete childProps.as;
-    childProps.style = Object(_jsx__WEBPACK_IMPORTED_MODULE_1__["varsToStyles"])(childProps, vars);
+    childProps.style = Object(_jsx__WEBPACK_IMPORTED_MODULE_2__["varsToStyles"])(childProps, vars);
     childProps.className = propsToStyles(childProps, styles, hasModifiers);
 
-    if (variants) childProps.className += ` ${Object(_jsx__WEBPACK_IMPORTED_MODULE_1__["resolveVariants"])(variants)}`;
+    if (variants) childProps.className += ` ${Object(_jsx__WEBPACK_IMPORTED_MODULE_2__["resolveVariants"])(variants)}`;
 
     return Object(react__WEBPACK_IMPORTED_MODULE_0__["createElement"])(allowAs && props.as ? props.as : type, childProps);
   });
 
   decorated.displayName = displayName;
 
-  decorated.withComponent = nextType => styled(nextType, options, settings);
+  decorated.withComponent = (nextType) => styled(nextType, options, settings);
 
   decorated.isAstroturf = true;
 

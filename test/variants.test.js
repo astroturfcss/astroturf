@@ -35,7 +35,7 @@ describe('variants', () => {
         `
       css={[
         _CssProp1_button,
-        [],
+        null,
         [primary && _CssProp1_button["cssProp1ButtonVariant0"]],
       ]}`,
       );
@@ -136,7 +136,7 @@ describe('variants', () => {
   it('should apply styles', () => {
     function Wrapper({ primary }) {
       return jsx('div', {
-        css: [{ cls1: 'cls1' }, [], [primary && 'variant1']],
+        css: [{ cls1: 'cls1' }, null, [primary && 'variant1']],
       });
     }
 

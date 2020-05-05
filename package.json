@@ -4,7 +4,7 @@
   "description": "Extract and process inline CSS literals in JavaScript files",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
-  "types": "lib/index.d.ts",
+  "types": "lib/esm/index.d.ts",
   "scripts": {
     "lint": "tsc -p . --noEmit && eslint .",
     "test": "yarn test:ts && jest",

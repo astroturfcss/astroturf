@@ -26,10 +26,10 @@ class Component extends React.Component<PropsType> {
     return (
       <>
         <h2>{this.props.children}</h2>
-        <Button variant="primary" css={[_CssProp1_Button, [], []]}>
+        <Button variant="primary" css={[_CssProp1_Button]}>
           click
         </Button>
-        <Button variant="secondary" css={[_CssProp2_Button, [], []]}>
+        <Button variant="secondary" css={[_CssProp2_Button]}>
           cancel
         </Button>
       </>

@@ -11,7 +11,7 @@ import createStyleNode from '../utils/createStyleNode';
 import getNameFromPath from '../utils/getNameFromPath';
 import isCssTag from '../utils/isCssTag';
 import isStylesheetTag from '../utils/isStylesheetTag';
-import truthy from '../utils/truthy';
+import trimEnd from '../utils/trimEnd';
 import wrapInClass from '../utils/wrapInClass';
 
 const JSX_IDENTS = Symbol('Astroturf jsx identifiers');
@@ -62,7 +62,8 @@ function buildCssProp(
 
   const displayName = `CssProp${++cssState.id}_${name}`;
 
-  let vars: t.ArrayExpression, variants: t.ArrayExpression;
+  let vars: t.ArrayExpression | null = null;
+  let variants: t.ArrayExpression | null = null;
 
   const baseStyle = createStyleNode(valuePath, displayName, {
     file,
@@ -104,8 +105,8 @@ function buildCssProp(
           : exprPath.get('quasi'),
       });
 
-      vars = template.vars;
-      variants = template.variants;
+      vars = template.vars.elements.length ? template.vars : null;
+      variants = template.variants.elements.length ? template.variants : null;
 
       style.interpolations = template.interpolations;
       style.value = template.css;
@@ -117,7 +118,7 @@ function buildCssProp(
   }
 
   let runtimeNode: t.Node = t.arrayExpression(
-    [importId, vars!, variants!].filter(truthy),
+    trimEnd([importId, vars!, variants!]).map((n) => n ?? t.nullLiteral()),
   );
 
   // FIXME?

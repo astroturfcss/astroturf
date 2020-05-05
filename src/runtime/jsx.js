@@ -1,7 +1,8 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Fragment, createElement } from 'react';
 
-export const resolveVariants = variants => variants.filter(Boolean).join(' ');
+export const resolveVariants = (variants) =>
+  !variants ? '' : variants.filter(Boolean).join(' ');
 
 export function varsToStyles(props, vars) {
   if (!vars || !vars.length) return props.style;
