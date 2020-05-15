@@ -97,7 +97,7 @@ export const fixtures = fs
   .map((file) => `${__dirname}/fixtures/${file}`)
   .filter((f) => !f.endsWith('.json'));
 
-export function runWebpack(config) {
+export function runWebpack(config, useRealFs) {
   const compiler = webpack({
     ...config,
     output: {
@@ -112,7 +112,9 @@ export function runWebpack(config) {
       },
     },
   });
-  compiler.outputFileSystem = new MemoryFS();
+  if (!useRealFs) {
+    compiler.outputFileSystem = new MemoryFS();
+  }
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       if (err) {
