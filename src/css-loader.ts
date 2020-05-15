@@ -15,9 +15,11 @@ const loader: Loader = function astroturfCssLoader(
   prevMap: any,
   meta?: any,
 ) {
-  const isLast = this.loaderIndex === this.loaders.length - 1;
+  const shouldProcess =
+    this.loaderIndex === this.loaders.length - 1 ||
+    path.extname(this.resourcePath) === '.css';
 
-  if (!isLast) {
+  if (!shouldProcess) {
     return css;
   }
 
