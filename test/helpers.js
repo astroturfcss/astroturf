@@ -1,4 +1,4 @@
-const { relative, dirname } = require('path');
+const { relative, dirname, resolve: pathResolve } = require('path');
 
 const { transformAsync } = require('@babel/core');
 const fs = require('fs-extra');
@@ -98,6 +98,7 @@ export const fixtures = fs
   .filter((f) => !f.endsWith('.json'));
 
 export function runWebpack(config, useRealFs) {
+  const outputFs = new MemoryFS() || fs;
   const compiler = webpack({
     ...config,
     output: {
@@ -113,7 +114,7 @@ export function runWebpack(config, useRealFs) {
     },
   });
   if (!useRealFs) {
-    compiler.outputFileSystem = new MemoryFS();
+    compiler.outputFileSystem = outputFs;
   }
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
@@ -124,6 +125,7 @@ export function runWebpack(config, useRealFs) {
 
       if (stats.hasErrors() || stats.hasWarnings()) {
         const { errors, warnings } = stats.toJson();
+        console.log(errors);
         reject(
           Object.assign(
             new Error(
@@ -137,6 +139,12 @@ export function runWebpack(config, useRealFs) {
         );
         return;
       }
+
+      Object.entries(stats.compilation.assets).forEach(([file, asset]) => {
+        // console.log('here', file, outputFs);
+        asset.source = () => outputFs.data.build[file].toString();
+      });
+
       resolve(stats.compilation.assets);
     });
   });

@@ -60,10 +60,32 @@ describe('virtual module plugin', () => {
       ],
     });
 
+    console.log(assets);
     expect(assets['main.js'].source()).toContain("module.exports = 'hi'");
   });
 
-  it('bootstraps via a loader', async () => {
+  it('loads other files', async () => {
+    const entry = require.resolve('./integration/virtual-entry.js');
+    const fake = resolveRelative('./fake.js', entry);
+
+    const assets = await runWebpack({
+      devtool: false,
+      mode: 'development',
+      entry: {
+        main: entry,
+      },
+
+      plugins: [
+        new Plugin({
+          [fake]: "module.exports = 'added!'",
+        }),
+      ],
+    });
+
+    expect(assets['main.js'].source()).toContain("module.exports = 'added!'");
+  });
+
+  it.only('bootstraps via a loader', async () => {
     const run = jest.fn(function run(src) {
       expect(this.emitVirtualFile).not.toBeDefined();
       const plugin = Plugin.bootstrap(this._compilation);
@@ -73,7 +95,7 @@ describe('virtual module plugin', () => {
         "module.exports = 'fake'",
       );
 
-      return `const msg = require('./fake.js');\n\n${src}`;
+      return src;
     });
 
     const assets = await runWebpack({

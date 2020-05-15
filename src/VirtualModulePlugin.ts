@@ -34,6 +34,11 @@ class VirtualModulePlugin {
     if (compiler.resolverFactory.cache2)
       compiler.resolverFactory.cache2.clear();
 
+    // >=5
+    if (compiler.resolverFactory.cache) {
+      compiler.resolverFactory.cache.clear();
+    }
+
     return plugin;
   }
 
