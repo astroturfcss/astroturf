@@ -8,12 +8,12 @@ import { NodeStyleMap, ResolvedOptions, Style } from '../types';
 import cssUnits from './cssUnits';
 import isCssTag from './isCssTag';
 import hash from './murmurHash';
+import replaceComposes from './replaceComposes';
 import resolveDependency, { Dependency } from './resolveDependency';
 import trimEnd from './trimEnd';
 import truthy from './truthy';
 import wrapInClass, { hoistImports } from './wrapInClass';
 
-const rComposes = /\b(?:composes\s*?:\s*([^;>]*?)(?:from\s(.+?))?(?=[;}/\n\r]))/gim;
 const rPlaceholder = /###ASTROTURF_PLACEHOLDER_\d*?###/g;
 // Match any valid CSS units followed by a separator such as ;, newline etc.
 const rUnit = new RegExp(`^(${cssUnits.join('|')})(;|,|\n| |\\))`);
@@ -173,10 +173,7 @@ function replaceDependencyPlaceholders(
   id: number,
   opts: ResolvedOptions,
 ) {
-  // Replace references in `composes` rules
-  text = text.replace(rComposes, (composes, classNames: string, fromPart) => {
-    const classList = classNames.replace(/(\n|\r|\n\r)/, '').split(/\s+/);
-
+  text = replaceComposes(text, (composes, classList, fromPart) => {
     const composed = classList
       .map((className) => depInterpolations.get(className))
       .filter(truthy);
@@ -198,7 +195,10 @@ function replaceDependencyPlaceholders(
 
     return Object.entries(groupBy(composed, (i) => i.source)).reduce(
       (acc, [source, values]) => {
-        const classes = uniq(values.map((v) => v.imported)).join(' ');
+        const classes = uniq(
+          // We need to to use the class with the styles for composes
+          values.map((v) => (v.imported === 'cls1' ? 'cls2' : v.imported)),
+        ).join(' ');
         return `${
           acc ? `${acc};\n` : ''
         }composes: ${classes} from "${source}"`;
