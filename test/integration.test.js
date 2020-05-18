@@ -171,7 +171,7 @@ describe('webpack integration', () => {
 });
 
 describe('css-loader', () => {
-  function getConfig(entry) {
+  function getConfig(entry, other) {
     const config = getBaseConfig(entry, {
       extension: '.scss',
     });
@@ -189,7 +189,8 @@ describe('css-loader', () => {
             loader: 'css-loader',
             options: cssModuleOptions,
           },
-        ],
+          other,
+        ].filter(Boolean),
       },
       {
         test: /\.scss$/,
@@ -238,6 +239,27 @@ describe('css-loader', () => {
     );
     expect(assets['main.js'].source()).toMatchFile(
       path.join(__dirname, '__file_snapshots__/default-plugins-js.js'),
+    );
+  });
+
+  it.only('adds default plugins plain css', async () => {
+    const assets = await runWebpack(
+      getConfig('./integration/css-loader-2.js', {
+        loader: require.resolve('./tag-loader'),
+      }),
+    );
+
+    const src = assets['main.css'].source();
+    expect(src).not.toContain('&:hover');
+
+    expect(src).toMatchFile(
+      path.join(
+        __dirname,
+        '__file_snapshots__/default-plugins-chain-styles.css',
+      ),
+    );
+    expect(assets['main.js'].source()).toMatchFile(
+      path.join(__dirname, '__file_snapshots__/default-plugins-chain-js.js'),
     );
   });
 });
