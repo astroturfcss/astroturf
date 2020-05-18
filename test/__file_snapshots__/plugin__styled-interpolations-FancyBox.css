@@ -5,8 +5,8 @@
 composes: cls1;
 
 composes: global from global;
-composes: cls1 from "styled-interpolations-other.css";
-composes: cls1 from "styled-interpolations-base.css";
+composes: cls2 from "styled-interpolations-other.css";
+composes: cls2 from "styled-interpolations-base.css";
 
 color: red;
 width: 75px;
