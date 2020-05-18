@@ -23,6 +23,7 @@ import {
 } from './types';
 import { createRequirePath, getNameFromFile } from './utils/createFilename';
 import getLoaderPrefix from './utils/getLoaderPrefix';
+import replaceComposes from './utils/replaceComposes';
 // @ts-ignore
 
 type LoaderContext = webpack.loader.LoaderContext;
@@ -244,6 +245,18 @@ module.exports = async function loader(
         }
 
         debug(`resolved request to: ${style.absoluteFilePath}`);
+
+        // replace composes first bc we need need to use a different identifier
+        localStyle.value = replaceComposes(localStyle.value, (match) =>
+          match
+            .replace(source, `~${style.absoluteFilePath}`)
+            .replace(
+              imported,
+              style.type === 'stylesheet' ? memberProperty : 'cls2',
+            ),
+        );
+
+        // replace selector interpolations
         localStyle.value = localStyle.value
           .replace(source, `~${style.absoluteFilePath}`)
           .replace(

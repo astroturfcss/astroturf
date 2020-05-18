@@ -9,6 +9,7 @@ import {
   NodeStyleMap,
   ResolvedImport,
   Style,
+  StyleType,
   UserDependency,
 } from '../types';
 import getNameFromPath from './getNameFromPath';
@@ -16,7 +17,7 @@ import getNameFromPath from './getNameFromPath';
 export interface Dependency {
   imported: string;
   source: string;
-  isStyledComponent?: boolean;
+  type?: StyleType;
 }
 
 function defaultResolver(
@@ -95,6 +96,7 @@ export default function resolveDependency(
 
   if (style) {
     return {
+      type: style.type,
       imported:
         style.type === 'stylesheet'
           ? (path.get('property') as any).node.name
