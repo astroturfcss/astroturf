@@ -51,12 +51,12 @@ class MemoryFs {
     );
   }
 
-  addFile = (p: string, data: any, updateMtime = false) => {
+  addFile = (p: string, data: any, forceTimeUpdate = false) => {
     p = path.normalize(p);
     const hash = md5(data);
     const existing = this.paths.get(p);
 
-    const keepTime = !updateMtime && existing && existing.hash === hash;
+    const keepTime = !forceTimeUpdate && existing && existing.hash === hash;
     if (!keepTime)
       debug(
         `${existing ? 'modifying' : 'writing'} file ${path.relative(
@@ -65,19 +65,24 @@ class MemoryFs {
         )} [${hash}]`,
       );
 
-    const mtime = keepTime ? existing.mtime : new Date();
+    const now = new Date();
 
-    this.paths.set(p, {
+    const mtime = keepTime ? existing.mtime : now;
+
+    const stats = {
       hash,
+      path: p,
       contents: Buffer.isBuffer(data) ? data : Buffer.from(data),
 
-      birthtime: existing ? existing.birthtime : new Date(),
-      ctime: existing ? existing.ctime : new Date(),
-      atime: existing ? existing.atime : new Date(),
+      birthtime: existing ? existing.birthtime : now,
+      ctime: existing ? existing.ctime : now,
+      atime: existing ? existing.atime : now,
       mtime,
-    });
+    };
 
-    return mtime;
+    this.paths.set(p, stats);
+
+    return [stats, !keepTime] as const;
   };
 
   getPaths = () => this.paths;

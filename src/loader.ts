@@ -307,10 +307,21 @@ module.exports = async function loader(
 
     return Promise.all(dependencies)
       .then(() => {
+        // const timeStamps = compilation.fileSystemInfo ? new Map() : null;
+
         styles.forEach((style) => {
-          const mtime = emitVirtualFile(style.absoluteFilePath, style.value);
-          compilation.fileTimestamps.set(style.absoluteFilePath, +mtime);
+          emitVirtualFile(style.absoluteFilePath, style.value);
+          // if (timeStamps) {
+          //   timeStamps.set(style.absoluteFilePath, +mtime);
+          // } else {
+          //   compilation.fileTimestamps.set(style.absoluteFilePath, +mtime);
+          // }
         });
+
+        // if (timeStamps) {
+        //   console.log('update');
+        //   compilation.fileSystemInfo.addFileTimestamps(timeStamps);
+        // }
 
         const result = replaceStyleTemplates(
           this,

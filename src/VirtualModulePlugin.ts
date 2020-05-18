@@ -8,6 +8,8 @@ class VirtualModulePlugin {
 
   fs: MemoryFs;
 
+  private watcher: any;
+
   /**
    * Apply an instance of the plugin to compilation.
    * helpful for adding the plugin inside a loader.
@@ -53,15 +55,34 @@ class VirtualModulePlugin {
   }
 
   addFile = (virtualPath: string, content: any) => {
-    this.fs.addFile(virtualPath, content);
+    const [{ path, mtime }, changed] = this.fs.addFile(virtualPath, content);
+
+    if (changed) {
+      this.watcher?._onChange(path, mtime, path, 'astroturf changed');
+    }
   };
 
-  augmentCompilerFileSystem(compiler) {
+  getWatcher(compiler: any) {
+    // https://github.com/sysgears/webpack-virtual-modules/blob/5e3ddccb5e09a1234ec53e94bd080cc979ae3ef4/index.js#L96
+    //
+    // When using the WatchIgnorePlugin (https://github.com/webpack/webpack/blob/52184b897f40c75560b3630e43ca642fcac7e2cf/lib/WatchIgnorePlugin.js),
+    // the original watchFileSystem is stored in `wfs`. The following "unwraps" the ignoring
+    // wrappers, giving us access to the "real" watchFileSystem.
+    let finalWatchFileSystem = compiler.watchFileSystem;
+    while (finalWatchFileSystem && finalWatchFileSystem.wfs) {
+      finalWatchFileSystem = finalWatchFileSystem.wfs;
+    }
+    return finalWatchFileSystem?.watcher;
+  }
+
+  augmentCompilerFileSystem(compiler: any) {
     if (this.augmented === true) {
       return;
     }
 
     const fs = proxyFileSystem(compiler.inputFileSystem, this.fs);
+
+    this.watcher = this.getWatcher(compiler);
 
     compiler.inputFileSystem = fs;
 
@@ -79,12 +100,12 @@ class VirtualModulePlugin {
        */
       compiler.hooks.watchRun.tapAsync(
         'astroturf',
-        ({ fileTimestamps }, callback) => {
+        (nextCompiler, callback) => {
+          this.watcher = this.getWatcher(nextCompiler);
           this.fs.getPaths().forEach((value, key) => {
             const mtime = +value.mtime;
-            fileTimestamps.set(key, mtime);
+            nextCompiler.fileTimestamps.set(key, mtime);
           });
-
           callback();
         },
       );

@@ -96,6 +96,7 @@ export function pitch(this: LoaderContext) {
 
     // Mark this module as side effect free so it can be optimized away
     // by Webpack. I don't think there is a more public way to do this.
+    if (this._module.factoryMeta == null) this._module.factoryMeta = {};
     this._module.factoryMeta.sideEffectFree = true;
 
     return `export { default } from "-!${prefix}!${this.resourcePath}";`;

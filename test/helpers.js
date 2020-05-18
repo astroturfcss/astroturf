@@ -1,4 +1,4 @@
-const { relative, dirname, resolve: pathResolve } = require('path');
+const { relative, dirname } = require('path');
 
 const { transformAsync } = require('@babel/core');
 const fs = require('fs-extra');
