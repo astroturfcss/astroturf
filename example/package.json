@@ -8,8 +8,8 @@
   },
   "devDependencies": {
     "@4c/babel-preset": "^7.3.6",
-    "@babel/cli": "^7.10.4",
-    "@babel/core": "^7.10.4",
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.10.5",
     "babel-core": "^7.0.0-bridge.0",
     "mini-css-extract-plugin": "^0.9.0",
     "webpack": "^4.43.0",
