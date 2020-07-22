@@ -1,6 +1,6 @@
 {
   "name": "astroturf",
-  "version": "1.0.0-beta.7",
+  "version": "1.0.0-beta.8",
   "description": "Extract and process inline CSS literals in JavaScript files",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
