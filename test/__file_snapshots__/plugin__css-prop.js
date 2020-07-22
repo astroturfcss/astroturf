@@ -22,13 +22,13 @@ function Button3() {
   );
 }
 function Button4({ theme }) {
-  return _j.jsx(
+  return _j(
     "button",
     {
       css: [_CssProp4_button, [["a1qka8js", theme]]],
     },
     "Hi there",
-    _j.jsx("span", {
+    _j("span", {
       css: [_CssProp5_span],
     })
   );

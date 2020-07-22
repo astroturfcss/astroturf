@@ -108,6 +108,9 @@ describe('css prop', () => {
       );
 
       expect(code).not.toMatch('React.createElement');
+
+      expect(code).toMatch('import _j from "astroturf/jsx";');
+      expect(code).toMatch('_j(');
       expect(styles).toHaveLength(2);
       expect(styles[0].identifier).toEqual('CssProp1_div');
     },
@@ -208,7 +211,7 @@ describe('css prop', () => {
     },
   );
 
-  testAllRunners('fallsback to stylesheet prop', async (runner) => {
+  testAllRunners('falls back to stylesheet prop', async (runner) => {
     const [, styles] = await runner(
       `
         import { css } from 'astroturf';

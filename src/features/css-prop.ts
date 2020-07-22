@@ -213,15 +213,14 @@ export default {
       const { jsx } = state[JSX_IDENTS];
       const { changeset } = file.get(STYLES);
       const callee = path.get('callee');
-      const callNode = t.memberExpression(jsx, t.identifier('jsx'));
 
       changeset.push({
-        code: `${jsx.name}.jsx`,
+        code: jsx.name,
         start: callee.node.start,
         end: callee.node.end,
       });
 
-      callee.replaceWith(callNode);
+      callee.replaceWith(t.identifier(jsx.name));
       file.set(HAS_CSS_PROP, true);
     }
   },
