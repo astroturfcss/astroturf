@@ -133,10 +133,7 @@ export interface CreateStyled extends StyledTags {
 
 declare const styled: CreateStyled;
 
-export function css(
-  template: TemplateStringsArray,
-  ...args: any[]
-): Record<string, string>;
+export function css(template: TemplateStringsArray, ...args: any[]): string;
 
 export function stylesheet(
   template: TemplateStringsArray,
