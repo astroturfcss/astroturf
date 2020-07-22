@@ -108,6 +108,7 @@ function Layout(props: Props) {
       >
         <NavItem href="/getting-started">Getting Started</NavItem>
         <NavItem href="/configuration">Configuration</NavItem>
+        <NavItem href="/migration">Migrating to v1</NavItem>
         <NavItem href="/tooling">Tooling</NavItem>
       </nav>
       <main

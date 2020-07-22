@@ -14,7 +14,7 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
-    "@docpocalypse/code-live": "^0.4.15",
+    "@docpocalypse/code-live": "^0.4.18",
     "@mdx-js/mdx": "^1.6.1",
     "@mdx-js/react": "^1.6.1",
     "@typescript-eslint/eslint-plugin": "^2.31.0",
