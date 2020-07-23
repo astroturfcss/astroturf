@@ -3,7 +3,7 @@ import util from 'util';
 
 import { codeFrameColumns } from '@babel/code-frame';
 import chalk from 'chalk';
-import levenshtein from 'fast-levenshtein';
+import { distance } from 'fastest-levenshtein';
 import loaderUtils from 'loader-utils';
 import sortBy from 'lodash/sortBy';
 import MagicString from 'magic-string';
@@ -53,7 +53,7 @@ function buildDependencyError(
   let closest;
   let minDistance = 2;
   idents.forEach((ident) => {
-    const d = levenshtein.get(ident, identifier);
+    const d = distance(ident, identifier);
     if (d < minDistance) {
       minDistance = d;
       closest = ident;
