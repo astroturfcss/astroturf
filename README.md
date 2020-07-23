@@ -9,6 +9,7 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+
 - [Usage](#usage)
 - [Component API](#component-api)
 - [`css` prop](#css-prop)
@@ -543,16 +544,16 @@ See [example](https://github.com/zeit/next.js/tree/canary/examples/with-astrotur
 
 ### Use without webpack
 
-If you aren't using webpack and still want to define styles inline, there is a babel plugin for that.
+If you aren't using webpack and still want to define styles inline, there is a babel preset for quickly configuring astroturf.
 
 Config shown below with the default options.
 
 ```js
 // babelrc.js
 module.exports = {
-  plugins: [
+  presets: [
     [
-      'astroturf/plugin',
+      'astroturf/preset',
       {
         cssTagName: 'css',
         extension: '.css',

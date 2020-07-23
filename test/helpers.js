@@ -60,7 +60,6 @@ export async function run(src, options, filename = 'MyStyleFile.js') {
 
 export async function runBabel(
   src,
-  options,
   { filename = 'MyStyleFile.js', ...babelConfig },
 ) {
   const { code, metadata } = await transformAsync(src, {
@@ -69,10 +68,6 @@ export async function runBabel(
     sourceType: 'unambiguous',
     babelrc: false,
     ...babelConfig,
-    plugins: [
-      ...(babelConfig.plugins || []),
-      [require('../src/plugin.ts'), { ...options, writeFiles: false }],
-    ].filter(Boolean),
   });
 
   return [

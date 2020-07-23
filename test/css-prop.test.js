@@ -108,6 +108,8 @@ describe('css prop', () => {
       );
 
       expect(code).not.toMatch('React.createElement');
+      expect(code).not.toContain('/** @jsx');
+      expect(code).not.toContain('/** @jsxFrag');
 
       expect(code).toMatch('import _j from "astroturf/jsx";');
       expect(code).toMatch('_j(');

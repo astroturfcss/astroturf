@@ -2,19 +2,19 @@ const { runBabel } = require('./helpers');
 
 describe('babel integration', () => {
   function run(src, options) {
-    return runBabel(
-      src,
-      { ...options, jsxPragma: '__AstroturfJsx' },
-      {
-        presets: [
-          '@babel/env',
-          [
-            '@babel/react',
-            { pragma: '__AstroturfJsx', pragmaFrag: '__AstroturfJsx.F' },
-          ],
+    return runBabel(src, {
+      presets: [
+        '@babel/env',
+        '@babel/react',
+        [
+          require('../src/preset.ts'),
+          {
+            ...options,
+            writeFiles: false,
+          },
         ],
-      },
-    );
+      ],
+    });
   }
 
   it('should not require additional compilation', async () => {
@@ -42,14 +42,18 @@ describe('babel integration', () => {
       { enableCssProp: true },
     );
 
-    expect(code).toContain('/** @jsx __AstroturfJsx **/');
-    expect(code).toContain('/** @jsxFrag __AstroturfJsx.F **/');
+    expect(code).not.toContain('/** @jsx');
+    expect(code).not.toContain('/** @jsxFrag');
 
     expect(code).toContain(
       'var _jsx = _interopRequireDefault(require("astroturf/jsx"))',
     );
+
+    expect(code).toContain('(0, _jsx["default"])("button",');
     expect(code).toContain(
       'var _MyStyleFileCls = _interopRequireDefault(require("./MyStyleFile-cls.css"))',
     );
+
+    expect(code).toContain('React.Fragment');
   });
 });

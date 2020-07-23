@@ -4,7 +4,7 @@ import * as t from '@babel/types';
 import chalk from 'chalk';
 
 import { DynamicStyle, PluginState, ResolvedOptions } from '../types';
-import { COMPONENTS, HAS_CSS_PROP, STYLES } from '../utils/Symbols';
+import { COMPONENTS, JSX_IDENTS, STYLES } from '../utils/Symbols';
 import addPragma from '../utils/addPragma';
 import buildTaggedTemplate from '../utils/buildTaggedTemplate';
 import createStyleNode from '../utils/createStyleNode';
@@ -14,7 +14,8 @@ import isStylesheetTag from '../utils/isStylesheetTag';
 import trimEnd from '../utils/trimEnd';
 import wrapInClass from '../utils/wrapInClass';
 
-const JSX_IDENTS = Symbol('Astroturf jsx identifiers');
+const HAS_JSX = Symbol('Astroturf has jsx');
+const HAS_CREATE_ELEMENT = Symbol('Astroturf has createElement call');
 
 type CssPropPluginState = PluginState & {
   [JSX_IDENTS]: {
@@ -167,24 +168,22 @@ const cssPropertyVisitors = {
 
 export default {
   Program: {
-    enter(path: NodePath<t.Program>, state: PluginState) {
-      const pragma = state.defaultedOptions.jsxPragma;
-
-      // We need to re-export Fragment because of
-      // https://github.com/babel/babel/pull/7996#issuecomment-519653431
-      state[JSX_IDENTS] = {
-        jsx: pragma
-          ? t.identifier(pragma)
-          : path.scope.generateUidIdentifier('j'),
-      };
-    },
-
     exit(path: NodePath<t.Program>, state: CssPropPluginState) {
-      if (!state.file.get(HAS_CSS_PROP)) return;
+      const hasJsx = !!state.file.get(HAS_JSX);
+      const hasCreateElement = !!state.file.get(HAS_CREATE_ELEMENT);
+
+      if (!hasJsx && !hasCreateElement) return;
 
       const { jsx } = state[JSX_IDENTS];
 
-      const changes = addPragma(path, jsx);
+      const pragmaDisabled = !state.defaultedOptions.jsxPragma;
+
+      // For createElement calls we still need to add an import
+      // but we don't need to do pragma bits
+      // if the pragma is disabled and there is no createElement call we are done
+      if (pragmaDisabled && !hasCreateElement) return;
+
+      const changes = addPragma(path, jsx, hasJsx && !pragmaDisabled);
 
       state.file.get(STYLES).changeset.unshift(...changes);
     },
@@ -225,7 +224,7 @@ export default {
       });
 
       callee.replaceWith(t.identifier(jsx.name));
-      file.set(HAS_CSS_PROP, true);
+      file.set(HAS_CREATE_ELEMENT, true);
     }
   },
 
@@ -246,7 +245,7 @@ export default {
 
     if (compiledNode) {
       valuePath.replaceWith(compiledNode);
-      file.set(HAS_CSS_PROP, true);
+      file.set(HAS_JSX, true);
     }
   },
 };

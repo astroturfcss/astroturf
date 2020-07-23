@@ -12,7 +12,7 @@ import styledComponent from './features/styled-component';
 import stylesheet from './features/stylesheet';
 import { PluginState, ResolvedOptions, StyleState } from './types';
 import ImportInjector from './utils/ImportInjector';
-import { COMPONENTS, IMPORTS, STYLES } from './utils/Symbols';
+import { COMPONENTS, IMPORTS, JSX_IDENTS, STYLES } from './utils/Symbols';
 
 export default function plugin(): PluginObj<PluginState> {
   return {
@@ -62,9 +62,21 @@ export default function plugin(): PluginObj<PluginState> {
               stylesheetTagName: 'stylesheet',
               allowGlobal: false,
               enableCssProp: true,
+              jsxPragma: true,
               enableDynamicInterpolations: 'cssProp',
               experiments: {},
             }) as ResolvedOptions;
+
+            const pragma = state.defaultedOptions.jsxPragma;
+
+            // We need to re-export Fragment because of
+            // https://github.com/babel/babel/pull/7996#issuecomment-519653431
+            state[JSX_IDENTS] = {
+              jsx:
+                typeof pragma === 'string'
+                  ? t.identifier(pragma)
+                  : path.scope.generateUidIdentifier('j'),
+            };
           },
         },
 
