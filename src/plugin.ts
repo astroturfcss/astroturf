@@ -33,39 +33,13 @@ export default function plugin(): PluginObj<PluginState> {
     },
 
     post(file) {
-      const { opts, styleImports } = this;
+      const { opts } = this;
       // eslint-disable-next-line prefer-const
       let { styles, changeset } = file.get(STYLES) as StyleState;
-      const importNodes: Array<{
-        path: NodePath;
-        specifiers: null | NodePath[];
-      }> = file.get(IMPORTS);
 
-      importNodes.forEach(({ path, specifiers }) => {
-        if (!path) return;
-
-        const { start, end } = path.node;
-
-        if (specifiers) {
-          specifiers.forEach((s) => s.remove());
-        } else {
-          path.remove();
-        }
-
-        if (opts.generateInterpolations)
-          changeset.push({
-            start: start!,
-            end: end!,
-            // if the path is just a removed specifier we need to regenerate
-            // the import statement otherwise we remove the entire declaration
-            code: specifiers ? generate(path.node).code : '',
-          });
-      });
-
-      const importAdditions = styleImports.inject();
       const styleList = Array.from(styles.values());
 
-      changeset = changeset.concat(importAdditions, styleList);
+      changeset = changeset.concat(styleList);
 
       file.metadata.astroturf = { styles: styleList, changeset };
 
@@ -122,6 +96,42 @@ export default function plugin(): PluginObj<PluginState> {
       cssProp,
       styledComponent,
       stylesheet,
+      {
+        Program: {
+          exit(_, { opts, file, styleImports }) {
+            // eslint-disable-next-line prefer-const
+            let { changeset } = file.get(STYLES) as StyleState;
+
+            const importNodes: Array<{
+              path: NodePath;
+              specifiers: null | NodePath[];
+            }> = file.get(IMPORTS);
+
+            importNodes.forEach(({ path, specifiers }) => {
+              if (!path) return;
+
+              const { start, end } = path.node;
+
+              if (specifiers) {
+                specifiers.forEach((s) => s.remove());
+              } else {
+                path.remove();
+              }
+
+              if (opts.generateInterpolations)
+                changeset.push({
+                  start: start!,
+                  end: end!,
+                  // if the path is just a removed specifier we need to regenerate
+                  // the import statement otherwise we remove the entire declaration
+                  code: specifiers ? generate(path.node).code : '',
+                });
+            });
+
+            changeset.push(styleImports.inject());
+          },
+        },
+      },
     ]),
   };
 }

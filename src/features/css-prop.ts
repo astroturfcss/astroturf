@@ -167,11 +167,15 @@ const cssPropertyVisitors = {
 
 export default {
   Program: {
-    enter(path: NodePath<t.Program>, state: any) {
+    enter(path: NodePath<t.Program>, state: PluginState) {
+      const pragma = state.defaultedOptions.jsxPragma;
+
       // We need to re-export Fragment because of
       // https://github.com/babel/babel/pull/7996#issuecomment-519653431
       state[JSX_IDENTS] = {
-        jsx: path.scope.generateUidIdentifier('j'),
+        jsx: pragma
+          ? t.identifier(pragma)
+          : path.scope.generateUidIdentifier('j'),
       };
     },
 

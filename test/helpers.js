@@ -47,9 +47,32 @@ export async function run(src, options, filename = 'MyStyleFile.js') {
     babelrc: false,
     plugins: [
       [require('../src/plugin.ts'), { ...options, writeFiles: false }],
-    ].filter(Boolean),
+    ],
     parserOpts: PARSER_OPTS,
     sourceType: 'unambiguous',
+  });
+
+  return [
+    normalizeNewLines(prettier.format(code, { filepath: filename })),
+    metadata.astroturf.styles,
+  ];
+}
+
+export async function runBabel(
+  src,
+  options,
+  { filename = 'MyStyleFile.js', ...babelConfig },
+) {
+  const { code, metadata } = await transformAsync(src, {
+    filename,
+    parserOpts: PARSER_OPTS,
+    sourceType: 'unambiguous',
+    babelrc: false,
+    ...babelConfig,
+    plugins: [
+      ...(babelConfig.plugins || []),
+      [require('../src/plugin.ts'), { ...options, writeFiles: false }],
+    ].filter(Boolean),
   });
 
   return [

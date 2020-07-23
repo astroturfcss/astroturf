@@ -30,6 +30,8 @@ export interface ResolvedOptions {
   styledTagName: string | false;
   stylesheetTagName: string | false;
 
+  jsxPragma?: string;
+
   enableCssProp: boolean;
   enableDynamicInterpolations: 'cssProp' | boolean;
 
