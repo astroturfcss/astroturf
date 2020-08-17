@@ -23,6 +23,7 @@
 - [Setup](#setup)
   - [Options](#options)
   - [Use with Parcel](#use-with-parcel)
+  - [Use with Rollup](#use-with-rollup)
   - [Use with Gatsby](#use-with-gatsby)
   - [Use with Preact](#use-with-preact)
   - [Use with Next.js](#use-with-nextjs)
@@ -523,6 +524,29 @@ Add these lines to `package.json` to work with [Parcel](https://parceljs.org/) b
     ]
   },
 ```
+
+### Use with Rollup
+
+Add [babel](https://github.com/rollup/plugins/tree/master/packages/babel) and [postcss](https://github.com/egoist/rollup-plugin-postcss) plugins to [Rollup](https://rollupjs.org/) config file:
+
+```js
+plugins: [
+  babel({
+    plugins: [
+      'astroturf/plugin'
+    ]
+  }),
+  postcss({
+    extract: 'app.css',
+    modules: true,
+    plugins: [
+      postcssNested
+    ]
+  })
+]
+```
+
+See [example repl](https://repl.it/@vladshcherbin/rollup-astroturf#rollup.config.js)
 
 ### Use with Gatsby
 
