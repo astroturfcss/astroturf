@@ -1,6 +1,6 @@
 import { run } from './helpers';
 
-describe('custom properties', () => {
+describe('dependencies', () => {
   it('should resolve', async () => {
     const [, styles] = await run(
       `

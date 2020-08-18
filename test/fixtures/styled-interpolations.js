@@ -12,7 +12,7 @@ const other = css`
 
 const FancyBox = styled('div')`
   composes: global from global;
-  composes: ${other.other} ${other.other} ${base};
+  composes: ${other} ${other} ${base};
 
   color: red;
   width: 75px;

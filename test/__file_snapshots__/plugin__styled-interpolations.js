@@ -4,8 +4,8 @@ import _other from "./styled-interpolations-other.css";
 import _FancyBox from "./styled-interpolations-FancyBox.css";
 import _FancierBox from "./styled-interpolations-FancierBox.css";
 import _Button from "./styled-interpolations-Button.css";
-const base = _base.cls1;
-const other = _other.cls1;
+const base = _base.cls2;
+const other = _other.cls2;
 const FancyBox = /*#__PURE__*/ styled("div", null, {
   displayName: "FancyBox",
   styles: _FancyBox,

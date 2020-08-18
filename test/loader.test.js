@@ -36,7 +36,7 @@ describe('webpack loader', () => {
       `import _styles from "${loaderPrefix}./MyStyleFile-styles.css"`,
     );
     expect(code).toContain('const styles = _styles;');
-    expect(code).toContain('const cls = _cls.cls1;');
+    expect(code).toContain('const cls = _cls.cls2;');
   });
 
   it('finds different css tag names', async () => {

@@ -59,9 +59,9 @@ function buildStyleRequire(
   nodeMap.set(runtimeNode, style);
 
   if (isSingleClass) {
-    runtimeNode = t.memberExpression(runtimeNode, t.identifier('cls1'));
+    runtimeNode = t.memberExpression(runtimeNode, t.identifier('cls2'));
 
-    style.code += '.cls1';
+    style.code += '.cls2';
   }
 
   return runtimeNode;
