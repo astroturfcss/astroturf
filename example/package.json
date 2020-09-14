@@ -11,7 +11,7 @@
     "@babel/cli": "^7.11.6",
     "@babel/core": "^7.11.6",
     "babel-core": "^7.0.0-bridge.0",
-    "mini-css-extract-plugin": "^0.11.0",
+    "mini-css-extract-plugin": "^0.11.2",
     "webpack": "^4.44.1",
     "webpack-atoms": "^13.1.0",
     "webpack-cli": "^3.3.12",
