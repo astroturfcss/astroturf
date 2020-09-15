@@ -4,7 +4,7 @@ export function hoistImports(text: string) {
   const imports = [] as string[];
 
   let match;
-  const rImports = /@import.*?(?:$|;)/g;
+  const rImports = /@(?:import|use|forward).*?(?:$|;)/g;
 
   // eslint-disable-next-line no-cond-assign
   while ((match = rImports.exec(text))) {
