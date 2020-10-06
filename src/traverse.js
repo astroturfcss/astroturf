@@ -26,7 +26,7 @@ export default function traverse(source, filename, opts) {
         extname === '.ts' || extname === '.tsx' ? 'typescript' : 'flow',
         'doExpressions',
         'objectRestSpread',
-        ['decorators', { legacy: true }],
+        'decorators-legacy',
         'classProperties',
         'classPrivateProperties',
         'classPrivateMethods',
