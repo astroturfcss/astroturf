@@ -10,6 +10,7 @@ export default function traverse(source, filename, opts) {
   return transformSync(source, {
     filename,
     babelrc: false,
+    configFile: false,
     code: false,
     ast: false,
     plugins: [[plugin, opts]],
@@ -25,7 +26,7 @@ export default function traverse(source, filename, opts) {
         extname === '.ts' || extname === '.tsx' ? 'typescript' : 'flow',
         'doExpressions',
         'objectRestSpread',
-        ['decorators', { decoratorsBeforeExport: true }],
+        ['decorators', { legacy: true }],
         'classProperties',
         'classPrivateProperties',
         'classPrivateMethods',
