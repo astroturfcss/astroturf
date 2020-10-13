@@ -18,7 +18,7 @@ const isStyledExpression = (
   (allowGlobal || calleePath.referencesImport('astroturf/react'));
 
 export default function isStyledTag(
-  tagPath: NodePath,
+  tagPath: NodePath<any>,
   pluginOptions: ResolvedOptions,
 ): tagPath is NodePath<t.CallExpression> {
   const callee = tagPath.get('callee');

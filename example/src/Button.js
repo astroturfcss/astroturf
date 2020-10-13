@@ -12,6 +12,7 @@ const Button = styled('button')`
   padding: 0 0.4rem;
   border-radius: 2px;
   font-weight: normal;
+
   font-size: 16px;
   touch-action: manipulation;
   cursor: pointer;
@@ -21,6 +22,7 @@ const Button = styled('button')`
 
   &.theme-primary {
     @include button-variant(white, #33ad13, #298f0f);
+    color: red;
   }
 
   &.theme-secondary {

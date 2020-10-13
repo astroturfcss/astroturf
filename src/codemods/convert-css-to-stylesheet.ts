@@ -41,7 +41,7 @@ export default function plugin(): PluginObj<PluginState> {
                 path.unshiftContainer(
                   'specifiers',
                   t.importSpecifier(
-                    t.identifier(stylesheetTagName),
+                    t.identifier(stylesheetTagName as string),
                     t.identifier('stylesheet'),
                   ),
                 );
@@ -63,7 +63,10 @@ export default function plugin(): PluginObj<PluginState> {
         } = state.opts;
         const tagPath = path.get('tag');
 
-        if (!isCssTag(tagPath, { cssTagName, allowGlobal })) {
+        if (
+          stylesheetTagName === false ||
+          !isCssTag(tagPath, { cssTagName, allowGlobal })
+        ) {
           return;
         }
 

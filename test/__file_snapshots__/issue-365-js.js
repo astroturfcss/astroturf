@@ -1,30 +1,70 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["main"],{
+(self["webpackChunkastroturf"] = self["webpackChunkastroturf"] || []).push([["main"],{
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/issue-365-BlockStyled.css":
-/*!****************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-0!./node_modules/css-loader/dist/cjs.js??ref--4-1!./src/css-loader.ts!./test/integration/issue-365-BlockStyled.css ***!
-  \****************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./test/integration/issue-365.js":
+/*!***************************************!*\
+  !*** ./test/integration/issue-365.js ***!
+  \***************************************/
+/*! namespace exports */
+/*! exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-/* harmony default export */ __webpack_exports__["default"] = ({"cls1":"issue-365-BlockStyled__cls1","cls2":"issue-365-BlockStyled__cls2 issue-365-BlockStyled__cls1","active":"issue-365-BlockStyled__active issue-365-mixins__cls2 issue-365-mixins__cls1"});
+/* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "./src/runtime/react.js");
+/* harmony import */ var astroturf_css_loader_inline_issue_365_mixins_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! astroturf/css-loader?inline!./issue-365-mixins.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/issue-365-mixins.css");
+/* harmony import */ var astroturf_css_loader_inline_issue_365_BlockStyled_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! astroturf/css-loader?inline!./issue-365-BlockStyled.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/issue-365-BlockStyled.css");
+
+
+
+const mixins = astroturf_css_loader_inline_issue_365_mixins_css__WEBPACK_IMPORTED_MODULE_1__.default.cls2;
+const Block = /*#__PURE__*/React.createElement(BlockStyled, {
+  active: false
+});
+const BlockStyled = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_0__.default)("div", null, {
+  displayName: "BlockStyled",
+  styles: astroturf_css_loader_inline_issue_365_BlockStyled_css__WEBPACK_IMPORTED_MODULE_2__.default
+});
 
 /***/ }),
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/issue-365-mixins.css":
-/*!***********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--4-0!./node_modules/css-loader/dist/cjs.js??ref--4-1!./src/css-loader.ts!./test/integration/issue-365-mixins.css ***!
-  \***********************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/issue-365-BlockStyled.css":
+/*!****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/issue-365-BlockStyled.css ***!
+  \****************************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ __webpack_exports__["default"] = ({"cls1":"issue-365-mixins__cls1","cls2":"issue-365-mixins__cls2 issue-365-mixins__cls1"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"issue-365-BlockStyled__cls1","cls2":"issue-365-BlockStyled__cls2 issue-365-BlockStyled__cls1","active":"issue-365-BlockStyled__active issue-365-mixins__cls2 issue-365-mixins__cls1"});
+
+/***/ }),
+
+/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/issue-365-mixins.css":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/issue-365-mixins.css ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! namespace exports */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+// extracted by mini-css-extract-plugin
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"issue-365-mixins__cls1","cls2":"issue-365-mixins__cls2 issue-365-mixins__cls1"});
 
 /***/ }),
 
@@ -32,13 +72,19 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************!*\
   !*** ./src/runtime/index.js ***!
   \******************************/
-/*! exports provided: stylesheet, css */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! namespace exports */
+/*! export css [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export stylesheet [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "stylesheet", function() { return stylesheet; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "css", function() { return css; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "stylesheet": () => /* binding */ stylesheet,
+/* harmony export */   "css": () => /* binding */ css
+/* harmony export */ });
 const stylesheet = () => {
   throw new Error(
     'stylesheet template literal evaluated at runtime. ' +
@@ -60,18 +106,26 @@ const css = () => {
 /*!****************************!*\
   !*** ./src/runtime/jsx.js ***!
   \****************************/
-/*! exports provided: resolveVariants, varsToStyles, jsx, F, default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! namespace exports */
+/*! export F [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/react/cjs/react.development.js .Fragment */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export jsx [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export resolveVariants [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export varsToStyles [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "resolveVariants", function() { return resolveVariants; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "varsToStyles", function() { return varsToStyles; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "jsx", function() { return jsx; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "resolveVariants": () => /* binding */ resolveVariants,
+/* harmony export */   "varsToStyles": () => /* binding */ varsToStyles,
+/* harmony export */   "jsx": () => /* binding */ jsx,
+/* harmony export */   "F": () => /* reexport safe */ react__WEBPACK_IMPORTED_MODULE_0__.Fragment,
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "F", function() { return react__WEBPACK_IMPORTED_MODULE_0__["Fragment"]; });
-
 // eslint-disable-next-line import/no-extraneous-dependencies
 
 
@@ -99,16 +153,16 @@ function jsx(type, props, ...children) {
     props = childProps;
   }
 
-  return Object(react__WEBPACK_IMPORTED_MODULE_0__["createElement"])(type, props, ...children);
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(type, props, ...children);
 }
-jsx.F = react__WEBPACK_IMPORTED_MODULE_0__["Fragment"];
+jsx.F = react__WEBPACK_IMPORTED_MODULE_0__.Fragment;
 
 // the reason for the crazy exports here is that you need to do a BUNCH of work
 // to keep typescript from eliding (removing) the jsx imports
 // see: https://github.com/babel/babel/pull/11523
 
 
-/* harmony default export */ __webpack_exports__["default"] = (jsx);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (jsx);
 
 
 /***/ }),
@@ -117,19 +171,24 @@ jsx.F = react__WEBPACK_IMPORTED_MODULE_0__["Fragment"];
 /*!******************************!*\
   !*** ./src/runtime/react.js ***!
   \******************************/
-/*! exports provided: default, css, stylesheet */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! namespace exports */
+/*! export css [provided] [no usage info] [missing usage info prevents renaming] -> ./src/runtime/index.js .css */
+/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
+/*! export stylesheet [provided] [no usage info] [missing usage info prevents renaming] -> ./src/runtime/index.js .stylesheet */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__,
+/* harmony export */   "css": () => /* reexport safe */ ___WEBPACK_IMPORTED_MODULE_2__.css,
+/* harmony export */   "stylesheet": () => /* reexport safe */ ___WEBPACK_IMPORTED_MODULE_2__.stylesheet
+/* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! . */ "./src/runtime/index.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "css", function() { return ___WEBPACK_IMPORTED_MODULE_1__["css"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "stylesheet", function() { return ___WEBPACK_IMPORTED_MODULE_1__["stylesheet"]; });
-
-/* harmony import */ var _jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./jsx */ "./src/runtime/jsx.js");
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! . */ "./src/runtime/index.js");
+/* harmony import */ var _jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./jsx */ "./src/runtime/jsx.js");
 // eslint-disable-next-line import/no-extraneous-dependencies
 
 
@@ -218,17 +277,17 @@ function styled(type, options, settings) {
     (className) => className !== (styles.cls2 || styles.cls1),
   );
 
-  const decorated = Object(react__WEBPACK_IMPORTED_MODULE_0__["forwardRef"])((rawProps, ref) => {
+  const decorated = (0,react__WEBPACK_IMPORTED_MODULE_0__.forwardRef)((rawProps, ref) => {
     const props = attrs ? attrs(rawProps) : rawProps;
     const childProps = { ...props, ref };
 
     if (allowAs) delete childProps.as;
-    childProps.style = Object(_jsx__WEBPACK_IMPORTED_MODULE_2__["varsToStyles"])(childProps, vars);
+    childProps.style = (0,_jsx__WEBPACK_IMPORTED_MODULE_1__.varsToStyles)(childProps, vars);
     childProps.className = propsToStyles(childProps, styles, hasModifiers);
 
-    if (variants) childProps.className += ` ${Object(_jsx__WEBPACK_IMPORTED_MODULE_2__["resolveVariants"])(variants)}`;
+    if (variants) childProps.className += ` ${(0,_jsx__WEBPACK_IMPORTED_MODULE_1__.resolveVariants)(variants)}`;
 
-    return Object(react__WEBPACK_IMPORTED_MODULE_0__["createElement"])(allowAs && props.as ? props.as : type, childProps);
+    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(allowAs && props.as ? props.as : type, childProps);
   });
 
   decorated.displayName = displayName;
@@ -240,37 +299,12 @@ function styled(type, options, settings) {
   return decorated;
 }
 
-/* harmony default export */ __webpack_exports__["default"] = (styled);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (styled);
 
 
 
-
-/***/ }),
-
-/***/ "./test/integration/issue-365.js":
-/*!***************************************!*\
-  !*** ./test/integration/issue-365.js ***!
-  \***************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "./src/runtime/react.js");
-/* harmony import */ var astroturf_css_loader_inline_issue_365_mixins_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! astroturf/css-loader?inline!./issue-365-mixins.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/issue-365-mixins.css");
-/* harmony import */ var astroturf_css_loader_inline_issue_365_BlockStyled_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! astroturf/css-loader?inline!./issue-365-BlockStyled.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js?!./node_modules/css-loader/dist/cjs.js?!./src/css-loader.ts!./test/integration/issue-365-BlockStyled.css");
-
-
-
-const mixins = astroturf_css_loader_inline_issue_365_mixins_css__WEBPACK_IMPORTED_MODULE_1__["default"].cls1;
-const Block = /*#__PURE__*/React.createElement(BlockStyled, {
-  active: false
-});
-const BlockStyled = /*#__PURE__*/Object(astroturf_react__WEBPACK_IMPORTED_MODULE_0__["default"])("div", null, {
-  displayName: "BlockStyled",
-  styles: astroturf_css_loader_inline_issue_365_BlockStyled_css__WEBPACK_IMPORTED_MODULE_2__["default"]
-});
 
 /***/ })
 
-},[["./test/integration/issue-365.js","runtime~main","vendors~main~vendor"]]]);
+},
+0,[["./test/integration/issue-365.js","runtime~main","vendors-node_modules_react_index_js"]]]);

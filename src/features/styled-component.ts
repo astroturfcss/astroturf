@@ -97,7 +97,7 @@ function buildStyledComponent(
   style.value = css;
 
   const runtimeNode = buildComponent({
-    TAG: t.identifier(pluginOptions.styledTagName),
+    TAG: t.identifier(pluginOptions.styledTagName as string),
     ELEMENTTYPE: elementType,
     ATTRS: normalizeAttrs(styledAttrs),
     OPTIONS: styledOptions || t.nullLiteral(),
@@ -128,7 +128,7 @@ export default {
     if (isStyledTag(tagPath, pluginOptions)) {
       let styledOptions, componentType, styledAttrs;
 
-      if (hasAttrs(tagPath.get('callee'))) {
+      if (hasAttrs(tagPath.get('callee') as any)) {
         styledAttrs = get(tagPath, 'node.arguments[0]');
 
         const styled = tagPath.get('callee.object');

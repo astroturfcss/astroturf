@@ -16,7 +16,7 @@ import { COMPONENTS, IMPORTS, JSX_IDENTS, STYLES } from './utils/Symbols';
 
 export default function plugin(): PluginObj<PluginState> {
   return {
-    pre(file) {
+    pre(file: any) {
       file.set(IMPORTS, []);
 
       if (!file.has(STYLES)) {
@@ -32,7 +32,7 @@ export default function plugin(): PluginObj<PluginState> {
       }
     },
 
-    post(file) {
+    post(file: any) {
       const { opts } = this;
       // eslint-disable-next-line prefer-const
       let { styles, changeset } = file.get(STYLES) as StyleState;

@@ -6,7 +6,7 @@ import truthy from './truthy';
 
 const getLiteralValue = (node: any): string => node.raw || node.value;
 
-export default function getNameFromPath(path: NodePath): string | null {
+export default function getNameFromPath(path: NodePath<any>): string | null {
   if (path.isIdentifier() || path.isJSXIdentifier()) return path.node.name;
   if (path.isLiteral()) return getLiteralValue(path.node);
   if (path.isMemberExpression() || path.isJSXMemberExpression()) {

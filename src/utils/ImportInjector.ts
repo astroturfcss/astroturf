@@ -16,15 +16,15 @@ function findLast<T>(
   return undefined;
 }
 
-function isRequire(path: NodePath) {
-  const isRequireExpression = (p: NodePath<any>) =>
+function isRequire(path: NodePath<any>) {
+  const isRequireExpression = (p: any) =>
     p.isCallExpression() &&
     p.get('callee').isIdentifier() &&
     (p.get('callee').node as any).name === 'require';
 
   if (!path) return false;
   if (path.isVariableDeclaration()) {
-    return path
+    return (path as NodePath<t.VariableDeclaration>)
       .get('declarations')
       .some((d) => d && isRequireExpression(d.get('init')));
   }

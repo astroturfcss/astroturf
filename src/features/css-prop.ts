@@ -31,7 +31,7 @@ const isCssPropTag = (tagPath: NodePath, options: ResolvedOptions) =>
     ? isStylesheetTag(tagPath, options)
     : isCssTag(tagPath, options);
 
-export const isCreateElementCall = (p: NodePath) =>
+export const isCreateElementCall = (p: NodePath<any>) =>
   p.isCallExpression() &&
   (p.get('callee.property') as any).node &&
   (p.get('callee.property') as any).node.name === 'createElement';
@@ -86,13 +86,13 @@ function buildCssProp(
     importId = options.styleImports.add(style);
   } else {
     const exprPath = valuePath.isJSXExpressionContainer()
-      ? valuePath.get('expression')
+      ? (valuePath.get('expression') as NodePath)
       : valuePath;
 
     if (
       exprPath.isTemplateLiteral() ||
       (exprPath.isTaggedTemplateExpression() &&
-        isCssPropTag(exprPath.get('tag'), pluginOptions))
+        isCssPropTag(exprPath.get('tag') as NodePath, pluginOptions))
     ) {
       importId = options.styleImports.add(style);
       const template = buildTaggedTemplate({

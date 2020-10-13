@@ -12,7 +12,7 @@ export interface IntermediateStyle {
 }
 
 export default function createStyleNode(
-  path: NodePath,
+  path: NodePath<any>,
   identifier: string | undefined,
   { pluginOptions, file }: { pluginOptions: ResolvedOptions; file: any },
 ): IntermediateStyle {

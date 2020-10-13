@@ -47,7 +47,7 @@ function getImported(
     : 'cls1';
 }
 
-function resolveMemberExpression(path: NodePath) {
+function resolveMemberExpression(path: NodePath<any>) {
   let nextPath: NodePath = (path as any).resolve();
   while (nextPath && nextPath.isMemberExpression()) {
     nextPath = (nextPath.get('object') as any).resolve();
@@ -55,7 +55,7 @@ function resolveMemberExpression(path: NodePath) {
   return nextPath;
 }
 
-function resolveImport(path: NodePath): ResolvedImport | null {
+function resolveImport(path: NodePath<any>): ResolvedImport | null {
   const resolvedPath = resolveMemberExpression(path);
   const binding =
     'name' in resolvedPath.node &&
@@ -78,7 +78,7 @@ function resolveImport(path: NodePath): ResolvedImport | null {
     identifier = getNameFromPath(resolvedPath)!;
   } else if (importPath.isImportSpecifier()) {
     // TODO: this isn't correct doesn't do member expressions
-    identifier = getNameFromPath(importPath.get('imported'))!;
+    identifier = getNameFromPath(importPath.get('imported') as NodePath<any>)!;
   }
 
   return { identifier, request, type: importPath.node.type };

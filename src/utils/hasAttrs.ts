@@ -2,7 +2,7 @@ import { NodePath } from '@babel/core';
 import * as t from '@babel/types';
 
 export default function hasAttrs(
-  calleePath: NodePath,
+  calleePath: NodePath<any>,
 ): calleePath is NodePath<t.MemberExpression> {
   return (
     calleePath.isMemberExpression() &&

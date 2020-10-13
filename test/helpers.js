@@ -2,9 +2,7 @@ const { relative, dirname } = require('path');
 
 const { transformAsync } = require('@babel/core');
 const fs = require('fs-extra');
-const MemoryFS = require('memory-fs');
 const prettier = require('prettier');
-const webpack = require('webpack');
 
 const loader = require('../src/loader');
 
@@ -115,48 +113,7 @@ export const fixtures = fs
   .map((file) => `${__dirname}/fixtures/${file}`)
   .filter((f) => !f.endsWith('.json'));
 
-export function runWebpack(config) {
-  const compiler = webpack({
-    ...config,
-    output: {
-      filename: '[name].js',
-      path: '/build',
-    },
-    optimization: {
-      ...config.optimization,
-      runtimeChunk: true,
-      splitChunks: {
-        chunks: 'initial',
-      },
-    },
-  });
-  compiler.outputFileSystem = new MemoryFS();
-  return new Promise((resolve, reject) => {
-    compiler.run((err, stats) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-
-      if (stats.hasErrors() || stats.hasWarnings()) {
-        const { errors, warnings } = stats.toJson();
-        reject(
-          Object.assign(
-            new Error(
-              `Webpack threw the following errors:\n\n ${[
-                ...errors,
-                ...warnings,
-              ].join('\n')}`,
-            ),
-            { errors, warnings, framesToPop: 1 },
-          ),
-        );
-        return;
-      }
-      resolve(stats.compilation.assets);
-    });
-  });
-}
+export * from './webpack-helpers';
 
 function testAllRunnersImpl(t, msg, testFn) {
   t.each([

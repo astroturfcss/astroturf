@@ -3,14 +3,10 @@ import path from 'path';
 import { getOptions, parseQuery } from 'loader-utils';
 import postcss from 'postcss';
 import postcssNested from 'postcss-nested';
-import * as webpack from 'webpack';
-
-type Loader = webpack.loader.Loader;
-type LoaderContext = webpack.loader.LoaderContext;
 
 // eslint-disable-next-line consistent-return
-const loader: Loader = function astroturfCssLoader(
-  this: LoaderContext,
+const loader = function astroturfCssLoader(
+  this: any,
   css: string,
   prevMap: any,
   meta?: any,
@@ -59,7 +55,7 @@ const loader: Loader = function astroturfCssLoader(
  * The pitch loader, takes itself from the front of the loader stack and
  * inserts itself immediately in front of the css-loader
  */
-export function pitch(this: LoaderContext) {
+export function pitch(this: any) {
   const loaderOpts = getOptions(this) || {};
   let cssIdx = this.loaders.findIndex((l) => l.path.includes('css-loader/'));
   const cssLoader = this.loaders[cssIdx];
@@ -98,6 +94,7 @@ export function pitch(this: LoaderContext) {
 
     // Mark this module as side effect free so it can be optimized away
     // by Webpack. I don't think there is a more public way to do this.
+    this._module.factoryMeta = this._module.factoryMeta || {};
     this._module.factoryMeta.sideEffectFree = true;
 
     return `export { default } from "-!${prefix}!${this.resourcePath}";`;

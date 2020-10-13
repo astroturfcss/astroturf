@@ -207,7 +207,7 @@ module.exports = async function loader(
   if (!compilation[SEEN]) compilation[SEEN] = new Map();
 
   const loadModule = util.promisify((request: string, done: any) =>
-    this.loadModule(request, (err, _, __, module) => done(err, module)),
+    this.loadModule(request, (err, _, _1, module) => done(err, module)),
   );
 
   const resolve = util.promisify(this.resolve);
@@ -228,7 +228,7 @@ module.exports = async function loader(
     if (!interpolation.identifier) return null;
     const { loc } = node;
 
-    const memberProperty = 'property' in node && node.property.name;
+    const memberProperty = 'property' in node && (node.property as any).name;
 
     const imported = `###ASTROTURF_IMPORTED_${dependencies.length}###`;
     const source = `###ASTROTURF_SOURCE_${dependencies.length}###`;
@@ -308,8 +308,8 @@ module.exports = async function loader(
     return Promise.all(dependencies)
       .then(() => {
         styles.forEach((style) => {
-          const mtime = emitVirtualFile(style.absoluteFilePath, style.value);
-          compilation.fileTimestamps.set(style.absoluteFilePath, +mtime);
+          emitVirtualFile(style.absoluteFilePath, style.value);
+          // compilation.fileTimestamps.set(style.absoluteFilePath, +mtime);
         });
 
         const result = replaceStyleTemplates(

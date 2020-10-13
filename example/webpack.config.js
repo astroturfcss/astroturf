@@ -1,5 +1,7 @@
 const path = require('path');
 
+process.traceDeprecation = true;
+
 const { rules, plugins, loaders } = require('webpack-atoms').createAtoms({
   env: 'development',
 });
@@ -25,22 +27,7 @@ module.exports = {
   },
 
   module: {
-    rules: [
-      inlineRule,
-      {
-        oneOf: [
-          rules.sass.external(),
-          {
-            test: /\.module\.scss/,
-            use: [
-              loaders.style(),
-              require.resolve('../lib/css-loader'),
-              loaders.sass(),
-            ],
-          },
-        ],
-      },
-    ],
+    rules: [inlineRule, rules.sass()],
   },
   mode: 'development',
   resolve: {

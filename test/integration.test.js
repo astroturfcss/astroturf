@@ -7,6 +7,7 @@ import path from 'path';
 import ExtractCSS from 'mini-css-extract-plugin';
 import stripAnsi from 'strip-ansi';
 
+// import VirtualModulePlugin from '../src/VirtualModulePlugin.ts.old';
 import { runWebpack } from './helpers';
 
 function getBaseConfig(entry, options = { enableCssProp: true }) {
@@ -42,6 +43,7 @@ function getBaseConfig(entry, options = { enableCssProp: true }) {
       ],
     },
     plugins: [],
+    // plugins: [new VirtualModulePlugin()],
     resolve: {
       modules: ['node_modules', 'shared'],
       alias: {
@@ -108,10 +110,10 @@ describe('webpack integration', () => {
   it('should work', async () => {
     const assets = await runWebpack(getConfig('./integration/main.js'));
 
-    expect(assets['main.js'].source()).toMatchFile(
+    expect(assets['main.js']).toMatchFile(
       path.join(__dirname, '__file_snapshots__/integration-js.js'),
     );
-    expect(assets['main.css'].source()).toMatchFile(
+    expect(assets['main.css']).toMatchFile(
       path.join(__dirname, '__file_snapshots__/integration-styles.css'),
     );
   });
@@ -161,10 +163,10 @@ describe('webpack integration', () => {
   it('issue 365', async () => {
     const assets = await runWebpack(getConfig('./integration/issue-365.js'));
 
-    expect(assets['main.css'].source()).toMatchFile(
+    expect(assets['main.css']).toMatchFile(
       path.join(__dirname, '__file_snapshots__/issue-365-styles.css'),
     );
-    expect(assets['main.js'].source()).toMatchFile(
+    expect(assets['main.js']).toMatchFile(
       path.join(__dirname, '__file_snapshots__/issue-365-js.js'),
     );
   });
@@ -218,10 +220,10 @@ describe('css-loader', () => {
       getConfig('./integration/css-loader-1.js'),
     );
 
-    expect(assets['main.css'].source()).toMatchFile(
+    expect(assets['main.css']).toMatchFile(
       path.join(__dirname, '__file_snapshots__/css-loader-1-styles.css'),
     );
-    expect(assets['main.js'].source()).toMatchFile(
+    expect(assets['main.js']).toMatchFile(
       path.join(__dirname, '__file_snapshots__/css-loader-1-js.js'),
     );
   });
@@ -231,25 +233,25 @@ describe('css-loader', () => {
       getConfig('./integration/css-loader-2.js'),
     );
 
-    const src = assets['main.css'].source();
+    const src = assets['main.css'];
     expect(src).not.toContain('&:hover');
 
     expect(src).toMatchFile(
       path.join(__dirname, '__file_snapshots__/default-plugins-styles.css'),
     );
-    expect(assets['main.js'].source()).toMatchFile(
+    expect(assets['main.js']).toMatchFile(
       path.join(__dirname, '__file_snapshots__/default-plugins-js.js'),
     );
   });
 
-  it.only('adds default plugins plain css', async () => {
+  it('adds default plugins plain css', async () => {
     const assets = await runWebpack(
       getConfig('./integration/css-loader-2.js', {
         loader: require.resolve('./tag-loader'),
       }),
     );
 
-    const src = assets['main.css'].source();
+    const src = assets['main.css'];
     expect(src).not.toContain('&:hover');
 
     expect(src).toMatchFile(
@@ -258,7 +260,7 @@ describe('css-loader', () => {
         '__file_snapshots__/default-plugins-chain-styles.css',
       ),
     );
-    expect(assets['main.js'].source()).toMatchFile(
+    expect(assets['main.js']).toMatchFile(
       path.join(__dirname, '__file_snapshots__/default-plugins-chain-js.js'),
     );
   });
