@@ -158,11 +158,25 @@ class VirtualModulesPlugin {
     finalInputFileSystem._writeVirtualFile(filePath, stats, contents);
     if (
       finalWatchFileSystem &&
-      finalWatchFileSystem.watcher.fileWatchers.length
+      (finalWatchFileSystem.watcher.fileWatchers.size ||
+        finalWatchFileSystem.watcher.fileWatchers.length)
     ) {
-      finalWatchFileSystem.watcher.fileWatchers.forEach((fileWatcher) => {
+      const fileWatchers =
+        'size' in finalWatchFileSystem.watcher.fileWatchers
+          ? Array.from(finalWatchFileSystem.watcher.fileWatchers.values())
+          : finalWatchFileSystem.watcher.fileWatchers;
+
+      fileWatchers.forEach((fileWatcher) => {
         if (fileWatcher.path === filePath) {
           debug(this.compiler.name, 'Emit file change:', filePath, time);
+          delete fileWatcher.directoryWatcher._cachedTimeInfoEntries;
+          fileWatcher.directoryWatcher.setFileTime(
+            filePath,
+            time,
+            false,
+            false,
+            null,
+          );
           fileWatcher.emit('change', time, null);
         }
       });

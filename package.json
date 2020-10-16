@@ -92,7 +92,7 @@
     "postcss": "^8.1.1",
     "postcss-nested": "^5.0.1",
     "resolve": "^1.17.0",
-    "webpack-virtual-modules": "^0.3.1"
+    "webpack-virtual-modules": "^0.3.2"
   },
   "peerDependencies": {
     "webpack": ">=2"
