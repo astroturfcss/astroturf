@@ -1,6 +1,8 @@
 import { PluginObj } from '@babel/core';
 import * as t from '@babel/types';
 
+import getName from '../utils/getName';
+
 export default function plugin(): PluginObj {
   return {
     name: 'rename-styled-import',
@@ -15,7 +17,7 @@ export default function plugin(): PluginObj {
           .find(
             (s) =>
               s.isImportDefaultSpecifier() ||
-              (s.isImportSpecifier() && s.node.imported.name === 'styled'),
+              (s.isImportSpecifier() && getName(s.node.imported) === 'styled'),
           );
 
         if (!styled) return;

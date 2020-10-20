@@ -2,6 +2,7 @@ import { PluginObj } from '@babel/core';
 import * as t from '@babel/types';
 
 import { ResolvedOptions } from '../types';
+import getName from '../utils/getName';
 import isCssTag from '../utils/isCssTag';
 
 type PluginState = Record<symbol, any> & {
@@ -33,7 +34,8 @@ export default function plugin(): PluginObj<PluginState> {
                 .get('specifiers')
                 .find(
                   (s) =>
-                    s.isImportSpecifier() && s.node.imported.name === 'css',
+                    s.isImportSpecifier() &&
+                    getName(s.node.imported) === 'css',
                 );
 
               if (shouldAdd) {

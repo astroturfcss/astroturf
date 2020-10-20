@@ -265,7 +265,7 @@ function buildTemplateImpl(opts: Options, state = { id: 0 }) {
 
   quasi.quasis.forEach((tmplNode, idx) => {
     const { raw } = tmplNode.value;
-    const expr = expressions[idx];
+    const expr = expressions[idx] as NodePath<t.Expression>;
 
     let matches;
 

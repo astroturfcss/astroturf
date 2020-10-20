@@ -13,6 +13,7 @@ import stylesheet from './features/stylesheet';
 import { PluginState, ResolvedOptions, StyleState } from './types';
 import ImportInjector from './utils/ImportInjector';
 import { COMPONENTS, IMPORTS, JSX_IDENTS, STYLES } from './utils/Symbols';
+import getName from './utils/getName';
 
 export default function plugin(): PluginObj<PluginState> {
   return {
@@ -89,7 +90,7 @@ export default function plugin(): PluginObj<PluginState> {
               .filter(
                 (p) =>
                   p.isImportSpecifier() &&
-                  ['css', 'stylesheet'].includes(p.node.imported.name) &&
+                  ['css', 'stylesheet'].includes(getName(p.node.imported)) &&
                   [cssTagName, stylesheetTagName].includes(p.node.local.name),
               );
 
