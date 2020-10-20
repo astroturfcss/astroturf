@@ -169,7 +169,7 @@ class VirtualModulesPlugin {
       fileWatchers.forEach((fileWatcher) => {
         if (fileWatcher.path === filePath) {
           debug(this.compiler.name, 'Emit file change:', filePath, time);
-          delete fileWatcher.directoryWatcher._cachedTimeInfoEntries;
+          // delete fileWatcher.directoryWatcher._cachedTimeInfoEntries;
           fileWatcher.directoryWatcher.setFileTime(
             filePath,
             time,
@@ -177,7 +177,7 @@ class VirtualModulesPlugin {
             false,
             null,
           );
-          fileWatcher.emit('change', time, null);
+          // fileWatcher.emit('change', time, null);
         }
       });
     }

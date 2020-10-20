@@ -22,7 +22,7 @@ const Button = styled('button')`
 
   &.theme-primary {
     @include button-variant(white, #33ad13, #298f0f);
-    color: red;
+    color: YOLO;
   }
 
   &.theme-secondary {
