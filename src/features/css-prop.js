@@ -153,8 +153,9 @@ export default {
       addNamed(path, 'F', 'astroturf', { nameHint: jsxFrag.name });
 
       state.file.get(STYLES).changeset.unshift(
-        { code: `/*${jsxPrgama}*/\n` },
-        { code: `/*${jsxFragPrgama}*/\n\n` },
+        { code: `/* @jsxRuntime classic */\n` },
+        { code: `/${jsxPrgama}/\n` },
+        { code: `/${jsxFragPrgama}/\n\n` },
         {
           code: `const { jsx: ${jsx.name}, F: ${jsxFrag.name} } = require('astroturf');\n`,
         },

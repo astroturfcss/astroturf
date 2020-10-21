@@ -1,5 +1,6 @@
-/** @jsx _j **/
-/** @jsxFrag _f **/
+/* @jsxRuntime classic */
+/* @jsx _j */
+/* @jsxFrag _f */
 
 const { jsx: _j, F: _f } = require("astroturf");
 

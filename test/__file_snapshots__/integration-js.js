@@ -279,9 +279,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var widget__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! widget */ "./test/integration/shared/widget/index.js");
 /* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Button */ "./test/integration/Button.js");
-/** @jsx _j **/
+/* @jsxRuntime classic */
 
-/** @jsxFrag _f **/
+/* @jsx _j */
+
+/* @jsxFrag _f */
 const {
   jsx: _j,
   F: _f
