@@ -1,3 +1,15 @@
+## [0.10.5](https://github.com/4Catalyzer/astroturf/compare/v0.10.4...v0.10.5) (2020-10-21)
+
+
+### Bug Fixes
+
+* jsx pragma with automatic runtime ([c18f201](https://github.com/4Catalyzer/astroturf/commit/c18f201))
+* use wider decorators parsing plugin [#140](https://github.com/4Catalyzer/astroturf/issues/140) ([#641](https://github.com/4Catalyzer/astroturf/issues/641)) ([8b01c12](https://github.com/4Catalyzer/astroturf/commit/8b01c12))
+
+
+
+
+
 ## [0.10.4](https://github.com/4Catalyzer/astroturf/compare/v0.10.3...v0.10.4) (2020-04-13)
 
 
