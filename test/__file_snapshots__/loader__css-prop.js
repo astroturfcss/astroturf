@@ -1,5 +1,6 @@
-/** @jsx _j **/
-/** @jsxFrag _j.F **/
+/** @jsxRuntime classic*/
+/** @jsx _j */
+/** @jsxFrag _j.F */
 import _j from "astroturf/jsx";
 import React from "react";
 import _CssProp1_button from "astroturf/css-loader?inline!./css-prop-CssProp1_button.css";

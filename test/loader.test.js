@@ -24,8 +24,8 @@ describe('webpack loader', () => {
       { enableCssProp: true },
     );
 
-    expect(code).toContain('/** @jsx _j **/');
-    expect(code).toContain('/** @jsxFrag _j.F **/');
+    expect(code).toContain('/** @jsx _j */');
+    expect(code).toContain('/** @jsxFrag _j.F */');
 
     expect(code).toContain(
       `import _CssProp1_button from "${loaderPrefix}./MyStyleFile-CssProp1_button.css"`,

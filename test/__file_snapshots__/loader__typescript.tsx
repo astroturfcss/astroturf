@@ -1,5 +1,6 @@
-/** @jsx _j **/
-/** @jsxFrag _j.F **/
+/** @jsxRuntime classic*/
+/** @jsx _j */
+/** @jsxFrag _j.F */
 import _j from "astroturf/jsx";
 import styled from "astroturf/react";
 import React from "react";

@@ -44,13 +44,15 @@ export default function addPragma(
   const changes: Change[] = [];
 
   if (insertComments) {
-    const jsxPrgama = `* @jsx ${JSX.name} *`;
-    const jsxFragPrgama = `* @jsxFrag ${JSX.name}.F *`;
+    const jsxPrgama = `* @jsx ${JSX.name} `;
+    const jsxFragPrgama = `* @jsxFrag ${JSX.name}.F `;
 
+    path.addComment('leading', '* @jsxRuntime classic');
     path.addComment('leading', jsxPrgama);
     path.addComment('leading', jsxFragPrgama);
 
     changes.push(
+      { code: `/** @jsxRuntime classic*/\n`, start: 0, end: 0 },
       { code: `/*${jsxPrgama}*/\n`, start: 0, end: 0 },
       { code: `/*${jsxFragPrgama}*/\n\n`, start: 0, end: 0 },
     );

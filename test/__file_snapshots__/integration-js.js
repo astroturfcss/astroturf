@@ -60,9 +60,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var astroturf_css_loader_inline_main_FancierBox_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-FancierBox.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/main-FancierBox.css");
 /* harmony import */ var astroturf_css_loader_inline_main_CssProp1_div_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-CssProp1_div.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/main-CssProp1_div.css");
 /* harmony import */ var astroturf_css_loader_inline_main_CssProp2_span_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-CssProp2_span.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/main-CssProp2_span.css");
-/** @jsx _j **/
+/** @jsxRuntime classic*/
 
-/** @jsxFrag _j.F **/
+/** @jsx _j */
+
+/** @jsxFrag _j.F */
 
 
 
