@@ -94,7 +94,7 @@
     "babel-jest": "^26.6.3",
     "babel-loader": "^8.2.2",
     "cpy-cli": "^3.1.1",
-    "doctoc": "^1.4.0",
+    "doctoc": "^2.0.0",
     "dtslint": "^4.0.6",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
