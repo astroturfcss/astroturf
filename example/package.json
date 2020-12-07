@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "NODE_DEBUG=astroturf* webpack serve --mode development"
+    "start": "NODE_DEBUG=webpack-virtual-modules* webpack serve --mode development"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
@@ -12,7 +12,7 @@
     "babel-core": "^7.0.0-bridge.0",
     "mini-css-extract-plugin": "^1.1.0",
     "webpack": "^5.1.3",
-    "webpack-atoms": "^14.0.0",
+    "webpack-atoms": "^15.0.0",
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {

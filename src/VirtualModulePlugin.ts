@@ -271,15 +271,18 @@ class VirtualModulesPlugin {
 
     const watchRunHook = (watcher, callback) => {
       this.watcher = watcher.compiler || watcher;
-      const virtualFiles = (compiler.inputFileSystem as any)._virtualFiles;
-      if (virtualFiles) {
-        Object.keys(virtualFiles).forEach((file) => {
-          if (compiler.fileTimestamps instanceof Map)
-            compiler.fileTimestamps.set(
-              file,
-              +virtualFiles[file].stats.mtime as any,
-            );
-        });
+
+      if (webpack.version.startsWith('4')) {
+        const virtualFiles = (compiler.inputFileSystem as any)._virtualFiles;
+        if (virtualFiles) {
+          Object.keys(virtualFiles).forEach((file) => {
+            if (compiler.fileTimestamps instanceof Map)
+              compiler.fileTimestamps.set(
+                file,
+                +virtualFiles[file].stats.mtime as any,
+              );
+          });
+        }
       }
       callback();
     };
