@@ -70,7 +70,7 @@
     "chalk": "^4.0.0",
     "common-tags": "^1.8.0",
     "css-loader": "^3.0.0",
-    "errno": "^0.1.7",
+    "errno": "^1.0.0",
     "fastest-levenshtein": "^1.0.9",
     "fs-extra": "^9.0.0",
     "loader-utils": "^2.0.0",
