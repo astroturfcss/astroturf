@@ -18,15 +18,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "./src/runtime/react.js");
-/* harmony import */ var astroturf_css_loader_inline_Button_styles_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! astroturf/css-loader?inline!./Button-styles.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/Button-styles.css");
-/* harmony import */ var astroturf_css_loader_inline_Button_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! astroturf/css-loader?inline!./Button.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/Button.css");
+/* harmony import */ var _Button_styles_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Button-styles.module.css */ "./test/integration/Button-styles.module.css");
+/* harmony import */ var _Button_module_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Button.module.css */ "./test/integration/Button.module.css");
 
 
 
-const styles = astroturf_css_loader_inline_Button_styles_css__WEBPACK_IMPORTED_MODULE_1__.default;
+const styles = _Button_styles_module_css__WEBPACK_IMPORTED_MODULE_1__.default;
 const Button = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_0__.default)('button', null, {
   displayName: "Button",
-  styles: astroturf_css_loader_inline_Button_css__WEBPACK_IMPORTED_MODULE_2__.default
+  styles: _Button_module_css__WEBPACK_IMPORTED_MODULE_2__.default
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Button);
 
@@ -55,11 +55,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var widget__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! widget */ "./test/integration/shared/widget/index.js");
 /* harmony import */ var withConfig__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! withConfig */ "./test/integration/shared/withConfig/index.js");
 /* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Button */ "./test/integration/Button.js");
-/* harmony import */ var astroturf_css_loader_inline_main_styles_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-styles.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/main-styles.css");
-/* harmony import */ var astroturf_css_loader_inline_main_FancyBox_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-FancyBox.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/main-FancyBox.css");
-/* harmony import */ var astroturf_css_loader_inline_main_FancierBox_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-FancierBox.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/main-FancierBox.css");
-/* harmony import */ var astroturf_css_loader_inline_main_CssProp1_div_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-CssProp1_div.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/main-CssProp1_div.css");
-/* harmony import */ var astroturf_css_loader_inline_main_CssProp2_span_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! astroturf/css-loader?inline!./main-CssProp2_span.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/main-CssProp2_span.css");
+/* harmony import */ var _main_styles_module_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./main-styles.module.css */ "./test/integration/main-styles.module.css");
+/* harmony import */ var _main_FancyBox_module_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./main-FancyBox.module.css */ "./test/integration/main-FancyBox.module.css");
+/* harmony import */ var _main_FancierBox_module_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./main-FancierBox.module.css */ "./test/integration/main-FancierBox.module.css");
+/* harmony import */ var _main_CssProp1_div_module_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./main-CssProp1_div.module.css */ "./test/integration/main-CssProp1_div.module.css");
+/* harmony import */ var _main_CssProp2_span_module_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./main-CssProp2_span.module.css */ "./test/integration/main-CssProp2_span.module.css");
 /** @jsxRuntime classic*/
 
 /** @jsx _j */
@@ -78,20 +78,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const width = 75;
-const styles = astroturf_css_loader_inline_main_styles_css__WEBPACK_IMPORTED_MODULE_6__.default;
+const styles = _main_styles_module_css__WEBPACK_IMPORTED_MODULE_6__.default;
 const FancyBox = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_1__.default)('div', null, {
   displayName: "FancyBox",
-  styles: astroturf_css_loader_inline_main_FancyBox_css__WEBPACK_IMPORTED_MODULE_7__.default
+  styles: _main_FancyBox_module_css__WEBPACK_IMPORTED_MODULE_7__.default
 });
 const FancierBox = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_1__.default)('div', null, {
   displayName: "FancierBox",
-  styles: astroturf_css_loader_inline_main_FancierBox_css__WEBPACK_IMPORTED_MODULE_8__.default
+  styles: _main_FancierBox_module_css__WEBPACK_IMPORTED_MODULE_8__.default
 });
 function MyComponent() {
   return (0,astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__.default)(astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__.default.F, null, (0,astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__.default)("div", {
-    css: [astroturf_css_loader_inline_main_CssProp1_div_css__WEBPACK_IMPORTED_MODULE_9__.default, null, [foo && astroturf_css_loader_inline_main_CssProp1_div_css__WEBPACK_IMPORTED_MODULE_9__.default.cssProp1DivVariant0]]
+    css: [_main_CssProp1_div_module_css__WEBPACK_IMPORTED_MODULE_9__.default, null, [foo && _main_CssProp1_div_module_css__WEBPACK_IMPORTED_MODULE_9__.default.cssProp1DivVariant0]]
   }, (0,astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__.default)("div", null, "hey "), (0,astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__.default)("span", {
-    css: [astroturf_css_loader_inline_main_CssProp2_span_css__WEBPACK_IMPORTED_MODULE_10__.default]
+    css: [_main_CssProp2_span_module_css__WEBPACK_IMPORTED_MODULE_10__.default]
   }, "yo")));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FancierBox);
@@ -114,12 +114,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "./src/runtime/react.js");
-/* harmony import */ var astroturf_css_loader_inline_Widget_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! astroturf/css-loader?inline!./Widget.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/shared/widget/Widget.css");
+/* harmony import */ var _Widget_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Widget.module.css */ "./test/integration/shared/widget/Widget.module.css");
 
 
 const Widget = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_0__.default)('div', null, {
   displayName: "Widget",
-  styles: astroturf_css_loader_inline_Widget_css__WEBPACK_IMPORTED_MODULE_1__.default
+  styles: _Widget_module_css__WEBPACK_IMPORTED_MODULE_1__.default
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Widget);
 
@@ -141,21 +141,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 /* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "./src/runtime/react.js");
-/* harmony import */ var astroturf_css_loader_inline_index_Doodad_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! astroturf/css-loader?inline!./index-Doodad.scss */ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[1].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/shared/withConfig/index-Doodad.scss");
+/* harmony import */ var _index_Doodad_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index-Doodad.module.scss */ "./test/integration/shared/withConfig/index-Doodad.module.scss");
 
 
 const Doodad = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_0__.default)('div', null, {
   displayName: "Doodad",
-  styles: astroturf_css_loader_inline_index_Doodad_scss__WEBPACK_IMPORTED_MODULE_1__.default
+  styles: _index_Doodad_module_scss__WEBPACK_IMPORTED_MODULE_1__.default
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Doodad);
 
 /***/ }),
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/Button-styles.css":
-/*!********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/Button-styles.css ***!
-  \********************************************************************************************************************************************************************************************************************/
+/***/ "./test/integration/Button-styles.module.css":
+/*!***************************************************!*\
+  !*** ./test/integration/Button-styles.module.css ***!
+  \***************************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -168,14 +168,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cool":"Button-styles__cool"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cool":"Button-styles-module__cool"});
 
 /***/ }),
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/Button.css":
-/*!*************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/Button.css ***!
-  \*************************************************************************************************************************************************************************************************************/
+/***/ "./test/integration/Button.module.css":
+/*!********************************************!*\
+  !*** ./test/integration/Button.module.css ***!
+  \********************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -188,14 +188,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"Button__cls1","cls2":"Button__cls2 Button__cls1 button-with-caret"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"Button-module__cls1","cls2":"Button-module__cls2 Button-module__cls1 button-with-caret"});
 
 /***/ }),
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/main-CssProp1_div.css":
-/*!************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/main-CssProp1_div.css ***!
-  \************************************************************************************************************************************************************************************************************************/
+/***/ "./test/integration/main-CssProp1_div.module.css":
+/*!*******************************************************!*\
+  !*** ./test/integration/main-CssProp1_div.module.css ***!
+  \*******************************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -208,14 +208,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"main-CssProp1_div__cls1","cls2":"main-CssProp1_div__cls2 main-CssProp1_div__cls1","cssProp1DivVariant0":"main-CssProp1_div__cssProp1DivVariant0"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"main-CssProp1_div-module__cls1","cls2":"main-CssProp1_div-module__cls2 main-CssProp1_div-module__cls1","cssProp1DivVariant0":"main-CssProp1_div-module__cssProp1DivVariant0"});
 
 /***/ }),
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/main-CssProp2_span.css":
-/*!*************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/main-CssProp2_span.css ***!
-  \*************************************************************************************************************************************************************************************************************************/
+/***/ "./test/integration/main-CssProp2_span.module.css":
+/*!********************************************************!*\
+  !*** ./test/integration/main-CssProp2_span.module.css ***!
+  \********************************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -228,14 +228,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"main-CssProp2_span__cls1","cls2":"main-CssProp2_span__cls2 main-CssProp2_span__cls1"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"main-CssProp2_span-module__cls1","cls2":"main-CssProp2_span-module__cls2 main-CssProp2_span-module__cls1"});
 
 /***/ }),
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/main-FancierBox.css":
-/*!**********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/main-FancierBox.css ***!
-  \**********************************************************************************************************************************************************************************************************************/
+/***/ "./test/integration/main-FancierBox.module.css":
+/*!*****************************************************!*\
+  !*** ./test/integration/main-FancierBox.module.css ***!
+  \*****************************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -248,14 +248,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"a0":"main-FancyBox__cls1","a1":"main-styles__parent","a2":"Button__cls1","a3":"Button__cls1","cls1":"main-FancierBox__cls1","cls2":"main-FancierBox__cls2 main-FancierBox__cls1"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"a0":"main-FancyBox-module__cls1","a1":"main-styles-module__parent","a2":"Button-module__cls1","a3":"Button-module__cls1","cls1":"main-FancierBox-module__cls1","cls2":"main-FancierBox-module__cls2 main-FancierBox-module__cls1"});
 
 /***/ }),
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/main-FancyBox.css":
-/*!********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/main-FancyBox.css ***!
-  \********************************************************************************************************************************************************************************************************************/
+/***/ "./test/integration/main-FancyBox.module.css":
+/*!***************************************************!*\
+  !*** ./test/integration/main-FancyBox.module.css ***!
+  \***************************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -268,14 +268,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"main-FancyBox__cls1","cls2":"main-FancyBox__cls2 main-FancyBox__cls1 foo","primary":"main-FancyBox__primary"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"main-FancyBox-module__cls1","cls2":"main-FancyBox-module__cls2 main-FancyBox-module__cls1 foo","primary":"main-FancyBox-module__primary"});
 
 /***/ }),
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/main-styles.css":
-/*!******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/main-styles.css ***!
-  \******************************************************************************************************************************************************************************************************************/
+/***/ "./test/integration/main-styles.module.css":
+/*!*************************************************!*\
+  !*** ./test/integration/main-styles.module.css ***!
+  \*************************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -288,14 +288,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"a0":"Button-styles__cool","a1":"Widget__cls1","parent":"main-styles__parent","test":"main-styles__test"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"a0":"Button-styles-module__cool","a1":"Widget-module__cls1","parent":"main-styles-module__parent","test":"main-styles-module__test"});
 
 /***/ }),
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/shared/widget/Widget.css":
-/*!***************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/shared/widget/Widget.css ***!
-  \***************************************************************************************************************************************************************************************************************************/
+/***/ "./test/integration/shared/widget/Widget.module.css":
+/*!**********************************************************!*\
+  !*** ./test/integration/shared/widget/Widget.module.css ***!
+  \**********************************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -308,14 +308,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"Widget__cls1","cls2":"Widget__cls2 Widget__cls1"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"Widget-module__cls1","cls2":"Widget-module__cls2 Widget-module__cls1"});
 
 /***/ }),
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[1].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/shared/withConfig/index-Doodad.scss":
-/*!*****************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[1].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/css-loader.ts!./node_modules/sass-loader/dist/cjs.js!./test/integration/shared/withConfig/index-Doodad.scss ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./test/integration/shared/withConfig/index-Doodad.module.scss":
+/*!*********************************************************************!*\
+  !*** ./test/integration/shared/withConfig/index-Doodad.module.scss ***!
+  \*********************************************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -328,7 +328,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"index-Doodad__cls1","cls2":"index-Doodad__cls2 index-Doodad__cls1"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"index-Doodad-module__cls1","cls2":"index-Doodad-module__cls2 index-Doodad-module__cls1"});
 
 /***/ }),
 

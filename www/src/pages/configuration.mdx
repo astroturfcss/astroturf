@@ -12,12 +12,15 @@ based on easy to use configuration options.
 Most options are available anywhere <Brand>astroturf</Brand> is used. Specify them
 via your `webpack.config` or `babelrc` depending on use and need.
 
-- **extension**: (default: `'.css'`) the extension used for extracted style files. `extension` generally informs the
+- **extension**: (default: `'.module.css'`) the extension used for extracted style files. `extension` generally informs the
   flavor of CSS used (Sass, Less, etc) for the CLI or bundler to further process to plain css.
+
 - **stylesheetTagName**: (default: `'stylesheet'`) The tag identifier used to '
   locate inline stylesheets declarations.
+
 - **cssTagName**: (default: `'css'`) The tag identifier used to locate inline
   css literals and extract them.
+
 - **styledTagName**: (default: `'styled'`) The tag identifier used to locate components.
 
 - **enableCssProp**: (default: `true`) compiles <Brand>React.JS™</Brand> `css`
@@ -31,9 +34,6 @@ via your `webpack.config` or `babelrc` depending on use and need.
 
   - **experiments.modularCssExternals**: Set the css-modules flavor to [`modular-css`](https://m-css.com/) which provides
     better inter-component referencing than the vanilla css-modules. **requires css-module-loader to be configured**
-
-  - **experiments.selfCompile**: Skip the additional css-module setup and let astroturf
-    handle it automatically.
 
 ## Configuration File
 

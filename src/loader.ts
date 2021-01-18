@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import { dirname } from 'path';
 import util from 'util';
 
@@ -8,6 +9,7 @@ import levenshtein from 'fast-levenshtein';
 import loaderUtils from 'loader-utils';
 import sortBy from 'lodash/sortBy';
 import MagicString from 'magic-string';
+import type { CssSyntaxError } from 'postcss';
 import * as webpack from 'webpack';
 
 import VirtualModulePlugin from './VirtualModulePlugin';
@@ -30,45 +32,62 @@ type LoaderContext = webpack.loader.LoaderContext;
 
 const debug = util.debuglog('astroturf:loader');
 
-type AstroturfLoaderError = new (...args: any[]) => AstroturfLoaderErrorClass;
-declare class AstroturfLoaderErrorClass extends Error {
-  constructor(msg: Error | string, codeFrame: any);
-
+class AstroturfLoaderError extends Error {
   error?: Error | string;
-}
 
-// can'ts use class syntax b/c babel doesn't transpile it correctly for Error
-const AstroturfLoaderError: AstroturfLoaderError = (() => {
-  function ctor(
-    this: AstroturfLoaderErrorClass,
-    errorOrMessage: string | Error,
-    // @ts-ignore
-    codeFrame: any = errorOrMessage.codeFrame,
-  ) {
-    Error.call(this);
+  constructor(errorOrMessage: string | Error, codeFrame?: any) {
+    super();
+
     this.name = 'AstroturfLoaderError';
 
     if (typeof errorOrMessage !== 'string') {
-      this.message = errorOrMessage.message;
       this.error = errorOrMessage;
 
-      try {
-        this.stack = errorOrMessage.stack!.replace(/^(.*?):/, `${this.name}:`);
-      } catch (err) {
-        Error.captureStackTrace(this, ctor);
+      if (errorOrMessage.name === 'CssSyntaxError') {
+        this.handleCssError(errorOrMessage as CssSyntaxError);
+      } else {
+        this.handleBabelError(errorOrMessage);
       }
     } else {
       this.message = errorOrMessage;
-      Error.captureStackTrace(this, ctor);
+      Error.captureStackTrace(this, AstroturfLoaderError);
     }
 
     if (codeFrame) this.message += `\n\n${codeFrame}\n`;
   }
 
-  ctor.prototype = Object.create(Error.prototype);
-  ctor.prototype.constructor = ctor;
-  return ctor as any;
-})();
+  handleBabelError(error: Error) {
+    this.message = error.message;
+
+    try {
+      this.stack = error.stack!.replace(/^(.*?):/, `${this.name}:`);
+    } catch (e) {
+      Error.captureStackTrace(this, AstroturfLoaderError);
+    }
+  }
+
+  handleCssError(error: CssSyntaxError) {
+    const { line, column, reason, plugin, file } = error;
+
+    this.message = `${this.name}\n\n`;
+
+    if (typeof line !== 'undefined') {
+      this.message += `(${line}:${column}) `;
+    }
+
+    this.message += plugin ? `${plugin}: ` : '';
+    this.message += file ? `${file} ` : '<css input> ';
+    this.message += `${reason}`;
+
+    const code = error.showSourceCode();
+
+    if (code) {
+      this.message += `\n\n${code}\n`;
+    }
+    // @ts-ignore
+    this.stack = false;
+  }
+}
 
 function buildDependencyError(
   content: string,
@@ -145,6 +164,8 @@ function collectStyles(
     })!;
     return (metadata as any).astroturf;
   } catch (err) {
+    // console.log(err, err.name);
+    // if (err.name === 'CSS')
     throw new AstroturfLoaderError(err);
   }
 }

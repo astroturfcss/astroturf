@@ -12,26 +12,26 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "./src/runtime/react.js");
-/* harmony import */ var astroturf_css_loader_inline_issue_365_mixins_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! astroturf/css-loader?inline!./issue-365-mixins.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/issue-365-mixins.css");
-/* harmony import */ var astroturf_css_loader_inline_issue_365_BlockStyled_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! astroturf/css-loader?inline!./issue-365-BlockStyled.css */ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/issue-365-BlockStyled.css");
+/* harmony import */ var _issue_365_mixins_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./issue-365-mixins.module.css */ "./test/integration/issue-365-mixins.module.css");
+/* harmony import */ var _issue_365_BlockStyled_module_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./issue-365-BlockStyled.module.css */ "./test/integration/issue-365-BlockStyled.module.css");
 
 
 
-const mixins = astroturf_css_loader_inline_issue_365_mixins_css__WEBPACK_IMPORTED_MODULE_1__.default.cls2;
+const mixins = _issue_365_mixins_module_css__WEBPACK_IMPORTED_MODULE_1__.default.cls2;
 const Block = /*#__PURE__*/React.createElement(BlockStyled, {
   active: false
 });
 const BlockStyled = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_0__.default)("div", null, {
   displayName: "BlockStyled",
-  styles: astroturf_css_loader_inline_issue_365_BlockStyled_css__WEBPACK_IMPORTED_MODULE_2__.default
+  styles: _issue_365_BlockStyled_module_css__WEBPACK_IMPORTED_MODULE_2__.default
 });
 
 /***/ }),
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/issue-365-BlockStyled.css":
-/*!****************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/issue-365-BlockStyled.css ***!
-  \****************************************************************************************************************************************************************************************************************************/
+/***/ "./test/integration/issue-365-BlockStyled.module.css":
+/*!***********************************************************!*\
+  !*** ./test/integration/issue-365-BlockStyled.module.css ***!
+  \***********************************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -44,14 +44,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"issue-365-BlockStyled__cls1","cls2":"issue-365-BlockStyled__cls2 issue-365-BlockStyled__cls1","active":"issue-365-BlockStyled__active issue-365-mixins__cls2 issue-365-mixins__cls1"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"issue-365-BlockStyled-module__cls1","cls2":"issue-365-BlockStyled-module__cls2 issue-365-BlockStyled-module__cls1","active":"issue-365-BlockStyled-module__active issue-365-mixins-module__cls2 issue-365-mixins-module__cls1"});
 
 /***/ }),
 
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/issue-365-mixins.css":
-/*!***********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ruleSet[1].rules[0].use[0]!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./src/css-loader.ts!./test/integration/issue-365-mixins.css ***!
-  \***********************************************************************************************************************************************************************************************************************/
+/***/ "./test/integration/issue-365-mixins.module.css":
+/*!******************************************************!*\
+  !*** ./test/integration/issue-365-mixins.module.css ***!
+  \******************************************************/
 /*! namespace exports */
 /*! export default [provided] [no usage info] [missing usage info prevents renaming] */
 /*! other exports [not provided] [no usage info] */
@@ -64,7 +64,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"issue-365-mixins__cls1","cls2":"issue-365-mixins__cls2 issue-365-mixins__cls1"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"issue-365-mixins-module__cls1","cls2":"issue-365-mixins-module__cls2 issue-365-mixins-module__cls1"});
 
 /***/ }),
 

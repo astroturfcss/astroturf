@@ -25,17 +25,21 @@ function normalizeNewLines(str) {
   return str.replace(/\n\s*?\n/g, '\n').trim();
 }
 
-export const loaderPrefix = 'astroturf/css-loader?inline!';
+function rmSourceMap(str) {
+  return str.slice(0, str.indexOf('/*# sourceMappingURL=') || str.length);
+}
+export const loaderPrefix = '';
 
 export const requirePath = (currentName, pathname) =>
   `${currentName === 'babel' ? '' : loaderPrefix}${pathname}`;
 
 export function format(strings, ...values) {
-  const str = strings.reduce(
+  let str = strings.reduce(
     (acc, next, idx) => `${acc}${next}${values[idx] || ''}`,
     '',
   );
 
+  str = str.slice(0, str.indexOf('/*# sourceMappingURL=') || str.length);
   return normalizeNewLines(prettier.format(str, { parser: 'babel' }));
 }
 
@@ -51,7 +55,9 @@ export async function run(src, options, filename = 'MyStyleFile.js') {
   });
 
   return [
-    normalizeNewLines(prettier.format(code, { filepath: filename })),
+    normalizeNewLines(
+      rmSourceMap(prettier.format(code, { filepath: filename })),
+    ),
     metadata.astroturf.styles,
   ];
 }
@@ -69,7 +75,9 @@ export async function runBabel(
   });
 
   return [
-    normalizeNewLines(prettier.format(code, { filepath: filename })),
+    normalizeNewLines(
+      rmSourceMap(prettier.format(code, { filepath: filename })),
+    ),
     metadata.astroturf.styles,
   ];
 }

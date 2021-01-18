@@ -8,6 +8,7 @@ import { NodeStyleMap, ResolvedOptions, Style } from '../types';
 import cssUnits from './cssUnits';
 import isCssTag from './isCssTag';
 import hash from './murmurHash';
+import processCss from './processCss';
 import replaceComposes from './replaceComposes';
 import resolveDependency, { Dependency } from './resolveDependency';
 import trimEnd from './trimEnd';
@@ -368,6 +369,14 @@ export default function buildTaggedTemplate(opts: Options) {
   }
 
   css = `${allImports.trim()}\n\n${css}`.trim();
+
+  if (
+    location !== 'STYLESHEET' &&
+    opts.style.absoluteFilePath.endsWith('.css')
+  ) {
+    // console.log(css);
+    css = processCss(css, opts.style.absoluteFilePath).css;
+  }
 
   return {
     css,

@@ -7,7 +7,6 @@ import path from 'path';
 import ExtractCSS from 'mini-css-extract-plugin';
 import stripAnsi from 'strip-ansi';
 
-// import VirtualModulePlugin from '../src/VirtualModulePlugin.ts.old';
 import { runWebpack } from './helpers';
 
 function getBaseConfig(entry, options = { enableCssProp: true }) {
@@ -50,22 +49,13 @@ function getBaseConfig(entry, options = { enableCssProp: true }) {
         astroturf: path.resolve(__dirname, '../src/runtime'),
       },
     },
-    resolveLoader: {
-      alias: {
-        // this resolves the mocked value back to the file, which
-        // prevents snapshots from including file paths
-        'astroturf/css-loader': require.resolve('../src/css-loader'),
-      },
-    },
   };
 }
 
-const cssModuleOptions = {
+const options = {
   modules: {
     localIdentName: '[name]__[local]',
   },
-  importLoaders: 1,
-  esModule: true,
 };
 
 describe('webpack integration', () => {
@@ -77,28 +67,13 @@ describe('webpack integration', () => {
     config.module.rules.unshift(
       {
         test: /\.css$/,
-        use: [
-          {
-            loader: ExtractCSS.loader,
-            options: { esModule: true },
-          },
-          {
-            loader: 'css-loader',
-            options: cssModuleOptions,
-          },
-        ],
+        use: [ExtractCSS.loader, { loader: 'css-loader', options }],
       },
       {
         test: /\.scss$/,
         use: [
-          {
-            loader: ExtractCSS.loader,
-            options: { esModule: true },
-          },
-          {
-            loader: 'css-loader',
-            options: cssModuleOptions,
-          },
+          ExtractCSS.loader,
+          { loader: 'css-loader', options },
           'sass-loader',
         ],
       },
@@ -168,100 +143,6 @@ describe('webpack integration', () => {
     );
     expect(assets['main.js']).toMatchFile(
       path.join(__dirname, '__file_snapshots__/issue-365-js.js'),
-    );
-  });
-});
-
-describe('css-loader', () => {
-  function getConfig(entry, other) {
-    const config = getBaseConfig(entry, {
-      extension: '.scss',
-    });
-
-    config.module.rules.unshift(
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: ExtractCSS.loader,
-            options: { esModule: true },
-          },
-
-          {
-            loader: 'css-loader',
-            options: cssModuleOptions,
-          },
-          other,
-        ].filter(Boolean),
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          {
-            loader: ExtractCSS.loader,
-            options: { esModule: true },
-          },
-
-          {
-            loader: 'css-loader',
-            options: cssModuleOptions,
-          },
-          'sass-loader',
-        ],
-      },
-    );
-
-    config.plugins.push(new ExtractCSS());
-    return config;
-  }
-
-  it('should work', async () => {
-    const assets = await runWebpack(
-      getConfig('./integration/css-loader-1.js'),
-    );
-
-    expect(assets['main.css']).toMatchFile(
-      path.join(__dirname, '__file_snapshots__/css-loader-1-styles.css'),
-    );
-    expect(assets['main.js']).toMatchFile(
-      path.join(__dirname, '__file_snapshots__/css-loader-1-js.js'),
-    );
-  });
-
-  it('adds default plugins when last in chain', async () => {
-    const assets = await runWebpack(
-      getConfig('./integration/css-loader-2.js'),
-    );
-
-    const src = assets['main.css'];
-    expect(src).not.toContain('&:hover');
-
-    expect(src).toMatchFile(
-      path.join(__dirname, '__file_snapshots__/default-plugins-styles.css'),
-    );
-    expect(assets['main.js']).toMatchFile(
-      path.join(__dirname, '__file_snapshots__/default-plugins-js.js'),
-    );
-  });
-
-  it('adds default plugins plain css', async () => {
-    const assets = await runWebpack(
-      getConfig('./integration/css-loader-2.js', {
-        loader: require.resolve('./tag-loader'),
-      }),
-    );
-
-    const src = assets['main.css'];
-    expect(src).not.toContain('&:hover');
-
-    expect(src).toMatchFile(
-      path.join(
-        __dirname,
-        '__file_snapshots__/default-plugins-chain-styles.css',
-      ),
-    );
-    expect(assets['main.js']).toMatchFile(
-      path.join(__dirname, '__file_snapshots__/default-plugins-chain-js.js'),
     );
   });
 });

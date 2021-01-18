@@ -1,12 +1,12 @@
-.issue-365-mixins__cls1 { /*!*/ }
-.issue-365-mixins__cls2 {
+.issue-365-mixins-module__cls1 { /*!*/ }
+.issue-365-mixins-module__cls2 {
 
 display: block;
 }
-.issue-365-BlockStyled__cls1 { /*!*/ }
-.issue-365-BlockStyled__cls2 {
+.issue-365-BlockStyled-module__cls1 { /*!*/ }
+.issue-365-BlockStyled-module__cls2 {
 
 color: red;
 }
-.issue-365-BlockStyled__active {
+.issue-365-BlockStyled-module__active {
 }

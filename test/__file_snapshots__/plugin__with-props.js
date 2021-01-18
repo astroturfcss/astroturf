@@ -1,6 +1,6 @@
 import styled from "astroturf/react";
-import _RedPasswordInput from "./with-props-RedPasswordInput.css";
-import _RedPasswordInput2 from "./with-props-RedPasswordInput2.css";
+import _RedPasswordInput from "./with-props-RedPasswordInput.module.css";
+import _RedPasswordInput2 from "./with-props-RedPasswordInput2.module.css";
 const RedPasswordInput = /*#__PURE__*/ styled("input", null, {
   displayName: "RedPasswordInput",
   styles: _RedPasswordInput,

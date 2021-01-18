@@ -1,2 +1,2 @@
-import _styles from "astroturf/css-loader?inline!./escape-sequences-styles.css";
+import _styles from "./escape-sequences-styles.module.css";
 const styles = _styles;

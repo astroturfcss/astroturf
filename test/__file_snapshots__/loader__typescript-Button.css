@@ -3,12 +3,11 @@
 composes: cls1;
 
 color: red;
-
-&.variant-primary {
+}
+.cls2.variant-primary {
 background: white;
 }
-
-&.variant-secondary {
+.cls2.variant-secondary {
 background: black;
 }
-}
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRlc3QvZml4dHVyZXMvdHlwZXNjcmlwdC1CdXR0b24ubW9kdWxlLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxRQUFRLElBQUksRUFBRTtBQUNkO0FBQ0EsY0FBYzs7QUFFZCxVQUFVO0FBU1Y7QUFQQTtBQUNBLGlCQUFpQjtBQUNqQjtBQUVBO0FBQ0EsaUJBQWlCO0FBQ2pCIiwiZmlsZSI6InRlc3QvZml4dHVyZXMvdHlwZXNjcmlwdC1CdXR0b24ubW9kdWxlLmNzcyIsInNvdXJjZXNDb250ZW50IjpbIi5jbHMxIHsgLyohKi8gfVxuLmNsczIge1xuY29tcG9zZXM6IGNsczE7XG5cbmNvbG9yOiByZWQ7XG5cbiYudmFyaWFudC1wcmltYXJ5IHtcbmJhY2tncm91bmQ6IHdoaXRlO1xufVxuXG4mLnZhcmlhbnQtc2Vjb25kYXJ5IHtcbmJhY2tncm91bmQ6IGJsYWNrO1xufVxufSJdfQ== */

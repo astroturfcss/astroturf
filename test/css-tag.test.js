@@ -19,8 +19,10 @@ describe('css tag', () => {
       expect(code).toEqual(
         format`
         import Component from './Foo';
-        import _styles from "${requirePath('./MyStyleFile-styles.css')}"
-        import _styles2 from "${requirePath('./MyStyleFile-styles2.css')}"
+        import _styles from "${requirePath('./MyStyleFile-styles.module.css')}"
+        import _styles2 from "${requirePath(
+          './MyStyleFile-styles2.module.css',
+        )}"
         const styles = _styles.cls2;
         const styles2 = _styles2.cls2;
       `,
@@ -60,7 +62,7 @@ describe('css tag', () => {
 
     expect(code).toEqual(
       format`
-        import _styles from "./MyStyleFile-styles.css"
+        import _styles from "./MyStyleFile-styles.module.css"
         const styles = _styles.cls2;
       `,
     );
@@ -78,7 +80,9 @@ describe('css tag', () => {
     expect(code).toEqual(
       format`
           import styled from 'astroturf/react';
-          import _styles from "${h.requirePath('./MyStyleFile-styles.css')}"
+          import _styles from "${h.requirePath(
+            './MyStyleFile-styles.module.css',
+          )}"
           const styles = _styles.cls2;
         `,
     );

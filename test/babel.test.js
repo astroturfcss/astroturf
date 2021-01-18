@@ -50,9 +50,7 @@ describe('babel integration', () => {
     );
 
     expect(code).toContain('(0, _jsx["default"])("button",');
-    expect(code).toContain(
-      'var _MyStyleFileCls = _interopRequireDefault(require("./MyStyleFile-cls.css"))',
-    );
+    expect(code).toContain('require("./MyStyleFile-cls.module.css")');
 
     expect(code).toContain('React.Fragment');
   });
