@@ -24,7 +24,7 @@ describe('styled', () => {
     expect(code).toEqual(
       format`
         import styled from 'astroturf/react';
-        import _ButtonBase from "./MyStyleFile-ButtonBase.css";
+        import _ButtonBase from "./MyStyleFile-ButtonBase.module.css";
         const ButtonBase = /*#__PURE__*/ styled('button', null, {
           displayName: \"ButtonBase\",
           styles: _ButtonBase
@@ -52,7 +52,7 @@ describe('styled', () => {
     expect(code).toEqual(
       format`
         import styled from 'astroturf/react';
-        import _ButtonBase from "${loaderPrefix}./MyStyleFile-ButtonBase.css";
+        import _ButtonBase from "${loaderPrefix}./MyStyleFile-ButtonBase.module.css";
         const ButtonBase = /*#__PURE__*/ styled('button', null, {
           displayName: \"ButtonBase\",
           styles: _ButtonBase
@@ -89,6 +89,7 @@ describe('styled', () => {
       justify-content: center;
       border: 1px solid transparent;
       }
+      /*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIk15U3R5bGVGaWxlLUJ1dHRvbkJhc2UubW9kdWxlLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSwrQkFBK0I7O0FBRS9CLFFBQVEsSUFBSSxFQUFFO0FBQ2Q7QUFDQSxjQUFjOztBQUVkLG9CQUFvQjtBQUNwQixtQkFBbUI7QUFDbkIsdUJBQXVCO0FBQ3ZCLDZCQUE2QjtBQUM3QiIsImZpbGUiOiJNeVN0eWxlRmlsZS1CdXR0b25CYXNlLm1vZHVsZS5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJAaW1wb3J0ICd+Li9zdHlsZXMvbWl4aW5zLnNjc3MnO1xuXG4uY2xzMSB7IC8qISovIH1cbi5jbHMyIHtcbmNvbXBvc2VzOiBjbHMxO1xuXG5kaXNwbGF5OiBpbmxpbmUtZmxleDtcbmFsaWduLWl0ZW1zOiBjZW50ZXI7XG5qdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbmJvcmRlcjogMXB4IHNvbGlkIHRyYW5zcGFyZW50O1xufSJdfQ== */
     `);
   });
 

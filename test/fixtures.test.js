@@ -1,5 +1,7 @@
-const fs = require('fs-extra');
 const { basename, extname, join } = require('path');
+
+const fs = require('fs-extra');
+
 const { fixtures, run, runLoader } = require('./helpers');
 
 process.env.NODE_ENV = 'development';
@@ -67,7 +69,10 @@ describe('fixtures', () => {
                 join(
                   __dirname,
                   '__file_snapshots__',
-                  `plugin__${basename(s.absoluteFilePath)}`,
+                  `plugin__${basename(s.absoluteFilePath).replace(
+                    '.module',
+                    '',
+                  )}`,
                 ),
               );
             });
@@ -116,7 +121,10 @@ describe('fixtures', () => {
                 join(
                   __dirname,
                   '__file_snapshots__',
-                  `loader__${basename(s.absoluteFilePath)}`,
+                  `loader__${basename(s.absoluteFilePath).replace(
+                    '.module',
+                    '',
+                  )}`,
                 ),
               );
             });

@@ -1,6 +1,6 @@
 {
   "main": "./index.js",
   "astroturf": {
-    "extension": ".scss"
+    "extension": ".module.scss"
   }
 }

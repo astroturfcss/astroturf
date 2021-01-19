@@ -23,8 +23,10 @@ describe('css tag', () => {
       expect(code).toEqual(
         format`
         import Component from './Foo';
-        import _styles from "${requirePath('./MyStyleFile-styles.css')}"
-        import _styles2 from "${requirePath('./MyStyleFile-styles2.css')}"
+        import _styles from "${requirePath('./MyStyleFile-styles.module.css')}"
+        import _styles2 from "${requirePath(
+          './MyStyleFile-styles2.module.css',
+        )}"
         const styles = _styles;
         const styles2 = _styles2;
       `,
@@ -45,7 +47,7 @@ describe('css tag', () => {
 
     expect(code).toEqual(
       format`
-        import _styles from "./MyStyleFile-styles.css"
+        import _styles from "./MyStyleFile-styles.module.css"
         const styles = _styles;
       `,
     );
@@ -67,14 +69,16 @@ describe('css tag', () => {
       expect(code).toEqual(
         format`
         import styled from 'astroturf/react';
-        import _styles from "${h.requirePath('./MyStyleFile-styles.css')}"
+        import _styles from "${h.requirePath(
+          './MyStyleFile-styles.module.css',
+        )}"
         const styles = _styles;
       `,
       );
     },
   );
 
-  testAllRunners('allows different tag names', async runner => {
+  testAllRunners('allows different tag names', async (runner) => {
     const [, styles] = await runner(
       `
       import { stylesheet as less } from 'astroturf';
@@ -107,7 +111,7 @@ describe('css tag', () => {
 
   testAllRunners(
     'should throw when there are ambigious identifiers',
-    async runner => {
+    async (runner) => {
       await expect(
         runner(
           `
@@ -133,7 +137,7 @@ describe('css tag', () => {
     },
   );
 
-  testAllRunners('respects the allowGlobal setting', async runner => {
+  testAllRunners('respects the allowGlobal setting', async (runner) => {
     const [, styles] = await runner(
       `
       const styles = less\`

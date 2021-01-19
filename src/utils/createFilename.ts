@@ -21,10 +21,10 @@ export function createRequirePath(from: string, to: string) {
 
 export default function createFilename(
   hostFile: string,
-  { extension = '.css' }: ResolvedOptions,
+  { extension = '.module.css' }: ResolvedOptions,
   id?: string,
 ) {
-  let base;
+  let base: string;
 
   if (getNameFromFile(hostFile) === id) base = id;
   else base = `${basename(hostFile, extname(hostFile))}-${id}`;

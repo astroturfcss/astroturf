@@ -46,11 +46,11 @@ describe('import ordering', () => {
           import Component from "./Foo";
           import styled from "astroturf/react";
           import Component2 from './Foo2';
-          import _styles from "./MyStyleFile-styles.css";
-          import _CssProp1_button from "./MyStyleFile-CssProp1_button.css";
-          import _CssProp2_span from "./MyStyleFile-CssProp2_span.css";
-          import _styles2 from "./MyStyleFile-styles2.css";
-          import _P from "./MyStyleFile-P.css";
+          import _styles from "./MyStyleFile-styles.module.css";
+          import _CssProp1_button from "./MyStyleFile-CssProp1_button.module.css";
+          import _CssProp2_span from "./MyStyleFile-CssProp2_span.module.css";
+          import _styles2 from "./MyStyleFile-styles2.module.css";
+          import _P from "./MyStyleFile-P.module.css";
         `,
       );
     });
@@ -64,11 +64,11 @@ describe('import ordering', () => {
           import Component from "./Foo";
           import styled from "astroturf/react";
           import Component2 from './Foo2';
-          import _styles from "${loaderPrefix}./MyStyleFile-styles.css";
-          import _CssProp1_button from "${loaderPrefix}./MyStyleFile-CssProp1_button.css";
-          import _CssProp2_span from "${loaderPrefix}./MyStyleFile-CssProp2_span.css";
-          import _styles2 from "${loaderPrefix}./MyStyleFile-styles2.css";
-          import _P from "${loaderPrefix}./MyStyleFile-P.css";
+          import _styles from "${loaderPrefix}./MyStyleFile-styles.module.css";
+          import _CssProp1_button from "${loaderPrefix}./MyStyleFile-CssProp1_button.module.css";
+          import _CssProp2_span from "${loaderPrefix}./MyStyleFile-CssProp2_span.module.css";
+          import _styles2 from "${loaderPrefix}./MyStyleFile-styles2.module.css";
+          import _P from "${loaderPrefix}./MyStyleFile-P.module.css";
         `,
       );
     });
@@ -124,11 +124,11 @@ describe('import ordering', () => {
           const _j = require("astroturf/jsx");
           const Component = require("./Foo");
           const Component2 = require("./Foo2");
-          const _styles = require("./MyStyleFile-styles.css");
-          const _CssProp1_button = require("./MyStyleFile-CssProp1_button.css");
-          const _CssProp2_span = require("./MyStyleFile-CssProp2_span.css");
-          const _styles2 = require("./MyStyleFile-styles2.css");
-          const _P = require("./MyStyleFile-P.css");
+          const _styles = require("./MyStyleFile-styles.module.css");
+          const _CssProp1_button = require("./MyStyleFile-CssProp1_button.module.css");
+          const _CssProp2_span = require("./MyStyleFile-CssProp2_span.module.css");
+          const _styles2 = require("./MyStyleFile-styles2.module.css");
+          const _P = require("./MyStyleFile-P.module.css");
       `,
       );
     });
@@ -144,11 +144,11 @@ describe('import ordering', () => {
 
           const Component = require("./Foo");
           const Component2 = require("./Foo2");
-          const _styles = require("${loaderPrefix}./MyStyleFile-styles.css");
-          const _CssProp1_button = require("${loaderPrefix}./MyStyleFile-CssProp1_button.css");
-          const _CssProp2_span = require("${loaderPrefix}./MyStyleFile-CssProp2_span.css");
-          const _styles2 = require("${loaderPrefix}./MyStyleFile-styles2.css");
-          const _P = require("${loaderPrefix}./MyStyleFile-P.css");
+          const _styles = require("${loaderPrefix}./MyStyleFile-styles.module.css");
+          const _CssProp1_button = require("${loaderPrefix}./MyStyleFile-CssProp1_button.module.css");
+          const _CssProp2_span = require("${loaderPrefix}./MyStyleFile-CssProp2_span.module.css");
+          const _styles2 = require("${loaderPrefix}./MyStyleFile-styles2.module.css");
+          const _P = require("${loaderPrefix}./MyStyleFile-P.module.css");
       `,
       );
     });

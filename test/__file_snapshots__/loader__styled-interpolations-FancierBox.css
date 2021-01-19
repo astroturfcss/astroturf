@@ -1,12 +1,12 @@
-@value cls1 as a0 from "styled-interpolations-FancyBox.css";
+@value cls1 as a0 from "styled-interpolations-FancyBox.module.css";
 
 .cls1 { /*!*/ }
 .cls2 {
 composes: cls1;
 
 color: ultra-red;
-
-> .a0 {
+}
+.cls2 > .a0 {
 padding: 4em;
 }
-}
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRlc3QvZml4dHVyZXMvc3R5bGVkLWludGVycG9sYXRpb25zLUZhbmNpZXJCb3gubW9kdWxlLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxrRUFBa0U7O0FBRWxFLFFBQVEsSUFBSSxFQUFFO0FBQ2Q7QUFDQSxjQUFjOztBQUVkLGdCQUFnQjtBQUtoQjtBQUhBO0FBQ0EsWUFBWTtBQUNaIiwiZmlsZSI6InRlc3QvZml4dHVyZXMvc3R5bGVkLWludGVycG9sYXRpb25zLUZhbmNpZXJCb3gubW9kdWxlLmNzcyIsInNvdXJjZXNDb250ZW50IjpbIkB2YWx1ZSBjbHMxIGFzIGEwIGZyb20gXCJzdHlsZWQtaW50ZXJwb2xhdGlvbnMtRmFuY3lCb3gubW9kdWxlLmNzc1wiO1xuXG4uY2xzMSB7IC8qISovIH1cbi5jbHMyIHtcbmNvbXBvc2VzOiBjbHMxO1xuXG5jb2xvcjogdWx0cmEtcmVkO1xuXG4+IC5hMCB7XG5wYWRkaW5nOiA0ZW07XG59XG59Il19 */

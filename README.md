@@ -444,7 +444,7 @@ const StyledFooter = styled(Footer, { allowAs: true })`
 
 ## Setup
 
-This is all the setup necessary
+This is all the setup necessary:
 
 ```js
 {
@@ -452,7 +452,7 @@ This is all the setup necessary
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader?modules=true'],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.jsx?$/,
@@ -475,8 +475,8 @@ You can add on here as you would normally for additional preprocesser setup. Her
   module: {
     rules: [
       {
-        test: /\.module\.scss$/,
-        use: ['style-loader', 'css-loader?modules=true', 'sass-loader'],
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.jsx?$/,
@@ -493,6 +493,11 @@ You can add on here as you would normally for additional preprocesser setup. Her
 }
 ```
 
+Since astroturf outputs CSS modules, it's best to use a `.module.*` extension. This
+automatically tells webpack's `css-loader` to process the stlyes correctly and expose the
+class names as exports for JS files. You can use whatever extension you like though, but
+may need to manually configure CSS modules elsewhere.
+
 ### Options
 
 astroturf accepts a few query options.
@@ -500,7 +505,8 @@ astroturf accepts a few query options.
 - **stylesheetTagName**: (default: `'stylesheet'`) The tag identifier used to locate inline stylesheets declarations.
 - **cssTagName**: (default: `'css'`) The tag identifier used to locate inline css literals and extract them.
 - **styledTagName**: (default: `'styled'`) The tag identifier used to locate components.
-- **extension**: (default: `'.css'`) the extension used for extracted "virtual" files. Change to whatever file type you want webpack to process extracted literals as.
+- **extension**: (default: `.'module.css'`) the extension used for extracted "virtual" files. Change to whatever file type you want webpack to process extracted literals as. It's generally
+  best to use a `.module.*` extension because `css-loader` automatically processes files ending with a `.module` extension as CSS modules.
 - **enableCssProp**: (default: true) compiles `css` props to styled components.
 - **enableDynamicInterpolations**: (default: 'cssProp') enables or disables custom value interpolation, You can disable this feature if you need to target environments that
   do not support CSS custom properties.
@@ -532,18 +538,14 @@ Add [babel](https://github.com/rollup/plugins/tree/master/packages/babel) and [p
 ```js
 plugins: [
   babel({
-    plugins: [
-      'astroturf/plugin'
-    ]
+    plugins: ['astroturf/plugin'],
   }),
   postcss({
     extract: 'app.css',
     modules: true,
-    plugins: [
-      postcssNested
-    ]
-  })
-]
+    plugins: [postcssNested],
+  }),
+];
 ```
 
 See [example repl](https://repl.it/@vladshcherbin/rollup-astroturf#rollup.config.js)
@@ -580,7 +582,7 @@ module.exports = {
       'astroturf/preset',
       {
         cssTagName: 'css',
-        extension: '.css',
+        extension: '.module.css',
         writeFiles: true, // Writes css files to disk using the result of `getFileName`
         getFileName(hostFilePath, pluginsOptions) {
           const basepath = join(

@@ -102,7 +102,7 @@ describe('variants', () => {
               color: \${color};
 
               \${primary && css\`
-                height: \${height}
+                height: \${height};
 
                 & > \${child} {
                   color: blue;

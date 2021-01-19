@@ -20,9 +20,9 @@ describe('dependencies', () => {
 
     expect(styles).toHaveLength(2);
     expect(styles[1].value).toContain(
-      '@value cls1 as a0 from "MyStyleFile-base.css";',
+      '@value cls1 as a0 from "MyStyleFile-base.module.css";',
     );
-    expect(styles[1].value).toContain('& > .a0');
+    expect(styles[1].value).toContain('.cls2 > .a0');
   });
 
   it('should use m-css external', async () => {
@@ -49,7 +49,7 @@ describe('dependencies', () => {
 
     expect(styles).toHaveLength(2);
     expect(styles[1].value).toContain(
-      '& > :external(cls1 from "MyStyleFile-base.css")',
+      '.cls2 > :external(cls1 from "MyStyleFile-base.module.css")',
     );
   });
 });
