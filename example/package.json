@@ -7,7 +7,7 @@
     "start": "NODE_DEBUG=astroturf* webpack-dev-server"
   },
   "devDependencies": {
-    "@4c/babel-preset": "^7.4.1",
+    "@4c/babel-preset": "^8.0.3",
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",
     "babel-core": "^7.0.0-bridge.0",

@@ -86,7 +86,7 @@
     "webpack": ">=2"
   },
   "devDependencies": {
-    "@4c/babel-preset": "^7.4.1",
+    "@4c/babel-preset": "^8.0.3",
     "@4c/cli": "^2.1.12",
     "@babel/plugin-transform-react-jsx": "^7.12.10",
     "@types/react": "^16.14.2",
