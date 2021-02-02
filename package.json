@@ -118,7 +118,7 @@
     "rimraf": "^3.0.2",
     "strip-ansi": "^6.0.0",
     "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12",
+    "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.0"
   }
 }
