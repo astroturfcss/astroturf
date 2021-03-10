@@ -44,7 +44,7 @@ export interface ResolvedOptions {
     opts: ResolvedOptions,
     id?: string,
   ) => string;
-  getRequirePath?: (from: string, to: string) => string;
+  getRequirePath?: (from: string, to: string, identifier: string) => string;
 
   experiments: {
     modularCssExternals?: boolean;

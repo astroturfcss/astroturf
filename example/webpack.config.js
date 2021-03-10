@@ -2,7 +2,7 @@ const path = require('path');
 
 process.traceDeprecation = true;
 
-const { rules, plugins, loaders } = require('webpack-atoms').createAtoms({
+const { rules, plugins } = require('webpack-atoms').createAtoms({
   env: 'development',
 });
 
@@ -10,8 +10,8 @@ const inlineRule = rules.js();
 inlineRule.use = [
   ...inlineRule.use,
   {
-    loader: require.resolve('../lib/loader'),
-    options: { extension: '.module.scss' },
+    loader: 'astroturf/loader',
+    options: { extension: '.module.scss', useAltLoader: true },
   },
 ];
 
@@ -27,7 +27,20 @@ module.exports = {
   },
 
   module: {
-    rules: [inlineRule, rules.sass()],
+    rules: [
+      inlineRule,
+      {
+        test: /\.scss$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: { importLoaders: 1, modules: true },
+          },
+          'sass-loader',
+        ],
+      },
+    ],
   },
   mode: 'development',
   resolve: {
@@ -35,5 +48,11 @@ module.exports = {
       astroturf: path.resolve(__dirname, '../lib'),
     },
   },
+  resolveLoader: {
+    alias: {
+      astroturf: path.resolve(__dirname, '../lib'),
+    },
+  },
+
   plugins: [plugins.html()],
 };

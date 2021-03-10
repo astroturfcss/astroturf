@@ -1,4 +1,4 @@
-import { css } from 'astroturf'; // eslint-disable-line import/no-extraneous-dependencies
+import { css } from 'astroturf'; // eslint-disable-line import/no-unresolved
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -17,14 +17,17 @@ const _ = css`
 
 function App() {
   return (
-    <ButtonToolbar>
-      <Button theme="secondary">Styled button</Button>
-      <Button theme="primary">Primary button</Button>
-      <Button theme="secondary" bold size={2}>
-        Big bold button
-      </Button>
-      <ComposedButton theme="primary">Composed Button</ComposedButton>
-    </ButtonToolbar>
+    <>
+      <div />
+      <ButtonToolbar>
+        <Button theme="secondary">Styled button</Button>
+        <Button theme="primary">Primary button</Button>
+        <Button theme="secondary" bold size={2}>
+          Big bold button
+        </Button>
+        <ComposedButton theme="primary">Composed Button</ComposedButton>
+      </ButtonToolbar>
+    </>
   );
 }
 

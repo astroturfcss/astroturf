@@ -23,7 +23,11 @@ export default function createStyleNode(
 
   const hostFile = file.opts.filename;
   style.absoluteFilePath = getFileName(hostFile, pluginOptions, identifier);
-  style.requirePath = getRequirePath(hostFile, style.absoluteFilePath);
+  style.requirePath = getRequirePath(
+    hostFile,
+    style.absoluteFilePath,
+    identifier || '',
+  );
   style.identifier = identifier || '';
 
   return style as IntermediateStyle;

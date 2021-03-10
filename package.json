@@ -82,7 +82,7 @@
     "chalk": "^4.1.0",
     "common-tags": "^1.8.0",
     "cosmiconfig": "^7.0.0",
-    "css-loader": "^5.0.0",
+    "css-loader": "^5.1.2",
     "fast-levenshtein": "^3.0.0",
     "fs-extra": "^9.0.1",
     "json5": "^2.1.3",

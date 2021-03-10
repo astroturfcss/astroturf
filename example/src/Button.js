@@ -1,7 +1,7 @@
 import styled from 'astroturf/react'; // eslint-disable-line import/no-extraneous-dependencies
 
 const Button = styled('button')`
-  @import '~./styles/mixins.scss';
+  @import './styles/mixins.scss';
 
   display: inline-flex;
   align-items: center;
