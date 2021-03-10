@@ -4,18 +4,13 @@
 /*!************************************!*\
   !*** ./test/integration/Button.js ***!
   \************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export styles [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "styles": () => /* binding */ styles,
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "styles": () => (/* binding */ styles),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "./src/runtime/react.js");
 /* harmony import */ var _Button_styles_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Button-styles.module.css */ "./test/integration/Button-styles.module.css");
@@ -36,18 +31,13 @@ const Button = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_0__.defa
 /*!**********************************!*\
   !*** ./test/integration/main.js ***!
   \**********************************/
-/*! namespace exports */
-/*! export MyComponent [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "MyComponent": () => /* binding */ MyComponent,
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "MyComponent": () => (/* binding */ MyComponent),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/jsx */ "./src/runtime/jsx.js");
 /* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! astroturf/react */ "./src/runtime/react.js");
@@ -102,16 +92,12 @@ function MyComponent() {
 /*!*************************************************!*\
   !*** ./test/integration/shared/widget/index.js ***!
   \*************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "./src/runtime/react.js");
 /* harmony import */ var _Widget_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Widget.module.css */ "./test/integration/shared/widget/Widget.module.css");
@@ -129,16 +115,12 @@ const Widget = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_0__.defa
 /*!*****************************************************!*\
   !*** ./test/integration/shared/withConfig/index.js ***!
   \*****************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "./src/runtime/react.js");
 /* harmony import */ var _index_Doodad_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index-Doodad.module.scss */ "./test/integration/shared/withConfig/index-Doodad.module.scss");
@@ -156,16 +138,12 @@ const Doodad = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_0__.defa
 /*!***************************************************!*\
   !*** ./test/integration/Button-styles.module.css ***!
   \***************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cool":"Button-styles-module__cool"});
@@ -176,16 +154,12 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************************!*\
   !*** ./test/integration/Button.module.css ***!
   \********************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"Button-module__cls1","cls2":"Button-module__cls2 Button-module__cls1 button-with-caret"});
@@ -196,16 +170,12 @@ __webpack_require__.r(__webpack_exports__);
 /*!*******************************************************!*\
   !*** ./test/integration/main-CssProp1_div.module.css ***!
   \*******************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"main-CssProp1_div-module__cls1","cls2":"main-CssProp1_div-module__cls2 main-CssProp1_div-module__cls1","cssProp1DivVariant0":"main-CssProp1_div-module__cssProp1DivVariant0"});
@@ -216,16 +186,12 @@ __webpack_require__.r(__webpack_exports__);
 /*!********************************************************!*\
   !*** ./test/integration/main-CssProp2_span.module.css ***!
   \********************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"main-CssProp2_span-module__cls1","cls2":"main-CssProp2_span-module__cls2 main-CssProp2_span-module__cls1"});
@@ -236,16 +202,12 @@ __webpack_require__.r(__webpack_exports__);
 /*!*****************************************************!*\
   !*** ./test/integration/main-FancierBox.module.css ***!
   \*****************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"a0":"main-FancyBox-module__cls1","a1":"main-styles-module__parent","a2":"Button-module__cls1","a3":"Button-module__cls1","cls1":"main-FancierBox-module__cls1","cls2":"main-FancierBox-module__cls2 main-FancierBox-module__cls1"});
@@ -256,16 +218,12 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************************!*\
   !*** ./test/integration/main-FancyBox.module.css ***!
   \***************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"main-FancyBox-module__cls1","cls2":"main-FancyBox-module__cls2 main-FancyBox-module__cls1 foo","primary":"main-FancyBox-module__primary"});
@@ -276,16 +234,12 @@ __webpack_require__.r(__webpack_exports__);
 /*!*************************************************!*\
   !*** ./test/integration/main-styles.module.css ***!
   \*************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"a0":"Button-styles-module__cool","a1":"Widget-module__cls1","parent":"main-styles-module__parent","test":"main-styles-module__test"});
@@ -296,16 +250,12 @@ __webpack_require__.r(__webpack_exports__);
 /*!**********************************************************!*\
   !*** ./test/integration/shared/widget/Widget.module.css ***!
   \**********************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"Widget-module__cls1","cls2":"Widget-module__cls2 Widget-module__cls1"});
@@ -316,16 +266,12 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************************************!*\
   !*** ./test/integration/shared/withConfig/index-Doodad.module.scss ***!
   \*********************************************************************/
-/*! namespace exports */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_exports__, __webpack_require__.r, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"index-Doodad-module__cls1","cls2":"index-Doodad-module__cls2 index-Doodad-module__cls1"});
@@ -336,18 +282,13 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************!*\
   !*** ./src/runtime/index.js ***!
   \******************************/
-/*! namespace exports */
-/*! export css [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export stylesheet [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "stylesheet": () => /* binding */ stylesheet,
-/* harmony export */   "css": () => /* binding */ css
+/* harmony export */   "stylesheet": () => (/* binding */ stylesheet),
+/* harmony export */   "css": () => (/* binding */ css)
 /* harmony export */ });
 const stylesheet = () => {
   throw new Error(
@@ -370,24 +311,16 @@ const css = () => {
 /*!****************************!*\
   !*** ./src/runtime/jsx.js ***!
   \****************************/
-/*! namespace exports */
-/*! export F [provided] [no usage info] [missing usage info prevents renaming] -> ./node_modules/react/cjs/react.development.js .Fragment */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export jsx [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export resolveVariants [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export varsToStyles [provided] [no usage info] [missing usage info prevents renaming] */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "resolveVariants": () => /* binding */ resolveVariants,
-/* harmony export */   "varsToStyles": () => /* binding */ varsToStyles,
-/* harmony export */   "jsx": () => /* binding */ jsx,
-/* harmony export */   "F": () => /* reexport safe */ react__WEBPACK_IMPORTED_MODULE_0__.Fragment,
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */   "resolveVariants": () => (/* binding */ resolveVariants),
+/* harmony export */   "varsToStyles": () => (/* binding */ varsToStyles),
+/* harmony export */   "jsx": () => (/* binding */ jsx),
+/* harmony export */   "F": () => (/* reexport safe */ react__WEBPACK_IMPORTED_MODULE_0__.Fragment),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -435,20 +368,14 @@ jsx.F = react__WEBPACK_IMPORTED_MODULE_0__.Fragment;
 /*!******************************!*\
   !*** ./src/runtime/react.js ***!
   \******************************/
-/*! namespace exports */
-/*! export css [provided] [no usage info] [missing usage info prevents renaming] -> ./src/runtime/index.js .css */
-/*! export default [provided] [no usage info] [missing usage info prevents renaming] */
-/*! export stylesheet [provided] [no usage info] [missing usage info prevents renaming] -> ./src/runtime/index.js .stylesheet */
-/*! other exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__, __webpack_exports__, __webpack_require__.d, __webpack_require__.r, __webpack_require__.* */
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__,
-/* harmony export */   "css": () => /* reexport safe */ ___WEBPACK_IMPORTED_MODULE_2__.css,
-/* harmony export */   "stylesheet": () => /* reexport safe */ ___WEBPACK_IMPORTED_MODULE_2__.stylesheet
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "css": () => (/* reexport safe */ ___WEBPACK_IMPORTED_MODULE_2__.css),
+/* harmony export */   "stylesheet": () => (/* reexport safe */ ___WEBPACK_IMPORTED_MODULE_2__.stylesheet)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var ___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! . */ "./src/runtime/index.js");
