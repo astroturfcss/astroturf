@@ -18,6 +18,7 @@ inlineRule.use = [
 module.exports = {
   entry: './src/client.js',
   devtool: 'cheap-module-source-map',
+  cache: { type: 'filesystem' },
   devServer: {
     stats: 'minimal',
   },

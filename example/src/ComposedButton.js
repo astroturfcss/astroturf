@@ -7,5 +7,5 @@ import Button from './Button';
  * precedence over the underlying `<Button/>` css property.
  */
 export default styled(Button)`
-  border-radius: 10px;
+  border-radius: 12px;
 `;

@@ -1,7 +1,11 @@
+import crypto from 'crypto';
+import { promises as fs, mkdirSync } from 'fs';
 import { basename, dirname } from 'path';
 import util from 'util';
+import { deserialize, serialize } from 'v8';
 
 import { Expression } from '@babel/types';
+import findCacheDir from 'find-cache-dir';
 import loaderUtils from 'loader-utils';
 
 import type { ResolvedImport, Style } from './types';
@@ -13,16 +17,42 @@ import {
 } from './utils/loaders';
 import replaceComposes from './utils/replaceComposes';
 
-const styleCache = new Map();
+const cacheDir = findCacheDir({ name: 'astroturf-loader' });
+
+mkdirSync(cacheDir, { recursive: true });
+
+const inMemoryStyleCache = new Map<string, Map<string, Style>>();
+
+const hash = (name: string) =>
+  `${crypto.createHash('md4').update(name).digest('hex')}.cache`;
+
+const cache = {
+  async set(source: string, newStyles: Style[]) {
+    const styles = (await this.get(source)) || new Map();
+    inMemoryStyleCache.set(source, styles);
+    newStyles.forEach((style) => {
+      styles.set(style.identifier, style);
+    });
+
+    await fs.writeFile(`${cacheDir}/${hash(source)}`, serialize(styles));
+  },
+
+  async get(source: string): Promise<Map<string, Style> | undefined> {
+    let styles = inMemoryStyleCache.get(source);
+
+    if (!styles) {
+      try {
+        styles = deserialize(await fs.readFile(`${cacheDir}/${hash(source)}`));
+        inMemoryStyleCache.set(source, styles!);
+      } catch (err) {
+        /* ignore */
+      }
+    }
+    return styles;
+  },
+};
 
 const debug = util.debuglog('astroturf:loader');
-
-function getLoaderRequest(from: string, to: string, id: string) {
-  const cssBase = basename(to);
-  const file = `${cssBase}!=!astroturf/inline-loader?source="${to}"&styleId="${id}"!${from}`;
-
-  return file;
-}
 
 module.exports = async function loader(
   this: any,
@@ -34,16 +64,43 @@ module.exports = async function loader(
   const loaderOpts = loaderUtils.getOptions(this) || {};
   const cb = this.async();
 
-  if (loaderOpts.styleId) {
-    const css = styleCache.get(loaderOpts.source)?.get(loaderOpts.styleId)
-      ?.value;
-    cb(null, css);
-    return undefined;
-  }
-
   const loadModule = util.promisify((request: string, done: any) =>
     this.loadModule(request, (err, _, _1, module) => done(err, module)),
   );
+
+  if (loaderOpts.styleId) {
+    const { source, styleId } = loaderOpts as {
+      source: string;
+      styleId: string;
+    };
+    this.resourcePath = source;
+    const styles = await cache.get(source);
+
+    let css = styles?.get(styleId)?.value;
+
+    if (!css) {
+      await loadModule(source);
+      css = inMemoryStyleCache.get(source)?.get(styleId)?.value;
+    }
+
+    if (!css) {
+      return cb(
+        new Error(
+          `Could not resolve style ${loaderOpts.styleId} in file ${loaderOpts.source}`,
+        ),
+      );
+    }
+
+    return cb(null, css);
+  }
+
+  function getLoaderRequest(from: string, to: string, id: string) {
+    const cssBase = basename(to);
+
+    const file = `${cssBase}!=!astroturf/inline-loader?source=${from}&styleId=${id}!${from}`;
+
+    return file;
+  }
 
   const resolve = util.promisify(this.resolve);
 
@@ -71,7 +128,7 @@ module.exports = async function loader(
     debug(`resolving dependency: ${request}`);
     dependencies.push(
       buildDependency(request).then((module: any) => {
-        const styles = styleCache.get(module.resource);
+        const styles = inMemoryStyleCache.get(module.resource);
 
         const style = styles?.get(identifier);
 
@@ -79,7 +136,7 @@ module.exports = async function loader(
           throw buildDependencyError(
             content,
             interpolation,
-            Array.from(styles || []),
+            Array.from((styles as any) || []),
             module.resource,
             loc!,
           );
@@ -136,15 +193,10 @@ module.exports = async function loader(
       return cb(null, content);
     }
 
-    const styleMap = new Map();
-
-    styleCache.set(resourcePath, styleMap);
-    styles.forEach((style) => {
-      styleMap.set(style.identifier, style);
-    });
-
     return Promise.all(dependencies)
-      .then(() => {
+      .then(async () => {
+        await cache.set(resourcePath, styles);
+
         const result = replaceStyleTemplates(
           this,
           resourcePath,
