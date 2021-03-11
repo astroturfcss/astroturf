@@ -1,17 +1,18 @@
-import { dirname, relative } from 'path';
+import { dirname } from 'path';
 
 import { NodePath } from '@babel/core';
 import * as t from '@babel/types';
 import resolve from 'resolve';
 
 import {
-  DependencyResolver,
   NodeStyleMap,
   ResolvedImport,
+  ResolvedOptions,
   Style,
   StyleType,
   UserDependency,
 } from '../types';
+import { createRequirePath } from './createFilename';
 import getNameFromPath from './getNameFromPath';
 
 export interface Dependency {
@@ -87,9 +88,13 @@ function resolveImport(path: NodePath<any>): ResolvedImport | null {
 export default function resolveDependency(
   path: NodePath<t.Expression>,
   nodeMap: NodeStyleMap,
-  localStyle: any,
-  resolver: DependencyResolver = defaultResolver,
+  localStyle: Style,
+  pluginOptions: ResolvedOptions,
 ): Dependency | null {
+  const {
+    getRequirePath = createRequirePath,
+    resolveDependency: resolver = defaultResolver,
+  } = pluginOptions;
   const resolvedPath = resolveMemberExpression(path);
 
   const style = resolvedPath && nodeMap.get(resolvedPath.node);
@@ -101,9 +106,10 @@ export default function resolveDependency(
         style.type === 'stylesheet'
           ? (path.get('property') as any).node.name
           : 'cls1',
-      source: relative(
-        dirname(localStyle.absoluteFilePath),
+      source: getRequirePath(
+        localStyle.hostFilePath!,
         style.absoluteFilePath,
+        style.identifier || '',
       ),
     };
   }

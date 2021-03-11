@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import Button from './Button';
 import ButtonToolbar from './ButtonToolbar';
 import ComposedButton from './ComposedButton';
+import { List, ListItem } from './List';
 
 // import 'bootstrap/scss/bootstrap-reboot.scss';
 
@@ -18,7 +19,9 @@ const _ = css`
 function App() {
   return (
     <>
-      <div />
+      <List>
+        <ListItem>hey</ListItem>
+      </List>
       <ButtonToolbar>
         <Button theme="secondary">Styled button</Button>
         <Button theme="primary">Primary button</Button>

@@ -301,7 +301,7 @@ function buildTemplateImpl(opts: Options, state = { id: 0 }) {
       expr,
       nodeMap,
       localStyle,
-      pluginOptions.resolveDependency,
+      pluginOptions,
     );
 
     if (resolvedDep) {

@@ -57,6 +57,7 @@ export interface BaseStyle {
   start: number;
   end: number;
   type: StyleType;
+  hostFilePath?: string;
   absoluteFilePath: string;
   requirePath: string;
   identifier: string;

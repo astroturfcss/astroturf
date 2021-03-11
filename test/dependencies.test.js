@@ -20,7 +20,7 @@ describe('dependencies', () => {
 
     expect(styles).toHaveLength(2);
     expect(styles[1].value).toContain(
-      '@value cls1 as a0 from "MyStyleFile-base.module.css";',
+      '@value cls1 as a0 from "./MyStyleFile-base.module.css";',
     );
     expect(styles[1].value).toContain('.cls2 > .a0');
   });
@@ -49,7 +49,7 @@ describe('dependencies', () => {
 
     expect(styles).toHaveLength(2);
     expect(styles[1].value).toContain(
-      '.cls2 > :external(cls1 from "MyStyleFile-base.module.css")',
+      '.cls2 > :external(cls1 from "./MyStyleFile-base.module.css")',
     );
   });
 });

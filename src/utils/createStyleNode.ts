@@ -6,6 +6,7 @@ import createFileName, { createRequirePath } from './createFilename';
 export interface IntermediateStyle {
   start: number;
   end: number;
+  hostFilePath: string;
   absoluteFilePath: string;
   requirePath: string;
   identifier: string;
@@ -22,6 +23,7 @@ export default function createStyleNode(
   const getRequirePath = pluginOptions.getRequirePath || createRequirePath;
 
   const hostFile = file.opts.filename;
+  style.hostFilePath = hostFile;
   style.absoluteFilePath = getFileName(hostFile, pluginOptions, identifier);
   style.requirePath = getRequirePath(
     hostFile,
