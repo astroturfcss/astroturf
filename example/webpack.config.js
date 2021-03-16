@@ -1,5 +1,7 @@
 const path = require('path');
 
+const ExtractPlugin = require('mini-css-extract-plugin');
+
 process.traceDeprecation = true;
 
 const { rules, plugins } = require('webpack-atoms').createAtoms({
@@ -18,7 +20,7 @@ inlineRule.use = [
 module.exports = {
   entry: './src/client.js',
   devtool: 'cheap-module-source-map',
-  cache: { type: 'filesystem' },
+  // cache: { type: 'memory' },
   devServer: {
     stats: 'minimal',
   },
@@ -26,17 +28,26 @@ module.exports = {
     path: path.join(__dirname, 'build'),
     filename: '[name].js',
   },
-
+  // optimization: {
+  //   minimize: false,
+  // },
   module: {
     rules: [
       inlineRule,
       {
         test: /\.scss$/,
         use: [
+          // ExtractPlugin.loader,
           'style-loader',
           {
             loader: 'css-loader',
-            options: { importLoaders: 1, modules: true },
+            options: {
+              importLoaders: 1,
+              modules: {
+                auto: true,
+                localIdentName: '[name]--[local]--[hash:base64:5]',
+              },
+            },
           },
           'sass-loader',
         ],
@@ -55,5 +66,9 @@ module.exports = {
     },
   },
 
-  plugins: [plugins.html()],
+  plugins: [
+    plugins.html(),
+    //
+    // new ExtractPlugin(),
+  ],
 };

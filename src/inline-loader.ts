@@ -9,6 +9,7 @@ import findCacheDir from 'find-cache-dir';
 import loaderUtils from 'loader-utils';
 
 import type { ResolvedImport, Style } from './types';
+import { createRequirePath } from './utils/createFilename';
 import {
   buildDependencyError,
   collectStyles,
@@ -73,31 +74,31 @@ module.exports = async function loader(
       source: string;
       styleId: string;
     };
-    this.resourcePath = source;
+
     const styles = await cache.get(source);
 
-    let css = styles?.get(styleId)?.value;
+    let style = styles?.get(styleId);
 
-    if (!css) {
+    if (!style) {
       await loadModule(source);
-      css = inMemoryStyleCache.get(source)?.get(styleId)?.value;
+      style = inMemoryStyleCache.get(source)?.get(styleId);
     }
 
-    if (!css) {
+    if (!style) {
       return cb(
         new Error(
           `Could not resolve style ${loaderOpts.styleId} in file ${loaderOpts.source}`,
         ),
       );
     }
-
-    return cb(null, css);
+    this._module.matchResource = style.absoluteFilePath;
+    return cb(null, style.value);
   }
 
   function getLoaderRequest(from: string, to: string, id: string) {
-    const cssBase = basename(to);
+    const cssBase = createRequirePath(from, to);
 
-    const file = `${cssBase}!=!astroturf/inline-loader?source=${from}&styleId=${id}!${from}`;
+    const file = `${cssBase}!=!astroturf/inline-loader?source=${from}&styleId=${id}!${from}?${id}`;
 
     return file;
   }
