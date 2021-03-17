@@ -498,4 +498,10 @@ function styled(type, options, settings) {
 /***/ })
 
 },
-0,[["./test/integration/main.js","runtime~main","vendors-node_modules_react_index_js"]]]);
+/******/ __webpack_require__ => { // webpackRuntimeModules
+/******/ "use strict";
+/******/ 
+/******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
+/******/ var __webpack_exports__ = __webpack_require__.O(undefined, ["vendors-node_modules_react_index_js"], () => (__webpack_exec__("./test/integration/main.js")));
+/******/ }
+]);

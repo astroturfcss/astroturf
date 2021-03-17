@@ -1,38 +1,49 @@
-// import styled from 'astroturf/react';
+import styled from 'astroturf/react';
 
-import styles2 from './button.module.scss!=!../base64-loader?LmZvbyB7IGNvbG9yOiByZWQ7IH0=!./Button.js';
+// eslint-disable-next-line max-len
+// import styles2 from './button.module.scss!=!../base64-loader?LmZvbyB7IGNvbG9yOiByZWQ7IH0=!./Button.js';
 
 // eslint-disable-line import/no-extraneous-dependencies
-// const Button = styled('button')`
-//   display: inline-flex;
-//   align-items: center;
-//   justify-content: center;
-//   border: 1px solid transparent;
-//   margin-bottom: 0;
-//   line-height: calc(3rem - 2px);
-//   padding: 0 0.4rem;
-//   border-radius: 2px;
-//   font-weight: normal;
+const Button = styled('button')`
+  @import './styles/mixins.scss';
 
-//   font-size: 16px;
-//   touch-action: manipulation;
-//   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  margin-bottom: 0;
+  line-height: calc(3rem - 2px);
+  padding: 0 0.4rem;
+  border-radius: 2px;
+  font-weight: normal;
 
-//   white-space: nowrap;
-//   user-select: none;
+  font-size: 16px;
+  touch-action: manipulation;
+  cursor: pointer;
 
-//   &.bold {
-//     font-weight: bold;
-//   }
+  white-space: nowrap;
+  user-select: none;
 
-//   &.size-2 {
-//     font-size: 24px;
-//     line-height: calc(4rem - 2px);
-//   }
-// `;
+  &.theme-primary {
+    @include button-variant(white, #33ad13, #298f0f);
+    color: blue;
+  }
+  &.theme-secondary {
+    @include button-variant(#33ad13, white, white);
+  }
 
-// export const Button2 = styled('button')`
-//   color: violet;
-// `;
+  &.bold {
+    font-weight: bold;
+  }
 
-// export default Button;
+  &.size-2 {
+    font-size: 24px;
+    line-height: calc(4rem - 2px);
+  }
+`;
+
+export const Button2 = styled('button')`
+  color: violet;
+`;
+
+export default Button;
