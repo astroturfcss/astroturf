@@ -498,6 +498,8 @@ automatically tells webpack's `css-loader` to process the stlyes correctly and e
 class names as exports for JS files. You can use whatever extension you like though, but
 may need to manually configure CSS modules elsewhere.
 
+If you're using Create React App, currently it's not possible to use astroturf, unless you eject to edit the webpack configuration manually.
+
 ### Options
 
 astroturf accepts a few query options.
