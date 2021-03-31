@@ -143,12 +143,8 @@ describe('css prop', () => {
       expect(code).toContain(
         format`
           import Component from './Foo';
-          import _CssProp1_button from "${requirePath(
-            './MyStyleFile-CssProp1_button.module.css',
-          )}";
-          import _CssProp2_span from "${requirePath(
-            './MyStyleFile-CssProp2_span.module.css',
-          )}";
+          import _CssProp1_button from "${requirePath('CssProp1_button')}";
+          import _CssProp2_span from "${requirePath('CssProp2_span')}";
         `,
       );
     },
