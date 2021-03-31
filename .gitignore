@@ -4,3 +4,4 @@ lib
 *.log
 .cache/
 public/
+example/build/
