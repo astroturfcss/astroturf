@@ -19,6 +19,7 @@ function getBaseConfig(entry, options = { enableCssProp: true }) {
     },
     optimization: {
       sideEffects: true,
+      moduleIds: 'natural',
     },
     module: {
       rules: [

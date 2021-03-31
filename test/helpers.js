@@ -1,10 +1,16 @@
-const { relative, dirname } = require('path');
+const { relative, dirname, basename } = require('path');
 
 const { transformAsync } = require('@babel/core');
 const fs = require('fs-extra');
 const prettier = require('prettier');
 
 const loader = require('../src/loader');
+const {
+  createRequirePath,
+  default: createFilename,
+} = require('../src/utils/createFilename');
+
+const FILE_NAME = '/MyStyleFile.js';
 
 const PARSER_OPTS = {
   plugins: [
@@ -30,8 +36,12 @@ function rmSourceMap(str) {
 }
 export const loaderPrefix = '';
 
-export const requirePath = (currentName, pathname) =>
-  `${currentName === 'babel' ? '' : loaderPrefix}${pathname}`;
+export const buildLoaderReuqest = (ident, file = FILE_NAME) => {
+  const cssFile = createFilename(file, {}, ident);
+  return `${basename(
+    cssFile,
+  )}!=!astroturf/inline-loader?style!${FILE_NAME}?${ident}`;
+};
 
 export function format(strings, ...values) {
   let str = strings.reduce(
@@ -82,17 +92,18 @@ export async function runBabel(
   ];
 }
 
-export function runLoader(src, options, filename = 'MyStyleFile.js') {
+export function runLoader(src, options, filename = FILE_NAME) {
   return new Promise((resolve, reject) => {
     const meta = {};
+    const resourcePath = filename.replace(__dirname, '');
     const loaderContext = {
-      query: options,
-      loaders: [{ request: '/path/css-literal-loader' }],
+      query: { useAltLoader: true, ...options },
+      loaders: [{ request: '/path/astroturf/loader' }],
       loaderIndex: 0,
       context: '',
-      resource: filename,
-      resourcePath: filename,
-      request: `babel-loader!css-literal-loader!${filename}`,
+      resourcePath,
+      resource: resourcePath,
+      request: `babel-loader!astroturf/loader!${resourcePath}`,
       _compiler: {},
       _compilation: {
         fileTimestamps: new Map(),
@@ -101,7 +112,7 @@ export function runLoader(src, options, filename = 'MyStyleFile.js') {
       resolve(request, cb) {
         cb(null, relative(dirname(filename), request));
       },
-      emitVirtualFile: (_absoluteFilePath, _value) => {},
+      // emitVirtualFile: (_absoluteFilePath, _value) => {},
       async: () => (err, result) => {
         if (err) reject(err);
         else
@@ -130,7 +141,14 @@ function testAllRunnersImpl(t, msg, testFn) {
   ])(`${msg}  (%s)`, (name, runner) =>
     testFn(runner, {
       current: name,
-      requirePath: (p) => requirePath(name, p),
+      requirePath: (ident) => {
+        if (name === 'babel') {
+          const cssFile = createFilename(FILE_NAME, {}, ident);
+          return createRequirePath(FILE_NAME, cssFile);
+        }
+
+        return buildLoaderReuqest(ident, FILE_NAME);
+      },
     }),
   );
 }
