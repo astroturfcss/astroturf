@@ -1,18 +1,13 @@
-import styled from "astroturf";
-
+import styled from "astroturf/react";
+import _FancyBox from "multiple-components-FancyBox.module.css!=!astroturf/inline-loader?style!/fixtures/multiple-components.js?FancyBox";
+import _FancyHeader from "multiple-components-FancyHeader.module.css!=!astroturf/inline-loader?style!/fixtures/multiple-components.js?FancyHeader";
 const SIZE = 75;
-
 // prettier-ignore
 const FancyBox = /*#__PURE__*/styled('div', null, {
   displayName: "FancyBox",
-  styles: require("./multiple-components-FancyBox.css"),
-  attrs: null,
-  vars: []
+  styles: _FancyBox
 });
-
 const FancyHeader = /*#__PURE__*/ styled("h2", null, {
   displayName: "FancyHeader",
-  styles: require("./multiple-components-FancyHeader.css"),
-  attrs: null,
-  vars: [],
+  styles: _FancyHeader,
 });

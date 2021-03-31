@@ -1,6 +1,6 @@
 import { mount } from 'enzyme';
 
-import { jsx } from '../src/index';
+import { jsx } from '../src/runtime/jsx';
 import { run, testAllRunners } from './helpers';
 
 describe('custom properties', () => {
@@ -9,13 +9,13 @@ describe('custom properties', () => {
     async (runner) => {
       const [code, [style]] = await runner(
         `
-        import styled from 'astroturf';
+        import styled from 'astroturf/react';
 
         const Button = styled.button\`
           color: \${p => p.color};
         \`
       `,
-        { customCssProperties: true },
+        { enableDynamicInterpolations: true },
       );
 
       const i = style.interpolations[0];
@@ -25,7 +25,7 @@ describe('custom properties', () => {
   );
 
   testAllRunners(
-    'should allow css prop dynamic interpolations',
+    'should allow css prop dynamic interpolations ',
     async (runner) => {
       const [code, [style]] = await runner(
         `
@@ -41,14 +41,12 @@ describe('custom properties', () => {
         );
       }
       `,
-        { enableCssProp: true, customCssProperties: 'cssProp' },
+        { enableCssProp: true, enableDynamicInterpolations: 'cssProp' },
       );
 
       const i = style.interpolations[0];
 
-      expect(code).toContain(
-        `css={[require("./MyStyleFile-CssProp1_button.css"), [["${i.id}", color]]]}`,
-      );
+      expect(code).toContain(`css={[_CssProp1_button, [["${i.id}", color]]]}`);
     },
   );
 
@@ -67,20 +65,54 @@ describe('custom properties', () => {
         );
       }
       `,
-      { enableCssProp: true },
     );
 
     const i = style.interpolations[0];
 
     expect(code).toContain(
-      `css={[
-        require("./MyStyleFile-CssProp1_button.css"),
-        [["${i.id}", duration, "ms"]],
-      ]}`,
+      `css={[_CssProp1_button, [["${i.id}", duration, "ms"]]]}`,
     );
   });
 
-  it('should disallow when configured off', async () => {
+  it('should disallow, wrong location', async () => {
+    await expect(
+      run(
+        `
+      import styled, { css } from 'astroturf';
+
+      const ButtonA = css\`
+        color: \${p => p.color};
+      \`
+      `,
+      ),
+    ).rejects.toThrow(
+      /The following expression could not be evaluated during compilation\. Dynamic expressions can only be used in the context of a component, in a `css` prop, or styled\(\) component helper/,
+    );
+  });
+
+  it('should disallow, wrong prop', async () => {
+    await expect(
+      run(
+        `
+      import styled, { css } from 'astroturf';
+
+      function ButtonB({ color }) {
+        return (
+          <button
+            className={css\`
+              color: \${color};
+            \`}
+          />
+        );
+      }
+      `,
+      ),
+    ).rejects.toThrow(
+      /This css tag with dynamic expressions cannot be used with `className` prop\. Dynamic styles can only be passed to the `css` prop\. Move the style to css=\{\.\.\.\} to fix the issue/,
+    );
+  });
+
+  it('should disallow when configured off, valid location', async () => {
     await expect(
       run(
         `
@@ -100,40 +132,43 @@ describe('custom properties', () => {
         );
       }
       `,
-        { enableCssProp: true, customCssProperties: false },
+        { enableCssProp: true, enableDynamicInterpolations: false },
       ),
-    ).rejects.toThrow(/Could not resolve interpolation to a value/);
+    ).rejects.toThrow(
+      /Dynamic expression compilation is not enabled\. To enable this usage set the the `enableDynamicInterpolations` to `true` or `"cssProp"` in your astroturf options/,
+    );
   });
 
   it('should disallow Styled usage when configured off', async () => {
     await expect(
       run(
         `
-      import styled, { css } from 'astroturf';
+      import styled, { css } from 'astroturf/react';
 
       const ButtonA = styled.button\`
         color: \${p => p.color};
       \`
       `,
-        { enableCssProp: true, customCssProperties: 'cssProp' },
+        { enableCssProp: true, enableDynamicInterpolations: 'cssProp' },
       ),
-    ).rejects.toThrow(/Could not resolve interpolation to a value/);
+    ).rejects.toThrow(
+      /Dynamic expression compilation is not enabled\. To enable this usage set the `enableDynamicInterpolations` from `"cssProp"` to `true` in your astroturf options/,
+    );
   });
 
   it('should apply styles', () => {
     const wrapper = mount(
       jsx('div', {
-        green: true,
         css: [
           {
             cls1: 'cls1',
-            green: 'green',
           },
           [['aszd', 'blue']],
+          [],
         ],
       }),
     );
-    expect(wrapper.find('div.green')).toHaveLength(1);
+    expect(wrapper.find('div.cls1')).toHaveLength(1);
     expect(wrapper.prop('style')).toEqual({
       '--aszd': 'blue',
     });

@@ -1,4 +1,7 @@
+.cls1 { /*!*/ }
+.cls2 {
+composes: cls1;
 
-  .item {
-    padding: 4rem;
-  }
+padding: 4rem;
+}
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRlc3QvZml4dHVyZXMvc3R5bGVkLWludGVycG9sYXRpb25zLWJhc2UubW9kdWxlLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxRQUFRLElBQUksRUFBRTtBQUNkO0FBQ0EsY0FBYzs7QUFFZCxhQUFhO0FBQ2IiLCJmaWxlIjoidGVzdC9maXh0dXJlcy9zdHlsZWQtaW50ZXJwb2xhdGlvbnMtYmFzZS5tb2R1bGUuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNsczEgeyAvKiEqLyB9XG4uY2xzMiB7XG5jb21wb3NlczogY2xzMTtcblxucGFkZGluZzogNHJlbTtcbn0iXX0= */

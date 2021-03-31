@@ -6,71 +6,102 @@ import path from 'path';
 
 import ExtractCSS from 'mini-css-extract-plugin';
 import stripAnsi from 'strip-ansi';
+import Template from 'webpack/lib/Template';
 
 import { runWebpack } from './helpers';
 
+function getBaseConfig(entry, options = {}) {
+  return {
+    devtool: false,
+    mode: 'development',
+    context: __dirname,
+    entry: {
+      main: require.resolve(entry),
+      vendor: ['react', 'react-dom', 'astroturf', 'astroturf/react'],
+    },
+    optimization: {
+      sideEffects: true,
+      // moduleIds: 'natural',
+    },
+    module: {
+      rules: [
+        {
+          test: /\.jsx?$/,
+          exclude: /node_modules|astroturf\/src/,
+          use: [
+            {
+              loader: 'babel-loader',
+              options: {
+                babelrc: false,
+                plugins: ['@babel/plugin-transform-react-jsx'],
+              },
+            },
+            {
+              loader: require.resolve('../src/loader.ts'),
+              options: { useAltLoader: true, ...options },
+            },
+          ],
+        },
+      ],
+    },
+    plugins: [],
+    // plugins: [new VirtualModulePlugin()],
+    resolve: {
+      modules: ['node_modules', 'shared'],
+      alias: {
+        astroturf: path.resolve(__dirname, '../src/runtime'),
+      },
+    },
+    resolveLoader: {
+      alias: {
+        'astroturf/inline-loader': require.resolve('../src/inline-loader'),
+      },
+    },
+  };
+}
+
+const options = {
+  modules: {
+    localIdentName: '[name]__[local]-[hash:base64:3]',
+  },
+};
+
+const normalize = (source) => {
+  return source.split(Template.toIdentifier(__dirname)).join('');
+};
+
 describe('webpack integration', () => {
   function getConfig(entry) {
-    return {
-      devtool: false,
-      mode: 'development',
-      entry: {
-        main: require.resolve(entry),
-        vendor: ['react', 'react-dom', 'astroturf'],
+    const config = getBaseConfig(entry, {
+      allowGlobal: true,
+    });
+
+    config.module.rules.unshift(
+      {
+        test: /\.css$/,
+        use: [ExtractCSS.loader, { loader: 'css-loader', options }],
       },
-      module: {
-        rules: [
-          {
-            test: /\.css$/,
-            use: [
-              ExtractCSS.loader,
-              {
-                loader: require.resolve('../src/css-loader'),
-                options: {
-                  modules: {
-                    localIdentName: '[name]__[local]',
-                  },
-                },
-              },
-            ],
-          },
-          {
-            test: /\.jsx?$/,
-            exclude: /node_modules|astroturf\/src/,
-            use: [
-              {
-                loader: 'babel-loader',
-                options: {
-                  babelrc: false,
-                  plugins: ['@babel/plugin-transform-react-jsx'],
-                },
-              },
-              {
-                loader: require.resolve('../src/loader'),
-                options: { enableCssProp: true },
-              },
-            ],
-          },
+      {
+        test: /\.scss$/,
+        use: [
+          ExtractCSS.loader,
+          { loader: 'css-loader', options },
+          'sass-loader',
         ],
       },
-      resolve: {
-        modules: ['node_modules', 'shared'],
-        alias: {
-          astroturf: require.resolve('../src/runtime/styled'),
-        },
-      },
-      plugins: [new ExtractCSS()],
-    };
+    );
+    config.plugins.push(new ExtractCSS());
+    return config;
   }
 
   it('should work', async () => {
     const assets = await runWebpack(getConfig('./integration/main.js'));
 
-    expect(assets['main.css'].source()).toMatchFile(
-      path.join(__dirname, '__file_snapshots__/integration-styles.css'),
-    );
-    expect(assets['main.js'].source()).toMatchFile(
+    expect(normalize(assets['main.js'])).toMatchFile(
       path.join(__dirname, '__file_snapshots__/integration-js.js'),
+    );
+    expect(assets['main.css']).toMatchFile(
+      path.join(__dirname, '__file_snapshots__/integration-styles.css'),
     );
   });
 
@@ -119,10 +150,10 @@ describe('webpack integration', () => {
   it('issue 365', async () => {
     const assets = await runWebpack(getConfig('./integration/issue-365.js'));
 
-    expect(assets['main.css'].source()).toMatchFile(
+    expect(assets['main.css']).toMatchFile(
       path.join(__dirname, '__file_snapshots__/issue-365-styles.css'),
     );
-    expect(assets['main.js'].source()).toMatchFile(
+    expect(assets['main.js']).toMatchFile(
       path.join(__dirname, '__file_snapshots__/issue-365-js.js'),
     );
   });

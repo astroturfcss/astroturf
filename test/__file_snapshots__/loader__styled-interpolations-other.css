@@ -1,7 +1,10 @@
-@value item as a0 from "styled-interpolations-base.css";
+@value cls1 as a0 from "styled-interpolations-base.module.css!=!astroturf/inline-loader?style!/fixtures/styled-interpolations.js?base";
 
-
-
-  .other .a0 {
-    margin: 4rem;
-  }
+.cls1 { /*!*/ }
+.cls2 {
+composes: cls1;
+}
+.cls2 .a0 {
+margin: 4rem;
+}
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2ZpeHR1cmVzL3N0eWxlZC1pbnRlcnBvbGF0aW9ucy1vdGhlci5tb2R1bGUuY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLHNJQUFzSTs7QUFFdEksUUFBUSxJQUFJLEVBQUU7QUFDZDtBQUNBLGNBQWM7QUFLZDtBQUhBO0FBQ0EsWUFBWTtBQUNaIiwiZmlsZSI6Ii4uLy4uLy4uLy4uL2ZpeHR1cmVzL3N0eWxlZC1pbnRlcnBvbGF0aW9ucy1vdGhlci5tb2R1bGUuY3NzIiwic291cmNlc0NvbnRlbnQiOlsiQHZhbHVlIGNsczEgYXMgYTAgZnJvbSBcInN0eWxlZC1pbnRlcnBvbGF0aW9ucy1iYXNlLm1vZHVsZS5jc3MhPSFhc3Ryb3R1cmYvaW5saW5lLWxvYWRlcj9zdHlsZSEvZml4dHVyZXMvc3R5bGVkLWludGVycG9sYXRpb25zLmpzP2Jhc2VcIjtcblxuLmNsczEgeyAvKiEqLyB9XG4uY2xzMiB7XG5jb21wb3NlczogY2xzMTtcblxuJiAuYTAge1xubWFyZ2luOiA0cmVtO1xufVxufSJdfQ== */

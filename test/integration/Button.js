@@ -1,6 +1,6 @@
-import styled, { css } from 'astroturf';
+import styled, { stylesheet } from 'astroturf/react';
 
-export const styles = css`
+export const styles = stylesheet`
   .cool {
     content: '';
   }

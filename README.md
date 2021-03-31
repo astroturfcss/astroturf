@@ -22,8 +22,9 @@
 - [`as` prop](#as-prop)
 - [Setup](#setup)
   - [Options](#options)
-  - [Use with Gatsby](#use-with-gatsby)
   - [Use with Parcel](#use-with-parcel)
+  - [Use with Rollup](#use-with-rollup)
+  - [Use with Gatsby](#use-with-gatsby)
   - [Use with Preact](#use-with-preact)
   - [Use with Next.js](#use-with-nextjs)
   - [Use without webpack](#use-without-webpack)
@@ -78,7 +79,7 @@ const styles = css`
 For those that want something a bit more like styled-components or Emotion, there is a component API!
 
 ```js
-import styled, { css } from 'astroturf';
+import styled, { css } from 'astroturf/react';
 
 const Button = styled('button')`
   color: black;
@@ -148,23 +149,24 @@ In addition to the `styled` helper, styles can be defined directly on components
 You first need to enable this feature via the `enableCssProp` option in your loader config
 
 ```jsx
-function Button({ variant, children }) {
+function Button({ variant, bgColor, children }) {
   return (
     <button
-      variant={variant}
       css={css`
         color: black;
         border: 1px solid black;
-        background-color: white;
+        background-color: ${bgColor};
 
-        &.variant-primary {
+        ${variant === 'primary' &&
+        css`
           color: blue;
           border: 1px solid blue;
-        }
+        `}
 
-        &.variant-secondary {
+        ${variant === 'secondary' &&
+        css`
           color: green;
-        }
+        `}
       `}
     >
       {children}
@@ -211,14 +213,12 @@ How you accomplish that is mostly up to your preprocessor. Leverage Sass variabl
 ```js
 // Button.js
 
-const helpers = css`
-  .heavy {
-    font-weight: 900;
-  }
+const heavy = css`
+  font-weight: 900;
 `;
 
 const Title = styled('h3')`
-  composes: ${helpers.heavy};
+  composes: ${heavy};
 
   font-size: 12%;
 `;
@@ -382,7 +382,7 @@ A common task with styled components is to map their props or set default values
 astroturf cribs from Styled Components, by including an `attrs()` api.
 
 ```jsx
-import styled from 'astroturf';
+import styled from 'astroturf/react';
 
 // Provide a default `type` props
 const PasswordInput = styled('input').attrs({
@@ -444,7 +444,7 @@ const StyledFooter = styled(Footer, { allowAs: true })`
 
 ## Setup
 
-If you want the simplest, most bare-bones setup you can use the included `css-loader` which will setup css-modules and postcss-nested. This is the minimum setup necessary to get it working. Any options passed to the loader are passed to the official webpack `css-loader`
+This is all the setup necessary:
 
 ```js
 {
@@ -452,7 +452,7 @@ If you want the simplest, most bare-bones setup you can use the included `css-lo
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader', 'astroturf/css-loader'],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.jsx?$/,
@@ -475,8 +475,8 @@ You can add on here as you would normally for additional preprocesser setup. Her
   module: {
     rules: [
       {
-        test: /\.module\.scss$/,
-        use: ['style-loader', 'astroturf/css-loader', 'sass-loader'],
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.jsx?$/,
@@ -493,26 +493,23 @@ You can add on here as you would normally for additional preprocesser setup. Her
 }
 ```
 
-You can also skip the included `css-loader` entirely if your preprocessor handles nesting out of the box (like most do).
-
-```js
-[
-  {
-    test: /\.module\.scss$/,
-    use: ['style-loader', 'css-loader?modules=true', 'sass-loader'],
-  },
-  ...
-]
-```
+Since astroturf outputs CSS modules, it's best to use a `.module.*` extension. This
+automatically tells webpack's `css-loader` to process the stlyes correctly and expose the
+class names as exports for JS files. You can use whatever extension you like though, but
+may need to manually configure CSS modules elsewhere.
 
 ### Options
 
 astroturf accepts a few query options.
 
-- **tagName**: (default: `'css'`) The tag identifier used to locate inline css literals and extract them.
-- **styledTag**: (default: `'styled'`) The tag identifier used to locate components.
-- **extension**: (default: `'.css'`) the extension used for extracted "virtual" files. Change to whatever file type you want webpack to process extracted literals as.
-- **enableCssProp**: (default: false) compiles `css` props to styled components.
+- **stylesheetTagName**: (default: `'stylesheet'`) The tag identifier used to locate inline stylesheets declarations.
+- **cssTagName**: (default: `'css'`) The tag identifier used to locate inline css literals and extract them.
+- **styledTagName**: (default: `'styled'`) The tag identifier used to locate components.
+- **extension**: (default: `.'module.css'`) the extension used for extracted "virtual" files. Change to whatever file type you want webpack to process extracted literals as. It's generally
+  best to use a `.module.*` extension because `css-loader` automatically processes files ending with a `.module` extension as CSS modules.
+- **enableCssProp**: (default: true) compiles `css` props to styled components.
+- **enableDynamicInterpolations**: (default: 'cssProp') enables or disables custom value interpolation, You can disable this feature if you need to target environments that
+  do not support CSS custom properties.
 
 **Note:** astroturf expects uncompiled JavaScript code, If you are using babel or Typescript to transform tagged template literals, ensure the loader runs _before_ babel or typescript loaders.
 
@@ -534,10 +531,28 @@ Add these lines to `package.json` to work with [Parcel](https://parceljs.org/) b
   },
 ```
 
+### Use with Rollup
+
+Add [babel](https://github.com/rollup/plugins/tree/master/packages/babel) and [postcss](https://github.com/egoist/rollup-plugin-postcss) plugins to [Rollup](https://rollupjs.org/) config file:
+
+```js
+plugins: [
+  babel({
+    plugins: ['astroturf/plugin'],
+  }),
+  postcss({
+    extract: 'app.css',
+    modules: true,
+    plugins: [postcssNested],
+  }),
+];
+```
+
+See [example repl](https://repl.it/@vladshcherbin/rollup-astroturf#rollup.config.js)
+
 ### Use with Gatsby
 
 See [gatsby-plugin-astroturf](https://github.com/silvenon/gatsby-plugin-astroturf)
-
 
 ### Use with Preact
 
@@ -555,19 +570,19 @@ See [example](https://github.com/zeit/next.js/tree/canary/examples/with-astrotur
 
 ### Use without webpack
 
-If you aren't using webpack and still want to define styles inline, there is a babel plugin for that.
+If you aren't using webpack and still want to define styles inline, there is a babel preset for quickly configuring astroturf.
 
 Config shown below with the default options.
 
 ```js
 // babelrc.js
 module.exports = {
-  plugins: [
+  presets: [
     [
-      'astroturf/plugin',
+      'astroturf/preset',
       {
-        tagName: 'css',
-        extension: '.css',
+        cssTagName: 'css',
+        extension: '.module.css',
         writeFiles: true, // Writes css files to disk using the result of `getFileName`
         getFileName(hostFilePath, pluginsOptions) {
           const basepath = join(

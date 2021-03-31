@@ -21,6 +21,8 @@ describe('fixtures', () => {
     const options = getOptions(fixture);
     const content = fs.readFileSync(fixture, 'utf8');
 
+    // if (!fixture.includes('styled-interpolations')) return;
+
     function expectErrorToMatchSnapshot(error, code) {
       // There may be an error, or may just be styles weren't extracted
       expect(
@@ -37,11 +39,7 @@ describe('fixtures', () => {
 
           beforeAll(async () => {
             try {
-              result = await run(
-                content,
-                { enableCssProp: true, ...options },
-                fixture,
-              );
+              result = await run(content, options, fixture);
             } catch (err) {
               error = err;
             }
@@ -71,7 +69,10 @@ describe('fixtures', () => {
                 join(
                   __dirname,
                   '__file_snapshots__',
-                  `plugin__${basename(s.absoluteFilePath)}`,
+                  `plugin__${basename(s.absoluteFilePath).replace(
+                    '.module',
+                    '',
+                  )}`,
                 ),
               );
             });
@@ -87,7 +88,7 @@ describe('fixtures', () => {
             try {
               result = await runLoader(
                 fs.readFileSync(fixture, 'utf-8'),
-                { enableCssProp: true, ...options },
+                options,
                 fixture,
               );
             } catch (err) {
@@ -120,7 +121,10 @@ describe('fixtures', () => {
                 join(
                   __dirname,
                   '__file_snapshots__',
-                  `loader__${basename(s.absoluteFilePath)}`,
+                  `loader__${basename(s.absoluteFilePath).replace(
+                    '.module',
+                    '',
+                  )}`,
                 ),
               );
             });

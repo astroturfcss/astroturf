@@ -1,0 +1,55 @@
+@tailwind base;
+
+html {
+  @apply antialiased m-0;
+}
+
+body {
+  color: theme('colors.black');
+  background-attachment: fixed;
+  background-image: url('../assets/dodad-1.svg'), url('../assets/dodad-2.svg'),
+    url('../assets/dodad-3.svg');
+  background-position: left 25% bottom 20%, left 12% top 50px, right 5% top 45%;
+  background-size: auto 140px, auto 100px, auto 140px;
+  background-color: theme('colors.secondary');
+  background-repeat: no-repeat;
+  min-height: 100%;
+}
+
+ul {
+  @apply pl-6;
+}
+
+li {
+  @apply pb-4;
+  list-style: disc;
+}
+
+h1 {
+  @apply text-5xl mb-6 mt-8 font-brand text-center text-yellow;
+
+  text-shadow: 3px 2px 0px #5c5a5a;
+}
+
+.text-shadow {
+  text-shadow: 3px 2px 0px #5c5a5a;
+}
+
+.text-shadow-sm {
+  text-shadow: 2px 1px 0px #5c5a5a;
+}
+
+h2,
+h3,
+h4 {
+  @apply text-3xl mb-4 mt-6 font-brand text-center text-yellow;
+
+  text-shadow: 3px 2px 0px #5c5a5a;
+}
+
+p {
+  @apply mb-4;
+}
+@tailwind components;
+
+@tailwind utilities;

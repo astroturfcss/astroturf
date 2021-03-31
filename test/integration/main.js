@@ -1,13 +1,14 @@
-import styled, { css } from 'astroturf';
+import styled, { css, stylesheet } from 'astroturf/react';
 import React from 'react';
 import Widget from 'widget';
+import Doodad from 'withConfig';
 
 import Button, { styles as btnStyles } from './Button';
 import * as Buttons from './Button';
 
 const width = 75;
 
-const styles = css`
+const styles = stylesheet`
   .parent {
     color: red;
   }
@@ -44,6 +45,7 @@ const FancierBox = styled('div')`
   & > ${Button} {
     margin-left: 4px;
   }
+
   & > ${Buttons.Button} {
     margin-left: 8px;
   }
@@ -53,13 +55,13 @@ export function MyComponent() {
   return (
     <>
       <div
-        foo
         css={css`
           color: red;
 
-          &.foo {
+          ${foo &&
+          css`
             color: blue;
-          }
+          `}
         `}
       >
         <div>hey </div>

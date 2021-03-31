@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 
-import { jsx } from '../src/index';
-import { testAllRunners } from './helpers';
+import { jsx } from '../src/runtime/jsx';
+import { format, testAllRunners } from './helpers';
 
 describe('css prop', () => {
   testAllRunners('should compile string', async (runner) => {
@@ -17,7 +17,6 @@ describe('css prop', () => {
         );
       }
     `,
-      { enableCssProp: true },
     );
 
     expect(styles[0].identifier).toEqual('CssProp1_button');
@@ -38,7 +37,6 @@ describe('css prop', () => {
         );
       }
     `,
-      { enableCssProp: true },
     );
 
     expect(style.identifier).toEqual('CssProp1_button');
@@ -59,7 +57,6 @@ describe('css prop', () => {
         );
       }
     `,
-      { enableCssProp: true },
     );
 
     expect(style.identifier).toEqual('CssProp1_button');
@@ -82,7 +79,6 @@ describe('css prop', () => {
         );
       }
     `,
-      { enableCssProp: true },
     );
 
     expect(style.value).toMatch('1500ms');
@@ -109,12 +105,48 @@ describe('css prop', () => {
         }), React.createElement('span', { css: 'width: 3rem' }));
       });
     `,
-        { enableCssProp: true },
       );
 
       expect(code).not.toMatch('React.createElement');
+      expect(code).not.toContain('/** @jsx');
+      expect(code).not.toContain('/** @jsxFrag');
+
+      expect(code).toMatch('import _j from "astroturf/jsx";');
+      expect(code).toMatch('_j(');
       expect(styles).toHaveLength(2);
       expect(styles[0].identifier).toEqual('CssProp1_div');
+    },
+  );
+
+  testAllRunners(
+    'should inject imports in the right order',
+    async (runner, { requirePath }) => {
+      const [code] = await runner(
+        `
+          import { css } from 'astroturf';
+          import Component from './Foo';
+
+          function Button() {
+            return (
+              <button
+                css={css\`
+                  color: blue;
+                \`}
+              >
+                <span css="height: 3rem;"/>
+              </button>
+            );
+          }
+        `,
+      );
+
+      expect(code).toContain(
+        format`
+          import Component from './Foo';
+          import _CssProp1_button from "${requirePath('CssProp1_button')}";
+          import _CssProp2_span from "${requirePath('CssProp2_span')}";
+        `,
+      );
     },
   );
 
@@ -177,27 +209,44 @@ describe('css prop', () => {
     },
   );
 
+  testAllRunners('falls back to stylesheet prop', async (runner) => {
+    const [, styles] = await runner(
+      `
+        import { css } from 'astroturf';
+
+        function Button() {
+          return (
+            <button
+              css={css\`
+                color: blue;
+              \`}
+            />
+          );
+        }
+      `,
+      {
+        cssTagName: false,
+        stylesheetTagName: 'css',
+      },
+    );
+
+    expect(styles).toHaveLength(1);
+    expect(styles[0].type).toEqual('class');
+  });
+
   it('should render the component correctly', () => {
     expect(
       mount(
         jsx('div', {
-          green: true,
-          big: undefined,
-          dangerous: null,
-          size: 'sm',
-          theme: 'primary',
-          foo: 1,
-          css: {
-            cls1: 'cls1',
-            green: 'green',
-            big: 'big',
-            dangerous: 'dangerous',
-            themePrimary: 'primary',
-            'size-sm': 'small',
-            'foo-1': 'foo',
-          },
+          css: [
+            {
+              cls1: 'cls1',
+            },
+            [],
+            [],
+          ],
         }),
-      ).find('div.green.primary.small.foo'),
+      ).find('div.cls1'),
     ).toHaveLength(1);
   });
 });

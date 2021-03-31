@@ -1,0 +1,12 @@
+.plain-css__btn {
+  color: red;
+}
+
+  .plain-css__btn:hover {
+    color: blue;
+  }
+
+  html {
+      font-size: 1px;
+    }
+

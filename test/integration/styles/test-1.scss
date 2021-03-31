@@ -1,0 +1,8 @@
+@import './utils.scss';
+
+$foo: red;
+
+.btn {
+  color: $foo;
+  background-color: $bar;
+}

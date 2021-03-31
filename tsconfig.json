@@ -1,0 +1,9 @@
+{
+  "extends": "@4c/tsconfig/web.json",
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "rootDir": "src",
+    "outDir": "lib"
+  },
+  "include": ["src"]
+}

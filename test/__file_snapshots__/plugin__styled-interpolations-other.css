@@ -1,7 +1,10 @@
-@value item as a0 from "styled-interpolations-base.css";
+@value cls1 as a0 from "./styled-interpolations-base.module.css";
 
-
-
-  .other .a0 {
-    margin: 4rem;
-  }
+.cls1 { /*!*/ }
+.cls2 {
+composes: cls1;
+}
+.cls2 .a0 {
+margin: 4rem;
+}
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRlc3QvZml4dHVyZXMvc3R5bGVkLWludGVycG9sYXRpb25zLW90aGVyLm1vZHVsZS5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsZ0VBQWdFOztBQUVoRSxRQUFRLElBQUksRUFBRTtBQUNkO0FBQ0EsY0FBYztBQUtkO0FBSEE7QUFDQSxZQUFZO0FBQ1oiLCJmaWxlIjoidGVzdC9maXh0dXJlcy9zdHlsZWQtaW50ZXJwb2xhdGlvbnMtb3RoZXIubW9kdWxlLmNzcyIsInNvdXJjZXNDb250ZW50IjpbIkB2YWx1ZSBjbHMxIGFzIGEwIGZyb20gXCIuL3N0eWxlZC1pbnRlcnBvbGF0aW9ucy1iYXNlLm1vZHVsZS5jc3NcIjtcblxuLmNsczEgeyAvKiEqLyB9XG4uY2xzMiB7XG5jb21wb3NlczogY2xzMTtcblxuJiAuYTAge1xubWFyZ2luOiA0cmVtO1xufVxufSJdfQ== */

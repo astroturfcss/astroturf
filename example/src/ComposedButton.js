@@ -1,4 +1,4 @@
-import styled from 'astroturf'; // eslint-disable-line import/no-extraneous-dependencies
+import styled from 'astroturf/react'; // eslint-disable-line import/no-extraneous-dependencies
 
 import Button from './Button';
 
@@ -7,5 +7,5 @@ import Button from './Button';
  * precedence over the underlying `<Button/>` css property.
  */
 export default styled(Button)`
-  border-radius: 10px;
+  border-radius: 12px;
 `;

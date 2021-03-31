@@ -1,6 +1,10 @@
 const path = require('path');
 
-const { rules, plugins, loaders } = require('webpack-atoms').createAtoms({
+const ExtractPlugin = require('mini-css-extract-plugin');
+
+process.traceDeprecation = true;
+
+const { rules, plugins } = require('webpack-atoms').createAtoms({
   env: 'development',
 });
 
@@ -8,14 +12,15 @@ const inlineRule = rules.js();
 inlineRule.use = [
   ...inlineRule.use,
   {
-    loader: require.resolve('../lib/loader'),
-    options: { extension: '.module.scss' },
+    loader: 'astroturf/loader',
+    options: { extension: '.module.scss', useAltLoader: true },
   },
 ];
 
 module.exports = {
   entry: './src/client.js',
   devtool: 'cheap-module-source-map',
+  // cache: { type: 'memory' },
   devServer: {
     stats: 'minimal',
   },
@@ -23,21 +28,28 @@ module.exports = {
     path: path.join(__dirname, 'build'),
     filename: '[name].js',
   },
-
+  // optimization: {
+  //   minimize: false,
+  // },
   module: {
     rules: [
       inlineRule,
       {
-        oneOf: [
-          rules.sass.external(),
+        test: /\.scss$/,
+        use: [
+          // ExtractPlugin.loader,
+          'style-loader',
           {
-            test: /\.module\.scss/,
-            use: [
-              loaders.style(),
-              require.resolve('../lib/css-loader'),
-              loaders.sass(),
-            ],
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              modules: {
+                auto: true,
+                localIdentName: '[name]--[local]--[hash:base64:5]',
+              },
+            },
           },
+          'sass-loader',
         ],
       },
     ],
@@ -45,8 +57,18 @@ module.exports = {
   mode: 'development',
   resolve: {
     alias: {
-      astroturf: path.resolve(__dirname, '../lib/index.js'),
+      astroturf: path.resolve(__dirname, '../lib'),
     },
   },
-  plugins: [plugins.html()],
+  resolveLoader: {
+    alias: {
+      astroturf: path.resolve(__dirname, '../lib'),
+    },
+  },
+
+  plugins: [
+    plugins.html(),
+    //
+    // new ExtractPlugin(),
+  ],
 };

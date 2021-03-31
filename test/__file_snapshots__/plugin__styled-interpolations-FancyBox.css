@@ -1,23 +1,21 @@
-@value item as a0 from "styled-interpolations-base.css";
-
+@value cls1 as a0 from "./styled-interpolations-base.module.css";
 
 .cls1 { /*!*/ }
 .cls2 {
 composes: cls1;
 
 composes: global from global;
-composes: other from "styled-interpolations-other.css";
-composes: item from "styled-interpolations-base.css";
+composes: cls2 from "./styled-interpolations-other.module.css";
+composes: cls2 from "./styled-interpolations-base.module.css";
 
 color: red;
 width: 75px;
-
-&.a0 {
+}
+.cls2.a0 {
 padding: 5rem;
 }
-
-&.primary {
+.cls2.primary {
 background: white;
 color: palevioletred;
 }
-}
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRlc3QvZml4dHVyZXMvc3R5bGVkLWludGVycG9sYXRpb25zLUZhbmN5Qm94Lm1vZHVsZS5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsZ0VBQWdFOztBQUVoRSxRQUFRLElBQUksRUFBRTtBQUNkO0FBQ0EsY0FBYzs7QUFFZCw0QkFBNEI7QUFDNUIsOERBQThEO0FBQzlELDZEQUE2RDs7QUFFN0QsVUFBVTtBQUNWLFdBQVc7QUFVWDtBQVJBO0FBQ0EsYUFBYTtBQUNiO0FBRUE7QUFDQSxpQkFBaUI7QUFDakIsb0JBQW9CO0FBQ3BCIiwiZmlsZSI6InRlc3QvZml4dHVyZXMvc3R5bGVkLWludGVycG9sYXRpb25zLUZhbmN5Qm94Lm1vZHVsZS5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJAdmFsdWUgY2xzMSBhcyBhMCBmcm9tIFwiLi9zdHlsZWQtaW50ZXJwb2xhdGlvbnMtYmFzZS5tb2R1bGUuY3NzXCI7XG5cbi5jbHMxIHsgLyohKi8gfVxuLmNsczIge1xuY29tcG9zZXM6IGNsczE7XG5cbmNvbXBvc2VzOiBnbG9iYWwgZnJvbSBnbG9iYWw7XG5jb21wb3NlczogY2xzMiBmcm9tIFwiLi9zdHlsZWQtaW50ZXJwb2xhdGlvbnMtb3RoZXIubW9kdWxlLmNzc1wiO1xuY29tcG9zZXM6IGNsczIgZnJvbSBcIi4vc3R5bGVkLWludGVycG9sYXRpb25zLWJhc2UubW9kdWxlLmNzc1wiO1xuXG5jb2xvcjogcmVkO1xud2lkdGg6IDc1cHg7XG5cbiYuYTAge1xucGFkZGluZzogNXJlbTtcbn1cblxuJi5wcmltYXJ5IHtcbmJhY2tncm91bmQ6IHdoaXRlO1xuY29sb3I6IHBhbGV2aW9sZXRyZWQ7XG59XG59Il19 */

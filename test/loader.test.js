@@ -1,12 +1,13 @@
-const { runLoader } = require('./helpers');
+const { runLoader, buildLoaderReuqest } = require('./helpers');
 
 describe('webpack loader', () => {
   it('should add imports', async () => {
     const [code] = await runLoader(
       `
-      import { css } from 'astroturf';
+      import { css, stylesheet } from 'astroturf';
 
-      const styles = css\`\`
+      const cls = css\`\`
+      const styles = stylesheet\`\`
 
       function Button() {
         return (
@@ -22,16 +23,22 @@ describe('webpack loader', () => {
     `,
       { enableCssProp: true },
     );
-    expect(code.includes('/* @jsx _j */')).toBe(true);
-    expect(code.includes('/* @jsxFrag _f */')).toBe(true);
 
-    expect(
-      code.includes('[require("./MyStyleFile-CssProp1_button.css")'),
-    ).toBe(true);
+    expect(code).toContain('/** @jsx _j */');
+    expect(code).toContain('/** @jsxFrag _j.F */');
 
-    expect(
-      code.includes('const styles = require("./MyStyleFile-styles.css")'),
-    ).toBe(true);
+    expect(code).toContain(
+      `import _CssProp1_button from "${buildLoaderReuqest(
+        'CssProp1_button',
+      )}"`,
+    );
+    expect(code).toContain('[_CssProp1_button');
+
+    expect(code).toContain(
+      `import _styles from "${buildLoaderReuqest('styles')}"`,
+    );
+    expect(code).toContain('const styles = _styles;');
+    expect(code).toContain('const cls = _cls.cls2;');
   });
 
   it('finds different css tag names', async () => {
@@ -47,7 +54,7 @@ describe('webpack loader', () => {
       \`;
     `,
       {
-        tagName: 'less',
+        cssTagName: 'less',
         extension: '.less',
       },
     );
@@ -65,7 +72,8 @@ describe('webpack loader', () => {
       \`;
     `,
       {
-        styledTag: 's',
+        styledTagName: 's',
+        allowGlobal: true,
       },
     );
 

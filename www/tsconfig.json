@@ -1,0 +1,13 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "../",
+    "noEmit": true,
+    "baseUrl": "../",
+    "paths": {
+      "astroturf/*": ["src/runtime/*"]
+    }
+  },
+  "exclude": ["node_modules"],
+  "include": ["../www", "www", "src", "../src"]
+}

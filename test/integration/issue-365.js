@@ -1,9 +1,7 @@
-import styled, { css } from 'astroturf';
+import styled, { css } from 'astroturf/react';
 
 const mixins = css`
-  .show {
-    display: block;
-  }
+  display: block;
 `;
 
 const Block = <BlockStyled active={false} />;
@@ -13,7 +11,7 @@ const BlockStyled = styled.div`
 
   @at-root {
     .active {
-      composes: ${mixins.show};
+      composes: ${mixins};
     }
   }
 `;

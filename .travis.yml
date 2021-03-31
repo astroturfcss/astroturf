@@ -10,3 +10,4 @@ cache:
 branches:
   only:
     - master
+    - v1

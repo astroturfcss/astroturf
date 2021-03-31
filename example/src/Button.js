@@ -1,7 +1,11 @@
-import styled from 'astroturf'; // eslint-disable-line import/no-extraneous-dependencies
+import styled from 'astroturf/react';
 
+// eslint-disable-next-line max-len
+// import styles2 from './button.module.scss!=!../base64-loader?LmZvbyB7IGNvbG9yOiByZWQ7IH0=!./Button.js';
+
+// eslint-disable-line import/no-extraneous-dependencies
 const Button = styled('button')`
-  @import '~./styles/mixins.scss';
+  @import './styles/mixins.scss';
 
   display: inline-flex;
   align-items: center;
@@ -12,6 +16,7 @@ const Button = styled('button')`
   padding: 0 0.4rem;
   border-radius: 2px;
   font-weight: normal;
+
   font-size: 16px;
   touch-action: manipulation;
   cursor: pointer;
@@ -21,8 +26,8 @@ const Button = styled('button')`
 
   &.theme-primary {
     @include button-variant(white, #33ad13, #298f0f);
+    color: blue;
   }
-
   &.theme-secondary {
     @include button-variant(#33ad13, white, white);
   }
@@ -35,6 +40,10 @@ const Button = styled('button')`
     font-size: 24px;
     line-height: calc(4rem - 2px);
   }
+`;
+
+export const Button2 = styled('button')`
+  color: violet;
 `;
 
 export default Button;

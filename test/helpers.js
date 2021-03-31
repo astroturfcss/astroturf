@@ -1,12 +1,16 @@
-const { relative, dirname } = require('path');
+const { relative, dirname, basename } = require('path');
 
 const { transformAsync } = require('@babel/core');
 const fs = require('fs-extra');
-const MemoryFS = require('memory-fs');
 const prettier = require('prettier');
-const webpack = require('webpack');
 
 const loader = require('../src/loader');
+const {
+  createRequirePath,
+  default: createFilename,
+} = require('../src/utils/createFilename');
+
+const FILE_NAME = '/MyStyleFile.js';
 
 const PARSER_OPTS = {
   plugins: [
@@ -23,13 +27,30 @@ const PARSER_OPTS = {
   ],
 };
 
+function normalizeNewLines(str) {
+  return str.replace(/\n\s*?\n/g, '\n').trim();
+}
+
+function rmSourceMap(str) {
+  return str.slice(0, str.indexOf('/*# sourceMappingURL=') || str.length);
+}
+export const loaderPrefix = '';
+
+export const buildLoaderReuqest = (ident, file = FILE_NAME) => {
+  const cssFile = createFilename(file, {}, ident);
+  return `${basename(
+    cssFile,
+  )}!=!astroturf/inline-loader?style!${FILE_NAME}?${ident}`;
+};
+
 export function format(strings, ...values) {
-  const str = strings.reduce(
+  let str = strings.reduce(
     (acc, next, idx) => `${acc}${next}${values[idx] || ''}`,
     '',
   );
 
-  return prettier.format(str, { parser: 'babel' });
+  str = str.slice(0, str.indexOf('/*# sourceMappingURL=') || str.length);
+  return normalizeNewLines(prettier.format(str, { parser: 'babel' }));
 }
 
 export async function run(src, options, filename = 'MyStyleFile.js') {
@@ -37,28 +58,52 @@ export async function run(src, options, filename = 'MyStyleFile.js') {
     filename,
     babelrc: false,
     plugins: [
-      [require('../src/plugin.js'), { ...options, writeFiles: false }],
-    ].filter(Boolean),
+      [require('../src/plugin.ts'), { ...options, writeFiles: false }],
+    ],
     parserOpts: PARSER_OPTS,
+    sourceType: 'unambiguous',
   });
 
   return [
-    prettier.format(code, { filepath: filename }),
+    normalizeNewLines(
+      rmSourceMap(prettier.format(code, { filepath: filename })),
+    ),
     metadata.astroturf.styles,
   ];
 }
 
-export function runLoader(src, options, filename = 'MyStyleFile.js') {
+export async function runBabel(
+  src,
+  { filename = 'MyStyleFile.js', ...babelConfig },
+) {
+  const { code, metadata } = await transformAsync(src, {
+    filename,
+    parserOpts: PARSER_OPTS,
+    sourceType: 'unambiguous',
+    babelrc: false,
+    ...babelConfig,
+  });
+
+  return [
+    normalizeNewLines(
+      rmSourceMap(prettier.format(code, { filepath: filename })),
+    ),
+    metadata.astroturf.styles,
+  ];
+}
+
+export function runLoader(src, options, filename = FILE_NAME) {
   return new Promise((resolve, reject) => {
     const meta = {};
+    const resourcePath = filename.replace(__dirname, '');
     const loaderContext = {
-      query: options,
-      loaders: [{ request: '/path/css-literal-loader' }],
+      query: { useAltLoader: true, ...options },
+      loaders: [{ request: '/path/astroturf/loader' }],
       loaderIndex: 0,
       context: '',
-      resource: filename,
-      resourcePath: filename,
-      request: `babel-loader!css-literal-loader!${filename}`,
+      resourcePath,
+      resource: resourcePath,
+      request: `babel-loader!astroturf/loader!${resourcePath}`,
       _compiler: {},
       _compilation: {
         fileTimestamps: new Map(),
@@ -67,12 +112,12 @@ export function runLoader(src, options, filename = 'MyStyleFile.js') {
       resolve(request, cb) {
         cb(null, relative(dirname(filename), request));
       },
-      emitVirtualFile: (_absoluteFilePath, _value) => {},
+      // emitVirtualFile: (_absoluteFilePath, _value) => {},
       async: () => (err, result) => {
         if (err) reject(err);
         else
           resolve([
-            prettier.format(result, { filepath: filename }),
+            normalizeNewLines(prettier.format(result, { filepath: filename })),
             meta.styles,
           ]);
       },
@@ -87,52 +132,25 @@ export const fixtures = fs
   .map((file) => `${__dirname}/fixtures/${file}`)
   .filter((f) => !f.endsWith('.json'));
 
-export function runWebpack(config) {
-  const compiler = webpack({
-    ...config,
-    output: {
-      filename: '[name].js',
-      path: '/build',
-    },
-    optimization: {
-      runtimeChunk: true,
-      splitChunks: {
-        chunks: 'initial',
-      },
-    },
-  });
-  compiler.outputFileSystem = new MemoryFS();
-  return new Promise((resolve, reject) => {
-    compiler.run((err, stats) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      if (stats.hasErrors() || stats.hasWarnings()) {
-        const { errors, warnings } = stats.toJson();
-        reject(
-          Object.assign(
-            new Error(
-              `Webpack threw the following errors:\n\n ${[
-                ...errors,
-                ...warnings,
-              ].join('\n')}`,
-            ),
-            { errors, warnings, framesToPop: 1 },
-          ),
-        );
-        return;
-      }
-      resolve(stats.compilation.assets);
-    });
-  });
-}
+export * from './webpack-helpers';
 
 function testAllRunnersImpl(t, msg, testFn) {
   t.each([
     ['babel', run],
     ['webpack', runLoader],
-  ])(`${msg} (%s)`, (name, ...args) => testFn(...args));
+  ])(`${msg}  (%s)`, (name, runner) =>
+    testFn(runner, {
+      current: name,
+      requirePath: (ident) => {
+        if (name === 'babel') {
+          const cssFile = createFilename(FILE_NAME, {}, ident);
+          return createRequirePath(FILE_NAME, cssFile);
+        }
+
+        return buildLoaderReuqest(ident, FILE_NAME);
+      },
+    }),
+  );
 }
 
 export function testAllRunners(msg, testFn) {

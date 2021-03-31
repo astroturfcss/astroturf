@@ -1,16 +1,11 @@
 {
+  "extends": "@4c/tsconfig/web.json",
   "compilerOptions": {
-    "forceConsistentCasingInFileNames": true,
-    "jsx": "react",
     "lib": ["es2015", "dom"],
-    "module": "commonjs",
-    "strict": true,
-    "types": [],
-    "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "astroturf": ["."],
-      "astroturf/helpers": ["helpers.d.ts"]
+      "astroturf/*": ["../src/runtime/*"]
     }
-  }
+  },
+  "include": [".", "../src"]
 }

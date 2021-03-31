@@ -1,13 +1,11 @@
+const _FancierBox = require("./styled-global-FancierBox.module.css");
+const _FancyBox = require("./styled-global-FancyBox.module.css");
 // prettier-ignore
 const FancyBox = /*#__PURE__*/s('div', null, {
   displayName: "FancyBox",
-  styles: require("./styled-global-FancyBox.css"),
-  attrs: null,
-  vars: []
+  styles: _FancyBox
 });
 const FancierBox = /*#__PURE__*/ s(FancyBox, null, {
   displayName: "FancierBox",
-  styles: require("./styled-global-FancierBox.css"),
-  attrs: null,
-  vars: [],
+  styles: _FancierBox,
 });

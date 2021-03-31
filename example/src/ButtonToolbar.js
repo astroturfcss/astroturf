@@ -1,4 +1,4 @@
-import styled from 'astroturf'; // eslint-disable-line import/no-extraneous-dependencies
+import styled from 'astroturf/react'; // eslint-disable-line import/no-extraneous-dependencies
 
 import Button from './Button';
 

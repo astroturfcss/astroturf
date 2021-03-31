@@ -1,5 +1,5 @@
 {
-  "extends": ["4catalyzer-react", "prettier"],
+  "extends": ["4catalyzer-react", "4catalyzer-typescript", "prettier"],
   "plugins": ["prettier"],
   "globals": {
     "__DEV__": false
@@ -11,7 +11,7 @@
   },
   "overrides": [
     {
-      "files": ["test/**"],
+      "files": ["test/**", "www/*.js"],
       "env": {
         "jest": true
       },

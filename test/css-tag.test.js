@@ -1,41 +1,86 @@
 import { format, run, testAllRunners } from './helpers';
 
 describe('css tag', () => {
+  testAllRunners(
+    'should inject imports in the right order',
+    async (runner, { requirePath }) => {
+      const [code] = await runner(`
+      import { css } from 'astroturf';
+      import Component from './Foo';
+
+      const styles = css\`
+        color: blue;
+      \`;
+      const styles2 = css\`
+        color: blue;
+      \`;
+    `);
+
+      expect(code).toEqual(
+        format`
+        import Component from './Foo';
+        import _styles from "${requirePath('styles')}"
+        import _styles2 from "${requirePath('styles2')}"
+        const styles = _styles.cls2;
+        const styles2 = _styles2.cls2;
+      `,
+      );
+    },
+  );
+
+  testAllRunners('should allow disabling', async (runner) => {
+    const [, styles] = await runner(
+      `
+        import { css } from 'astroturf';
+
+        const styles = css\`
+          .foo {
+            color: red;
+          }
+        \`;
+      `,
+      {
+        cssTagName: false,
+        stylesheetTagName: 'css',
+      },
+    );
+
+    expect(styles).toHaveLength(1);
+    expect(styles[0].type).toEqual('stylesheet');
+  });
+
   it('should remove css imports', async () => {
     const [code] = await run(`
       import { css } from 'astroturf';
 
       const styles = css\`
-        .blue {
-          color: blue;
-        }
+        color: blue;
       \`;
     `);
 
     expect(code).toEqual(
       format`
-        const styles = require("./MyStyleFile-styles.css");
+        import _styles from "./MyStyleFile-styles.module.css"
+        const styles = _styles.cls2;
       `,
     );
   });
 
-  testAllRunners('should remove just the css import', async (runner) => {
+  testAllRunners('should remove just the css import', async (runner, h) => {
     const [code] = await runner(`
-      import styled, { css } from 'astroturf';
+      import styled, { css } from 'astroturf/react';
 
       const styles = css\`
-        .blue {
-          color: blue;
-        }
+        color: blue;
       \`;
     `);
 
     expect(code).toEqual(
       format`
-        import styled from 'astroturf';
-
-        const styles = require("./MyStyleFile-styles.css");
-      `,
+          import styled from 'astroturf/react';
+          import _styles from "${h.requirePath('styles')}"
+          const styles = _styles.cls2;
+        `,
     );
   });
 
@@ -61,7 +106,7 @@ describe('css tag', () => {
       \`;
     `,
       {
-        tagName: 'less',
+        cssTagName: 'less',
         extension: '.less',
       },
     );
@@ -78,7 +123,7 @@ describe('css tag', () => {
           `
         import { css as less } from 'astroturf';
 
-        less\`
+        less\`a
           .blue {
             color: blue;
           }
@@ -90,7 +135,7 @@ describe('css tag', () => {
           }
         \`;
       `,
-          { tagName: 'less' },
+          { cssTagName: 'less' },
         ),
       ).rejects.toThrow(
         /There are multiple anonymous less tags that would conflict/,
@@ -111,7 +156,7 @@ describe('css tag', () => {
       \`;
     `,
       {
-        tagName: 'less',
+        cssTagName: 'less',
         allowGlobal: false,
       },
     );
@@ -122,6 +167,8 @@ describe('css tag', () => {
   testAllRunners('handles non-simple interpolations', async () => {
     const [, styles] = await run(
       `
+      import { css } from 'astroturf';
+
       const duration = 1000
       const durationMs = \`$\{duration + 500}ms\`;
 

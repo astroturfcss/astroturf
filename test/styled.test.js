@@ -2,15 +2,14 @@ import { stripIndents } from 'common-tags';
 import { mount } from 'enzyme';
 import React from 'react';
 
-import { withProps } from '../src/helpers';
-import styled from '../src/index';
-import { format, run, runLoader } from './helpers';
+import styled from '../src/runtime/react';
+import { buildLoaderReuqest, format, run, runLoader } from './helpers';
 
 describe('styled', () => {
-  it('should compile', async () => {
+  it('should compile (babel)', async () => {
     const [code] = await run(
       `
-      import { styled } from 'astroturf';
+      import styled from 'astroturf/react';
       const ButtonBase = styled('button')\`
         @import '~./styles/mixins.scss';
 
@@ -24,21 +23,20 @@ describe('styled', () => {
 
     expect(code).toEqual(
       format`
-        import { styled } from 'astroturf';
+        import styled from 'astroturf/react';
+        import _ButtonBase from "./MyStyleFile-ButtonBase.module.css";
         const ButtonBase = /*#__PURE__*/ styled('button', null, {
           displayName: \"ButtonBase\",
-          styles: require(\"./MyStyleFile-ButtonBase.css\"),
-          attrs: null,
-          vars: []
+          styles: _ButtonBase
         });
       `,
     );
   });
 
-  it('should compile', async () => {
+  it('should compile (webpack)', async () => {
     const [code] = await runLoader(
       `
-      import { styled } from 'astroturf';
+      import styled from 'astroturf/react';
 
       const ButtonBase = styled('button')\`
         @import '~./styles/mixins.scss';
@@ -53,13 +51,11 @@ describe('styled', () => {
 
     expect(code).toEqual(
       format`
-        import { styled } from 'astroturf';
-
+        import styled from 'astroturf/react';
+        import _ButtonBase from "${buildLoaderReuqest('ButtonBase')}";
         const ButtonBase = /*#__PURE__*/ styled('button', null, {
           displayName: \"ButtonBase\",
-          styles: require(\"./MyStyleFile-ButtonBase.css\"),
-          attrs: null,
-          vars: []
+          styles: _ButtonBase
         });
       `,
     );
@@ -68,7 +64,7 @@ describe('styled', () => {
   it('should hoist imports outside of wrapping class', async () => {
     const [, styles] = await run(
       `
-      import { styled } from 'astroturf';
+      import styled from 'astroturf/react';
 
       const ButtonBase = styled('button')\`
         @import '~./styles/mixins.scss';
@@ -83,6 +79,7 @@ describe('styled', () => {
 
     expect(styles[0].value).toEqual(stripIndents`
       @import '~./styles/mixins.scss';
+
       .cls1 { /*!*/ }
       .cls2 {
       composes: cls1;
@@ -92,13 +89,14 @@ describe('styled', () => {
       justify-content: center;
       border: 1px solid transparent;
       }
+      /*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIk15U3R5bGVGaWxlLUJ1dHRvbkJhc2UubW9kdWxlLmNzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSwrQkFBK0I7O0FBRS9CLFFBQVEsSUFBSSxFQUFFO0FBQ2Q7QUFDQSxjQUFjOztBQUVkLG9CQUFvQjtBQUNwQixtQkFBbUI7QUFDbkIsdUJBQXVCO0FBQ3ZCLDZCQUE2QjtBQUM3QiIsImZpbGUiOiJNeVN0eWxlRmlsZS1CdXR0b25CYXNlLm1vZHVsZS5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyJAaW1wb3J0ICd+Li9zdHlsZXMvbWl4aW5zLnNjc3MnO1xuXG4uY2xzMSB7IC8qISovIH1cbi5jbHMyIHtcbmNvbXBvc2VzOiBjbHMxO1xuXG5kaXNwbGF5OiBpbmxpbmUtZmxleDtcbmFsaWduLWl0ZW1zOiBjZW50ZXI7XG5qdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbmJvcmRlcjogMXB4IHNvbGlkIHRyYW5zcGFyZW50O1xufSJdfQ== */
     `);
   });
 
   it('should infer display names', async () => {
     const [, styles] = await run(
       `
-      import styled from 'astroturf';
+      import styled from 'astroturf/react';
 
       const Foo = () => {};
       const bar = 'qux';
@@ -124,6 +122,8 @@ describe('styled', () => {
     await expect(
       run(
         `
+        import styled from 'astroturf/react';
+
         styled('p')\`
           color: blue;
         \`;
@@ -240,7 +240,7 @@ describe('styled', () => {
       camelName: 'fancyBox',
     });
 
-    const Component = styled(withProps({})(Inner), null, {
+    const Component = styled(Inner, null, {
       displayName: 'Outer',
       styles: { green: 'green' },
       kebabName: 'outer',

@@ -1,4 +1,4 @@
-import styled from 'astroturf';
+import styled from 'astroturf/react';
 
 import Foo from './cycle-2';
 
