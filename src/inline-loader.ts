@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { promises as fs, mkdirSync } from 'fs';
-import { , dirname } from 'path';
+import { basename, dirname } from 'path';
 import util from 'util';
 import { deserialize, serialize } from 'v8';
 
@@ -69,36 +69,35 @@ module.exports = async function loader(
     this.loadModule(request, (err, _, _1, module) => done(err, module)),
   );
 
-  if (loaderOpts.styleId) {
-    const { source, styleId } = loaderOpts as {
-      source: string;
-      styleId: string;
-    };
+  if (loaderOpts.style) {
+    const styleId = this.resourceQuery.slice(1);
 
-    const styles = await cache.get(source);
+    const styles = await cache.get(resourcePath);
 
     let style = styles?.get(styleId);
 
     if (!style) {
-      await loadModule(source);
-      style = inMemoryStyleCache.get(source)?.get(styleId);
+      await loadModule(resourcePath);
+      style = inMemoryStyleCache.get(resourcePath)?.get(styleId);
     }
 
     if (!style) {
       return cb(
         new Error(
-          `Could not resolve style ${loaderOpts.styleId} in file ${loaderOpts.source}`,
+          `Could not resolve style ${styleId} in file ${resourcePath}`,
         ),
       );
     }
-    this._module.matchResource = style.absoluteFilePath;
+    if (!this._module.matchResource)
+      this._module.matchResource = style.absoluteFilePath;
+
     return cb(null, style.value);
   }
 
   function getLoaderRequest(from: string, to: string, id: string) {
-    const cssBase = createRequirePath(from, to);
+    const cssBase = basename(to);
 
-    const file = `${cssBase}!=!astroturf/inline-loader?source=${from}&styleId=${id}!${from}?${id}`;
+    const file = `${cssBase}!=!astroturf/inline-loader?style!${from}?${id}`;
 
     return file;
   }
@@ -137,7 +136,7 @@ module.exports = async function loader(
           throw buildDependencyError(
             content,
             interpolation,
-            Array.from((styles as any) || []),
+            Array.from(styles?.values() || []),
             module.resource,
             loc!,
           );

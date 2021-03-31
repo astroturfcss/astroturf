@@ -6,20 +6,22 @@ import path from 'path';
 
 import ExtractCSS from 'mini-css-extract-plugin';
 import stripAnsi from 'strip-ansi';
+import Template from 'webpack/lib/Template';
 
 import { runWebpack } from './helpers';
 
-function getBaseConfig(entry, options = { enableCssProp: true }) {
+function getBaseConfig(entry, options = {}) {
   return {
     devtool: false,
     mode: 'development',
+    context: __dirname,
     entry: {
       main: require.resolve(entry),
       vendor: ['react', 'react-dom', 'astroturf', 'astroturf/react'],
     },
     optimization: {
       sideEffects: true,
-      moduleIds: 'natural',
+      // moduleIds: 'natural',
     },
     module: {
       rules: [
@@ -36,7 +38,7 @@ function getBaseConfig(entry, options = { enableCssProp: true }) {
             },
             {
               loader: require.resolve('../src/loader.ts'),
-              options,
+              options: { useAltLoader: true, ...options },
             },
           ],
         },
@@ -50,13 +52,22 @@ function getBaseConfig(entry, options = { enableCssProp: true }) {
         astroturf: path.resolve(__dirname, '../src/runtime'),
       },
     },
+    resolveLoader: {
+      alias: {
+        'astroturf/inline-loader': require.resolve('../src/inline-loader'),
+      },
+    },
   };
 }
 
 const options = {
   modules: {
-    localIdentName: '[name]__[local]',
+    localIdentName: '[name]__[local]-[hash:base64:3]',
   },
+};
+
+const normalize = (source) => {
+  return source.split(Template.toIdentifier(__dirname)).join('');
 };
 
 describe('webpack integration', () => {
@@ -86,7 +97,7 @@ describe('webpack integration', () => {
   it('should work', async () => {
     const assets = await runWebpack(getConfig('./integration/main.js'));
 
-    expect(assets['main.js']).toMatchFile(
+    expect(normalize(assets['main.js'])).toMatchFile(
       path.join(__dirname, '__file_snapshots__/integration-js.js'),
     );
     expect(assets['main.css']).toMatchFile(

@@ -1,34 +1,34 @@
-(self["webpackChunkastroturf"] = self["webpackChunkastroturf"] || []).push([["main"],{
+(self["webpackChunk"] = self["webpackChunk"] || []).push([["main"],{
 
-/***/ "./test/integration/issue-365.js":
-/*!***************************************!*\
-  !*** ./test/integration/issue-365.js ***!
-  \***************************************/
+/***/ "./integration/issue-365.js":
+/*!**********************************!*\
+  !*** ./integration/issue-365.js ***!
+  \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "./src/runtime/react.js");
-/* harmony import */ var _issue_365_mixins_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./issue-365-mixins.module.css */ "./test/integration/issue-365-mixins.module.css");
-/* harmony import */ var _issue_365_BlockStyled_module_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./issue-365-BlockStyled.module.css */ "./test/integration/issue-365-BlockStyled.module.css");
+/* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "../src/runtime/react.js");
+/* harmony import */ var issue_365_mixins_module_css_astroturf_inline_loader_style_Users_jquense_src_astroturf_test_integration_issue_365_js_mixins__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! issue-365-mixins.module.css!=!astroturf/inline-loader?style!./integration/issue-365.js?mixins */ "issue-365-mixins.module.css!=!../src/inline-loader.ts?style!./integration/issue-365.js?mixins");
+/* harmony import */ var issue_365_BlockStyled_module_css_astroturf_inline_loader_style_Users_jquense_src_astroturf_test_integration_issue_365_js_BlockStyled__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! issue-365-BlockStyled.module.css!=!astroturf/inline-loader?style!./integration/issue-365.js?BlockStyled */ "issue-365-BlockStyled.module.css!=!../src/inline-loader.ts?style!./integration/issue-365.js?BlockStyled");
 
 
 
-const mixins = _issue_365_mixins_module_css__WEBPACK_IMPORTED_MODULE_1__.default.cls2;
+const mixins = issue_365_mixins_module_css_astroturf_inline_loader_style_Users_jquense_src_astroturf_test_integration_issue_365_js_mixins__WEBPACK_IMPORTED_MODULE_1__.default.cls2;
 const Block = /*#__PURE__*/React.createElement(BlockStyled, {
   active: false
 });
 const BlockStyled = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_0__.default)("div", null, {
   displayName: "BlockStyled",
-  styles: _issue_365_BlockStyled_module_css__WEBPACK_IMPORTED_MODULE_2__.default
+  styles: issue_365_BlockStyled_module_css_astroturf_inline_loader_style_Users_jquense_src_astroturf_test_integration_issue_365_js_BlockStyled__WEBPACK_IMPORTED_MODULE_2__.default
 });
 
 /***/ }),
 
-/***/ "./test/integration/issue-365-BlockStyled.module.css":
-/*!***********************************************************!*\
-  !*** ./test/integration/issue-365-BlockStyled.module.css ***!
-  \***********************************************************/
+/***/ "issue-365-BlockStyled.module.css!=!../src/inline-loader.ts?style!./integration/issue-365.js?BlockStyled":
+/*!***************************************************************************************************************!*\
+  !*** issue-365-BlockStyled.module.css!=!../src/inline-loader.ts?style!./integration/issue-365.js?BlockStyled ***!
+  \***************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -37,14 +37,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"issue-365-BlockStyled-module__cls1","cls2":"issue-365-BlockStyled-module__cls2 issue-365-BlockStyled-module__cls1","active":"issue-365-BlockStyled-module__active issue-365-mixins-module__cls2 issue-365-mixins-module__cls1"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"issue-365__cls1-2fz","cls2":"issue-365__cls2-1Im issue-365__cls1-2fz","active":"issue-365__active--Om issue-365__cls2-qZK issue-365__cls1-1l7"});
 
 /***/ }),
 
-/***/ "./test/integration/issue-365-mixins.module.css":
-/*!******************************************************!*\
-  !*** ./test/integration/issue-365-mixins.module.css ***!
-  \******************************************************/
+/***/ "issue-365-mixins.module.css!=!../src/inline-loader.ts?style!./integration/issue-365.js?mixins":
+/*!*****************************************************************************************************!*\
+  !*** issue-365-mixins.module.css!=!../src/inline-loader.ts?style!./integration/issue-365.js?mixins ***!
+  \*****************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -53,14 +53,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"issue-365-mixins-module__cls1","cls2":"issue-365-mixins-module__cls2 issue-365-mixins-module__cls1"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"issue-365__cls1-3C5","cls2":"issue-365__cls2-129 issue-365__cls1-3C5"});
 
 /***/ }),
 
-/***/ "./src/runtime/index.js":
-/*!******************************!*\
-  !*** ./src/runtime/index.js ***!
-  \******************************/
+/***/ "../src/runtime/index.js":
+/*!*******************************!*\
+  !*** ../src/runtime/index.js ***!
+  \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -86,10 +86,10 @@ const css = () => {
 
 /***/ }),
 
-/***/ "./src/runtime/jsx.js":
-/*!****************************!*\
-  !*** ./src/runtime/jsx.js ***!
-  \****************************/
+/***/ "../src/runtime/jsx.js":
+/*!*****************************!*\
+  !*** ../src/runtime/jsx.js ***!
+  \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -101,7 +101,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "F": () => (/* reexport safe */ react__WEBPACK_IMPORTED_MODULE_0__.Fragment),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
 // eslint-disable-next-line import/no-extraneous-dependencies
 
 
@@ -143,10 +143,10 @@ jsx.F = react__WEBPACK_IMPORTED_MODULE_0__.Fragment;
 
 /***/ }),
 
-/***/ "./src/runtime/react.js":
-/*!******************************!*\
-  !*** ./src/runtime/react.js ***!
-  \******************************/
+/***/ "../src/runtime/react.js":
+/*!*******************************!*\
+  !*** ../src/runtime/react.js ***!
+  \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -156,9 +156,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "css": () => (/* reexport safe */ ___WEBPACK_IMPORTED_MODULE_2__.css),
 /* harmony export */   "stylesheet": () => (/* reexport safe */ ___WEBPACK_IMPORTED_MODULE_2__.stylesheet)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! . */ "./src/runtime/index.js");
-/* harmony import */ var _jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./jsx */ "./src/runtime/jsx.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! . */ "../src/runtime/index.js");
+/* harmony import */ var _jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./jsx */ "../src/runtime/jsx.js");
 // eslint-disable-next-line import/no-extraneous-dependencies
 
 
@@ -281,6 +281,6 @@ function styled(type, options, settings) {
 /******/ "use strict";
 /******/ 
 /******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ var __webpack_exports__ = __webpack_require__.O(undefined, ["vendors-node_modules_react_index_js"], () => (__webpack_exec__("./test/integration/issue-365.js")));
+/******/ var __webpack_exports__ = __webpack_require__.O(undefined, ["vendors-node_modules_react_index_js"], () => (__webpack_exec__("./integration/issue-365.js")));
 /******/ }
 ]);

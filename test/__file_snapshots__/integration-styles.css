@@ -1,70 +1,70 @@
-.Widget-module__cls1 { /*!*/ }
-.Widget-module__cls2 {
+.index__cls1-lcM { /*!*/ }
+.index__cls2-zQ3 {
 
 height: 20px;
 width: 30px;
 background-color: #dfd;
 }
-.index-Doodad-module__cls1 {
+.index__cls1-2tw {
   /*!*/
 }
 
-.index-Doodad-module__cls2 {
+.index__cls2-2qf {
   height: 20px;
   width: 30px;
   background-color: red;
 }
-.Button-styles-module__cool {
+.Button__cool-1Gm {
     content: '';
   }
-.Button-module__cls1 { /*!*/ }
-.Button-module__cls2 {
+.Button__cls1-3Yg { /*!*/ }
+.Button__cls2-1qB {
 }
-.main-styles-module__parent {
+.main__parent-23u {
     color: red;
   }
 
-  .main-styles-module__test > .Button-styles-module__cool, .main-styles-module__test > .Widget-module__cls1 {
+  .main__test-3Es > .Button__cool-1Gm, .main__test-3Es > .index__cls1-lcM {
     holla: yo;
   }
-.main-FancyBox-module__cls1 { /*!*/ }
-.main-FancyBox-module__cls2 {
+.main__cls1-319 { /*!*/ }
+.main__cls2-1cO {
 
 color: red;
 width: 75px;
 }
-.main-FancyBox-module__cls2.main-FancyBox-module__primary {
+.main__cls2-1cO.main__primary-3Nc {
 background: white;
 color: palevioletred;
 }
-.main-FancierBox-module__cls1 { /*!*/ }
-.main-FancierBox-module__cls2 {
+.main__cls1-3Ch { /*!*/ }
+.main__cls2-3n6 {
 
 color: ultra-red;
 }
-.main-FancierBox-module__cls2 > .main-FancyBox-module__cls1 {
+.main__cls2-3n6 > .main__cls1-319 {
 padding: 4em;
 }
-.main-styles-module__parent > .main-FancierBox-module__cls2 {
+.main__parent-23u > .main__cls2-3n6 {
 margin: 2em;
 }
 /* these are the same selector */
-.main-FancierBox-module__cls2 > .Button-module__cls1 {
+.main__cls2-3n6 > .Button__cls1-3Yg {
 margin-left: 4px;
 }
-.main-FancierBox-module__cls2 > .Button-module__cls1 {
+.main__cls2-3n6 > .Button__cls1-3Yg {
 margin-left: 8px;
 }
-.main-CssProp1_div-module__cls1 { /*!*/ }
-.main-CssProp1_div-module__cls2 {
+.main__cls1-1cT { /*!*/ }
+.main__cls2-3Ni {
 
 color: red;
 }
-.main-CssProp1_div-module__cssProp1DivVariant0 {
+.main__cssProp1DivVariant0-2Mw {
 color: blue;
 }
-.main-CssProp2_span-module__cls1 { /*!*/ }
-.main-CssProp2_span-module__cls2 {
+.main__cls1-j2C { /*!*/ }
+.main__cls2-3WV {
 
 color: blue;
 }

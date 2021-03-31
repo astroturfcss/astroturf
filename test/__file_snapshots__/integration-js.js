@@ -1,9 +1,9 @@
-(self["webpackChunkastroturf"] = self["webpackChunkastroturf"] || []).push([["main"],{
+(self["webpackChunk"] = self["webpackChunk"] || []).push([["main"],{
 
-/***/ "./test/integration/Button.js":
-/*!************************************!*\
-  !*** ./test/integration/Button.js ***!
-  \************************************/
+/***/ "./integration/Button.js":
+/*!*******************************!*\
+  !*** ./integration/Button.js ***!
+  \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -12,25 +12,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "styles": () => (/* binding */ styles),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "./src/runtime/react.js");
-/* harmony import */ var _Button_styles_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Button-styles.module.css */ "./test/integration/Button-styles.module.css");
-/* harmony import */ var _Button_module_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Button.module.css */ "./test/integration/Button.module.css");
+/* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "../src/runtime/react.js");
+/* harmony import */ var Button_styles_module_css_astroturf_inline_loader_style_integration_Button_js_styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! Button-styles.module.css!=!astroturf/inline-loader?style!./integration/Button.js?styles */ "Button-styles.module.css!=!../src/inline-loader.ts?style!./integration/Button.js?styles");
+/* harmony import */ var Button_module_css_astroturf_inline_loader_style_integration_Button_js_Button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! Button.module.css!=!astroturf/inline-loader?style!./integration/Button.js?Button */ "Button.module.css!=!../src/inline-loader.ts?style!./integration/Button.js?Button");
 
 
 
-const styles = _Button_styles_module_css__WEBPACK_IMPORTED_MODULE_1__.default;
+const styles = Button_styles_module_css_astroturf_inline_loader_style_integration_Button_js_styles__WEBPACK_IMPORTED_MODULE_1__.default;
 const Button = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_0__.default)('button', null, {
   displayName: "Button",
-  styles: _Button_module_css__WEBPACK_IMPORTED_MODULE_2__.default
+  styles: Button_module_css_astroturf_inline_loader_style_integration_Button_js_Button__WEBPACK_IMPORTED_MODULE_2__.default
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Button);
 
 /***/ }),
 
-/***/ "./test/integration/main.js":
-/*!**********************************!*\
-  !*** ./test/integration/main.js ***!
-  \**********************************/
+/***/ "./integration/main.js":
+/*!*****************************!*\
+  !*** ./integration/main.js ***!
+  \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -39,17 +39,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "MyComponent": () => (/* binding */ MyComponent),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/jsx */ "./src/runtime/jsx.js");
-/* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! astroturf/react */ "./src/runtime/react.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var widget__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! widget */ "./test/integration/shared/widget/index.js");
-/* harmony import */ var withConfig__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! withConfig */ "./test/integration/shared/withConfig/index.js");
-/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Button */ "./test/integration/Button.js");
-/* harmony import */ var _main_styles_module_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./main-styles.module.css */ "./test/integration/main-styles.module.css");
-/* harmony import */ var _main_FancyBox_module_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./main-FancyBox.module.css */ "./test/integration/main-FancyBox.module.css");
-/* harmony import */ var _main_FancierBox_module_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./main-FancierBox.module.css */ "./test/integration/main-FancierBox.module.css");
-/* harmony import */ var _main_CssProp1_div_module_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./main-CssProp1_div.module.css */ "./test/integration/main-CssProp1_div.module.css");
-/* harmony import */ var _main_CssProp2_span_module_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./main-CssProp2_span.module.css */ "./test/integration/main-CssProp2_span.module.css");
+/* harmony import */ var astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/jsx */ "../src/runtime/jsx.js");
+/* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! astroturf/react */ "../src/runtime/react.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
+/* harmony import */ var widget__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! widget */ "./integration/shared/widget/index.js");
+/* harmony import */ var withConfig__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! withConfig */ "./integration/shared/withConfig/index.js");
+/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Button */ "./integration/Button.js");
+/* harmony import */ var main_styles_module_css_astroturf_inline_loader_style_integration_main_js_styles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! main-styles.module.css!=!astroturf/inline-loader?style!./integration/main.js?styles */ "main-styles.module.css!=!../src/inline-loader.ts?style!./integration/main.js?styles");
+/* harmony import */ var main_FancyBox_module_css_astroturf_inline_loader_style_integration_main_js_FancyBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! main-FancyBox.module.css!=!astroturf/inline-loader?style!./integration/main.js?FancyBox */ "main-FancyBox.module.css!=!../src/inline-loader.ts?style!./integration/main.js?FancyBox");
+/* harmony import */ var main_FancierBox_module_css_astroturf_inline_loader_style_integration_main_js_FancierBox__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! main-FancierBox.module.css!=!astroturf/inline-loader?style!./integration/main.js?FancierBox */ "main-FancierBox.module.css!=!../src/inline-loader.ts?style!./integration/main.js?FancierBox");
+/* harmony import */ var main_CssProp1_div_module_css_astroturf_inline_loader_style_integration_main_js_CssProp1_div__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! main-CssProp1_div.module.css!=!astroturf/inline-loader?style!./integration/main.js?CssProp1_div */ "main-CssProp1_div.module.css!=!../src/inline-loader.ts?style!./integration/main.js?CssProp1_div");
+/* harmony import */ var main_CssProp2_span_module_css_astroturf_inline_loader_style_integration_main_js_CssProp2_span__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! main-CssProp2_span.module.css!=!astroturf/inline-loader?style!./integration/main.js?CssProp2_span */ "main-CssProp2_span.module.css!=!../src/inline-loader.ts?style!./integration/main.js?CssProp2_span");
 /** @jsxRuntime classic*/
 
 /** @jsx _j */
@@ -68,91 +68,29 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const width = 75;
-const styles = _main_styles_module_css__WEBPACK_IMPORTED_MODULE_6__.default;
+const styles = main_styles_module_css_astroturf_inline_loader_style_integration_main_js_styles__WEBPACK_IMPORTED_MODULE_6__.default;
 const FancyBox = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_1__.default)('div', null, {
   displayName: "FancyBox",
-  styles: _main_FancyBox_module_css__WEBPACK_IMPORTED_MODULE_7__.default
+  styles: main_FancyBox_module_css_astroturf_inline_loader_style_integration_main_js_FancyBox__WEBPACK_IMPORTED_MODULE_7__.default
 });
 const FancierBox = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_1__.default)('div', null, {
   displayName: "FancierBox",
-  styles: _main_FancierBox_module_css__WEBPACK_IMPORTED_MODULE_8__.default
+  styles: main_FancierBox_module_css_astroturf_inline_loader_style_integration_main_js_FancierBox__WEBPACK_IMPORTED_MODULE_8__.default
 });
 function MyComponent() {
   return (0,astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__.default)(astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__.default.F, null, (0,astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__.default)("div", {
-    css: [_main_CssProp1_div_module_css__WEBPACK_IMPORTED_MODULE_9__.default, null, [foo && _main_CssProp1_div_module_css__WEBPACK_IMPORTED_MODULE_9__.default.cssProp1DivVariant0]]
+    css: [main_CssProp1_div_module_css_astroturf_inline_loader_style_integration_main_js_CssProp1_div__WEBPACK_IMPORTED_MODULE_9__.default, null, [foo && main_CssProp1_div_module_css_astroturf_inline_loader_style_integration_main_js_CssProp1_div__WEBPACK_IMPORTED_MODULE_9__.default.cssProp1DivVariant0]]
   }, (0,astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__.default)("div", null, "hey "), (0,astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__.default)("span", {
-    css: [_main_CssProp2_span_module_css__WEBPACK_IMPORTED_MODULE_10__.default]
+    css: [main_CssProp2_span_module_css_astroturf_inline_loader_style_integration_main_js_CssProp2_span__WEBPACK_IMPORTED_MODULE_10__.default]
   }, "yo")));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FancierBox);
 
 /***/ }),
 
-/***/ "./test/integration/shared/widget/index.js":
-/*!*************************************************!*\
-  !*** ./test/integration/shared/widget/index.js ***!
-  \*************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "./src/runtime/react.js");
-/* harmony import */ var _Widget_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Widget.module.css */ "./test/integration/shared/widget/Widget.module.css");
-
-
-const Widget = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_0__.default)('div', null, {
-  displayName: "Widget",
-  styles: _Widget_module_css__WEBPACK_IMPORTED_MODULE_1__.default
-});
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Widget);
-
-/***/ }),
-
-/***/ "./test/integration/shared/withConfig/index.js":
-/*!*****************************************************!*\
-  !*** ./test/integration/shared/withConfig/index.js ***!
-  \*****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "./src/runtime/react.js");
-/* harmony import */ var _index_Doodad_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index-Doodad.module.scss */ "./test/integration/shared/withConfig/index-Doodad.module.scss");
-
-
-const Doodad = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_0__.default)('div', null, {
-  displayName: "Doodad",
-  styles: _index_Doodad_module_scss__WEBPACK_IMPORTED_MODULE_1__.default
-});
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Doodad);
-
-/***/ }),
-
-/***/ "./test/integration/Button-styles.module.css":
-/*!***************************************************!*\
-  !*** ./test/integration/Button-styles.module.css ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-// extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cool":"Button-styles-module__cool"});
-
-/***/ }),
-
-/***/ "./test/integration/Button.module.css":
+/***/ "./integration/shared/widget/index.js":
 /*!********************************************!*\
-  !*** ./test/integration/Button.module.css ***!
+  !*** ./integration/shared/widget/index.js ***!
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -161,15 +99,45 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-// extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"Button-module__cls1","cls2":"Button-module__cls2 Button-module__cls1 button-with-caret"});
+/* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "../src/runtime/react.js");
+/* harmony import */ var Widget_module_css_astroturf_inline_loader_style_integration_shared_widget_index_js_Widget__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! Widget.module.css!=!astroturf/inline-loader?style!./integration/shared/widget/index.js?Widget */ "Widget.module.css!=!../src/inline-loader.ts?style!./integration/shared/widget/index.js?Widget");
+
+
+const Widget = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_0__.default)('div', null, {
+  displayName: "Widget",
+  styles: Widget_module_css_astroturf_inline_loader_style_integration_shared_widget_index_js_Widget__WEBPACK_IMPORTED_MODULE_1__.default
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Widget);
 
 /***/ }),
 
-/***/ "./test/integration/main-CssProp1_div.module.css":
-/*!*******************************************************!*\
-  !*** ./test/integration/main-CssProp1_div.module.css ***!
-  \*******************************************************/
+/***/ "./integration/shared/withConfig/index.js":
+/*!************************************************!*\
+  !*** ./integration/shared/withConfig/index.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "../src/runtime/react.js");
+/* harmony import */ var index_Doodad_module_scss_astroturf_inline_loader_style_integration_shared_withConfig_index_js_Doodad__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! index-Doodad.module.scss!=!astroturf/inline-loader?style!./integration/shared/withConfig/index.js?Doodad */ "index-Doodad.module.scss!=!../src/inline-loader.ts?style!./integration/shared/withConfig/index.js?Doodad");
+
+
+const Doodad = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_0__.default)('div', null, {
+  displayName: "Doodad",
+  styles: index_Doodad_module_scss_astroturf_inline_loader_style_integration_shared_withConfig_index_js_Doodad__WEBPACK_IMPORTED_MODULE_1__.default
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Doodad);
+
+/***/ }),
+
+/***/ "Button.module.css!=!../src/inline-loader.ts?style!./integration/Button.js?Button":
+/*!****************************************************************************************!*\
+  !*** Button.module.css!=!../src/inline-loader.ts?style!./integration/Button.js?Button ***!
+  \****************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -178,14 +146,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"main-CssProp1_div-module__cls1","cls2":"main-CssProp1_div-module__cls2 main-CssProp1_div-module__cls1","cssProp1DivVariant0":"main-CssProp1_div-module__cssProp1DivVariant0"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"Button__cls1-1Sk","cls2":"Button__cls2-3iX Button__cls1-1Sk button-with-caret"});
 
 /***/ }),
 
-/***/ "./test/integration/main-CssProp2_span.module.css":
-/*!********************************************************!*\
-  !*** ./test/integration/main-CssProp2_span.module.css ***!
-  \********************************************************/
+/***/ "Button-styles.module.css!=!../src/inline-loader.ts?style!./integration/Button.js?styles":
+/*!***********************************************************************************************!*\
+  !*** Button-styles.module.css!=!../src/inline-loader.ts?style!./integration/Button.js?styles ***!
+  \***********************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -194,14 +162,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"main-CssProp2_span-module__cls1","cls2":"main-CssProp2_span-module__cls2 main-CssProp2_span-module__cls1"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cool":"Button__cool-3Ke"});
 
 /***/ }),
 
-/***/ "./test/integration/main-FancierBox.module.css":
-/*!*****************************************************!*\
-  !*** ./test/integration/main-FancierBox.module.css ***!
-  \*****************************************************/
+/***/ "main-CssProp1_div.module.css!=!../src/inline-loader.ts?style!./integration/main.js?CssProp1_div":
+/*!*******************************************************************************************************!*\
+  !*** main-CssProp1_div.module.css!=!../src/inline-loader.ts?style!./integration/main.js?CssProp1_div ***!
+  \*******************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -210,14 +178,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"a0":"main-FancyBox-module__cls1","a1":"main-styles-module__parent","a2":"Button-module__cls1","a3":"Button-module__cls1","cls1":"main-FancierBox-module__cls1","cls2":"main-FancierBox-module__cls2 main-FancierBox-module__cls1"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"main__cls1-1cT","cls2":"main__cls2-3Ni main__cls1-1cT","cssProp1DivVariant0":"main__cssProp1DivVariant0-2Mw"});
 
 /***/ }),
 
-/***/ "./test/integration/main-FancyBox.module.css":
-/*!***************************************************!*\
-  !*** ./test/integration/main-FancyBox.module.css ***!
-  \***************************************************/
+/***/ "main-CssProp2_span.module.css!=!../src/inline-loader.ts?style!./integration/main.js?CssProp2_span":
+/*!*********************************************************************************************************!*\
+  !*** main-CssProp2_span.module.css!=!../src/inline-loader.ts?style!./integration/main.js?CssProp2_span ***!
+  \*********************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -226,14 +194,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"main-FancyBox-module__cls1","cls2":"main-FancyBox-module__cls2 main-FancyBox-module__cls1 foo","primary":"main-FancyBox-module__primary"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"main__cls1-j2C","cls2":"main__cls2-3WV main__cls1-j2C"});
 
 /***/ }),
 
-/***/ "./test/integration/main-styles.module.css":
-/*!*************************************************!*\
-  !*** ./test/integration/main-styles.module.css ***!
-  \*************************************************/
+/***/ "main-FancierBox.module.css!=!../src/inline-loader.ts?style!./integration/main.js?FancierBox":
+/*!***************************************************************************************************!*\
+  !*** main-FancierBox.module.css!=!../src/inline-loader.ts?style!./integration/main.js?FancierBox ***!
+  \***************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -242,14 +210,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"a0":"Button-styles-module__cool","a1":"Widget-module__cls1","parent":"main-styles-module__parent","test":"main-styles-module__test"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"a0":"main__cls1-319","a1":"main__parent-23u","a2":"Button__cls1-3Yg","a3":"Button__cls1-3Yg","cls1":"main__cls1-3Ch","cls2":"main__cls2-3n6 main__cls1-3Ch"});
 
 /***/ }),
 
-/***/ "./test/integration/shared/widget/Widget.module.css":
-/*!**********************************************************!*\
-  !*** ./test/integration/shared/widget/Widget.module.css ***!
-  \**********************************************************/
+/***/ "main-FancyBox.module.css!=!../src/inline-loader.ts?style!./integration/main.js?FancyBox":
+/*!***********************************************************************************************!*\
+  !*** main-FancyBox.module.css!=!../src/inline-loader.ts?style!./integration/main.js?FancyBox ***!
+  \***********************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -258,14 +226,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"Widget-module__cls1","cls2":"Widget-module__cls2 Widget-module__cls1"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"main__cls1-2Lw","cls2":"main__cls2-oHS main__cls1-2Lw foo","primary":"main__primary-27J"});
 
 /***/ }),
 
-/***/ "./test/integration/shared/withConfig/index-Doodad.module.scss":
-/*!*********************************************************************!*\
-  !*** ./test/integration/shared/withConfig/index-Doodad.module.scss ***!
-  \*********************************************************************/
+/***/ "main-styles.module.css!=!../src/inline-loader.ts?style!./integration/main.js?styles":
+/*!*******************************************************************************************!*\
+  !*** main-styles.module.css!=!../src/inline-loader.ts?style!./integration/main.js?styles ***!
+  \*******************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -274,14 +242,46 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // extracted by mini-css-extract-plugin
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"index-Doodad-module__cls1","cls2":"index-Doodad-module__cls2 index-Doodad-module__cls1"});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"a0":"Button__cool-1Gm","a1":"index__cls1-lcM","parent":"main__parent-2D9","test":"main__test-2fA"});
 
 /***/ }),
 
-/***/ "./src/runtime/index.js":
-/*!******************************!*\
-  !*** ./src/runtime/index.js ***!
-  \******************************/
+/***/ "Widget.module.css!=!../src/inline-loader.ts?style!./integration/shared/widget/index.js?Widget":
+/*!*****************************************************************************************************!*\
+  !*** Widget.module.css!=!../src/inline-loader.ts?style!./integration/shared/widget/index.js?Widget ***!
+  \*****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// extracted by mini-css-extract-plugin
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"index__cls1-2os","cls2":"index__cls2-1Lm index__cls1-2os"});
+
+/***/ }),
+
+/***/ "index-Doodad.module.scss!=!../src/inline-loader.ts?style!./integration/shared/withConfig/index.js?Doodad":
+/*!****************************************************************************************************************!*\
+  !*** index-Doodad.module.scss!=!../src/inline-loader.ts?style!./integration/shared/withConfig/index.js?Doodad ***!
+  \****************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// extracted by mini-css-extract-plugin
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"cls1":"index__cls1-2tw","cls2":"index__cls2-2qf index__cls1-2tw"});
+
+/***/ }),
+
+/***/ "../src/runtime/index.js":
+/*!*******************************!*\
+  !*** ../src/runtime/index.js ***!
+  \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -307,10 +307,10 @@ const css = () => {
 
 /***/ }),
 
-/***/ "./src/runtime/jsx.js":
-/*!****************************!*\
-  !*** ./src/runtime/jsx.js ***!
-  \****************************/
+/***/ "../src/runtime/jsx.js":
+/*!*****************************!*\
+  !*** ../src/runtime/jsx.js ***!
+  \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -322,7 +322,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "F": () => (/* reexport safe */ react__WEBPACK_IMPORTED_MODULE_0__.Fragment),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
 // eslint-disable-next-line import/no-extraneous-dependencies
 
 
@@ -364,10 +364,10 @@ jsx.F = react__WEBPACK_IMPORTED_MODULE_0__.Fragment;
 
 /***/ }),
 
-/***/ "./src/runtime/react.js":
-/*!******************************!*\
-  !*** ./src/runtime/react.js ***!
-  \******************************/
+/***/ "../src/runtime/react.js":
+/*!*******************************!*\
+  !*** ../src/runtime/react.js ***!
+  \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -377,9 +377,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "css": () => (/* reexport safe */ ___WEBPACK_IMPORTED_MODULE_2__.css),
 /* harmony export */   "stylesheet": () => (/* reexport safe */ ___WEBPACK_IMPORTED_MODULE_2__.stylesheet)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! . */ "./src/runtime/index.js");
-/* harmony import */ var _jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./jsx */ "./src/runtime/jsx.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
+/* harmony import */ var ___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! . */ "../src/runtime/index.js");
+/* harmony import */ var _jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./jsx */ "../src/runtime/jsx.js");
 // eslint-disable-next-line import/no-extraneous-dependencies
 
 
@@ -502,6 +502,6 @@ function styled(type, options, settings) {
 /******/ "use strict";
 /******/ 
 /******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ var __webpack_exports__ = __webpack_require__.O(undefined, ["vendors-node_modules_react_index_js"], () => (__webpack_exec__("./test/integration/main.js")));
+/******/ var __webpack_exports__ = __webpack_require__.O(undefined, ["vendors-node_modules_react_index_js"], () => (__webpack_exec__("./integration/main.js")));
 /******/ }
 ]);
