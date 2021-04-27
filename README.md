@@ -6,4 +6,4 @@
 - Use your existing tools – **Sass, PostCSS, Less** – but still write your style definitions in your JavaScript files
 - **Whole component in the single file**. Write CSS in a template literal, then use it as if it were in a separate file
 
-Checkout the docs for examples and API details
+Checkout the docs for examples and API details: https://4catalyzer.github.io/astroturf/
