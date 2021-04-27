@@ -9,7 +9,6 @@ import findCacheDir from 'find-cache-dir';
 import loaderUtils from 'loader-utils';
 
 import type { ResolvedImport, Style } from './types';
-import { createRequirePath } from './utils/createFilename';
 import {
   buildDependencyError,
   collectStyles,

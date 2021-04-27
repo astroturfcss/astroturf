@@ -1,0 +1,249 @@
+import Layout from '../components/Layout';
+
+export default Layout;
+
+## Attaching Additional Props
+
+A common task with styled components is to map their props or set default values.
+astroturf cribs from Styled Components, by including an `attrs()` api.
+
+```jsx
+import styled from 'astroturf/react';
+
+// Provide a default `type` props
+const PasswordInput = styled('input').attrs({
+  type: 'password',
+})`
+  background-color: #ccc;
+`;
+
+// Map the incoming props to a new set of props
+const TextOrPasswordInput = styled('input').attrs(
+  ({ isPassword, ...props }) => ({
+    ...props,
+    type: isPassword ? 'password' : 'text',
+  }),
+)`
+  background-color: #ccc;
+`;
+```
+
+Because `attrs()` is resolved during render you can use hooks in them! We even
+do some magic in the non-function signature so that it works.
+
+```js
+const Link = styled('a').attrs((props) => ({
+  href: useRouter().createHref(props.to),
+}))`
+  color: blue;
+`;
+
+// astroturf will automatically compile to a function
+// when using a plain object so that the hooks
+// are only evaluated during render
+const Link = styled(MyLink).attrs({
+  router: useRouter(),
+})`
+  color: blue;
+`;
+```
+
+## "as" prop
+
+`astroturf` supports the `as` prop to control the underlying element type at runtime.
+
+```jsx noFormat
+const Button = styled('button')`
+  color: red;
+`;
+
+<Button as="a" href="#link" />;
+```
+
+**This feature is only enabled by default for host components**, e.g. native DOM elements.
+We do this to prevent annoying conflicts with other UI libraries like react-bootstrap or
+semantic-ui which also use the the `as` prop. If you want to enable it for any styled
+component you can do so via the `allowAs` option.
+
+```js
+const StyledFooter = styled(Footer, { allowAs: true })`
+  color: red;
+`;
+```
+
+## Class composition
+
+How you accomplish that is mostly up to your preprocessor. Leverage Sass variables,
+or Less mixins, or postcss nesting polyfills, or whatever. The css you're writing
+is treated exactly like a normal style file so all the tooling you're used to works as expected.
+For composition, specifically around classes, you can also use
+css-modules `composes` to compose styles and interpolation;
+
+```js
+// Button.js
+
+const heavy = css`
+  font-weight: 900;
+`;
+
+const Title = styled('h3')`
+  composes: ${heavy};
+
+  font-size: 12%;
+`;
+```
+
+You don't have to define everything in a `.js` file. Where it makes sense
+just use normal css (or any other file type).
+
+```scss
+// mixins.scss
+@mixin heavy() {
+  font-weight: 900;
+}
+```
+
+and then:
+
+```js
+// Button.js
+const Title = styled('h3')`
+  @import './mixins.scss';
+
+  @include heavy();
+  font-size: 12%;
+`;
+```
+
+## Referring to other Components
+
+One limitation to fully encapsulated styles is that it's hard to contextually style components
+without them referencing each other. In astroturf you can use a component in a
+selector as if it were referencing a class selector.
+
+> Note: Referencing stylesheets or styled components from other files has a few caveats:
+> [cross-file-dependencies](cross-file-dependencies)
+
+```js
+const Link = styled('a')`
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  background: papayawhip;
+  color: palevioletred;
+`;
+
+const Icon = styled('svg')`
+  flex: none;
+  transition: fill 0.25s;
+  width: 48px;
+  height: 48px;
+
+  ${Link}:hover & {
+    fill: rebeccapurple;
+  }
+`;
+```
+
+## Sharing values between styles and JavaScript
+
+We've found that in practice, you rarely have to share values between the two, but there are times when it's
+very convenient. Astroturf ofters two ways to do this, the first is string interpolations.
+
+```js
+const DURATION = 500;
+
+const ColorTransition = styled('nav')`
+  color: red;
+  transition: color ${DURATION}ms;
+
+  &.blue {
+    color: blue;
+  }
+`;
+
+class App extends React.Component {
+  state = { blue: false };
+  toggle = () => {
+    this.setState(
+      (s) => ({ blue: !s.blue }),
+      () => {
+        setTimeout(() => console.log('done!'), DURATION);
+      },
+    );
+  };
+
+  render() {
+    const { blue } = this.state;
+    return (
+      <div>
+        <ColorTransition blue={blue} />
+        <button onClick={this.toggle}>Toggle Color</button>
+      </div>
+    );
+  }
+}
+```
+
+This works great for local variables, since the compiler can determine their
+value at compile time and share them. For cases when you want to share things
+a bit more globally, such as in a theme, we recommend leaning on your css preprocesser again.
+
+css-modules provides a syntax for exporting values from styles, generally
+this is used for class names, but you can leverage it for whatever values you want.
+Combined with something like Sass's variables it ends up being a powerful tool.
+
+```js
+const breakpointValues = css`
+  @import '../styles/theme';
+
+  :export {
+    @each $breakpoint, $px in $grid-breakpoints {
+      #{$breakpoint}: $px;
+    }
+  }
+`;
+
+function Responsive() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useLayoutEffect(() => {
+    setIsMobile(window.clientWidth < parseInt(breakpoints.md, 10));
+  }, []);
+
+  return <div>{isMobile ? 'A small screen!' : 'A big screen!'}</div>;
+}
+```
+
+## Keyframes and global
+
+Everything in `css` will be used as normal CSS Modules styles.
+So, if you need to insert some CSS without isolation (like reset with [postcss-normalize](https://github.com/csstools/postcss-normalize)):
+
+```js
+css`
+  @import-normalize;
+
+  :global(.btn) {
+    background: blue;
+  }
+`;
+```
+
+With [postcss-nested](https://github.com/postcss/postcss-nested) you can
+add keyframes to specific component (and keyframes name will not be global):
+
+```js
+const Loader = styled('div')`
+  animation-name: rotation;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+  @keyframes rotation {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+`;
+```

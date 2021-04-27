@@ -83,6 +83,8 @@ function CodeBlock(props: any) {
     if (width !== printWidth) setPrintWidth(width);
   });
 
+  const isJs = ['js', 'ts', 'tsx', 'jsx'].includes(language);
+
   return (
     <div ref={ref}>
       <BaseCodBlock
@@ -90,7 +92,7 @@ function CodeBlock(props: any) {
         theme={theme}
         language={language}
         code={
-          noFormat || printWidth == null
+          noFormat || printWidth == null || !isJs
             ? children
             : prettier.format(children, {
                 parser: 'babel',

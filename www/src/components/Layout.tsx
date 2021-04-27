@@ -34,13 +34,16 @@ const NavItem = styled('a')`
     left: 0;
   }
 
+  &:hover {
+    text-decoration: none;
+  }
   &:hover::before {
     opacity: 1;
   }
 `;
 
 function Layout(props: Props) {
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <MDXProvider
@@ -52,11 +55,12 @@ function Layout(props: Props) {
       }}
     >
       <div
+        className="py-3 px-6 sticky top-0 bg-secondary shadow-sm border-b border-secondary-darker flex  justify-between"
         css={css`
           @apply py-3 px-6 sticky top-0;
 
           @media (max-width: theme(screens.md)) {
-            @apply bg-secondary border-b border-secondary-darker flex  justify-between;
+            @apply;
           }
         `}
       >
@@ -66,10 +70,9 @@ function Layout(props: Props) {
             astroturf
           </span>
         </div>
-
         <button
           type="button"
-          className="focus:shadow-outline md:hidden"
+          className="focus:shadow-outline lg:hidden"
           onClick={() => setExpanded((t) => !t)}
         >
           <div className="bg-white my-1" css="height: 2px; width: 1.5rem" />
@@ -87,7 +90,7 @@ function Layout(props: Props) {
           align-items: flex-start;
           flex-direction: column;
 
-          @media (max-width: theme(screens.md)) {
+          @media (max-width: theme(screens.lg)) {
             display: none;
 
             width: 100%;
@@ -99,15 +102,16 @@ function Layout(props: Props) {
 
           ${expanded &&
           css`
-            @media (max-width: theme(screens.md)) {
+            @media (max-width: theme(screens.lg)) {
               display: flex;
               align-items: center;
             }
           `}
         `}
       >
-        <NavItem href="/getting-started">Getting Started</NavItem>
-        <NavItem href="/configuration">Configuration</NavItem>
+        <NavItem href="/introduction">Introduction</NavItem>
+        <NavItem href="/setup">Setup</NavItem>
+        <NavItem href="/advanced">Advanced features</NavItem>
         <NavItem href="/migration">Migrating to v1</NavItem>
         <NavItem href="/tooling">Tooling</NavItem>
       </nav>

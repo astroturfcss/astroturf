@@ -2,7 +2,7 @@ import Layout from '../components/Layout';
 
 export default Layout;
 
-# Getting Started
+# Intro to astroturf
 
 <p>
   <Brand>astroturf</Brand> lets you write CSS in your JavaScript files without
@@ -171,3 +171,37 @@ function Button({ variant = 'primary', children }) {
 
 Each inner `css` interpolation compiles to seperate CSS Class Name, and is toggled
 at runtime when the inner expression returns true.
+
+### Cruise Control
+
+For the discerning consumer who knows what they want, and don't have time to mess
+around, <Brand>astroturf</Brand> has you covered with <Brand>Instant Components™</Brand>
+brought to you by the `styled` helper.
+
+Create components with ease, effortlessly mapping class names to component props:
+
+```jsx
+import * as React from 'react';
+import { styled } from 'astroturf/react';
+
+const Button = styled('button')`
+  border: 1px solid transparent;
+
+  &.disabled {
+    opacity: 0.6;
+  }
+
+  &.variant-primary {
+    color: blue;
+    border-color: blue;
+  }
+`;
+
+<Button variant="primary" disabled />;
+```
+
+The `styled` helper will infer component props from the nested classes you define.
+Create boolean props with simple class names, and cover more complex cases using a `-`
+to differentiate the name from value. `.color-red` becomes `color="red"`!
+
+We recommend this pattern for simple cases, where you value less boilerplate over customizability.

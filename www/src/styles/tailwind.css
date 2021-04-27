@@ -47,6 +47,14 @@ h4 {
   text-shadow: 3px 2px 0px #5c5a5a;
 }
 
+a {
+  @apply text-puke font-bold;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 p {
   @apply mb-4;
 }

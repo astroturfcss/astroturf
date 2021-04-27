@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: '/astroturf',
   plugins: [
     {
       resolve: 'gatsby-source-filesystem',
