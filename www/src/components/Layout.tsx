@@ -1,7 +1,7 @@
 import { MDXProvider } from '@mdx-js/react';
 import styled, { css } from 'astroturf/react';
-import React, { useState } from 'react';
 import { Link } from 'gatsby';
+import React, { useState } from 'react';
 
 import CodeBlock from './CodeBlock';
 
@@ -56,7 +56,7 @@ function Layout(props: Props) {
       }}
     >
       <div
-        className="py-3 px-6 sticky top-0 bg-secondary shadow-sm border-b border-secondary-darker flex  justify-between"
+        className="py-3 px-6 sticky top-0 bg-secondary shadow-sm border-b border-secondary-darker flex justify-between"
         css={css`
           @apply py-3 px-6 sticky top-0;
 

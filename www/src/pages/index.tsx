@@ -11,9 +11,8 @@ function HomePage() {
         <img
           src={logo}
           alt="astroturf: Better styling through compiling"
+          className="mx-auto mt-16"
           css={css`
-            composes: mx-auto, mt-16 from global;
-
             max-width: 32rem;
             width: 100%;
             object-fit: contain;
