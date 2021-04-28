@@ -1,6 +1,7 @@
 import { MDXProvider } from '@mdx-js/react';
 import styled, { css } from 'astroturf/react';
 import React, { useState } from 'react';
+import { Link } from 'gatsby';
 
 import CodeBlock from './CodeBlock';
 
@@ -16,7 +17,7 @@ const Brand = styled('span')`
   font-family: theme('fontFamily.brand');
 `;
 
-const NavItem = styled('a')`
+const NavItem = styled(Link)`
   composes: my-2, inline-block, font-brand, text-xl, text-white, text-shadow-sm, relative from global;
 
   &::before {
@@ -109,11 +110,11 @@ function Layout(props: Props) {
           `}
         `}
       >
-        <NavItem href="/introduction">Introduction</NavItem>
-        <NavItem href="/setup">Setup</NavItem>
-        <NavItem href="/advanced">Advanced features</NavItem>
-        <NavItem href="/migration">Migrating to v1</NavItem>
-        <NavItem href="/tooling">Tooling</NavItem>
+        <NavItem to="/introduction">Introduction</NavItem>
+        <NavItem to="/setup">Setup</NavItem>
+        <NavItem to="/advanced">Advanced features</NavItem>
+        <NavItem to="/migration">Migrating to v1</NavItem>
+        <NavItem to="/tooling">Tooling</NavItem>
       </nav>
       <main
         css={css`
