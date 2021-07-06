@@ -1,0 +1,18 @@
+name: Test
+on:
+  push:
+    branches: [master, v1]
+  pull_request:
+    branches: [master, v1]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 'lts/*'
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile
+      # - run: yarn test

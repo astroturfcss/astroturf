@@ -5,7 +5,7 @@
 
 import * as React from 'react';
 
-type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type IntrinsicElementsKeys = keyof JSX.IntrinsicElements;
 
 // Any prop that has a default prop becomes optional, but its type is unchanged
 // Undeclared default props are augmented into the resulting allowable attributes
@@ -23,30 +23,58 @@ type ReactDefaultizedProps<C, P> = C extends { defaultProps: infer D }
   ? Defaultize<P, D>
   : P;
 
+type MakeAttrsOptional<
+  C extends string | React.ComponentType<any>,
+  O extends object,
+  A extends keyof any
+> = Omit<
+  ReactDefaultizedProps<
+    C,
+    React.ComponentPropsWithRef<
+      C extends IntrinsicElementsKeys | React.ComponentType<any> ? C : never
+    >
+  > &
+    O,
+  A
+> &
+  Partial<
+    Pick<
+      React.ComponentPropsWithRef<
+        C extends IntrinsicElementsKeys | React.ComponentType<any> ? C : never
+      > &
+        O,
+      A
+    >
+  >;
+
 export type StyledComponentProps<
   // The Component from whose props are derived
-  C extends keyof JSX.IntrinsicElements | React.ComponentType<any>,
+  C extends keyof string | React.ComponentType<any>,
   // The other props added by the template
   O extends object,
   // The props that are made optional by .attrs
   A extends keyof any
-> = Omit<ReactDefaultizedProps<C, React.ComponentPropsWithRef<C>> & O, A> &
-  Partial<Pick<React.ComponentPropsWithRef<C> & O, A>> &
-  WithChildrenIfReactComponentClass<C>;
+> =
+  // Distribute O if O is a union type
+  O extends object
+    ? MakeAttrsOptional<C, O, A> & WithChildrenIfReactComponentClass<C>
+    : never;
 
 // Because of React typing quirks, when getting props from a React.ComponentClass,
 // we need to manually add a `children` field.
 // See https://github.com/DefinitelyTyped/DefinitelyTyped/pull/31945
 // and https://github.com/DefinitelyTyped/DefinitelyTyped/pull/32843
 type WithChildrenIfReactComponentClass<
-  C extends keyof JSX.IntrinsicElements | React.ComponentType<any>
-> = C extends React.ComponentClass<any> ? { children?: React.ReactNode } : {};
+  C extends keyof string | React.ComponentType<any>
+> = C extends React.ComponentClass<any>
+  ? { children?: React.ReactNode | undefined }
+  : {};
 
 type StyledComponentPropsWithAs<
-  C extends keyof JSX.IntrinsicElements | React.ComponentType<any>,
+  C extends keyof string | React.ComponentType<any>,
   O extends object,
   A extends keyof any
-> = StyledComponentProps<C, O, A> & { as?: C };
+> = StyledComponentProps<C, O, A> & { as?: C | undefined };
 
 // abuse Pick to strip the call signature from ForwardRefExoticComponent
 type ForwardRefExoticBase<P> = Pick<
@@ -60,32 +88,26 @@ export interface StyledComponent<
   A extends keyof any = never
 > extends ForwardRefExoticBase<StyledComponentProps<C, O, A>> {
   // add our own fake call signature to implement the polymorphic 'as' prop
-  // NOTE: TS <3.2 will refuse to infer the generic and this component becomes impossible to use in JSX
-  // just the presence of the overload is enough to break JSX
-  //
-  // TODO (TypeScript 3.2): actually makes the 'as' prop polymorphic
   (props: StyledComponentProps<C, O, A> & { as?: never }): React.ReactElement<
     StyledComponentProps<C, O, A>
   >;
-  <AsC extends keyof JSX.IntrinsicElements | React.ComponentType<any> = C>(
+  <AsC extends string | React.ComponentType<any> = C>(
     props: StyledComponentPropsWithAs<AsC, O, A>,
   ): React.ReactElement<StyledComponentPropsWithAs<AsC, O, A>>;
 
-  withComponent<
-    WithC extends keyof JSX.IntrinsicElements | React.ComponentType<any>
-  >(
+  withComponent<WithC extends string | React.ComponentType<any>>(
     component: WithC,
   ): StyledComponent<WithC, O>;
 }
 
 export type StyledComponentPropsWithRef<
-  C extends keyof JSX.IntrinsicElements | React.ComponentType<any>
+  C extends string | React.ComponentType<any>
 > = React.ComponentPropsWithRef<C>;
 
 type Attrs<P, A extends Partial<P>> = ((props: P) => A) | A;
 
 export interface StyledFunction<
-  C extends keyof JSX.IntrinsicElements | React.ComponentType<any>,
+  C extends string | React.ComponentType<any>,
   O extends object = {},
   A extends keyof any = never
 > {
@@ -107,28 +129,25 @@ export interface StyledFunction<
 }
 
 export type StyledTags = {
-  readonly [TTag in keyof JSX.IntrinsicElements]: StyledFunction<TTag>;
+  readonly [TTag in IntrinsicElementsKeys]: StyledFunction<TTag>;
 };
 
 export interface StyledOptions {
-  allowAs?: boolean;
+  allowAs?: boolean | undefined;
 }
 
 export type mapper<TInner, TOuter> = (input: TInner) => TOuter;
 
 export interface CreateStyled extends StyledTags {
-  <C extends keyof JSX.IntrinsicElements | React.ComponentType<any>>(
+  <C extends string | React.ComponentType<any>>(
     component: C,
     options?: StyledOptions,
   ): StyledFunction<C>;
 
-  <
-    C extends keyof JSX.IntrinsicElements | React.ComponentType<any>,
-    OtherProps extends object
-  >(
+  <C extends string | React.ComponentType<any>, OtherProps extends object>(
     component: C,
-    options?: StyledOptions,
-  ): StyledFunction<C, OtherProps>; // tslint:disable-line:no-unnecessary-generics
+    options?: StyledOptions | undefined,
+  ): StyledFunction<C, OtherProps>;
 }
 
 declare const styled: CreateStyled;

@@ -7,5 +7,5 @@
       "astroturf/*": ["../src/runtime/*"]
     }
   },
-  "include": [".", "../src"]
+  "include": [".", "../src/runtime"]
 }

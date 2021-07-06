@@ -50,7 +50,7 @@ const Button0 = styled('button')`
 <Button0 type="button" />;
 
 // href not allowed
-<Button0 type="button" href />; // $ExpectError
+<Button0 type="button" href='#' />; // $ExpectError
 
 const Input0 = styled('input', {
   allowAs: true,
@@ -92,9 +92,9 @@ const Button2 = styled<'button', PrimaryProps>('button')`
 // missing primary
 <Button2 type="button" />; // $ExpectError
 
-const Button4 = styled<typeof ReactClassComponent0>(ReactClassComponent0)<
-  PrimaryProps
->``;
+const Button4 = styled<typeof ReactClassComponent0>(
+  ReactClassComponent0,
+)<PrimaryProps>``;
 
 const Button5 = styled<typeof ReactSFC0>(ReactSFC0)<PrimaryProps>``;
 <div>
@@ -116,7 +116,7 @@ const Button5 = styled<typeof ReactSFC0>(ReactSFC0)<PrimaryProps>``;
 <Button5 />; // $ExpectError
 
 // - missing primary
-<Button5 column />; // $ExpectError
+<Button5 />; // $ExpectError
 
 const Container0 = styled(ReactClassComponent0)``;
 <Container0 column={false} />;
@@ -228,7 +228,7 @@ const AsComponent1 = styled('input')``;
     border-radius: 3px;
   `;
 
-  const AttrsWithOnlyNewProps = styled.h2.attrs(p => ({ as: 'h1', ...p }))`
+  const AttrsWithOnlyNewProps = styled.h2.attrs((p) => ({ as: 'h1', ...p }))`
     color: blue;
     font-size: 14px;
   `;
@@ -242,7 +242,7 @@ const AsComponent1 = styled('input')``;
   // Ideally should complain about foo?
   <ButtonAttrs />;
 
-  const ButtonAttrs2 = styled(ReactSFC0).attrs<{ other: boolean }>(p => ({
+  const ButtonAttrs2 = styled(ReactSFC0).attrs<{ other: boolean }>((p) => ({
     column: p.column,
     other: p.other,
   }))``;
