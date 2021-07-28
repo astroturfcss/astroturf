@@ -32,7 +32,7 @@
     "typescript": "^3.8.3"
   },
   "devDependencies": {
-    "postcss-nested": "^4.2.3",
+    "postcss-nested": "^5.0.6",
     "prettier": "2.3.2"
   },
   "repository": {
