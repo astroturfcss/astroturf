@@ -9,10 +9,10 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.14.8",
-    "@babel/core": "^7.14.8",
+    "@babel/core": "^7.15.0",
     "babel-core": "^7.0.0-bridge.0",
     "mini-css-extract-plugin": "^1.6.2",
-    "webpack": "^5.47.1",
+    "webpack": "^5.49.0",
     "webpack-atoms": "^16.1.0",
     "webpack-dev-server": "^3.11.2"
   },
