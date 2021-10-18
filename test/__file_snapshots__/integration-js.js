@@ -1,3 +1,4 @@
+"use strict";
 (self["webpackChunk"] = self["webpackChunk"] || []).push([["main"],{
 
 /***/ "./integration/Button.js":
@@ -6,7 +7,6 @@
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "styles": () => (/* binding */ styles),
@@ -33,7 +33,6 @@ const Button = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_0__.defa
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "MyComponent": () => (/* binding */ MyComponent),
@@ -94,7 +93,6 @@ function MyComponent() {
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -117,7 +115,6 @@ const Widget = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_0__.defa
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -140,7 +137,6 @@ const Doodad = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_0__.defa
   \****************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -156,7 +152,6 @@ __webpack_require__.r(__webpack_exports__);
   \***********************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -172,7 +167,6 @@ __webpack_require__.r(__webpack_exports__);
   \*******************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -188,7 +182,6 @@ __webpack_require__.r(__webpack_exports__);
   \*********************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -204,7 +197,6 @@ __webpack_require__.r(__webpack_exports__);
   \***************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -220,7 +212,6 @@ __webpack_require__.r(__webpack_exports__);
   \***********************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -236,7 +227,6 @@ __webpack_require__.r(__webpack_exports__);
   \*******************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -252,7 +242,6 @@ __webpack_require__.r(__webpack_exports__);
   \*****************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -268,7 +257,6 @@ __webpack_require__.r(__webpack_exports__);
   \****************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -284,7 +272,6 @@ __webpack_require__.r(__webpack_exports__);
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "stylesheet": () => (/* binding */ stylesheet),
@@ -313,7 +300,6 @@ const css = () => {
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "resolveVariants": () => (/* binding */ resolveVariants),
@@ -370,7 +356,6 @@ jsx.F = react__WEBPACK_IMPORTED_MODULE_0__.Fragment;
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
@@ -499,9 +484,8 @@ function styled(type, options, settings) {
 
 },
 /******/ __webpack_require__ => { // webpackRuntimeModules
-/******/ "use strict";
-/******/ 
 /******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ var __webpack_exports__ = __webpack_require__.O(undefined, ["vendors-node_modules_react_index_js"], () => (__webpack_exec__("./integration/main.js")));
+/******/ __webpack_require__.O(0, ["vendors-node_modules_react_index_js"], () => (__webpack_exec__("./integration/main.js")));
+/******/ var __webpack_exports__ = __webpack_require__.O();
 /******/ }
 ]);

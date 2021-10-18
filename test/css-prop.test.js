@@ -107,7 +107,43 @@ describe('css prop', () => {
     `,
       );
 
+      // expect(code).toMatchSnapshot();
       expect(code).not.toMatch('React.createElement');
+      expect(code).not.toContain('/** @jsx');
+      expect(code).not.toContain('/** @jsxFrag');
+
+      expect(code).toMatch('import _j from "astroturf/jsx";');
+      expect(code).toMatch('_j(');
+      expect(styles).toHaveLength(2);
+      expect(styles[0].identifier).toEqual('CssProp1_div');
+    },
+  );
+
+  testAllRunners(
+    'should find when used with automatic runtime',
+    async (runner) => {
+      const [code, styles] = await runner(
+        `  
+      import { css } from 'astroturf';
+      import { jsx as _jsx } from "react/jsx-runtime";
+      import { jsxs as _jsxs } from "react/jsx-runtime";
+        
+      function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+      
+      const Widget = React.forwardRef((props, ref) => {
+        return  /*#__PURE__*/_jsxs('div',  _extends({}, props, {
+          tabIndex: -1,
+          css: css\`
+              color: red
+            \`,
+          children: [/*#__PURE__*/_jsx('span', { css: 'width: 3rem' }), children] 
+        }))
+      })
+    `,
+      );
+
+      expect(code).not.toMatch('_jsxs(');
+      expect(code).not.toMatch('_jsx(');
       expect(code).not.toContain('/** @jsx');
       expect(code).not.toContain('/** @jsxFrag');
 

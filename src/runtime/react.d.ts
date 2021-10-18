@@ -139,12 +139,15 @@ export interface StyledOptions {
 export type mapper<TInner, TOuter> = (input: TInner) => TOuter;
 
 export interface CreateStyled extends StyledTags {
-  <C extends string | React.ComponentType<any>>(
+  <C extends IntrinsicElementsKeys | React.ComponentType<any>>(
     component: C,
     options?: StyledOptions,
   ): StyledFunction<C>;
 
-  <C extends string | React.ComponentType<any>, OtherProps extends object>(
+  <
+    C extends IntrinsicElementsKeys | React.ComponentType<any>,
+    OtherProps extends object
+  >(
     component: C,
     options?: StyledOptions | undefined,
   ): StyledFunction<C, OtherProps>;

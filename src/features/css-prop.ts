@@ -16,6 +16,7 @@ import wrapInClass from '../utils/wrapInClass';
 
 const HAS_JSX = Symbol('Astroturf has jsx');
 const HAS_CREATE_ELEMENT = Symbol('Astroturf has createElement call');
+const IS_JSX = Symbol('Is a JSX call expression');
 
 type CssPropPluginState = PluginState & {
   [JSX_IDENTS]: {
@@ -30,6 +31,15 @@ const isCssPropTag = (tagPath: NodePath, options: ResolvedOptions) =>
   options.cssTagName === false
     ? isStylesheetTag(tagPath, options)
     : isCssTag(tagPath, options);
+
+const isJsxCallExpression = (p: NodePath<any>) => {
+  const result =
+    p.isCallExpression() &&
+    // @ts-ignore
+    p.get('callee').referencesImport('react/jsx-runtime');
+
+  return result;
+};
 
 export const isCreateElementCall = (p: NodePath<any>) =>
   p.isCallExpression() &&
@@ -164,6 +174,14 @@ const cssPropertyVisitors = {
       state.processed = true;
     }
   },
+  CallExpression(path: NodePath<t.CallExpression>) {
+    // prevent the inner traversal from finding nested css props, on `children:` keys
+    // but mark the path so we can skip the check when the outer traversal finds it
+    if (isCreateElementCall(path) || isJsxCallExpression(path)) {
+      path[IS_JSX] = true;
+      path.skip();
+    }
+  },
 };
 
 export default {
@@ -193,7 +211,12 @@ export default {
     const { file } = state;
     const pluginOptions = state.defaultedOptions;
 
-    if (!isCreateElementCall(path)) return;
+    if (
+      !path[IS_JSX] &&
+      !isCreateElementCall(path) &&
+      !isJsxCallExpression(path)
+    )
+      return;
 
     const typeName = getNameFromPath(path.get('arguments')[0]);
 
@@ -208,9 +231,11 @@ export default {
     };
 
     // We aren't checking very hard that this is a React createElement call
-    if (propsPath) {
-      propsPath.traverse(cssPropertyVisitors, innerState);
+    if (!propsPath) {
+      return;
     }
+
+    propsPath.traverse(cssPropertyVisitors, innerState);
 
     if (innerState.processed) {
       const { jsx } = state[JSX_IDENTS];
@@ -223,6 +248,7 @@ export default {
         end: callee.node.end,
       });
 
+      // console.log('HERE', callee.node);
       callee.replaceWith(t.identifier(jsx.name));
       file.set(HAS_CREATE_ELEMENT, true);
     }
