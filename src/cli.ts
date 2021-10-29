@@ -5,6 +5,8 @@ import path from 'path';
 import Processor from '@modular-css/processor';
 import Output from '@modular-css/processor/lib/output';
 import globby from 'globby';
+import postcssScss from 'postcss-scss';
+import stripInlineComments from 'postcss-strip-inline-comments';
 import resolve from 'resolve';
 import yargs from 'yargs';
 
@@ -104,7 +106,9 @@ yargs
 
       const processor = new Processor({
         before: [composesPlugin],
+        after: [stripInlineComments],
         resolvers: [(src, file) => path.resolve(path.dirname(src), file)],
+        postcss: { syntax: postcssScss },
         loadFile: async (src) => {
           if (deps.has(src)) {
             const hostFile = deps.get(src)!;
