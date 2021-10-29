@@ -132,6 +132,8 @@ function buildCssProp(
     trimEnd([importId, vars!, variants!]).map((n) => n ?? t.nullLiteral()),
   );
 
+  style.importIdentifier = importId.name;
+
   // FIXME?
   // @ts-ignore
   nodeMap.set(runtimeNode.expression, style);

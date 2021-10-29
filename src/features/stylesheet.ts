@@ -55,6 +55,7 @@ function buildStyleRequire(
 
   let runtimeNode: t.Node = opts.styleImports.add(style);
   style.code = runtimeNode.name;
+  style.importIdentifier = runtimeNode.name;
 
   nodeMap.set(runtimeNode, style);
 

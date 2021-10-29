@@ -63,6 +63,7 @@ export interface BaseStyle {
   identifier: string;
   value: string;
   code?: string;
+  importIdentifier?: string;
 }
 
 export interface StaticStyle extends BaseStyle {

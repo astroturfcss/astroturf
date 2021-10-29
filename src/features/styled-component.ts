@@ -54,13 +54,8 @@ function buildStyledComponent(
   elementType: t.Node,
   opts: Options,
 ) {
-  const {
-    file,
-    pluginOptions,
-    styledAttrs,
-    styledOptions,
-    styleImports,
-  } = opts;
+  const { file, pluginOptions, styledAttrs, styledOptions, styleImports } =
+    opts;
   const cssState = file.get(STYLES) as StyleState;
   const nodeMap = file.get(COMPONENTS) as NodeStyleMap;
   const displayName = getDisplayName(path, opts, null);
@@ -110,6 +105,8 @@ function buildStyledComponent(
   if (pluginOptions.generateInterpolations) {
     style.code = `${PURE_COMMENT}${generate(runtimeNode).code}`;
   }
+
+  style.importIdentifier = importId.name;
 
   cssState.styles.set(style.absoluteFilePath, style);
   nodeMap.set(runtimeNode, style);
