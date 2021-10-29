@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /* eslint-disable no-await-in-loop */
 import { readFile, writeFile } from 'fs/promises';
 import path from 'path';
