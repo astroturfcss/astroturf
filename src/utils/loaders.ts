@@ -11,7 +11,6 @@ import config from '../config';
 import traverse from '../traverse';
 import type {
   AstroturfMetadata,
-  Change,
   DependencyResolver,
   ResolvedImport,
   ResolvedOptions,
@@ -144,7 +143,7 @@ export function collectStyles(
       generateInterpolations: true,
     })!;
     return (metadata as any).astroturf;
-  } catch (err) {
+  } catch (err: any) {
     throw new AstroturfLoaderError(err);
   }
 }
@@ -153,7 +152,7 @@ export function replaceStyleTemplates(
   loaderContext: any,
   filename: string,
   src: string,
-  locations: Change[],
+  locations: { start?: number; end?: number; code?: string }[],
   // content: Map<string, string>,
 ) {
   locations = sortBy(locations, (i) => i.start || 0);
