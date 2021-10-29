@@ -80,6 +80,15 @@ export type Style = StaticStyle | DynamicStyle;
 export type NodeStyleMap = Map<T.Node, Style>;
 
 export interface Change {
+  type:
+    | 'stylesheet'
+    | 'class'
+    | 'styled'
+    | 'create-element'
+    | 'style-imports'
+    | 'pragma'
+    | 'import-optimization';
+
   start: number;
   end: number;
   code?: string;

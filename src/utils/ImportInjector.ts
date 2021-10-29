@@ -85,6 +85,7 @@ export default class StyleImportInjector {
     const nodes = Array.from(this.nodes).reverse();
     const end = targetPath?.node?.end || 0;
     const changes: Change = {
+      type: 'style-imports',
       end,
       start: end,
       code: `\n${Array.from(this.nodes, (n) => this.code.get(n))

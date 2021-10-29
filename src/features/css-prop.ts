@@ -243,12 +243,12 @@ export default {
       const callee = path.get('callee');
 
       changeset.push({
+        type: 'create-element',
         code: jsx.name,
         start: callee.node.start,
         end: callee.node.end,
       });
 
-      // console.log('HERE', callee.node);
       callee.replaceWith(t.identifier(jsx.name));
       file.set(HAS_CREATE_ELEMENT, true);
     }

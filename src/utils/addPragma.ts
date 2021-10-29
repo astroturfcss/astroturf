@@ -52,13 +52,19 @@ export default function addPragma(
     path.addComment('leading', jsxFragPrgama);
 
     changes.push(
-      { code: `/** @jsxRuntime classic*/\n`, start: 0, end: 0 },
-      { code: `/*${jsxPrgama}*/\n`, start: 0, end: 0 },
-      { code: `/*${jsxFragPrgama}*/\n\n`, start: 0, end: 0 },
+      {
+        type: 'pragma',
+        code: `/** @jsxRuntime classic*/\n`,
+        start: 0,
+        end: 0,
+      },
+      { type: 'pragma', code: `/*${jsxPrgama}*/\n`, start: 0, end: 0 },
+      { type: 'pragma', code: `/*${jsxFragPrgama}*/\n\n`, start: 0, end: 0 },
     );
   }
 
   changes.push({
+    type: 'pragma',
     code: `${pattern.replace('JSX', JSX.name)}\n`,
     start: 0,
     end: 0,

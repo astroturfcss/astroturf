@@ -134,6 +134,7 @@ export default function plugin(): PluginObj<PluginState> {
 
               if (opts.generateInterpolations)
                 changeset.push({
+                  type: 'import-optimization',
                   start: start!,
                   end: end!,
                   // if the path is just a removed specifier we need to regenerate
