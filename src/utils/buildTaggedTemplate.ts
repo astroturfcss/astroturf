@@ -374,8 +374,11 @@ export default function buildTaggedTemplate(opts: Options) {
     location !== 'STYLESHEET' &&
     opts.style.absoluteFilePath.endsWith('.css')
   ) {
-    // console.log(css);
-    css = processCss(css, opts.style.absoluteFilePath).css;
+    try {
+      css = processCss(css, opts.style.absoluteFilePath).css;
+    } catch {
+      /* ignore */
+    }
   }
 
   return {
