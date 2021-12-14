@@ -212,12 +212,9 @@ export default {
   CallExpression(path: NodePath<t.CallExpression>, state: CssPropPluginState) {
     const { file } = state;
     const pluginOptions = state.defaultedOptions;
+    const isAutomaticRuntime = isJsxCallExpression(path);
 
-    if (
-      !path[IS_JSX] &&
-      !isCreateElementCall(path) &&
-      !isJsxCallExpression(path)
-    )
+    if (!path[IS_JSX] && !isCreateElementCall(path) && !isAutomaticRuntime)
       return;
 
     const typeName = getNameFromPath(path.get('arguments')[0]);
@@ -244,14 +241,31 @@ export default {
       const { changeset } = file.get(STYLES);
       const callee = path.get('callee');
 
-      changeset.push({
-        type: 'create-element',
-        code: jsx.name,
-        start: callee.node.start,
-        end: callee.node.end,
-      });
+      if (isAutomaticRuntime) {
+        const end = path.get('arguments')[0]!.node!.start!;
 
-      callee.replaceWith(t.identifier(jsx.name));
+        const calleeName = (callee.node as any).name;
+        changeset.push({
+          type: 'create-element',
+          code: `${jsx.name}.jsx2(${calleeName}, `,
+          start: callee.node.start,
+          end,
+        });
+
+        path.unshiftContainer('arguments', t.identifier(calleeName));
+        callee.replaceWith(
+          t.memberExpression(t.identifier(jsx.name), t.identifier('jsx2')),
+        );
+      } else {
+        changeset.push({
+          type: 'create-element',
+          code: jsx.name,
+          start: callee.node.start,
+          end: callee.node.end,
+        });
+        callee.replaceWith(t.identifier(jsx.name));
+      }
+
       file.set(HAS_CREATE_ELEMENT, true);
     }
   },

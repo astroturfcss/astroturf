@@ -93,6 +93,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "resolveVariants": () => (/* binding */ resolveVariants),
 /* harmony export */   "varsToStyles": () => (/* binding */ varsToStyles),
+/* harmony export */   "jsx2": () => (/* binding */ jsx2),
 /* harmony export */   "jsx": () => (/* binding */ jsx),
 /* harmony export */   "F": () => (/* reexport safe */ react__WEBPACK_IMPORTED_MODULE_0__.Fragment),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -114,7 +115,7 @@ function varsToStyles(props, vars) {
   return style;
 }
 
-function jsx(type, props, ...children) {
+function jsx2(fn, type, props, ...args) {
   if (props && props.css) {
     const { css, className, ...childProps } = props;
     const componentClassName = css[0].cls2 || css[0].cls1;
@@ -124,10 +125,14 @@ function jsx(type, props, ...children) {
     } ${resolveVariants(css[2])}`;
     props = childProps;
   }
-
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(type, props, ...children);
+  return fn(type, props, ...args);
 }
+function jsx(type, props, ...children) {
+  return jsx2(react__WEBPACK_IMPORTED_MODULE_0__.createElement, type, props, ...children);
+}
+
 jsx.F = react__WEBPACK_IMPORTED_MODULE_0__.Fragment;
+jsx.jsx2 = jsx2;
 
 // the reason for the crazy exports here is that you need to do a BUNCH of work
 // to keep typescript from eliding (removing) the jsx imports

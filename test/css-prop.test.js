@@ -148,7 +148,9 @@ describe('css prop', () => {
       expect(code).not.toContain('/** @jsxFrag');
 
       expect(code).toMatch('import _j from "astroturf/jsx";');
-      expect(code).toMatch('_j(');
+      expect(code).toMatch('_j.jsx2(');
+      expect(code).toMatch('_jsx');
+      expect(code).toMatch('_jsxs');
       expect(styles).toHaveLength(2);
       expect(styles[0].identifier).toEqual('CssProp1_div');
     },
