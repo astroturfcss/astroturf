@@ -1,10 +1,10 @@
 import { codeFrameColumns } from '@babel/code-frame';
 import { SourceLocation } from '@babel/types';
-import pico from 'picocolors';
 import levenshtein from 'fast-levenshtein';
 import loaderUtils from 'loader-utils';
 import sortBy from 'lodash/sortBy';
 import MagicString from 'magic-string';
+import pico from 'picocolors';
 import type { CssSyntaxError } from 'postcss';
 
 import config from '../config';
