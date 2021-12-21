@@ -1,10 +1,10 @@
 import { codeFrameColumns } from '@babel/code-frame';
 import { SourceLocation } from '@babel/types';
-import chalk from 'chalk';
 import levenshtein from 'fast-levenshtein';
 import loaderUtils from 'loader-utils';
 import sortBy from 'lodash/sortBy';
 import MagicString from 'magic-string';
+import pico from 'picocolors';
 import type { CssSyntaxError } from 'postcss';
 
 import config from '../config';
@@ -100,11 +100,11 @@ export function buildDependencyError(
   }
   if (closest) idents = idents.filter((ident) => ident !== closest);
 
-  const identMsg = idents.map((s) => chalk.yellow(s)).join(', ');
+  const identMsg = idents.map((s) => pico.yellow(s)).join(', ');
 
   const alternative = isDefaultImport
-    ? `Instead try: ${chalk.yellow(`import ${closest} from '${request}';`)}`
-    : `Did you mean to import as ${chalk.yellow(closest)} instead?`;
+    ? `Instead try: ${pico.yellow(`import ${closest} from '${request}';`)}`
+    : `Did you mean to import as ${pico.yellow(closest)} instead?`;
 
   return new AstroturfLoaderError(
     // eslint-disable-next-line prefer-template
@@ -116,7 +116,7 @@ export function buildDependencyError(
         {
           highlightCode: true,
           message: !isDefaultImport
-            ? `(Imported as ${chalk.bold(identifier)})`
+            ? `(Imported as ${pico.bold(identifier)})`
             : '',
         },
       ) +

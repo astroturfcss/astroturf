@@ -7,8 +7,8 @@ import path from 'path';
 import Processor from '@modular-css/processor';
 import Output from '@modular-css/processor/lib/output';
 import globby from 'globby';
+import { PluginCreator } from 'postcss';
 import postcssScss from 'postcss-scss';
-import stripInlineComments from 'postcss-strip-inline-comments';
 import resolve from 'resolve';
 import yargs from 'yargs';
 
@@ -38,6 +38,16 @@ function composesPlugin(css: any) {
 }
 
 composesPlugin.postcssPlugin = 'compat-composes-delimiter';
+
+const stripInlineComments: PluginCreator<never> = () => {
+  return {
+    postcssPlugin: 'astroturf/strip-inline-comments',
+    Comment(comment) {
+      if (comment.raws.inline) comment.remove();
+    },
+  };
+};
+stripInlineComments.postcss = true;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
 yargs

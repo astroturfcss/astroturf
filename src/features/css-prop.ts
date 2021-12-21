@@ -1,7 +1,7 @@
 import { NodePath } from '@babel/core';
 import generate from '@babel/generator';
 import * as t from '@babel/types';
-import chalk from 'chalk';
+import pico from 'picocolors';
 
 import { DynamicStyle, PluginState, ResolvedOptions } from '../types';
 import { COMPONENTS, JSX_IDENTS, STYLES } from '../utils/Symbols';
@@ -60,11 +60,11 @@ function buildCssProp(
     if (!pluginOptions.noWarnings)
       // eslint-disable-next-line no-console
       console.warn(
-        chalk.yellow(
+        pico.yellow(
           'It looks like you are trying to use the css prop with',
-          chalk.bold('astroturf'),
+          pico.bold('astroturf'),
           'but have not enabled it. add',
-          chalk.bold('enableCssProp: true'),
+          pico.bold('enableCssProp: true'),
           'to the loader or plugin options to compile the css prop.',
         ),
       );
