@@ -97,7 +97,6 @@
     "postcss": "^8.4.5",
     "postcss-nested": "^5.0.6",
     "postcss-scss": "^4.0.2",
-    "postcss-strip-inline-comments": "^0.1.5",
     "resolve": "^1.20.0",
     "webpack-virtual-modules": "^0.3.2",
     "yargs": "^17.2.1"
