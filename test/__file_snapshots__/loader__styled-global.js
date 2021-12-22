@@ -1,5 +1,5 @@
-const _FancyBox = require("styled-global-FancyBox.module.css!=!astroturf/inline-loader?style!/fixtures/styled-global.js?FancyBox");
-const _FancierBox = require("styled-global-FancierBox.module.css!=!astroturf/inline-loader?style!/fixtures/styled-global.js?FancierBox");
+const _FancyBox = require("styled-global-FancyBox.module.css!=!astroturf/inline-loader?style=1!/fixtures/styled-global.js?FancyBox");
+const _FancierBox = require("styled-global-FancierBox.module.css!=!astroturf/inline-loader?style=1!/fixtures/styled-global.js?FancierBox");
 // prettier-ignore
 const FancyBox = /*#__PURE__*/s('div', null, {
   displayName: "FancyBox",

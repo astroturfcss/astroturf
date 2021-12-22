@@ -6,7 +6,6 @@ import { deserialize, serialize } from 'v8';
 
 import { Expression } from '@babel/types';
 import findCacheDir from 'find-cache-dir';
-import loaderUtils from 'loader-utils';
 
 import type { ResolvedImport, Style } from './types';
 import {
@@ -61,7 +60,7 @@ module.exports = async function loader(
   meta?: any,
 ) {
   const { resourcePath } = this;
-  const loaderOpts = loaderUtils.getOptions(this) || {};
+  const loaderOpts = this.getOptions() || {};
   const cb = this.async();
 
   const loadModule = util.promisify((request: string, done: any) =>
@@ -96,7 +95,7 @@ module.exports = async function loader(
   function getLoaderRequest(from: string, to: string, id: string) {
     const cssBase = basename(to);
 
-    const file = `${cssBase}!=!astroturf/inline-loader?style!${from}?${id}`;
+    const file = `${cssBase}!=!astroturf/inline-loader?style=1!${from}?${id}`;
 
     return file;
   }

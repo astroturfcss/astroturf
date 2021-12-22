@@ -77,8 +77,8 @@ describe('cli', () => {
     expect(output[0].content).toMatchInlineSnapshot(`
       "
       const _styles = {
-        \\"@bar\\": \\"baz\\",
-        \\"foo\\": \\"baz\\",
+        \\"@quz\\": \\"baz\\",
+        \\"foo\\": \\"bar\\",
         \\"baz\\": \\"1px\\"
       };
 

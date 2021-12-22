@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 
 import styled from '../src/runtime/react';
-import { buildLoaderReuqest, format, run, runLoader } from './helpers';
+import { buildLoaderRequest, format, run, runLoader } from './helpers';
 
 describe('styled', () => {
   it('should compile (babel)', async () => {
@@ -52,7 +52,7 @@ describe('styled', () => {
     expect(code).toEqual(
       format`
         import styled from 'astroturf/react';
-        import _ButtonBase from "${buildLoaderReuqest('ButtonBase')}";
+        import _ButtonBase from "${buildLoaderRequest('ButtonBase')}";
         const ButtonBase = /*#__PURE__*/ styled('button', null, {
           displayName: \"ButtonBase\",
           styles: _ButtonBase

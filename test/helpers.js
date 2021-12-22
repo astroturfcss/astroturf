@@ -36,11 +36,11 @@ function rmSourceMap(str) {
 }
 export const loaderPrefix = '';
 
-export const buildLoaderReuqest = (ident, file = FILE_NAME) => {
+export const buildLoaderRequest = (ident, file = FILE_NAME) => {
   const cssFile = createFilename(file, {}, ident);
   return `${basename(
     cssFile,
-  )}!=!astroturf/inline-loader?style!${FILE_NAME}?${ident}`;
+  )}!=!astroturf/inline-loader?style=1!${FILE_NAME}?${ident}`;
 };
 
 export function format(strings, ...values) {
@@ -57,9 +57,7 @@ export async function run(src, options, filename = 'MyStyleFile.js') {
   const { code, metadata } = await transformAsync(src, {
     filename,
     babelrc: false,
-    plugins: [
-      [require('../src/plugin.ts'), { ...options, writeFiles: false }],
-    ],
+    plugins: [[require('../src/plugin'), { ...options, writeFiles: false }]],
     parserOpts: PARSER_OPTS,
     sourceType: 'unambiguous',
   });
@@ -98,6 +96,9 @@ export function runLoader(src, options, filename = FILE_NAME) {
     const resourcePath = filename.replace(__dirname, '');
     const loaderContext = {
       query: { useAltLoader: true, ...options },
+      getOptions() {
+        return this.query;
+      },
       loaders: [{ request: '/path/astroturf/loader' }],
       loaderIndex: 0,
       context: '',
@@ -147,7 +148,7 @@ function testAllRunnersImpl(t, msg, testFn) {
           return createRequirePath(FILE_NAME, cssFile);
         }
 
-        return buildLoaderReuqest(ident, FILE_NAME);
+        return buildLoaderRequest(ident, FILE_NAME);
       },
     }),
   );

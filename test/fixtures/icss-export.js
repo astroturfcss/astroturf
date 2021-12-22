@@ -5,7 +5,7 @@ const styles = stylesheet`
     foo: bar;
   }
 
-  @value bar: baz;
+  @value quz: baz;
 
   @export {
     baz: 1px

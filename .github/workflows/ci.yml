@@ -15,4 +15,4 @@ jobs:
           node-version: 'lts/*'
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
-      # - run: yarn test
+      - run: yarn test
