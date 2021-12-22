@@ -98,7 +98,7 @@
   },
   "devDependencies": {
     "@4c/babel-preset": "^8.1.1",
-    "@4c/cli": "^2.2.8",
+    "@4c/cli": "^3.0.1",
     "@4c/tsconfig": "^0.4.0",
     "@babel/cli": "^7.14.8",
     "@babel/node": "^7.14.9",
