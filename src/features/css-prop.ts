@@ -61,13 +61,14 @@ function buildCssProp(
       // eslint-disable-next-line no-console
       console.warn(
         pico.yellow(
-          'It looks like you are trying to use the css prop with',
-          pico.bold('astroturf'),
-          'but have not enabled it. add',
-          pico.bold('enableCssProp: true'),
-          'to the loader or plugin options to compile the css prop.',
+          `It looks like you are trying to use the css prop with${pico.bold(
+            'astroturf',
+          )} but have not enabled it. add ${pico.bold(
+            'enableCssProp: true',
+          )} to the loader or plugin options to compile the css prop.`,
         ),
       );
+
     return null;
   }
 

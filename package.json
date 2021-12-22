@@ -107,7 +107,6 @@
     "@babel/preset-typescript": "^7.15.0",
     "@types/common-tags": "^1.8.1",
     "@types/fs-extra": "^9.0.13",
-    "@types/loader-utils": "^2.0.3",
     "@types/lodash": "^4.14.172",
     "@types/react": "^17.0.18",
     "@types/react-dom": "^17.0.9",

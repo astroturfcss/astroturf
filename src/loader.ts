@@ -1,5 +1,6 @@
 /* eslint-disable global-require */
 
+// @ts-ignore
 module.exports = function astroturfLoader(...args) {
   const { useAltLoader = false } = (this as any).getOptions() || {};
 
