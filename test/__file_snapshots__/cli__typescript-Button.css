@@ -1,0 +1,10 @@
+.mc17ec701a_cls1 { /*!*/ }
+.mc17ec701a_cls2 {
+color: red;
+}
+.mc17ec701a_cls2.mc17ec701a_variant-primary {
+background: white;
+}
+.mc17ec701a_cls2.mc17ec701a_variant-secondary {
+background: black;
+}

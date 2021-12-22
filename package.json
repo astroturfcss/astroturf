@@ -58,6 +58,7 @@
     ],
     "watchPathIgnorePatterns": [
       "build",
+      "output",
       "__file_snapshots__"
     ]
   },

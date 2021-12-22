@@ -1,0 +1,9 @@
+:export {
+    foo: bar;
+  }
+
+  @value bar: baz;
+
+  @export {
+    baz: 1px
+  }

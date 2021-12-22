@@ -5,3 +5,4 @@ lib
 .cache/
 public/
 example/build/
+test/output/
