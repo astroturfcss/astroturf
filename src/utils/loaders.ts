@@ -1,7 +1,6 @@
 import { codeFrameColumns } from '@babel/code-frame';
 import { SourceLocation } from '@babel/types';
 import levenshtein from 'fast-levenshtein';
-import loaderUtils from 'loader-utils';
 import sortBy from 'lodash/sortBy';
 import MagicString from 'magic-string';
 import pico from 'picocolors';
@@ -180,7 +179,7 @@ export function replaceStyleTemplates(
 export async function resolveOptions(
   loaderContext: any,
 ): Promise<Partial<ResolvedOptions>> {
-  const loaderOpts = loaderUtils.getOptions(loaderContext) || {};
+  const loaderOpts = loaderContext.getOptions() || {};
 
   if (loaderOpts.config === false) {
     return loaderOpts;

@@ -1,0 +1,30 @@
+/*test/output/typescript-Button.css*/
+.mc17ec701a_cls1 { /*!*/ }
+.mc17ec701a_cls2 {
+color: red;
+}
+.mc17ec701a_cls2.mc17ec701a_variant-primary {
+background: white;
+}
+.mc17ec701a_cls2.mc17ec701a_variant-secondary {
+background: black;
+}
+/*test/output/typescript-CssProp1_Button.css*/
+.mc4c29ab1f_cls1 { /*!*/ }
+.mc4c29ab1f_cls2 {
+color: red !important;
+}
+/*test/output/typescript-CssProp2_Button.css*/
+.mc2fdd70ce_cls1 { /*!*/ }
+.mc2fdd70ce_cls2 {
+color: red !important;
+}
+/*test/output/typescript-styles.css*/
+.mcd8ce0bb3_foo {
+    color: red;
+    width: 75px;
+  }
+.mcd8ce0bb3_bar {
+    font-weight: bold;
+    font-style: italic;
+  }

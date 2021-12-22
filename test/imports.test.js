@@ -1,4 +1,4 @@
-import { buildLoaderReuqest, format, run, runLoader } from './helpers';
+import { buildLoaderRequest, format, run, runLoader } from './helpers';
 
 describe('import ordering', () => {
   describe('esm', () => {
@@ -64,13 +64,13 @@ describe('import ordering', () => {
           import Component from "./Foo";
           import styled from "astroturf/react";
           import Component2 from './Foo2';
-          import _styles from "${buildLoaderReuqest('styles')}";
-          import _CssProp1_button from "${buildLoaderReuqest(
+          import _styles from "${buildLoaderRequest('styles')}";
+          import _CssProp1_button from "${buildLoaderRequest(
             'CssProp1_button',
           )}";
-          import _CssProp2_span from "${buildLoaderReuqest('CssProp2_span')}";
-          import _styles2 from "${buildLoaderReuqest('styles2')}";
-          import _P from "${buildLoaderReuqest('P')}";
+          import _CssProp2_span from "${buildLoaderRequest('CssProp2_span')}";
+          import _styles2 from "${buildLoaderRequest('styles2')}";
+          import _P from "${buildLoaderRequest('P')}";
         `,
       );
     });
@@ -146,15 +146,15 @@ describe('import ordering', () => {
 
           const Component = require("./Foo");
           const Component2 = require("./Foo2");
-          const _styles = require("${buildLoaderReuqest('styles')}");
-          const _CssProp1_button = require("${buildLoaderReuqest(
+          const _styles = require("${buildLoaderRequest('styles')}");
+          const _CssProp1_button = require("${buildLoaderRequest(
             'CssProp1_button',
           )}");
-          const _CssProp2_span = require("${buildLoaderReuqest(
+          const _CssProp2_span = require("${buildLoaderRequest(
             'CssProp2_span',
           )}");
-          const _styles2 = require("${buildLoaderReuqest('styles2')}");
-          const _P = require("${buildLoaderReuqest('P')}");
+          const _styles2 = require("${buildLoaderRequest('styles2')}");
+          const _P = require("${buildLoaderRequest('P')}");
       `,
       );
     });

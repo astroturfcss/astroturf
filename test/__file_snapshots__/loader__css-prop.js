@@ -3,11 +3,11 @@
 /** @jsxFrag _j.F */
 import _j from "astroturf/jsx";
 import React from "react";
-import _CssProp1_button from "css-prop-CssProp1_button.module.css!=!astroturf/inline-loader?style!/fixtures/css-prop.js?CssProp1_button";
-import _CssProp2_button from "css-prop-CssProp2_button.module.css!=!astroturf/inline-loader?style!/fixtures/css-prop.js?CssProp2_button";
-import _CssProp3_button from "css-prop-CssProp3_button.module.css!=!astroturf/inline-loader?style!/fixtures/css-prop.js?CssProp3_button";
-import _CssProp4_button from "css-prop-CssProp4_button.module.css!=!astroturf/inline-loader?style!/fixtures/css-prop.js?CssProp4_button";
-import _CssProp5_span from "css-prop-CssProp5_span.module.css!=!astroturf/inline-loader?style!/fixtures/css-prop.js?CssProp5_span";
+import _CssProp1_button from "css-prop-CssProp1_button.module.css!=!astroturf/inline-loader?style=1!/fixtures/css-prop.js?CssProp1_button";
+import _CssProp2_button from "css-prop-CssProp2_button.module.css!=!astroturf/inline-loader?style=1!/fixtures/css-prop.js?CssProp2_button";
+import _CssProp3_button from "css-prop-CssProp3_button.module.css!=!astroturf/inline-loader?style=1!/fixtures/css-prop.js?CssProp3_button";
+import _CssProp4_button from "css-prop-CssProp4_button.module.css!=!astroturf/inline-loader?style=1!/fixtures/css-prop.js?CssProp4_button";
+import _CssProp5_span from "css-prop-CssProp5_span.module.css!=!astroturf/inline-loader?style=1!/fixtures/css-prop.js?CssProp5_span";
 function Button() {
   return <button css={[_CssProp1_button]} />;
 }

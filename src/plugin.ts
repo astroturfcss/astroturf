@@ -1,10 +1,12 @@
+import { mkdirSync, writeFileSync } from 'fs';
+import { dirname } from 'path';
+
 import { PluginObj } from '@babel/core';
 import generate from '@babel/generator';
 // @ts-ignore
 import { NodePath, visitors } from '@babel/traverse';
 import * as t from '@babel/types';
 import { stripIndent } from 'common-tags';
-import { outputFileSync } from 'fs-extra';
 import defaults from 'lodash/defaults';
 
 import cssProp from './features/css-prop';
@@ -47,7 +49,8 @@ export default function plugin(): PluginObj<PluginState> {
       if (opts.writeFiles !== false) {
         styles.forEach(({ absoluteFilePath, value }) => {
           // @ts-ignore
-          outputFileSync(absoluteFilePath, stripIndent([value]));
+          mkdirSync(dirname(absoluteFilePath), { recursive: true });
+          writeFileSync(absoluteFilePath, stripIndent([value] as any));
         });
       }
     },

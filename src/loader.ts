@@ -1,9 +1,7 @@
 /* eslint-disable global-require */
 
-import loaderUtils from 'loader-utils';
-
 module.exports = function astroturfLoader(...args) {
-  const { useAltLoader = false } = loaderUtils.getOptions(this) || {};
+  const { useAltLoader = false } = (this as any).getOptions() || {};
 
   const loader = useAltLoader
     ? require('./inline-loader')
