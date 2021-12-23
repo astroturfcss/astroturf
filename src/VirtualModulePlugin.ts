@@ -167,10 +167,14 @@ class VirtualModulesPlugin {
           : finalWatchFileSystem.watcher.fileWatchers;
 
       fileWatchers.forEach((fileWatcher) => {
-        if (fileWatcher.path === filePath) {
+        const fileWatcherPath = fileWatcher.path || fileWatcher.watcher.path;
+
+        if (fileWatcherPath === filePath) {
+          const fileWatcherDirectoryWatcher = fileWatcher.directoryWatcher || fileWatcher.watcher.directoryWatcher;
+
           debug(this.compiler.name, 'Emit file change:', filePath, time);
-          // delete fileWatcher.directoryWatcher._cachedTimeInfoEntries;
-          fileWatcher.directoryWatcher.setFileTime(
+          // delete fileWatcherDirectoryWatcher._cachedTimeInfoEntries;
+          fileWatcherDirectoryWatcher.setFileTime(
             filePath,
             time,
             false,
