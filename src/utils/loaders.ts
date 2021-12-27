@@ -1,7 +1,7 @@
 import { codeFrameColumns } from '@babel/code-frame';
 import { SourceLocation } from '@babel/types';
 import levenshtein from 'fast-levenshtein';
-import sortBy from 'lodash/sortBy';
+import sortBy from 'lodash.sortby';
 import MagicString from 'magic-string';
 import pico from 'picocolors';
 import type { CssSyntaxError } from 'postcss';

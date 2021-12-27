@@ -1,8 +1,8 @@
 import { NodePath } from '@babel/core';
 import * as t from '@babel/types';
-import camelCase from 'lodash/camelCase';
-import groupBy from 'lodash/groupBy';
-import uniq from 'lodash/uniq';
+import camelCase from 'lodash.camelcase';
+import groupBy from 'lodash.groupby';
+import uniq from 'lodash.uniq';
 
 import { NodeStyleMap, ResolvedOptions, Style } from '../types';
 import cssUnits from './cssUnits';

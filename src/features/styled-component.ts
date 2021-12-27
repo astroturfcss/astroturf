@@ -1,7 +1,7 @@
 import { NodePath } from '@babel/core';
 import generate from '@babel/generator';
 import * as t from '@babel/types';
-import get from 'lodash/get';
+import get from 'lodash.get';
 
 import {
   DynamicStyle,
