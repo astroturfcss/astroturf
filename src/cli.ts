@@ -6,7 +6,7 @@ import path from 'path';
 
 import Processor from '@modular-css/processor';
 import Output from '@modular-css/processor/lib/output';
-import globby from 'globby';
+import fastGlob from 'fast-glob';
 import { AtRule, PluginCreator, Result, Rule } from 'postcss';
 import postcssScss from 'postcss-scss';
 import resolve from 'resolve';
@@ -280,7 +280,7 @@ yargs
       }),
 
     async ({ _, 'css-out-file': cssOutFile, config: configFile }) => {
-      const files = await globby(_);
+      const files = await fastGlob(_);
 
       await handler({ files, outFile: cssOutFile, configFile });
     },
