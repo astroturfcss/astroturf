@@ -1,3 +1,14 @@
+## [1.0.1](https://github.com/4Catalyzer/astroturf/compare/v1.0.0...v1.0.1) (2022-01-31)
+
+
+### Bug Fixes
+
+* support jsx dev runtime in css prop logic ([2751c84](https://github.com/4Catalyzer/astroturf/commit/2751c848458a6c7ae1029539cd0f497a2b5b8507))
+
+
+
+
+
 ## [0.10.5](https://github.com/4Catalyzer/astroturf/compare/v0.10.4...v0.10.5) (2020-10-21)
 
 
