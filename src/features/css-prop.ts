@@ -36,7 +36,9 @@ const isJsxCallExpression = (p: NodePath<any>) => {
   const result =
     p.isCallExpression() &&
     // @ts-ignore
-    p.get('callee').referencesImport('react/jsx-runtime');
+    (p.get('callee').referencesImport('react/jsx-runtime') ||
+      // @ts-ignore
+      p.get('callee').referencesImport('react/jsx-dev-runtime'));
 
   return result;
 };
