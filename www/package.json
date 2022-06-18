@@ -21,7 +21,7 @@
     "@typescript-eslint/parser": "^2.31.0",
     "gatsby": "^2.21.11",
     "gatsby-plugin-css": "^2.0.1",
-    "gatsby-plugin-mdx": "^1.2.5",
+    "gatsby-plugin-mdx": "^2.0.0",
     "gatsby-plugin-postcss": "^2.3.0",
     "gatsby-plugin-typescript": "^2.4.0",
     "gatsby-plugin-webfonts": "^1.1.2",
