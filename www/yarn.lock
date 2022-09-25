@@ -11850,10 +11850,10 @@ typescript-workspace-plugin@^2.0.1:
   resolved "https://registry.yarnpkg.com/typescript-workspace-plugin/-/typescript-workspace-plugin-2.0.1.tgz#3d88be1c35a7fdf2c0160c8cf569ca8993439a12"
   integrity sha512-xjIYNFlPIA7IWXvnOFJoAeHPbPJSo0AiQDCRJzaAp3+xZwz6maTgeRLB0oEHVtCqz4Q1CDN6U9kh/2z8sxdDBQ==
 
-typescript@^3.8.3:
-  version "3.8.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.8.3.tgz#409eb8544ea0335711205869ec458ab109ee1061"
-  integrity sha512-MYlEfn5VrLNsgudQTVJeNaQFUAI7DkhnOjdpAp4T+ku1TfQClewlbSuTVHiA+8skNBgaf02TL/kLOvig4y3G8w==
+typescript@^4.8.3:
+  version "4.8.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.8.3.tgz#d59344522c4bc464a65a730ac695007fdb66dd88"
+  integrity sha512-goMHfm00nWPa8UvR/CPSvykqf6dVV8x/dp0c5mFTMTIu0u0FlGWRioyy7Nn0PGAdHxpJZnuO/ut+PpQ8UiHAig==
 
 unc-path-regex@^0.1.2:
   version "0.1.2"
