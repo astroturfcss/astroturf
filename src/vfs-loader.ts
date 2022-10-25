@@ -141,10 +141,10 @@ module.exports = async function loader(
         });
 
         const result = replaceStyleTemplates(
-          this,
           resourcePath,
           content,
           changeset,
+          this.sourceMap,
         );
 
         cb(null, result.code, result.map as any);

@@ -196,10 +196,10 @@ module.exports = async function loader(
         await cache.set(resourcePath, styles);
 
         const result = replaceStyleTemplates(
-          this,
           resourcePath,
           content,
           changeset,
+          this.sourceMap,
         );
 
         cb(null, result.code, result.map as any);

@@ -243,7 +243,7 @@ export async function handler({ files, outFile, configFile }) {
 
     await writeFile(
       file,
-      replaceStyleTemplates({}, file, content, changeset).code,
+      replaceStyleTemplates(file, content, changeset, false).code,
     );
   }
 
