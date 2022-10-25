@@ -3,6 +3,12 @@ import fs from 'fs/promises';
 import { handler } from '../src/cli';
 
 async function copyFixture(file) {
+  try {
+    await fs.stat(`${__dirname}/output`);
+  } catch (error) {
+    await fs.mkdir(`${__dirname}/output`);
+  }
+
   const dest = `${__dirname}/output/${file}`;
   await fs.copyFile(`${__dirname}/fixtures/${file}`, dest);
   return dest;
@@ -42,7 +48,7 @@ describe('cli', () => {
     }
   });
 
-  it('should work with out file', async () => {
+  it('should work without out file', async () => {
     const output = await run('typescript.tsx', false);
 
     for (const out of output) {

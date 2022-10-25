@@ -1,7 +1,7 @@
-import { cosmiconfig } from 'cosmiconfig';
 import JSON5 from 'json5';
+import { lilconfig } from 'lilconfig';
 
-const explorer = cosmiconfig('astroturf', {
+const explorer = lilconfig('astroturf', {
   searchPlaces: ['package.json', `.astroturfrc`, `.astroturfrc.json`],
   loaders: {
     json: (_file: string, content: string) => JSON5.parse(content),

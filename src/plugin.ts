@@ -7,7 +7,7 @@ import generate from '@babel/generator';
 import { NodePath, visitors } from '@babel/traverse';
 import * as t from '@babel/types';
 import { stripIndent } from 'common-tags';
-import defaults from 'lodash/defaults';
+import defaults from 'lodash.defaults';
 
 import cssProp from './features/css-prop';
 import styledComponent from './features/styled-component';
