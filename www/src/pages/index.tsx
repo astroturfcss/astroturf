@@ -21,7 +21,7 @@ function HomePage() {
         <nav className="flex text-2xl space-x-8">
           <Button href="introduction">Docs</Button>
           <Button href="https://github.com/4Catalyzer/astroturf">
-            Github
+            GitHub
           </Button>
         </nav>
       </section>
