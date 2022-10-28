@@ -148,11 +148,10 @@ export function collectStyles(
 }
 
 export function replaceStyleTemplates(
-  loaderContext: any,
   filename: string,
   src: string,
   locations: { start?: number; end?: number; code?: string }[],
-  // content: Map<string, string>,
+  sourceMap = true,
 ) {
   locations = sortBy(locations, (i) => i.start || 0);
 
@@ -170,8 +169,12 @@ export function replaceStyleTemplates(
 
   return {
     code: magic.toString(),
-    map: loaderContext.sourceMap
-      ? magic.generateMap({ includeContent: true, source: filename })
+    map: sourceMap
+      ? magic.generateMap({
+          includeContent: true,
+          source: filename,
+          hires: true,
+        })
       : null,
   };
 }

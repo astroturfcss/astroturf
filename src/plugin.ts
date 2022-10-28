@@ -61,6 +61,7 @@ export default function plugin(): PluginObj<PluginState> {
           enter(path: NodePath<t.Program>, state: any) {
             state.styleImports = new ImportInjector(path);
             state.defaultedOptions = defaults(state.opts, {
+              nesting: 'auto',
               extension: '.module.css',
               cssTagName: 'css',
               styledTagName: 'styled',

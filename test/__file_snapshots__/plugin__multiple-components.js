@@ -1,10 +1,11 @@
 import styled from "astroturf/react";
 import _FancyBox from "./multiple-components-FancyBox.module.css";
 import _FancyHeader from "./multiple-components-FancyHeader.module.css";
-const SIZE = 75; // prettier-ignore
-const FancyBox = /*#__PURE__*/ styled("div", null, {
+const SIZE = 75;
+// prettier-ignore
+const FancyBox = /*#__PURE__*/styled('div', null, {
   displayName: "FancyBox",
-  styles: _FancyBox,
+  styles: _FancyBox
 });
 const FancyHeader = /*#__PURE__*/ styled("h2", null, {
   displayName: "FancyHeader",

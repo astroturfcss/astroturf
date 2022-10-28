@@ -1,22 +1,13 @@
-import { stylesheet } from 'astroturf/react';
+const tailwindConfig = require('./tailwind.config.cjs');
 
-const colors = stylesheet`
-  @value bgColor: theme(colors.secondary-lighter);
-  @value primary: theme(colors.primary);
-  @value yellow: theme(colors.yellow);
-  @value puke: theme(colors.puke);
-  @value teal: theme(colors.teal);
-  @value redOrange: theme(colors.redOrange);
-  @value black: theme(colors.black);
-
-`;
+const { colors } = tailwindConfig.theme;
 
 // Original: https://github.com/damienstanton/ultramin
 // Converted automatically using ./tools/themeFromVsCode
 const theme = {
   plain: {
     color: colors.black,
-    backgroundColor: colors.bgColor,
+    backgroundColor: colors['secondary-lighter'],
   },
   styles: [
     // { types: ['styled-template-string'], color: colors.black },
@@ -65,4 +56,4 @@ const theme = {
   ],
 };
 
-export default theme;
+module.exports = theme;

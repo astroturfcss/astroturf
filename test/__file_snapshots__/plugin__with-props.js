@@ -4,7 +4,10 @@ import _RedPasswordInput2 from "./with-props-RedPasswordInput2.module.css";
 const RedPasswordInput = /*#__PURE__*/ styled("input", null, {
   displayName: "RedPasswordInput",
   styles: _RedPasswordInput,
-  attrs: (props) => ({ ...props, type: "password" }),
+  attrs: (props) => ({
+    ...props,
+    type: "password",
+  }),
 });
 const RedPasswordInput2 = /*#__PURE__*/ styled("input", null, {
   displayName: "RedPasswordInput2",

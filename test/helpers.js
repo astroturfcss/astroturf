@@ -40,7 +40,7 @@ export const buildLoaderRequest = (ident, file = FILE_NAME) => {
   const cssFile = createFilename(file, {}, ident);
   return `${basename(
     cssFile,
-  )}!=!astroturf/inline-loader?style=1!${FILE_NAME}?${ident}`;
+  )}!=!astroturf/inline-loader?style=1!${FILE_NAME}?styleId=${ident}`;
 };
 
 export function format(strings, ...values) {

@@ -3,6 +3,11 @@ import fs from 'fs/promises';
 import { handler } from '../src/cli';
 
 async function copyFixture(file) {
+  try {
+    await fs.mkdir(`${__dirname}/output`, { recursive: true });
+  } catch {
+    /* ignore */
+  }
   const dest = `${__dirname}/output/${file}`;
   await fs.copyFile(`${__dirname}/fixtures/${file}`, dest);
   return dest;

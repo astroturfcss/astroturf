@@ -1,15 +1,16 @@
-import React from 'react';
 import { css } from 'astroturf/react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Button(props: any) {
-  const Component = props.href ? 'a' : 'button';
+  const Component = props.href ? 'a' : props.to ? Link : 'button';
   return (
     <div className="inline-block relative">
       <Component
         type={Component === 'button' ? 'button' : undefined}
         {...props}
         css={css`
-          composes: appearance-none, font-brand, inline-block, py-1, px-4, border, border-white, text-white, font-bold, text-shadow from global;
+          composes: appearance-none font-brand inline-block py-1 px-4 border border-white text-white font-bold text-shadow from global;
 
           /*transform: skew(2deg, 1deg); */
         `}
