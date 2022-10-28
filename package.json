@@ -15,7 +15,7 @@
     "build:pick": "cherry-pick --cwd=lib --input-dir=../src/runtime --cjs-dir=cjs --esm-dir=esm",
     "build:runtime": "4c build src/runtime --no-copy-files --no-types",
     "build:tools": "4c build -d lib --no-esm -- --ignore \"**/runtime/**\"",
-    "build": "yarn build:tools && yarn build:runtime && yarn build:pick && yarn copy:types",
+    "build": "yarn build:tools && yarn build:runtime && yarn build:pick && yarn copy:types && yarn file-butler prepare-publish-dir lib",
     "deploy-docs": "yarn --cwd www build --prefix-paths && gh-pages -d www/public",
     "release": "4c release",
     "start": "yarn --cwd ./example start"

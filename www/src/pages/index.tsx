@@ -1,8 +1,7 @@
 import { css } from 'astroturf/react';
-import React from 'react';
 
+import Button from '../Button';
 import logo from '../assets/logo.svg';
-import Button from '@site/src/components/Button';
 
 function HomePage() {
   return (

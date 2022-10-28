@@ -1,4 +1,4 @@
-const tailwindConfig = require('./tailwind.config');
+const tailwindConfig = require('./tailwind.config.cjs');
 
 const { colors } = tailwindConfig.theme;
 

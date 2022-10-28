@@ -1,24 +1,17 @@
-import { MDXProvider } from '@mdx-js/react';
+// import { MDXProvider } from '@mdx-js/react';
 import styled, { css } from 'astroturf/react';
-import { Link } from 'gatsby';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-import CodeBlock from './CodeBlock';
-
-const InlineCode = styled('code')`
-  @apply text-primary bg-secondary-darker bg-opacity-75 rounded px-1;
-`;
+// import CodeBlock from '../components/CodeBlock';
+import MDXContent from './MDXContext';
 
 interface Props {
   children?: React.ReactNode;
 }
 
-const Brand = styled('span')`
-  font-family: theme('fontFamily.brand');
-`;
-
 const NavItem = styled(Link)`
-  composes: my-2, inline-block, font-brand, text-xl, text-white, text-shadow-sm, relative from global;
+  composes: my-2 inline-block font-brand text-xl text-white text-shadow-sm relative from global;
 
   &::before {
     @apply bg-primary absolute;
@@ -47,22 +40,11 @@ function Layout(props: Props) {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <MDXProvider
-      components={{
-        // Or define component inline
-        pre: CodeBlock,
-        inlineCode: InlineCode,
-        Brand,
-      }}
-    >
+    <>
       <div
         className="py-3 px-6 sticky top-0 bg-secondary shadow-sm border-b border-secondary-darker flex justify-between"
         css={css`
           @apply py-3 px-6 sticky top-0;
-
-          @media (max-width: theme(screens.md)) {
-            @apply;
-          }
         `}
       >
         <div className="relative inline-block mr-12">
@@ -95,7 +77,7 @@ function Layout(props: Props) {
             display: none;
 
             width: 100%;
-            box-shadow: theme(boxShadow.default);
+            box-shadow: theme(boxShadow.DEFAULT);
             background-color: theme(colors.secondary-darker);
             max-height: calc(100% - 61px);
             overflow-y: auto;
@@ -113,7 +95,7 @@ function Layout(props: Props) {
         <NavItem to="/introduction">Introduction</NavItem>
         <NavItem to="/setup">Setup</NavItem>
         <NavItem to="/advanced">Advanced features</NavItem>
-        <NavItem to="/migration">Migrating to v1</NavItem>
+        {/* <NavItem to="/migration">Migrating to v1</NavItem> */}
         <NavItem to="/tooling">Tooling</NavItem>
       </nav>
       <main
@@ -125,7 +107,7 @@ function Layout(props: Props) {
       >
         {props.children}
       </main>
-    </MDXProvider>
+    </>
   );
 }
 

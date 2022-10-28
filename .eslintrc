@@ -11,13 +11,15 @@
   },
   "overrides": [
     {
-      "files": ["test/**", "www/*.js"],
+      "files": ["test/**", "www/**"],
       "env": {
         "jest": true
       },
       "rules": {
         "global-require": "off",
         "no-console": "off",
+        "react/react-in-jsx-scope": "off",
+        "import/extensions": "off",
         "import/no-extraneous-dependencies": [
           "error",
           { "devDependencies": true }

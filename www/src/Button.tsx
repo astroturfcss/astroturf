@@ -1,8 +1,9 @@
 import { css } from 'astroturf/react';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Button(props: any) {
-  const Component = props.href ? 'a' : 'button';
+  const Component = props.href ? 'a' : props.to ? Link : 'button';
   return (
     <div className="inline-block relative">
       <Component
