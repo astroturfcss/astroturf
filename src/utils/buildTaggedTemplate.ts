@@ -371,8 +371,10 @@ export default function buildTaggedTemplate(opts: Options) {
   css = `${allImports.trim()}\n\n${css}`.trim();
 
   if (
-    location !== 'STYLESHEET' &&
-    opts.style.absoluteFilePath.endsWith('.css')
+    opts.pluginOptions.nesting === true ||
+    (opts.pluginOptions.nesting === 'auto' &&
+      location !== 'STYLESHEET' &&
+      opts.style.absoluteFilePath.endsWith('.css'))
   ) {
     try {
       css = processCss(css, opts.style.absoluteFilePath).css;

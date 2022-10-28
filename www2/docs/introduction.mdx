@@ -1,0 +1,203 @@
+# Intro to astroturf
+
+<p>
+  <brand>astroturf</brand> lets you write CSS in your JavaScript files without
+  adding any runtime layer, and with your existing CSS processing pipeline.
+</p>
+
+- **Zero runtime CSS-in-JS.** Get many of the same benefits as CSS-in-JS,
+  but without the loss of flexibility in requiring framework-specific CSS
+  processing, and while keeping your CSS fully static with no runtime style parsing.
+- Use your existing tools – **Sass, PostCSS, Less** – but still write
+  your style definitions in your JavaScript files
+- **Whole component in the single file**. Write CSS in a template literal,
+  then use it as if it were in a separate file
+
+## Usage
+
+A goal of <brand>astroturf</brand> is to provide approachable,
+scoped, and managable CSS according to everyone's level of comfort. Pick the level of
+abstraction that is right for _you_!
+
+### Scoped StyleSheets
+
+Leveraging the magic of <brand>COMPILATION</brand>, astroturf lets you define styles
+from the comfort of your JavaScript (or TypeScript) files; Framework optional!
+
+```jsx
+import { stylesheet } from 'astroturf';
+
+const height = 2;
+
+const styles = stylesheet`
+  .btn {
+    appearance: none;
+    height: ${height}rem;
+    display: inline-block;
+    padding: .5rem 1rem;
+  }
+
+  .primary {
+    color: white:
+    border: 1px solid white;
+    background-color: taupe;
+
+    &:hover {
+      color: taupe:
+      border-color: taupe;
+      background-color: white;
+    }
+  }
+`;
+
+const Button = ({ primary }) => {
+  const button = document.createElement('button');
+  button.classList.add(styles.btn, primary && styles.primary);
+  return button;
+};
+```
+
+Through our proprietary "Extraction Process" each stylesheet is
+turned into its own CSS file.
+
+For those who like a more <brand>MODULAR</brand> approach the `css` tag is ready and
+waiting. The `css` tag creates single CSS classes:
+
+```jsx
+import React from 'react';
+import { css } from 'astroturf';
+
+const btn = css`
+  color: black;
+  border: 1px solid black;
+  background-color: white;
+`;
+
+export default function Button({ children }) {
+  return <button className={btn}>{children}</button>;
+}
+```
+
+When processed, the `css` block will be extracted into a `.css` file,
+taking advantage of any and all of the other loaders configured to handle css.
+
+## React.JS™!
+
+Embracing the component lifestyle? <brand>astroturf</brand> has you covered with
+built-in integration with <brand>React.JS™</brand>. The versatile `css` tag helps
+transform your plain ol' components into beautiful works of art.
+
+```jsx
+import * as React from 'react';
+import { css } from 'astroturf';
+
+function Button({ children, ...props }) {
+  return (
+    <button
+      {...props}
+      css={css`
+        color: blue;
+        border: 1px solid blue;
+        padding: 0 1rem;
+      `}
+    >
+      {children}
+    </button>
+  );
+}
+```
+
+Additional `className` props are automically combined with the provided css
+with no additional effort.
+
+## Dynamic Props and You
+
+While not a "real" CSS-in-JS library <brand>astroturf</brand> still provides
+a level of dynamic styling you've come to expect from component styling. Individual
+CSS property values can be fully specified at runtime by transpiling interpolations
+to "CSS Custom Properties". Use dynamic interpolations anywhere CSS custom properties are
+allowed!
+
+```jsx
+import * as React from 'react';
+import { css } from 'astroturf';
+
+function Button({ bgColor, children }) {
+  return (
+    <button
+      css={css`
+        color: black;
+        border: 1px solid black;
+        background-color: ${bgColor};
+      `}
+    >
+      {children}
+    </button>
+  );
+}
+```
+
+### Component Variants
+
+In addition to individual property values, <brand>astroturf</brand> can also create
+larger component "variants" by nesting `css` tags inside the root componnent definition.
+
+```jsx
+import * as React from 'react';
+import { css } from 'astroturf';
+
+function Button({ variant = 'primary', children }) {
+  return (
+    <button
+      css={css`
+        border: 1px solid transparent;
+
+        ${variant === 'primary' &&
+        css`
+          color: blue;
+          border-color: blue;
+        `}
+      `}
+    >
+      {children}
+    </button>
+  );
+}
+```
+
+Each inner `css` interpolation compiles to seperate CSS Class Name, and is toggled
+at runtime when the inner expression returns true.
+
+### Cruise Control
+
+For the discerning consumer who knows what they want, and don't have time to mess
+around, <brand>astroturf</brand> has you covered with <brand>Instant Components™</brand>
+brought to you by the `styled` helper.
+
+Create components with ease, effortlessly mapping class names to component props:
+
+```jsx
+import * as React from 'react';
+import { styled } from 'astroturf/react';
+
+const Button = styled('button')`
+  border: 1px solid transparent;
+
+  &.disabled {
+    opacity: 0.6;
+  }
+
+  &.variant-primary {
+    color: blue;
+    border-color: blue;
+  }
+`;
+
+<Button variant="primary" disabled />;
+```
+
+The `styled` helper will infer component props from the nested classes you define.
+Create boolean props with simple class names, and cover more complex cases using a `-`
+to differentiate the name from value. `.color-red` becomes `color="red"`!
+
+We recommend this pattern for simple cases, where you value less boilerplate over customizability.

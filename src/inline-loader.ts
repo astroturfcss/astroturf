@@ -18,12 +18,16 @@ import replaceComposes from './utils/replaceComposes';
 
 const cacheDir = findCacheDir({ name: 'astroturf-loader' });
 
-mkdirSync(cacheDir, { recursive: true });
+try {
+  mkdirSync(cacheDir, { recursive: true });
+} catch (error) {
+  console.error('astroturf/loader could not create cache directory', error);
+}
 
 const inMemoryStyleCache = new Map<string, Map<string, Style>>();
 
 const hash = (name: string) =>
-  `${crypto.createHash('md4').update(name).digest('hex')}.cache`;
+  `${crypto.createHash('sha1').update(name).digest('hex')}.cache`;
 
 const cache = {
   async set(source: string, newStyles: Style[]) {
@@ -33,7 +37,11 @@ const cache = {
       styles.set(style.identifier, style);
     });
 
-    await fs.writeFile(`${cacheDir}/${hash(source)}`, serialize(styles));
+    try {
+      await fs.writeFile(`${cacheDir}/${hash(source)}`, serialize(styles));
+    } catch {
+      /* ignore */
+    }
   },
 
   async get(source: string): Promise<Map<string, Style> | undefined> {
@@ -43,7 +51,7 @@ const cache = {
       try {
         styles = deserialize(await fs.readFile(`${cacheDir}/${hash(source)}`));
         inMemoryStyleCache.set(source, styles!);
-      } catch (err) {
+      } catch {
         /* ignore */
       }
     }
@@ -68,15 +76,17 @@ module.exports = async function loader(
   );
 
   if (loaderOpts.style) {
-    const styleId = this.resourceQuery.slice(1);
+    const styleId = new URLSearchParams(this.resourceQuery || '').get(
+      'styleId',
+    );
 
     const styles = await cache.get(resourcePath);
 
-    let style = styles?.get(styleId);
+    let style = styles?.get(styleId!);
 
     if (!style) {
       await loadModule(resourcePath);
-      style = inMemoryStyleCache.get(resourcePath)?.get(styleId);
+      style = inMemoryStyleCache.get(resourcePath)?.get(styleId!);
     }
 
     if (!style) {
@@ -86,6 +96,7 @@ module.exports = async function loader(
         ),
       );
     }
+
     if (!this._module.matchResource)
       this._module.matchResource = style.absoluteFilePath;
 
@@ -95,7 +106,7 @@ module.exports = async function loader(
   function getLoaderRequest(from: string, to: string, id: string) {
     const cssBase = basename(to);
 
-    const file = `${cssBase}!=!astroturf/inline-loader?style=1!${from}?${id}`;
+    const file = `${cssBase}!=!astroturf/inline-loader?style=1!${from}?styleId=${id}`;
 
     return file;
   }

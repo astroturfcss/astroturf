@@ -9,26 +9,26 @@
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "../src/runtime/react.js");
-/* harmony import */ var issue_365_mixins_module_css_astroturf_inline_loader_style_1_Users_jquense_src_astroturf_test_integration_issue_365_js_mixins__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! issue-365-mixins.module.css!=!astroturf/inline-loader?style=1!./integration/issue-365.js?mixins */ "issue-365-mixins.module.css!=!../src/inline-loader.ts?style=1!./integration/issue-365.js?mixins");
-/* harmony import */ var issue_365_BlockStyled_module_css_astroturf_inline_loader_style_1_Users_jquense_src_astroturf_test_integration_issue_365_js_BlockStyled__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! issue-365-BlockStyled.module.css!=!astroturf/inline-loader?style=1!./integration/issue-365.js?BlockStyled */ "issue-365-BlockStyled.module.css!=!../src/inline-loader.ts?style=1!./integration/issue-365.js?BlockStyled");
+/* harmony import */ var issue_365_mixins_module_css_astroturf_inline_loader_style_1_Users_jasonquense_code_astroturf_test_integration_issue_365_js_styleId_mixins__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! issue-365-mixins.module.css!=!astroturf/inline-loader?style=1!./integration/issue-365.js?styleId=mixins */ "issue-365-mixins.module.css!=!../src/inline-loader.ts?style=1!./integration/issue-365.js?styleId=mixins");
+/* harmony import */ var issue_365_BlockStyled_module_css_astroturf_inline_loader_style_1_Users_jasonquense_code_astroturf_test_integration_issue_365_js_styleId_BlockStyled__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! issue-365-BlockStyled.module.css!=!astroturf/inline-loader?style=1!./integration/issue-365.js?styleId=BlockStyled */ "issue-365-BlockStyled.module.css!=!../src/inline-loader.ts?style=1!./integration/issue-365.js?styleId=BlockStyled");
 
 
 
-const mixins = issue_365_mixins_module_css_astroturf_inline_loader_style_1_Users_jquense_src_astroturf_test_integration_issue_365_js_mixins__WEBPACK_IMPORTED_MODULE_1__["default"].cls2;
+const mixins = issue_365_mixins_module_css_astroturf_inline_loader_style_1_Users_jasonquense_code_astroturf_test_integration_issue_365_js_styleId_mixins__WEBPACK_IMPORTED_MODULE_1__["default"].cls2;
 const Block = /*#__PURE__*/React.createElement(BlockStyled, {
   active: false
 });
 const BlockStyled = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_0__["default"])("div", null, {
   displayName: "BlockStyled",
-  styles: issue_365_BlockStyled_module_css_astroturf_inline_loader_style_1_Users_jquense_src_astroturf_test_integration_issue_365_js_BlockStyled__WEBPACK_IMPORTED_MODULE_2__["default"]
+  styles: issue_365_BlockStyled_module_css_astroturf_inline_loader_style_1_Users_jasonquense_code_astroturf_test_integration_issue_365_js_styleId_BlockStyled__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
 
 /***/ }),
 
-/***/ "issue-365-BlockStyled.module.css!=!../src/inline-loader.ts?style=1!./integration/issue-365.js?BlockStyled":
-/*!*****************************************************************************************************************!*\
-  !*** issue-365-BlockStyled.module.css!=!../src/inline-loader.ts?style=1!./integration/issue-365.js?BlockStyled ***!
-  \*****************************************************************************************************************/
+/***/ "issue-365-BlockStyled.module.css!=!../src/inline-loader.ts?style=1!./integration/issue-365.js?styleId=BlockStyled":
+/*!*************************************************************************************************************************!*\
+  !*** issue-365-BlockStyled.module.css!=!../src/inline-loader.ts?style=1!./integration/issue-365.js?styleId=BlockStyled ***!
+  \*************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -40,10 +40,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "issue-365-mixins.module.css!=!../src/inline-loader.ts?style=1!./integration/issue-365.js?mixins":
-/*!*******************************************************************************************************!*\
-  !*** issue-365-mixins.module.css!=!../src/inline-loader.ts?style=1!./integration/issue-365.js?mixins ***!
-  \*******************************************************************************************************/
+/***/ "issue-365-mixins.module.css!=!../src/inline-loader.ts?style=1!./integration/issue-365.js?styleId=mixins":
+/*!***************************************************************************************************************!*\
+  !*** issue-365-mixins.module.css!=!../src/inline-loader.ts?style=1!./integration/issue-365.js?styleId=mixins ***!
+  \***************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);

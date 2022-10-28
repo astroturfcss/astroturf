@@ -25,6 +25,7 @@ export interface ResolvedOptions {
   configFile?: string | boolean;
   writeFiles: boolean;
   allowGlobal: boolean;
+  nesting: boolean | 'auto';
 
   cssTagName: string | false;
   styledTagName: string | false;

@@ -1,6 +1,6 @@
 import styled from "astroturf/react";
-import _FancyBox from "styled-FancyBox.module.css!=!astroturf/inline-loader?style=1!/fixtures/styled.js?FancyBox";
-import _FancierBox from "styled-FancierBox.module.css!=!astroturf/inline-loader?style=1!/fixtures/styled.js?FancierBox";
+import _FancyBox from "styled-FancyBox.module.css!=!astroturf/inline-loader?style=1!/fixtures/styled.js?styleId=FancyBox";
+import _FancierBox from "styled-FancierBox.module.css!=!astroturf/inline-loader?style=1!/fixtures/styled.js?styleId=FancierBox";
 const SIZE = 75;
 // prettier-ignore
 const FancyBox = /*#__PURE__*/styled('div', null, {

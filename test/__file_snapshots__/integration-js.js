@@ -13,15 +13,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "../src/runtime/react.js");
-/* harmony import */ var Button_styles_module_css_astroturf_inline_loader_style_1_integration_Button_js_styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! Button-styles.module.css!=!astroturf/inline-loader?style=1!./integration/Button.js?styles */ "Button-styles.module.css!=!../src/inline-loader.ts?style=1!./integration/Button.js?styles");
-/* harmony import */ var Button_module_css_astroturf_inline_loader_style_1_integration_Button_js_Button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! Button.module.css!=!astroturf/inline-loader?style=1!./integration/Button.js?Button */ "Button.module.css!=!../src/inline-loader.ts?style=1!./integration/Button.js?Button");
+/* harmony import */ var Button_styles_module_css_astroturf_inline_loader_style_1_integration_Button_js_styleId_styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! Button-styles.module.css!=!astroturf/inline-loader?style=1!./integration/Button.js?styleId=styles */ "Button-styles.module.css!=!../src/inline-loader.ts?style=1!./integration/Button.js?styleId=styles");
+/* harmony import */ var Button_module_css_astroturf_inline_loader_style_1_integration_Button_js_styleId_Button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! Button.module.css!=!astroturf/inline-loader?style=1!./integration/Button.js?styleId=Button */ "Button.module.css!=!../src/inline-loader.ts?style=1!./integration/Button.js?styleId=Button");
 
 
 
-const styles = Button_styles_module_css_astroturf_inline_loader_style_1_integration_Button_js_styles__WEBPACK_IMPORTED_MODULE_1__["default"];
+const styles = Button_styles_module_css_astroturf_inline_loader_style_1_integration_Button_js_styleId_styles__WEBPACK_IMPORTED_MODULE_1__["default"];
 const Button = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_0__["default"])('button', null, {
   displayName: "Button",
-  styles: Button_module_css_astroturf_inline_loader_style_1_integration_Button_js_Button__WEBPACK_IMPORTED_MODULE_2__["default"]
+  styles: Button_module_css_astroturf_inline_loader_style_1_integration_Button_js_styleId_Button__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Button);
 
@@ -44,15 +44,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var widget__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! widget */ "./integration/shared/widget/index.js");
 /* harmony import */ var withConfig__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! withConfig */ "./integration/shared/withConfig/index.js");
 /* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Button */ "./integration/Button.js");
-/* harmony import */ var main_styles_module_css_astroturf_inline_loader_style_1_integration_main_js_styles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! main-styles.module.css!=!astroturf/inline-loader?style=1!./integration/main.js?styles */ "main-styles.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?styles");
-/* harmony import */ var main_FancyBox_module_css_astroturf_inline_loader_style_1_integration_main_js_FancyBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! main-FancyBox.module.css!=!astroturf/inline-loader?style=1!./integration/main.js?FancyBox */ "main-FancyBox.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?FancyBox");
-/* harmony import */ var main_FancierBox_module_css_astroturf_inline_loader_style_1_integration_main_js_FancierBox__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! main-FancierBox.module.css!=!astroturf/inline-loader?style=1!./integration/main.js?FancierBox */ "main-FancierBox.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?FancierBox");
-/* harmony import */ var main_CssProp1_div_module_css_astroturf_inline_loader_style_1_integration_main_js_CssProp1_div__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! main-CssProp1_div.module.css!=!astroturf/inline-loader?style=1!./integration/main.js?CssProp1_div */ "main-CssProp1_div.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?CssProp1_div");
-/* harmony import */ var main_CssProp2_span_module_css_astroturf_inline_loader_style_1_integration_main_js_CssProp2_span__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! main-CssProp2_span.module.css!=!astroturf/inline-loader?style=1!./integration/main.js?CssProp2_span */ "main-CssProp2_span.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?CssProp2_span");
+/* harmony import */ var main_styles_module_css_astroturf_inline_loader_style_1_integration_main_js_styleId_styles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! main-styles.module.css!=!astroturf/inline-loader?style=1!./integration/main.js?styleId=styles */ "main-styles.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?styleId=styles");
+/* harmony import */ var main_FancyBox_module_css_astroturf_inline_loader_style_1_integration_main_js_styleId_FancyBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! main-FancyBox.module.css!=!astroturf/inline-loader?style=1!./integration/main.js?styleId=FancyBox */ "main-FancyBox.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?styleId=FancyBox");
+/* harmony import */ var main_FancierBox_module_css_astroturf_inline_loader_style_1_integration_main_js_styleId_FancierBox__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! main-FancierBox.module.css!=!astroturf/inline-loader?style=1!./integration/main.js?styleId=FancierBox */ "main-FancierBox.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?styleId=FancierBox");
+/* harmony import */ var main_CssProp1_div_module_css_astroturf_inline_loader_style_1_integration_main_js_styleId_CssProp1_div__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! main-CssProp1_div.module.css!=!astroturf/inline-loader?style=1!./integration/main.js?styleId=CssProp1_div */ "main-CssProp1_div.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?styleId=CssProp1_div");
+/* harmony import */ var main_CssProp2_span_module_css_astroturf_inline_loader_style_1_integration_main_js_styleId_CssProp2_span__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! main-CssProp2_span.module.css!=!astroturf/inline-loader?style=1!./integration/main.js?styleId=CssProp2_span */ "main-CssProp2_span.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?styleId=CssProp2_span");
 /** @jsxRuntime classic*/
-
 /** @jsx _j */
-
 /** @jsxFrag _j.F */
 
 
@@ -66,21 +64,22 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 const width = 75;
-const styles = main_styles_module_css_astroturf_inline_loader_style_1_integration_main_js_styles__WEBPACK_IMPORTED_MODULE_6__["default"];
+const styles = main_styles_module_css_astroturf_inline_loader_style_1_integration_main_js_styleId_styles__WEBPACK_IMPORTED_MODULE_6__["default"];
 const FancyBox = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_1__["default"])('div', null, {
   displayName: "FancyBox",
-  styles: main_FancyBox_module_css_astroturf_inline_loader_style_1_integration_main_js_FancyBox__WEBPACK_IMPORTED_MODULE_7__["default"]
+  styles: main_FancyBox_module_css_astroturf_inline_loader_style_1_integration_main_js_styleId_FancyBox__WEBPACK_IMPORTED_MODULE_7__["default"]
 });
 const FancierBox = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_1__["default"])('div', null, {
   displayName: "FancierBox",
-  styles: main_FancierBox_module_css_astroturf_inline_loader_style_1_integration_main_js_FancierBox__WEBPACK_IMPORTED_MODULE_8__["default"]
+  styles: main_FancierBox_module_css_astroturf_inline_loader_style_1_integration_main_js_styleId_FancierBox__WEBPACK_IMPORTED_MODULE_8__["default"]
 });
 function MyComponent() {
   return (0,astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["default"])(astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["default"].F, null, (0,astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["default"])("div", {
-    css: [main_CssProp1_div_module_css_astroturf_inline_loader_style_1_integration_main_js_CssProp1_div__WEBPACK_IMPORTED_MODULE_9__["default"], null, [foo && main_CssProp1_div_module_css_astroturf_inline_loader_style_1_integration_main_js_CssProp1_div__WEBPACK_IMPORTED_MODULE_9__["default"].cssProp1DivVariant0]]
+    css: [main_CssProp1_div_module_css_astroturf_inline_loader_style_1_integration_main_js_styleId_CssProp1_div__WEBPACK_IMPORTED_MODULE_9__["default"], null, [foo && main_CssProp1_div_module_css_astroturf_inline_loader_style_1_integration_main_js_styleId_CssProp1_div__WEBPACK_IMPORTED_MODULE_9__["default"].cssProp1DivVariant0]]
   }, (0,astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["default"])("div", null, "hey "), (0,astroturf_jsx__WEBPACK_IMPORTED_MODULE_0__["default"])("span", {
-    css: [main_CssProp2_span_module_css_astroturf_inline_loader_style_1_integration_main_js_CssProp2_span__WEBPACK_IMPORTED_MODULE_10__["default"]]
+    css: [main_CssProp2_span_module_css_astroturf_inline_loader_style_1_integration_main_js_styleId_CssProp2_span__WEBPACK_IMPORTED_MODULE_10__["default"]]
   }, "yo")));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FancierBox);
@@ -98,12 +97,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "../src/runtime/react.js");
-/* harmony import */ var Widget_module_css_astroturf_inline_loader_style_1_integration_shared_widget_index_js_Widget__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! Widget.module.css!=!astroturf/inline-loader?style=1!./integration/shared/widget/index.js?Widget */ "Widget.module.css!=!../src/inline-loader.ts?style=1!./integration/shared/widget/index.js?Widget");
+/* harmony import */ var Widget_module_css_astroturf_inline_loader_style_1_integration_shared_widget_index_js_styleId_Widget__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! Widget.module.css!=!astroturf/inline-loader?style=1!./integration/shared/widget/index.js?styleId=Widget */ "Widget.module.css!=!../src/inline-loader.ts?style=1!./integration/shared/widget/index.js?styleId=Widget");
 
 
 const Widget = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_0__["default"])('div', null, {
   displayName: "Widget",
-  styles: Widget_module_css_astroturf_inline_loader_style_1_integration_shared_widget_index_js_Widget__WEBPACK_IMPORTED_MODULE_1__["default"]
+  styles: Widget_module_css_astroturf_inline_loader_style_1_integration_shared_widget_index_js_styleId_Widget__WEBPACK_IMPORTED_MODULE_1__["default"]
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Widget);
 
@@ -120,21 +119,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var astroturf_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! astroturf/react */ "../src/runtime/react.js");
-/* harmony import */ var index_Doodad_module_scss_astroturf_inline_loader_style_1_integration_shared_withConfig_index_js_Doodad__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! index-Doodad.module.scss!=!astroturf/inline-loader?style=1!./integration/shared/withConfig/index.js?Doodad */ "index-Doodad.module.scss!=!../src/inline-loader.ts?style=1!./integration/shared/withConfig/index.js?Doodad");
+/* harmony import */ var index_Doodad_module_scss_astroturf_inline_loader_style_1_integration_shared_withConfig_index_js_styleId_Doodad__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! index-Doodad.module.scss!=!astroturf/inline-loader?style=1!./integration/shared/withConfig/index.js?styleId=Doodad */ "index-Doodad.module.scss!=!../src/inline-loader.ts?style=1!./integration/shared/withConfig/index.js?styleId=Doodad");
 
 
 const Doodad = /*#__PURE__*/(0,astroturf_react__WEBPACK_IMPORTED_MODULE_0__["default"])('div', null, {
   displayName: "Doodad",
-  styles: index_Doodad_module_scss_astroturf_inline_loader_style_1_integration_shared_withConfig_index_js_Doodad__WEBPACK_IMPORTED_MODULE_1__["default"]
+  styles: index_Doodad_module_scss_astroturf_inline_loader_style_1_integration_shared_withConfig_index_js_styleId_Doodad__WEBPACK_IMPORTED_MODULE_1__["default"]
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Doodad);
 
 /***/ }),
 
-/***/ "Button.module.css!=!../src/inline-loader.ts?style=1!./integration/Button.js?Button":
-/*!******************************************************************************************!*\
-  !*** Button.module.css!=!../src/inline-loader.ts?style=1!./integration/Button.js?Button ***!
-  \******************************************************************************************/
+/***/ "Button.module.css!=!../src/inline-loader.ts?style=1!./integration/Button.js?styleId=Button":
+/*!**************************************************************************************************!*\
+  !*** Button.module.css!=!../src/inline-loader.ts?style=1!./integration/Button.js?styleId=Button ***!
+  \**************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -146,10 +145,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "Button-styles.module.css!=!../src/inline-loader.ts?style=1!./integration/Button.js?styles":
-/*!*************************************************************************************************!*\
-  !*** Button-styles.module.css!=!../src/inline-loader.ts?style=1!./integration/Button.js?styles ***!
-  \*************************************************************************************************/
+/***/ "Button-styles.module.css!=!../src/inline-loader.ts?style=1!./integration/Button.js?styleId=styles":
+/*!*********************************************************************************************************!*\
+  !*** Button-styles.module.css!=!../src/inline-loader.ts?style=1!./integration/Button.js?styleId=styles ***!
+  \*********************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -161,10 +160,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "main-CssProp1_div.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?CssProp1_div":
-/*!*********************************************************************************************************!*\
-  !*** main-CssProp1_div.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?CssProp1_div ***!
-  \*********************************************************************************************************/
+/***/ "main-CssProp1_div.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?styleId=CssProp1_div":
+/*!*****************************************************************************************************************!*\
+  !*** main-CssProp1_div.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?styleId=CssProp1_div ***!
+  \*****************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -176,10 +175,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "main-CssProp2_span.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?CssProp2_span":
-/*!***********************************************************************************************************!*\
-  !*** main-CssProp2_span.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?CssProp2_span ***!
-  \***********************************************************************************************************/
+/***/ "main-CssProp2_span.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?styleId=CssProp2_span":
+/*!*******************************************************************************************************************!*\
+  !*** main-CssProp2_span.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?styleId=CssProp2_span ***!
+  \*******************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -191,10 +190,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "main-FancierBox.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?FancierBox":
-/*!*****************************************************************************************************!*\
-  !*** main-FancierBox.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?FancierBox ***!
-  \*****************************************************************************************************/
+/***/ "main-FancierBox.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?styleId=FancierBox":
+/*!*************************************************************************************************************!*\
+  !*** main-FancierBox.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?styleId=FancierBox ***!
+  \*************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -206,10 +205,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "main-FancyBox.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?FancyBox":
-/*!*************************************************************************************************!*\
-  !*** main-FancyBox.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?FancyBox ***!
-  \*************************************************************************************************/
+/***/ "main-FancyBox.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?styleId=FancyBox":
+/*!*********************************************************************************************************!*\
+  !*** main-FancyBox.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?styleId=FancyBox ***!
+  \*********************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -221,10 +220,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "main-styles.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?styles":
-/*!*********************************************************************************************!*\
-  !*** main-styles.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?styles ***!
-  \*********************************************************************************************/
+/***/ "main-styles.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?styleId=styles":
+/*!*****************************************************************************************************!*\
+  !*** main-styles.module.css!=!../src/inline-loader.ts?style=1!./integration/main.js?styleId=styles ***!
+  \*****************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -236,10 +235,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "Widget.module.css!=!../src/inline-loader.ts?style=1!./integration/shared/widget/index.js?Widget":
-/*!*******************************************************************************************************!*\
-  !*** Widget.module.css!=!../src/inline-loader.ts?style=1!./integration/shared/widget/index.js?Widget ***!
-  \*******************************************************************************************************/
+/***/ "Widget.module.css!=!../src/inline-loader.ts?style=1!./integration/shared/widget/index.js?styleId=Widget":
+/*!***************************************************************************************************************!*\
+  !*** Widget.module.css!=!../src/inline-loader.ts?style=1!./integration/shared/widget/index.js?styleId=Widget ***!
+  \***************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -251,10 +250,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "index-Doodad.module.scss!=!../src/inline-loader.ts?style=1!./integration/shared/withConfig/index.js?Doodad":
-/*!******************************************************************************************************************!*\
-  !*** index-Doodad.module.scss!=!../src/inline-loader.ts?style=1!./integration/shared/withConfig/index.js?Doodad ***!
-  \******************************************************************************************************************/
+/***/ "index-Doodad.module.scss!=!../src/inline-loader.ts?style=1!./integration/shared/withConfig/index.js?styleId=Doodad":
+/*!**************************************************************************************************************************!*\
+  !*** index-Doodad.module.scss!=!../src/inline-loader.ts?style=1!./integration/shared/withConfig/index.js?styleId=Doodad ***!
+  \**************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
