@@ -1,5 +1,9 @@
 import { NodePath } from '@babel/core';
-import { AssignmentExpression, VariableDeclarator } from '@babel/types';
+import {
+  AssignmentExpression,
+  ObjectProperty,
+  VariableDeclarator,
+} from '@babel/types';
 
 import { getNameFromFile } from './createFilename';
 import getNameFromPath from './getNameFromPath';
@@ -21,6 +25,8 @@ export default function getDisplayName(
       );
     if (path.isExportDefaultDeclaration())
       return getNameFromFile(file.opts.filename);
+    if (path.isObjectProperty())
+      return getNameFromPath((path as NodePath<ObjectProperty>).get('key'));
   }
   return defaultName || null;
 }

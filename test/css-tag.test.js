@@ -143,6 +143,31 @@ describe('css tag', () => {
     },
   );
 
+  testAllRunners(
+    'should use object properties as identifiers',
+    async (runner) => {
+      const [, styles] = await runner(
+        `
+      import { css } from 'astroturf';
+      
+      const styles = {
+        blue: css\`
+          color: blue
+        \`,
+
+        red: css\`
+          color: red;
+        \`,
+      }
+    `,
+        { cssTagName: 'css' },
+      );
+
+      expect(styles[0].identifier).toEqual('blue');
+      expect(styles[1].identifier).toEqual('red');
+    },
+  );
+
   testAllRunners('respects the allowGlobal setting', async (runner) => {
     const [, styles] = await runner(
       `
