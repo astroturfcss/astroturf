@@ -1,3 +1,14 @@
+# [1.2.0](https://github.com/4Catalyzer/astroturf/compare/v1.1.0...v1.2.0) (2023-03-17)
+
+
+### Features
+
+* use static object properties as identifiers ([#749](https://github.com/4Catalyzer/astroturf/issues/749)) ([626c54c](https://github.com/4Catalyzer/astroturf/commit/626c54c10332f562986508fc88002b1f0b6862ef))
+
+
+
+
+
 ## [1.0.1](https://github.com/4Catalyzer/astroturf/compare/v1.0.0...v1.0.1) (2022-01-31)
 
 
